@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Tickets;
 
+[assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
 {
     public class FreshdeskClient : IDisposable

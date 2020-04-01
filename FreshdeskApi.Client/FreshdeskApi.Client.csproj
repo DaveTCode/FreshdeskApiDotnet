@@ -3,10 +3,36 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
+
+    <AssemblyName>FreshdeskApi</AssemblyName>
+    <Authors>David Tyler</Authors>
+    <Description>A lightweight wrapper around the Freshdesk REST API as described in https://developers.freshdesk.com/api</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IsPackable>true</IsPackable>
+    <OutputType>Library</OutputType>
+    <PackageId>Freshdesk.Api</PackageId>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/DaveTCode/FreshdeskApiDotnet</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/DaveTCode/FreshdeskApiDotnet/blob/master/CHANGELOG.md</PackageReleaseNotes>
+    <PackageTags>Freshdesk;Rest;Api</PackageTags>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Title>Freshdesk API Client</Title>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="4.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\README.md" Link="README.md">
+      <Pack>true</Pack>
+      <PackagePath>README.md</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\License.md" Pack="true" PackagePath="$(PackageLicenseFile)" />
+  </ItemGroup>
 </Project>

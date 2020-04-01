@@ -21,7 +21,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
         private readonly TicketOrderDirection? _orderDir;
 
         public ListAllTicketsRequest(
-            ListAllTicketsFilter filter,
+            ListAllTicketsFilter? filter = null,
             long? requesterId = null,
             string requesterEmail = null,
             long? companyID = null,
