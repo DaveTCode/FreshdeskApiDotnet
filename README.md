@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/DavidATyler/Freshdesk%20API/_apis/build/status/DaveTCode.FreshdeskApiDotnet?branchName=master)](https://dev.azure.com/DavidATyler/Freshdesk%20API/_build/latest?definitionId=3&branchName=master)
+
 # Freshdesk API Client
 
 This is a dotnet standard library providing a thin wrapper around the Freshdesk API as described here: https://developers.freshdesk.com/api.
