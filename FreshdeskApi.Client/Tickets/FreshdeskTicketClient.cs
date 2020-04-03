@@ -63,10 +63,19 @@ namespace FreshdeskApi.Client.Tickets
         /// 
         /// c.f. https://developers.freshdesk.com/api/#list_all_tickets
         /// </summary>
-        /// <param name="listAllTicketsRequest"></param>
+        /// 
+        /// <param name="listAllTicketsRequest">
+        /// A request object with required filters filled in.
+        /// </param>
+        ///
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async IAsyncEnumerable<Ticket> ListAllTickets(
+        ///
+        /// <returns>
+        /// A list of matching tickets as an <seealso cref="IAsyncEnumerable{Ticket}"/>,
+        /// therefore if there are multiple pages of results iterating to the next item
+        /// may cause an API call.
+        /// </returns>
+        public async IAsyncEnumerable<Ticket> ListAllTicketsAsync(
             ListAllTicketsRequest listAllTicketsRequest,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
@@ -82,7 +91,8 @@ namespace FreshdeskApi.Client.Tickets
         ///
         /// c.f. https://developers.freshdesk.com/api/#filter_tickets
         /// </summary>
-        /// <param name="ticketFilterQuery">
+        /// 
+        /// <param name="unencodedQuery">
         /// An unencoded query string of the form
         /// (ticket_field:integer or ticket_field:'string') AND ticket_field:boolean
         /// </param>
@@ -94,11 +104,11 @@ namespace FreshdeskApi.Client.Tickets
         /// therefore if there are multiple pages of results iterating to the next item
         /// may cause an API call.
         /// </returns>
-        public async IAsyncEnumerable<Ticket> FilterTickets(
-            string ticketFilterQuery,
+        public async IAsyncEnumerable<Ticket> FilterTicketsAsync(
+            string unencodedQuery,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            var encodedQuery = Uri.EscapeDataString(ticketFilterQuery);
+            var encodedQuery = Uri.EscapeDataString(unencodedQuery);
 
             await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", cancellationToken))
             {
@@ -224,7 +234,7 @@ namespace FreshdeskApi.Client.Tickets
         /// from the API can be paged this is async and iterating to the next
         /// entry may cause another API call if there are several pages.
         /// </returns>
-        public async IAsyncEnumerable<ConversationEntry> GetTicketConversations(
+        public async IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
             long ticketId,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
@@ -259,7 +269,7 @@ namespace FreshdeskApi.Client.Tickets
         /// from the API can be paged this is async and iterating to the next
         /// entry may cause another API call if there are several pages.
         /// </returns>
-        public async IAsyncEnumerable<TimeEntry> GetTicketTimeEntries(
+        public async IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
             long ticketId,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
@@ -294,7 +304,7 @@ namespace FreshdeskApi.Client.Tickets
         /// from the API can be paged this is async and iterating to the next
         /// entry may cause another API call if there are several pages.
         /// </returns>
-        public async IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatings(
+        public async IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
             long ticketId,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {

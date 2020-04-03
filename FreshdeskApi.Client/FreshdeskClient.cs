@@ -9,7 +9,11 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Agents;
+using FreshdeskApi.Client.Companies;
+using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Exceptions;
+using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Tickets;
 
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
@@ -28,7 +32,24 @@ namespace FreshdeskApi.Client
 
         public FreshdeskTicketClient Tickets { get; }
 
+        public FreshdeskContactClient Contacts { get; }
+
+        public FreshdeskGroupClient Groups { get; }
+
+        public FreshdeskAgentClient Agents { get; }
+
+        public FreshdeskCompaniesClient Companies { get; }
+
         private readonly HttpClient _httpClient;
+
+        private FreshdeskClient()
+        {
+            Tickets = new FreshdeskTicketClient(this);
+            Contacts = new FreshdeskContactClient(this);
+            Groups = new FreshdeskGroupClient(this);
+            Agents = new FreshdeskAgentClient(this);
+            Companies = new FreshdeskCompaniesClient(this);
+        }
 
         /// <summary>
         /// Construct a freshdesk client object from just domain and api key.
@@ -48,7 +69,7 @@ namespace FreshdeskApi.Client
         /// The API key from freshdesk of a user with sufficient permissions to
         /// perform whichever operations you are calling.
         /// </param>
-        public FreshdeskClient(string freshdeskDomain, string apiKey)
+        public FreshdeskClient(string freshdeskDomain, string apiKey) : this()
         {
             if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentOutOfRangeException(nameof(apiKey), apiKey, "API Key can't be blank");
             if (string.IsNullOrWhiteSpace(freshdeskDomain)) throw new ArgumentOutOfRangeException(nameof(freshdeskDomain), freshdeskDomain, "Freshdesk domain can't be blank");
@@ -58,11 +79,9 @@ namespace FreshdeskApi.Client
                 BaseAddress = new Uri(freshdeskDomain, UriKind.Absolute)
             };
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.Default.GetBytes($"{apiKey}:X")));
-
-            Tickets = new FreshdeskTicketClient(this);
         }
 
-        public FreshdeskClient(HttpClient httpClient)
+        public FreshdeskClient(HttpClient httpClient) : this()
         {
             _httpClient = httpClient;
         }

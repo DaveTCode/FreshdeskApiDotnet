@@ -13,9 +13,9 @@ namespace FreshdeskApi.Client.Tickets.Requests
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class UpdateTicketRequest
     {
-        public UpdateTicketRequest(TicketStatus? status = null, TicketPriority? priority = null, TicketSource? source = null, 
-            string description = null, string requesterName = null, long? requesterId = null, string email = null, string facebookId = null, 
-            string phoneNumber = null, string twitterId = null, string uniqueExternalId = null, long? responderId = null, 
+        public UpdateTicketRequest(TicketStatus? status = null, TicketPriority? priority = null, TicketSource? source = null,
+            string description = null, string requesterName = null, long? requesterId = null, string email = null, string facebookId = null,
+            string phoneNumber = null, string twitterId = null, string uniqueExternalId = null, long? responderId = null,
             Dictionary<string, string> customFields = null, DateTimeOffset? dueBy = null, long? emailConfigId = null,
             DateTimeOffset? firstResponseDueBy = null, long? groupId = null, long? productId = null, string[] tags = null,
             long? companyId = null, string subject = null, string ticketType = null)

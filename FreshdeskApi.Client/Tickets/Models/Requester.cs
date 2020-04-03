@@ -14,7 +14,7 @@ namespace FreshdeskApi.Client.Tickets.Models
 
         [JsonPropertyName("email")]
         public string Email { get; set; }
-        
+
         [JsonPropertyName("mobile")]
         public string Mobile { get; set; }
 

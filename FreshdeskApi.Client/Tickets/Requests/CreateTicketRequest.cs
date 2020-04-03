@@ -9,7 +9,8 @@ namespace FreshdeskApi.Client.Tickets.Requests
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class CreateTicketRequest
     {
-        public CreateTicketRequest(TicketStatus status, TicketPriority priority, TicketSource source, string description, long requesterId1, string requesterName = null, long? requesterId = null, string email = null, string facebookId = null, string phoneNumber = null,
+        public CreateTicketRequest(TicketStatus status, TicketPriority priority, TicketSource source, string description, string requesterName = null,
+            long? requesterId = null, string email = null, string facebookId = null, string phoneNumber = null,
             string twitterId = null, string uniqueExternalId = null, long? responderId = null, string[] ccEmails = null,
             Dictionary<string, string> customFields = null, DateTimeOffset? dueBy = null, long? emailConfigId = null,
             DateTimeOffset? firstResponseDueBy = null, long? groupId = null, long? productId = null, string[] tags = null,
@@ -30,7 +31,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
             TwitterId = twitterId;
             UniqueExternalId = uniqueExternalId;
             Description = description;
-            RequesterId = requesterId1;
+            RequesterId = requesterId;
             ResponderId = responderId;
             CcEmails = ccEmails;
             CustomFields = customFields;
@@ -51,7 +52,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
 
         /// User ID of the requester. For existing contacts, the requester_id can be passed instead of the requester email.
         [JsonPropertyName("requester_id")]
-        public long RequesterId { get; }
+        public long? RequesterId { get; }
 
         /// Email address of the requester. If no contact exists with this email address in Freshdesk, it will be added as a new contact.
         [JsonPropertyName("email")]
