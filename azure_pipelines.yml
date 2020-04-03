@@ -17,6 +17,16 @@ steps:
       version: 3.1.x
       installationPath: $(Agent.ToolsDirectory)/dotnet
 
+  - script:
+    - export PATH="$PATH:/root/.dotnet/tools"
+    - dotnet tool install -g dotnet-format
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Lint code'
+    inputs:
+      command: 'format'
+      arguments: '--check --dry-run -v diag'
+
   - task: DotNetCoreCLI@2
     displayName: 'Build projects'
     inputs:
