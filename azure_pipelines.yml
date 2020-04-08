@@ -47,3 +47,10 @@ steps:
       codeCoverageTool: Cobertura
       summaryFileLocation: '$(Build.SourcesDirectory)/TestResults/Coverage/*cobertura.xml'
       reportDirectory: '$(Build.SourcesDirectory)/TestResults/Coverage'
+
+  - task: NuGetCommand@2
+    inputs:
+      command: 'pack'
+      packagesToPack: 'FreshdeskApi.Client/FreshdeskApi.Client.csproj'
+      configuration: '$(buildConfiguration)'
+      versioningScheme: 'byBuildNumber'
