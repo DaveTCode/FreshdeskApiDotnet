@@ -1,17 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FreshdeskApi.Client.Agents.Models;
 
 namespace FreshdeskApi.Client.Agents.Requests
 {
+    /// <summary>
+    /// Constructs a request which can filter the list of agents
+    ///
+    /// c.f. https://developers.freshdesk.com/api/#list_all_agents
+    /// </summary>
     public class ListAllAgentsRequest
     {
         private const string ListAllContactsUrl = "/api/v2/agents";
 
-        private readonly string _email;
-        private readonly string _mobile;
-        private readonly string _phone;
-        private readonly AgentState? _agentState;
+        internal string UrlWithQueryString { get; }
 
         public ListAllAgentsRequest(
             string email = null,
@@ -19,24 +22,23 @@ namespace FreshdeskApi.Client.Agents.Requests
             string phone = null,
             AgentState? agentState = null)
         {
-            _email = email;
-            _mobile = mobile;
-            _phone = phone;
-            _agentState = agentState;
+            var urlParams = new Dictionary<string, string>
+            {
+                { "email", email },
+                { "mobile", mobile },
+                { "phone", phone },
+                { "state", agentState?.GetQueryStringValue() }
+            }.Where(x => x.Value != null)
+                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value)}")
+                .ToList();
+
+            UrlWithQueryString = ListAllContactsUrl +
+                   (urlParams.Any() ? "?" + string.Join("&", urlParams) : "");
         }
 
-        internal string GetUrl()
+        public override string ToString()
         {
-            var urlParams = new List<string>
-            {
-                (_email != null) ? $"email={_email}" : null,
-                (_mobile != null) ? $"mobile={_mobile}" : null,
-                (_phone != null) ? $"phone={_phone}" : null,
-                (_agentState != null) ? $"state={_agentState.Value.GetQueryStringValue()}" : null,
-            }.Select(x => x != null).ToList();
-
-            return ListAllContactsUrl +
-                   (urlParams.Any() ? "?" + string.Join("&", urlParams) : "");
+            return $"{nameof(UrlWithQueryString)}: {UrlWithQueryString}";
         }
     }
 }

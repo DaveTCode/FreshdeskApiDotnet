@@ -35,7 +35,9 @@ namespace FreshdeskApi.Client.Agents
             long agentId,
             CancellationToken cancellationToken = default)
         {
-            return await _freshdeskClient.ApiOperationAsync<Agent>(HttpMethod.Get, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken);
+            return await _freshdeskClient
+                .ApiOperationAsync<Agent>(HttpMethod.Get, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false); 
         }
 
         /// <summary>
@@ -61,7 +63,7 @@ namespace FreshdeskApi.Client.Agents
             ListAllAgentsRequest request,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var agent in _freshdeskClient.GetPagedResults<Agent>(request.GetUrl(), cancellationToken))
+            await foreach (var agent in _freshdeskClient.GetPagedResults<Agent>(request.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return agent;
             }
@@ -82,7 +84,9 @@ namespace FreshdeskApi.Client.Agents
             long agentId,
             CancellationToken cancellationToken = default)
         {
-            await _freshdeskClient.ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken);
+            await _freshdeskClient
+                .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
     }
 }

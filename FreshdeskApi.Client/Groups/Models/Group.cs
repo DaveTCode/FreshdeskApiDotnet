@@ -13,12 +13,21 @@ namespace FreshdeskApi.Client.Groups.Models
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class Group
     {
+        /// <summary>
+        /// Unique ID of the group
+        /// </summary>
         [JsonPropertyName("id")]
         public long Id { get; set; }
 
+        /// <summary>
+        /// Name of the group
+        /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Description of the group
+        /// </summary>
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
@@ -46,23 +55,39 @@ namespace FreshdeskApi.Client.Groups.Models
         [JsonPropertyName("business_hour_id")]
         public long? BusinessHourId { get; set; }
 
+        /// <summary>
+        /// Array of agent user IDs separated by commas.
+        /// </summary>
         [JsonPropertyName("agent_ids")]
         public long[] AgentIds { get; set; }
 
         [JsonPropertyName("group_type")]
         public string GroupType { get; set; }
 
+        /// <summary>
+        /// Group creation timestamp
+        /// </summary>
         [JsonPropertyName("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
 
+        /// <summary>
+        /// Group updated timestamp
+        /// </summary>
         [JsonPropertyName("updated_at")]
         public DateTimeOffset UpdatedAt { get; set; }
 
         /// <summary>
         /// Set to true if automatic ticket assignment has been enabled.
         /// Automatic ticket assignment is only available on certain plans.
+        ///
+        /// TODO - Turns out that it can an integer sometimes as well?? WTF
         /// </summary>
         [JsonPropertyName("auto_ticket_assign")]
-        public bool AutoTicketAssign { get; set; }
+        public object AutoTicketAssign { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(EscalateTo)}: {EscalateTo}, {nameof(UnassignedFor)}: {UnassignedFor}, {nameof(BusinessHourId)}: {BusinessHourId}, {nameof(AgentIds)}: {AgentIds}, {nameof(GroupType)}: {GroupType}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(AutoTicketAssign)}: {AutoTicketAssign}";
+        }
     }
 }

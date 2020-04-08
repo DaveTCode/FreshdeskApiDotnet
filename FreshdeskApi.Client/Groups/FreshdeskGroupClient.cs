@@ -34,7 +34,9 @@ namespace FreshdeskApi.Client.Groups
             long groupId,
             CancellationToken cancellationToken = default)
         {
-            return await _freshdeskClient.ApiOperationAsync<Group>(HttpMethod.Get, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken);
+            return await _freshdeskClient
+                .ApiOperationAsync<Group>(HttpMethod.Get, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -52,10 +54,34 @@ namespace FreshdeskApi.Client.Groups
         public async IAsyncEnumerable<Group> ListAllGroupsAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var group in _freshdeskClient.GetPagedResults<Group>("/api/v2/groups", cancellationToken))
+            await foreach (var group in _freshdeskClient.GetPagedResults<Group>("/api/v2/groups", false, cancellationToken).ConfigureAwait(false))
             {
                 yield return group;
             }
+        }
+
+        /// <summary>
+        /// Delete a group from the Freshdesk instance.
+        ///
+        /// Note:
+        /// 1. Deleting a Group will only disband the group and not delete its members.
+        /// 2. Deleted groups cannot be restored.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#delete_group
+        /// </summary>
+        /// 
+        /// <param name="groupId">
+        /// The unique group identifier.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        public async Task DeleteGroupAsync(
+            long groupId,
+            CancellationToken cancellationToken = default)
+        {
+            await _freshdeskClient
+                .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false); ;
         }
     }
 }

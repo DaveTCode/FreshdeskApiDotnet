@@ -14,6 +14,7 @@ using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Groups;
+using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.Tickets;
 
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
@@ -40,6 +41,8 @@ namespace FreshdeskApi.Client
 
         public FreshdeskCompaniesClient Companies { get; }
 
+        public FreshdeskSolutionClient Solutions { get; }
+
         private readonly HttpClient _httpClient;
 
         private FreshdeskClient()
@@ -49,6 +52,7 @@ namespace FreshdeskApi.Client
             Groups = new FreshdeskGroupClient(this);
             Agents = new FreshdeskAgentClient(this);
             Companies = new FreshdeskCompaniesClient(this);
+            Solutions = new FreshdeskSolutionClient(this);
         }
 
         /// <summary>
@@ -69,6 +73,7 @@ namespace FreshdeskApi.Client
         /// The API key from freshdesk of a user with sufficient permissions to
         /// perform whichever operations you are calling.
         /// </param>
+        // ReSharper disable once UnusedMember.Global
         public FreshdeskClient(string freshdeskDomain, string apiKey) : this()
         {
             if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentOutOfRangeException(nameof(apiKey), apiKey, "API Key can't be blank");
@@ -81,8 +86,23 @@ namespace FreshdeskApi.Client
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.Default.GetBytes($"{apiKey}:X")));
         }
 
+        /// <summary>
+        /// Construct a freshdesk client object when you already have access
+        /// to HttpClient objects or want to otherwise pool them outside of
+        /// this client.
+        ///
+        /// It is recommended that you use this method in long lived
+        /// applications where many of these clients will be created.
+        /// </summary>
+        /// <param name="httpClient">
+        /// A HttpClient object with authentication and
+        /// <seealso cref="HttpClient.BaseAddress"/> already set.
+        /// </param>
+        // ReSharper disable once UnusedMember.Global
         public FreshdeskClient(HttpClient httpClient) : this()
         {
+            if (string.IsNullOrWhiteSpace(httpClient?.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
+
             _httpClient = httpClient;
         }
 
@@ -127,7 +147,7 @@ namespace FreshdeskApi.Client
             };
         }
 
-        internal async IAsyncEnumerable<T> GetPagedResults<T>(string url, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        internal async IAsyncEnumerable<T> GetPagedResults<T>(string url, bool newStylePages, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             if (url.Contains("?")) url += "&page=1";
             else url += "?page=1";
@@ -167,11 +187,23 @@ namespace FreshdeskApi.Client
                 }
 
                 using var contentStream = await response.Content.ReadAsStreamAsync();
-                var newData = await JsonSerializer.DeserializeAsync<List<T>>(contentStream, cancellationToken: cancellationToken);
-
-                foreach (var data in newData)
+                if (newStylePages)
                 {
-                    yield return data;
+                    var newData = await JsonSerializer.DeserializeAsync<PagedResult<T>>(contentStream, cancellationToken: cancellationToken);
+
+                    foreach (var data in newData.Results)
+                    {
+                        yield return data;
+                    }
+                }
+                else
+                {
+                    var newData = await JsonSerializer.DeserializeAsync<List<T>>(contentStream, cancellationToken: cancellationToken);
+
+                    foreach (var data in newData)
+                    {
+                        yield return data;
+                    }
                 }
 
                 if (!response.Headers.Contains("Location"))
@@ -191,7 +223,10 @@ namespace FreshdeskApi.Client
 
             if (body != null)
             {
-                httpMessage.Content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+                httpMessage.Content = new StringContent(JsonSerializer.Serialize(body, new JsonSerializerOptions
+                {
+                        IgnoreNullValues = true
+                }), Encoding.UTF8, "application/json");
             }
 
             var response = await _httpClient

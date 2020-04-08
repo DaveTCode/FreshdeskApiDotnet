@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -35,7 +34,9 @@ namespace FreshdeskApi.Client.Companies
             long companyId,
             CancellationToken cancellationToken = default)
         {
-            return await _freshdeskClient.ApiOperationAsync<Company>(HttpMethod.Get, $"/api/v2/companies/{companyId}", cancellationToken: cancellationToken);
+            return await _freshdeskClient
+                .ApiOperationAsync<Company>(HttpMethod.Get, $"/api/v2/companies/{companyId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace FreshdeskApi.Client.Companies
         public async IAsyncEnumerable<Company> ListAllCompaniesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var company in _freshdeskClient.GetPagedResults<Company>("/api/v2/companies", cancellationToken))
+            await foreach (var company in _freshdeskClient.GetPagedResults<Company>("/api/v2/companies", false, cancellationToken).ConfigureAwait(false))
             {
                 yield return company;
             }
@@ -67,8 +68,10 @@ namespace FreshdeskApi.Client.Companies
         /// c.f. https://developers.freshdesk.com/api/#filter_companies
         /// </summary>
         /// 
-        /// <param name="unencodedQuery">
-        /// The full query string in unencoded form.
+        /// <param name="encodedQuery">
+        /// The full query string with params encoded properly.
+        ///
+        /// Will be appended with ?query="encodedQuery" so don't enclose in quotes.
         /// </param>
         ///
         /// <param name="cancellationToken"></param>
@@ -78,12 +81,10 @@ namespace FreshdeskApi.Client.Companies
         /// to the next entry may cause a new API call to get the next page.
         /// </returns>
         public async IAsyncEnumerable<Company> FilterCompaniesAsync(
-            string unencodedQuery,
+            string encodedQuery,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            var encodedQuery = Uri.EscapeDataString(unencodedQuery);
-
-            await foreach (var company in _freshdeskClient.GetPagedResults<Company>($"/api/v2/search/companies?query={encodedQuery}", cancellationToken))
+            await foreach (var company in _freshdeskClient.GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", true, cancellationToken).ConfigureAwait(false))
             {
                 yield return company;
             }

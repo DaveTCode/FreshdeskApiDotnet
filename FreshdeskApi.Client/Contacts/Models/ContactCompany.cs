@@ -13,5 +13,10 @@ namespace FreshdeskApi.Client.Contacts.Models
 
         [JsonPropertyName("view_all_tickets")]
         public bool ViewAllTickets { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}, {nameof(ViewAllTickets)}: {ViewAllTickets}";
+        }
     }
 }

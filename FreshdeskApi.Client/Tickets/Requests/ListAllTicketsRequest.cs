@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FreshdeskApi.Client.Tickets.Models;
 
 namespace FreshdeskApi.Client.Tickets.Requests
@@ -8,17 +9,14 @@ namespace FreshdeskApi.Client.Tickets.Requests
     /// When listing all tickets only certain filters can be applied, this
     /// object restricts what searches can be done to reflect the API hard
     /// limits.
+    ///
+    /// c.f. https://developers.freshdesk.com/api/#list_all_tickets
     /// </summary>
     public class ListAllTicketsRequest
     {
-        private readonly ListAllTicketsFilter? _filter;
-        private readonly long? _requesterId;
-        private readonly string _requesterEmail;
-        private readonly long? _companyID;
-        private readonly DateTimeOffset? _updatedSince;
-        private readonly TicketIncludes? _includes;
-        private readonly TicketOrderBy? _orderBy;
-        private readonly TicketOrderDirection? _orderDir;
+        private const string ListAllTicketsUrl = "/api/v2/tickets";
+
+        internal string UrlWithQueryString { get; }
 
         public ListAllTicketsRequest(
             ListAllTicketsFilter? filter = null,
@@ -30,33 +28,27 @@ namespace FreshdeskApi.Client.Tickets.Requests
             TicketOrderBy? orderBy = default,
             TicketOrderDirection? orderDir = default)
         {
-            _filter = filter;
-            _requesterId = requesterId;
-            _requesterEmail = requesterEmail;
-            _companyID = companyID;
-            _updatedSince = updatedSince;
-            _includes = includes;
-            _orderBy = orderBy;
-            _orderDir = orderDir;
+            var urlParams = new Dictionary<string, string>
+            {
+                { "filter", filter?.QueryParameterValue() },
+                { "requester_id", requesterId?.ToString() },
+                { "email", requesterEmail },
+                { "company_id", companyID?.ToString() },
+                { "updated_since", updatedSince?.ToString("yyyy-MM-ddTHH:mm:ssZ") },
+                { "includes", includes?.ToString() },
+                { "order_by", orderBy?.QueryParameterValue() },
+                { "order_type", orderDir?.QueryParameterValue() }
+            }.Where(x => x.Value != null)
+                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value)}")
+                .ToList();
+
+            UrlWithQueryString = ListAllTicketsUrl +
+                   (urlParams.Any() ? "?" + string.Join("&", urlParams) : "");
         }
 
-        internal string ToQueryString()
+        public override string ToString()
         {
-            var queryParts = new List<string>();
-
-            if (_filter.HasValue) queryParts.Add($"filter={_filter.Value.QueryParameterValue()}");
-            if (_requesterId.HasValue) queryParts.Add($"requesterId={_requesterId.Value}");
-            if (_requesterEmail != null) queryParts.Add($"email={_requesterEmail}");
-            if (_companyID.HasValue) queryParts.Add($"company_id={_companyID.Value}");
-            if (_updatedSince.HasValue) queryParts.Add($"updated_since={_updatedSince.Value:yyyy-MM-ddTHH:mm:ssZ}");
-            if (_orderBy.HasValue) queryParts.Add($"order_by={_orderBy.Value.QueryParameterValue()}");
-            if (_orderDir.HasValue) queryParts.Add($"order_type={_orderDir.Value.QueryParameterValue()}");
-
-            var queryString = "?" + string.Join("&", queryParts);
-
-            if (_includes.HasValue) queryString += _includes.Value.ToString();
-
-            return queryString;
+            return $"{nameof(UrlWithQueryString)}: {UrlWithQueryString}";
         }
     }
 

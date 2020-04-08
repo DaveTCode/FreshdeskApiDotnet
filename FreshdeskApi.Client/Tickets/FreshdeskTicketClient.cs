@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -79,7 +78,7 @@ namespace FreshdeskApi.Client.Tickets
             ListAllTicketsRequest listAllTicketsRequest,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>($"/api/v2/tickets{listAllTicketsRequest.ToQueryString()}", cancellationToken))
+            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>(listAllTicketsRequest.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return ticket;
             }
@@ -92,8 +91,8 @@ namespace FreshdeskApi.Client.Tickets
         /// c.f. https://developers.freshdesk.com/api/#filter_tickets
         /// </summary>
         /// 
-        /// <param name="unencodedQuery">
-        /// An unencoded query string of the form
+        /// <param name="encodedQuery">
+        /// An encoded query string of the form
         /// (ticket_field:integer or ticket_field:'string') AND ticket_field:boolean
         /// </param>
         ///
@@ -105,12 +104,10 @@ namespace FreshdeskApi.Client.Tickets
         /// may cause an API call.
         /// </returns>
         public async IAsyncEnumerable<Ticket> FilterTicketsAsync(
-            string unencodedQuery,
+            string encodedQuery,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            var encodedQuery = Uri.EscapeDataString(unencodedQuery);
-
-            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", cancellationToken))
+            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", true, cancellationToken).ConfigureAwait(false))
             {
                 yield return ticket;
             }
@@ -238,7 +235,7 @@ namespace FreshdeskApi.Client.Tickets
             long ticketId,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var conversationEntry in _freshdeskClient.GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", cancellationToken))
+            await foreach (var conversationEntry in _freshdeskClient.GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", false, cancellationToken).ConfigureAwait(false))
             {
                 yield return conversationEntry;
             }
@@ -273,7 +270,7 @@ namespace FreshdeskApi.Client.Tickets
             long ticketId,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var timeEntry in _freshdeskClient.GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", cancellationToken))
+            await foreach (var timeEntry in _freshdeskClient.GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", false, cancellationToken).ConfigureAwait(false))
             {
                 yield return timeEntry;
             }
@@ -308,7 +305,7 @@ namespace FreshdeskApi.Client.Tickets
             long ticketId,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var satisfactionRating in _freshdeskClient.GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", cancellationToken))
+            await foreach (var satisfactionRating in _freshdeskClient.GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", false, cancellationToken).ConfigureAwait(false))
             {
                 yield return satisfactionRating;
             }

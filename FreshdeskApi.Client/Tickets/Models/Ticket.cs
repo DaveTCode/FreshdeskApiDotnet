@@ -92,7 +92,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public string DescriptionText { get; set; }
 
         [JsonPropertyName("custom_fields")]
-        public Dictionary<string, string> CustomFields { get; set; }
+        public Dictionary<string, object> CustomFields { get; set; }
 
         [JsonPropertyName("created_at")]
         public DateTimeOffset CreatedAt { get; set; }

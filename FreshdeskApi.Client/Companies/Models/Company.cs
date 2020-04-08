@@ -48,7 +48,7 @@ namespace FreshdeskApi.Client.Companies.Models
         /// Key value pairs containing the names and values of custom fields.
         /// </summary>
         [JsonPropertyName("custom_fields")]
-        public Dictionary<string, string> CustomFields { get; set; }
+        public Dictionary<string, object> CustomFields { get; set; }
 
         /// <summary>
         /// Company creation timestamp
@@ -87,5 +87,10 @@ namespace FreshdeskApi.Client.Companies.Models
         /// </summary>
         [JsonPropertyName("industry")]
         public string Industry { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(Note)}: {Note}, {nameof(Domains)}: {Domains}, {nameof(CustomFields)}: {CustomFields}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(HealthScore)}: {HealthScore}, {nameof(AccountTier)}: {AccountTier}, {nameof(RenewalDate)}: {RenewalDate}, {nameof(Industry)}: {Industry}";
+        }
     }
 }

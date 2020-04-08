@@ -35,7 +35,9 @@ namespace FreshdeskApi.Client.Contacts
             long contactId,
             CancellationToken cancellationToken = default)
         {
-            return await _freshdeskClient.ApiOperationAsync<Contact>(HttpMethod.Get, $"/api/v2/contacts/{contactId}", cancellationToken: cancellationToken);
+            return await _freshdeskClient
+                .ApiOperationAsync<Contact>(HttpMethod.Get, $"/api/v2/contacts/{contactId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,7 +55,9 @@ namespace FreshdeskApi.Client.Contacts
             ContactCreateRequest request,
             CancellationToken cancellationToken = default)
         {
-            return await _freshdeskClient.ApiOperationAsync<Contact>(HttpMethod.Post, "/api/v2/contacts", request, cancellationToken);
+            return await _freshdeskClient
+                .ApiOperationAsync<Contact>(HttpMethod.Post, "/api/v2/contacts", request, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,7 +83,7 @@ namespace FreshdeskApi.Client.Contacts
             ListAllContactsRequest request,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var contact in _freshdeskClient.GetPagedResults<Contact>(request.GetUrl(), cancellationToken))
+            await foreach (var contact in _freshdeskClient.GetPagedResults<Contact>(request.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return contact;
             }
