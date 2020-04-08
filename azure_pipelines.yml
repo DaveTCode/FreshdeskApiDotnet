@@ -53,4 +53,7 @@ steps:
       command: 'pack'
       packagesToPack: 'FreshdeskApi.Client/FreshdeskApi.Client.csproj'
       configuration: '$(buildConfiguration)'
-      versioningScheme: 'byBuildNumber'
+      versioningScheme: 'byPrereleaseNumber'
+      majorVersion: '1'
+      minorVersion: '0'
+      patchVersion: '0'
