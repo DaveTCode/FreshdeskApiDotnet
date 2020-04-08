@@ -13,7 +13,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
     public class ListAllContactsRequest
     {
         private const string ListAllContactsUrl = "/api/v2/contacts";
-        
+
         internal string UrlWithQueryString { get; }
 
         public ListAllContactsRequest(

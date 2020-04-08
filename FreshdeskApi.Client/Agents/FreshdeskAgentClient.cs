@@ -37,7 +37,7 @@ namespace FreshdeskApi.Client.Agents
         {
             return await _freshdeskClient
                 .ApiOperationAsync<Agent>(HttpMethod.Get, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false); 
+                .ConfigureAwait(false);
         }
 
         /// <summary>

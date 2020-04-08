@@ -34,7 +34,7 @@ namespace FreshdeskApi.Client.Solutions.Requests
         /// </summary>
         public long[] CompanyIds { get; }
 
-        public CreateFolderRequest(string name, string description = null, FolderVisibility? visibility = null, long[] companyIds= null)
+        public CreateFolderRequest(string name, string description = null, FolderVisibility? visibility = null, long[] companyIds = null)
         {
             Name = name;
             Description = description;
