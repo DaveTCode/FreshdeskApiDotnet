@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2020-04-09
+- Added support for ticket_fields API endpoints
+- Fixed bug with paging (previously only first 30 results were ever returned)
+- Switched to Newtonsoft.Json to support more JSON deserialization options
+- Added CreateGroupRequest
+
 ## [0.1.0] - 2020-04-08
 First public release of the package
 - Solution API fully implemented
