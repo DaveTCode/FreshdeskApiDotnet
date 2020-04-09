@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Solutions.Models
 {
@@ -11,13 +11,13 @@ namespace FreshdeskApi.Client.Solutions.Models
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class SeoData
     {
-        [JsonPropertyName("meta_title")]
+        [JsonProperty("meta_title")]
         public string MetaTitle { get; set; }
 
-        [JsonPropertyName("meta_description")]
+        [JsonProperty("meta_description")]
         public string MetaDescription { get; set; }
 
-        [JsonPropertyName("meta_keywords")]
+        [JsonProperty("meta_keywords")]
         public string MetaKeywords { get; set; }
 
         public override string ToString()

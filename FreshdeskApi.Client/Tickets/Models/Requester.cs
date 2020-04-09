@@ -1,24 +1,24 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Tickets.Models
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class Requester
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("email")]
+        [JsonProperty("email")]
         public string Email { get; set; }
 
-        [JsonPropertyName("mobile")]
+        [JsonProperty("mobile")]
         public string Mobile { get; set; }
 
-        [JsonPropertyName("phone")]
+        [JsonProperty("phone")]
         public string Phone { get; set; }
 
         public override string ToString()

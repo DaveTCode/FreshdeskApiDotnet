@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Contacts.Models
 {
@@ -9,25 +9,25 @@ namespace FreshdeskApi.Client.Contacts.Models
     /// </summary>
     public class Avatar
     {
-        [JsonPropertyName("avatar_url")]
+        [JsonProperty("avatar_url")]
         public string Url { get; set; }
 
-        [JsonPropertyName("content_type")]
+        [JsonProperty("content_type")]
         public string ContentType { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("size")]
+        [JsonProperty("size")]
         public long Size { get; set; }
 
-        [JsonPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
 
-        [JsonPropertyName("updated_at")]
+        [JsonProperty("updated_at")]
         public DateTimeOffset UpdatedAt { get; set; }
 
         public override string ToString()

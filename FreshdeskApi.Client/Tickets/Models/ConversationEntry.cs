@@ -1,67 +1,67 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Tickets.Models
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class ConversationEntry
     {
-        [JsonPropertyName("body")]
+        [JsonProperty("body")]
         public string Body { get; set; }
 
-        [JsonPropertyName("body_text")]
+        [JsonProperty("body_text")]
         public string BodyText { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonPropertyName("incoming")]
+        [JsonProperty("incoming")]
         public bool Incoming { get; set; }
 
-        [JsonPropertyName("private")]
+        [JsonProperty("private")]
         public bool Private { get; set; }
 
-        [JsonPropertyName("user_id")]
+        [JsonProperty("user_id")]
         public long UserId { get; set; }
 
-        [JsonPropertyName("support_email")]
+        [JsonProperty("support_email")]
         public string SupportEmail { get; set; }
 
-        [JsonPropertyName("source")]
+        [JsonProperty("source")]
         public TicketSource Source { get; set; }
 
-        [JsonPropertyName("category")]
+        [JsonProperty("category")]
         public long Category { get; set; }
 
-        [JsonPropertyName("ticket_id")]
+        [JsonProperty("ticket_id")]
         public long TicketId { get; set; }
 
-        [JsonPropertyName("to_emails")]
+        [JsonProperty("to_emails")]
         public string[] ToEmails { get; set; }
 
-        [JsonPropertyName("from_email")]
+        [JsonProperty("from_email")]
         public string FromEmail { get; set; }
 
-        [JsonPropertyName("cc_emails")]
+        [JsonProperty("cc_emails")]
         public string[] CcEmails { get; set; }
 
-        [JsonPropertyName("bcc_emails")]
+        [JsonProperty("bcc_emails")]
         public string[] BccEmails { get; set; }
 
-        [JsonPropertyName("email_failure_count")]
+        [JsonProperty("email_failure_count")]
         public long? EmailFailureCount { get; set; }
 
-        [JsonPropertyName("outgoing_failures")]
+        [JsonProperty("outgoing_failures")]
         public long? OutgoingFailures { get; set; }
 
-        [JsonPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
 
-        [JsonPropertyName("updated_at")]
+        [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
 
-        [JsonPropertyName("source_additional_info")]
+        [JsonProperty("source_additional_info")]
         public string SourceAdditionalInfo { get; set; }
 
         public override string ToString()

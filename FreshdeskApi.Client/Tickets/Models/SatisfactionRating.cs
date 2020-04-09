@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Tickets.Models
 {
@@ -14,34 +14,34 @@ namespace FreshdeskApi.Client.Tickets.Models
     /// </summary>
     public class SatisfactionRating
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonPropertyName("survey_id")]
+        [JsonProperty("survey_id")]
         public long SurveyId { get; set; }
 
-        [JsonPropertyName("user_id")]
+        [JsonProperty("user_id")]
         public long UserId { get; set; }
 
-        [JsonPropertyName("agent_id")]
+        [JsonProperty("agent_id")]
         public long AgentId { get; set; }
 
-        [JsonPropertyName("feedback")]
+        [JsonProperty("feedback")]
         public string Feedback { get; set; }
 
-        [JsonPropertyName("group_id")]
+        [JsonProperty("group_id")]
         public long? GroupId { get; set; }
 
-        [JsonPropertyName("ticket_id")]
+        [JsonProperty("ticket_id")]
         public long TicketId { get; set; }
 
-        [JsonPropertyName("ratings")]
+        [JsonProperty("ratings")]
         public Dictionary<string, int> Ratings { get; set; }
 
-        [JsonPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
 
-        [JsonPropertyName("updated_at")]
+        [JsonProperty("updated_at")]
         public DateTimeOffset UpdatedAt { get; set; }
 
         public override string ToString()

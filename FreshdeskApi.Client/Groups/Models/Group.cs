@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Groups.Models
 {
@@ -16,19 +16,19 @@ namespace FreshdeskApi.Client.Groups.Models
         /// <summary>
         /// Unique ID of the group
         /// </summary>
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
         /// <summary>
         /// Name of the group
         /// </summary>
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Description of the group
         /// </summary>
-        [JsonPropertyName("description")]
+        [JsonProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace FreshdeskApi.Client.Groups.Models
         ///
         /// null == None
         /// </summary>
-        [JsonPropertyName("escalate_to")]
+        [JsonProperty("escalate_to")]
         public long? EscalateTo { get; set; }
 
         /// <summary>
@@ -46,34 +46,34 @@ namespace FreshdeskApi.Client.Groups.Models
         /// hours, "12h" for 12 hours, "1d" for 1 day, "2d" for 2 days, and
         /// "3d" for 3 days
         /// </summary>
-        [JsonPropertyName("unassigned_for")]
+        [JsonProperty("unassigned_for")]
         public string UnassignedFor { get; set; }
 
         /// <summary>
         /// Unique ID of the business hour associated with the group
         /// </summary>
-        [JsonPropertyName("business_hour_id")]
+        [JsonProperty("business_hour_id")]
         public long? BusinessHourId { get; set; }
 
         /// <summary>
         /// Array of agent user IDs separated by commas.
         /// </summary>
-        [JsonPropertyName("agent_ids")]
+        [JsonProperty("agent_ids")]
         public long[] AgentIds { get; set; }
 
-        [JsonPropertyName("group_type")]
+        [JsonProperty("group_type")]
         public string GroupType { get; set; }
 
         /// <summary>
         /// Group creation timestamp
         /// </summary>
-        [JsonPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// Group updated timestamp
         /// </summary>
-        [JsonPropertyName("updated_at")]
+        [JsonProperty("updated_at")]
         public DateTimeOffset UpdatedAt { get; set; }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace FreshdeskApi.Client.Groups.Models
         ///
         /// TODO - Turns out that it can an integer sometimes as well?? WTF
         /// </summary>
-        [JsonPropertyName("auto_ticket_assign")]
+        [JsonProperty("auto_ticket_assign")]
         public object AutoTicketAssign { get; set; }
 
         public override string ToString()

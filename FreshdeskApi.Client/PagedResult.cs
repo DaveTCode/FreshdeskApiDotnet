@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client
 {
@@ -10,10 +10,10 @@ namespace FreshdeskApi.Client
     /// <typeparam name="T"></typeparam>
     public class PagedResult<T>
     {
-        [JsonPropertyName("total")]
+        [JsonProperty("total")]
         public long? Total { get; set; }
 
-        [JsonPropertyName("results")]
+        [JsonProperty("results")]
         public List<T> Results { get; set; }
     }
 }

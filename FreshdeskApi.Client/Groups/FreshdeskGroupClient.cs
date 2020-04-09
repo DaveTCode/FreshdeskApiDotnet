@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Groups.Models;
+using FreshdeskApi.Client.Groups.Requests;
 
 namespace FreshdeskApi.Client.Groups
 {
@@ -82,6 +84,28 @@ namespace FreshdeskApi.Client.Groups
             await _freshdeskClient
                 .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
                 .ConfigureAwait(false); ;
+        }
+
+        /// <summary>
+        /// Create a new group of agents
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#create_group
+        /// </summary>
+        /// 
+        /// <param name="request">
+        /// The properties to set on the new group.
+        /// </param>
+        /// 
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The newly created group</returns>
+        public async Task<Group> CreateGroupAsync(
+            CreateGroupRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
+            return await _freshdeskClient.ApiOperationAsync<Group>(HttpMethod.Post, "/api/v2/groups", request, cancellationToken);
         }
     }
 }

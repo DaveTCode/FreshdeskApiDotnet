@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Contacts.Requests
 {
@@ -15,7 +15,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// <summary>
         /// Name of the contact
         /// </summary>
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; }
 
         /// <summary>
@@ -23,50 +23,50 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// additional email(s) with this contact, use the other_emails
         /// attribute.
         /// </summary>
-        [JsonPropertyName("email")]
+        [JsonProperty("email")]
         public string Email { get; }
 
         /// <summary>
         /// Telephone number of the contact. Must be unique amongst all contacts.
         /// </summary>
-        [JsonPropertyName("phone")]
+        [JsonProperty("phone")]
         public string Phone { get; }
 
         /// <summary>
         /// Mobile number of the contact. Must be unique amongst all contacts.
         /// </summary>
-        [JsonPropertyName("mobile")]
+        [JsonProperty("mobile")]
         public string Mobile { get; }
 
         /// <summary>
         /// Twitter handle of the contact. Must be unique amongst all contacts.
         /// </summary>
-        [JsonPropertyName("twitter_id")]
+        [JsonProperty("twitter_id")]
         public string TwitterId { get; }
 
         /// <summary>
         /// External ID of the contact. Must be unique amongst all contacts.
         /// </summary>
-        [JsonPropertyName("unique_external_id")]
+        [JsonProperty("unique_external_id")]
         public string UniqueExternalId { get; }
 
         /// <summary>
         /// Additional emails associated with the contact
         /// </summary>
-        [JsonPropertyName("other_emails")]
+        [JsonProperty("other_emails")]
         public string[] OtherEmails { get; }
 
         /// <summary>
         /// ID of the primary company to which this contact belongs
         /// </summary>
-        [JsonPropertyName("company_id")]
+        [JsonProperty("company_id")]
         public long? CompanyId { get; }
 
         /// <summary>
         /// Set to true if the contact can see all the tickets that are
         /// associated with the company to which they belong
         /// </summary>
-        [JsonPropertyName("view_all_tickets")]
+        [JsonProperty("view_all_tickets")]
         public bool? ViewAllTickets { get; }
 
         /// <summary>
@@ -74,13 +74,13 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// can only be set if the Multiple Companies feature is enabled
         /// (Estate plan and above.)
         /// </summary>
-        [JsonPropertyName("other_companies")]
+        [JsonProperty("other_companies")]
         public long[] OtherCompanies { get; }
 
         /// <summary>
         /// Address of the contact
         /// </summary>
-        [JsonPropertyName("address")]
+        [JsonProperty("address")]
         public string Address { get; }
 
         /// <summary>
@@ -90,19 +90,19 @@ namespace FreshdeskApi.Client.Contacts.Requests
         ///
         /// c.f. https://support.freshdesk.com/support/solutions/articles/216553
         /// </summary>
-        [JsonPropertyName("custom_fields")]
+        [JsonProperty("custom_fields")]
         public Dictionary<string, string> CustomFields { get; }
 
         /// <summary>
         /// A small description of the contact
         /// </summary>
-        [JsonPropertyName("description")]
+        [JsonProperty("description")]
         public string Description { get; }
 
         /// <summary>
         /// Job title of the contact
         /// </summary>
-        [JsonPropertyName("job_title")]
+        [JsonProperty("job_title")]
         public string JobTitle { get; }
 
         /// <summary>
@@ -110,13 +110,13 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// can only be set if the Multiple Language feature is enabled (Garden
         /// plan and above)
         /// </summary>
-        [JsonPropertyName("language")]
+        [JsonProperty("language")]
         public string Language { get; }
 
         /// <summary>
         /// Tags associated with this contact
         /// </summary>
-        [JsonPropertyName("tags")]
+        [JsonProperty("tags")]
         public string[] Tags { get; }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// domain. This attribute can only be set if the Multiple Time Zone
         /// feature is enabled (Garden plan and above)
         /// </summary>
-        [JsonPropertyName("time_zone")]
+        [JsonProperty("time_zone")]
         public string TimeZone { get; }
 
         public ContactCreateRequest(string name, string email = null, string phone = null, string mobile = null, string twitterId = null,

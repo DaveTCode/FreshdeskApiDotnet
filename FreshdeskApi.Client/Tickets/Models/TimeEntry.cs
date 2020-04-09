@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Tickets.Models
 {
@@ -12,37 +12,37 @@ namespace FreshdeskApi.Client.Tickets.Models
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class TimeEntry
     {
-        [JsonPropertyName("billable")]
+        [JsonProperty("billable")]
         public bool Billable { get; set; }
 
-        [JsonPropertyName("note")]
+        [JsonProperty("note")]
         public string Note { get; set; }
 
-        [JsonPropertyName("timer_running")]
+        [JsonProperty("timer_running")]
         public bool TimerRunning { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonPropertyName("agent_id")]
+        [JsonProperty("agent_id")]
         public long AgentId { get; set; }
 
-        [JsonPropertyName("ticket_id")]
+        [JsonProperty("ticket_id")]
         public long TicketId { get; set; }
 
-        [JsonPropertyName("time_spent")]
+        [JsonProperty("time_spent")]
         public string TimeSpent { get; set; }
 
-        [JsonPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
 
-        [JsonPropertyName("updated_at")]
+        [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
 
-        [JsonPropertyName("executed_at")]
+        [JsonProperty("executed_at")]
         public DateTimeOffset? ExecutedAt { get; set; }
 
-        [JsonPropertyName("start_time")]
+        [JsonProperty("start_time")]
         public DateTimeOffset? StartTime { get; set; }
 
         public override string ToString()

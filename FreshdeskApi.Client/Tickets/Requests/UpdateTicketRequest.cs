@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using FreshdeskApi.Client.Tickets.Models;
 
 namespace FreshdeskApi.Client.Tickets.Requests
@@ -45,93 +45,93 @@ namespace FreshdeskApi.Client.Tickets.Requests
         }
 
         /// Name of the requester
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string RequesterName { get; }
 
         /// User ID of the requester. For existing contacts, the requester_id can be passed instead of the requester email.
-        [JsonPropertyName("requester_id")]
+        [JsonProperty("requester_id")]
         public long? RequesterId { get; }
 
         /// Email address of the requester. If no contact exists with this email address in Freshdesk, it will be added as a new contact.
-        [JsonPropertyName("email")]
+        [JsonProperty("email")]
         public string Email { get; }
 
         /// Facebook ID of the requester. If no contact exists with this facebook_id, then a new contact will be created.
-        [JsonPropertyName("facebook_id ")]
+        [JsonProperty("facebook_id ")]
         public string FacebookId { get; }
 
         /// Phone number of the requester. If no contact exists with this phone number in Freshdesk, it will be added as a new contact. If the phone number is set and the email address is not, then the name attribute is mandatory.
-        [JsonPropertyName("phone")]
+        [JsonProperty("phone")]
         public string PhoneNumber { get; }
 
         /// Twitter handle of the requester. If no contact exists with this handle in Freshdesk, it will be added as a new contact.
-        [JsonPropertyName("twitter_id ")]
+        [JsonProperty("twitter_id ")]
         public string TwitterId { get; }
 
         /// External ID of the requester. If no contact exists with this external ID in Freshdesk, they will be added as a new contact.
-        [JsonPropertyName("unique_external_id ")]
+        [JsonProperty("unique_external_id ")]
         public string UniqueExternalId { get; }
 
         /// Subject of the ticket. The default Value is null.
-        [JsonPropertyName("subject")]
+        [JsonProperty("subject")]
         public string Subject { get; }
 
         /// Helps categorize the ticket according to the different kinds of issues your support team deals with. The default Value is null.
-        [JsonPropertyName("type")]
+        [JsonProperty("type")]
         public string TicketType { get; }
 
         /// Status of the ticket. The default Value is 2.
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public TicketStatus? Status { get; }
 
         /// Priority of the ticket. The default value is 1.
-        [JsonPropertyName("priority")]
+        [JsonProperty("priority")]
         public TicketPriority? Priority { get; }
 
         /// HTML content of the ticket.
-        [JsonPropertyName("description")]
+        [JsonProperty("description")]
         public string Description { get; }
 
         /// ID of the agent to whom the ticket has been assigned
-        [JsonPropertyName("responder_id")]
+        [JsonProperty("responder_id")]
         public long? ResponderId { get; }
 
         /// Key value pairs containing the names and values of custom fields.
-        [JsonPropertyName("custom_fields")]
+        [JsonProperty("custom_fields")]
         public Dictionary<string, string> CustomFields { get; }
 
         /// Timestamp that denotes when the ticket is due to be resolved
-        [JsonPropertyName("due_by")]
+        [JsonProperty("due_by")]
         public DateTimeOffset? DueBy { get; }
 
         /// ID of email config which is used for this ticket. (i.e., support@yourcompany.com/sales@yourcompany.com)
         /// If product_id is given and email_config_id is not given, product's primary email_config_id will be set
-        [JsonPropertyName("email_config_id")]
+        [JsonProperty("email_config_id")]
         public long? EmailConfigId { get; }
 
         /// Timestamp that denotes when the first response is due
-        [JsonPropertyName("fr_due_by")]
+        [JsonProperty("fr_due_by")]
         public DateTimeOffset? FirstResponseDueBy { get; }
 
         /// ID of the group to which the ticket has been assigned. The default value is the ID of the group that is associated with the given email_config_id
-        [JsonPropertyName("group_id")]
+        [JsonProperty("group_id")]
         public long? GroupId { get; }
 
         /// ID of the product to which the ticket is associated.
         /// It will be ignored if the email_config_id attribute is set in the request.
-        [JsonPropertyName("product_id")]
+        [JsonProperty("product_id")]
         public long? ProductId { get; }
 
         /// The channel through which the ticket was created. The default value is 2.
-        [JsonPropertyName("source")]
+        [JsonProperty("source")]
         public TicketSource? Source { get; }
 
         /// Tags that have been associated with the ticket
-        [JsonPropertyName("tags")]
+        [JsonProperty("tags")]
         public string[] Tags { get; }
 
         /// Company ID of the requester. This attribute can only be set if the Multiple Companies feature is enabled (Estate plan and above)
-        [JsonPropertyName("company_id")]
+        [JsonProperty("company_id")]
         public long? CompanyId { get; }
 
         public override string ToString()

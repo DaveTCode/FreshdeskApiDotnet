@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Tickets.Models
 {
@@ -13,127 +13,127 @@ namespace FreshdeskApi.Client.Tickets.Models
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class Ticket
     {
-        [JsonPropertyName("cc_emails")]
+        [JsonProperty("cc_emails")]
         public string[] CcEmails { get; set; }
 
-        [JsonPropertyName("fwd_emails")]
+        [JsonProperty("fwd_emails")]
         public string[] FwdEmails { get; set; }
 
-        [JsonPropertyName("reply_cc_emails")]
+        [JsonProperty("reply_cc_emails")]
         public string[] ReplyCcEmails { get; set; }
 
-        [JsonPropertyName("ticket_cc_emails")]
+        [JsonProperty("ticket_cc_emails")]
         public string[] TicketCcEmails { get; set; }
 
-        [JsonPropertyName("fr_escalated")]
+        [JsonProperty("fr_escalated")]
         public bool FirstResponseTimeEscalated { get; set; }
 
-        [JsonPropertyName("spam")]
+        [JsonProperty("spam")]
         public bool Spam { get; set; }
 
-        [JsonPropertyName("email_config_id")]
+        [JsonProperty("email_config_id")]
         public long? EmailConfigId { get; set; }
 
-        [JsonPropertyName("group_id")]
+        [JsonProperty("group_id")]
         public long? GroupId { get; set; }
 
-        [JsonPropertyName("priority")]
+        [JsonProperty("priority")]
         public TicketPriority Priority { get; set; }
 
-        [JsonPropertyName("requester_id")]
+        [JsonProperty("requester_id")]
         public long RequesterId { get; set; }
 
-        [JsonPropertyName("responder_id")]
+        [JsonProperty("responder_id")]
         public long? ResponderId { get; set; }
 
-        [JsonPropertyName("source")]
+        [JsonProperty("source")]
         public TicketSource Source { get; set; }
 
-        [JsonPropertyName("company_id")]
+        [JsonProperty("company_id")]
         public long? CompanyId { get; set; }
 
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public TicketStatus Status { get; set; }
 
-        [JsonPropertyName("subject")]
+        [JsonProperty("subject")]
         public string Subject { get; set; }
 
-        [JsonPropertyName("association_type")]
+        [JsonProperty("association_type")]
         public TicketAssociationType? AssociationType { get; set; }
 
-        [JsonPropertyName("associated_ticket_list")]
+        [JsonProperty("associated_ticket_list")]
         public long[] AssociatedTicketList { get; set; }
 
-        [JsonPropertyName("to_emails")]
+        [JsonProperty("to_emails")]
         public string[] ToEmails { get; set; }
 
-        [JsonPropertyName("product_id")]
+        [JsonProperty("product_id")]
         public long? ProductId { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonPropertyName("type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
 
-        [JsonPropertyName("due_by")]
+        [JsonProperty("due_by")]
         public DateTimeOffset DueBy { get; set; }
 
-        [JsonPropertyName("fr_due_by")]
+        [JsonProperty("fr_due_by")]
         public DateTimeOffset FirstResponseDueBy { get; set; }
 
-        [JsonPropertyName("is_escalated")]
+        [JsonProperty("is_escalated")]
         public bool IsEscalated { get; set; }
 
-        [JsonPropertyName("description")]
+        [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonPropertyName("description_text")]
+        [JsonProperty("description_text")]
         public string DescriptionText { get; set; }
 
-        [JsonPropertyName("custom_fields")]
+        [JsonProperty("custom_fields")]
         public Dictionary<string, object> CustomFields { get; set; }
 
-        [JsonPropertyName("created_at")]
+        [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
 
-        [JsonPropertyName("updated_at")]
+        [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
 
-        [JsonPropertyName("tags")]
+        [JsonProperty("tags")]
         public string[] Tags { get; set; }
 
-        [JsonPropertyName("attachments")]
+        [JsonProperty("attachments")]
         public object[] Attachments { get; set; }
 
-        [JsonPropertyName("source_additional_info")]
+        [JsonProperty("source_additional_info")]
         public string SourceAdditionalInfo { get; set; }
 
-        [JsonPropertyName("deleted")]
+        [JsonProperty("deleted")]
         public bool Deleted { get; set; }
 
         /// <summary>
         /// Optional include, excluded by default and will therefore be null.
         /// </summary>
-        [JsonPropertyName("stats")]
+        [JsonProperty("stats")]
         public TicketStats Stats { get; set; }
 
         /// <summary>
         /// Optional include, excluded by default and will therefore be null.
         /// </summary>
-        [JsonPropertyName("requester")]
+        [JsonProperty("requester")]
         public Requester Requester { get; set; }
 
         /// <summary>
         /// Optional include, excluded by default and will therefore be null.
         /// </summary>
-        [JsonPropertyName("conversations")]
+        [JsonProperty("conversations")]
         public ConversationEntry[] Conversations { get; set; }
 
         /// <summary>
         /// Optional include, excluded by default and will therefore be null.
         /// </summary>
-        [JsonPropertyName("company")]
+        [JsonProperty("company")]
         public TicketCompany Company { get; set; }
 
         public override string ToString()

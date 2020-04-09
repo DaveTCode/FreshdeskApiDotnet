@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Tickets.Models
 {
@@ -9,10 +9,10 @@ namespace FreshdeskApi.Client.Tickets.Models
     /// </summary>
     public class TicketCompany
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         public override string ToString()

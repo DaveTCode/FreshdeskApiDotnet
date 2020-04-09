@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Contacts.Models
 {
@@ -8,10 +8,10 @@ namespace FreshdeskApi.Client.Contacts.Models
     /// </summary>
     public class ContactCompany
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonPropertyName("view_all_tickets")]
+        [JsonProperty("view_all_tickets")]
         public bool ViewAllTickets { get; set; }
 
         public override string ToString()

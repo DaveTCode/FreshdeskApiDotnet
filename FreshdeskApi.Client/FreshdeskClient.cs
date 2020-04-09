@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Agents;
@@ -15,13 +16,22 @@ using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Solutions;
+using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
+using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
 {
     public class FreshdeskClient : IDisposable
     {
+        /// <summary>
+        /// Note this is obviously not a full method for parsing RFC5988 link
+        /// headers. I don't currently believe one is needed for the Freshdesk
+        /// API.
+        /// </summary>
+        private static readonly Regex LinkHeaderRegex = new Regex(@"\<(?<url>.+)?\>");
+
         /// <summary>
         /// The rate limit remaining after the last request was completed.
         ///
@@ -43,6 +53,8 @@ namespace FreshdeskApi.Client
 
         public FreshdeskSolutionClient Solutions { get; }
 
+        public TicketFieldsClient TicketFields { get; }
+
         private readonly HttpClient _httpClient;
 
         private FreshdeskClient()
@@ -53,6 +65,7 @@ namespace FreshdeskApi.Client
             Agents = new FreshdeskAgentClient(this);
             Companies = new FreshdeskCompaniesClient(this);
             Solutions = new FreshdeskSolutionClient(this);
+            TicketFields = new TicketFieldsClient(this);
         }
 
         /// <summary>
@@ -186,33 +199,36 @@ namespace FreshdeskApi.Client
                     throw CreateApiException(response);
                 }
 
-                using var contentStream = await response.Content.ReadAsStreamAsync();
-                if (newStylePages)
-                {
-                    var newData = await JsonSerializer.DeserializeAsync<PagedResult<T>>(contentStream, cancellationToken: cancellationToken);
+                await using var contentStream = await response.Content.ReadAsStreamAsync();
+                using var sr = new StreamReader(contentStream);
+                using var reader = new JsonTextReader(sr);
+                var serializer = new JsonSerializer();
 
-                    foreach (var data in newData.Results)
+                var newData = (newStylePages)
+                    ? serializer.Deserialize<PagedResult<T>>(reader).Results
+                    : serializer.Deserialize<List<T>>(reader);
+                foreach (var data in newData)
+                {
+                    yield return data;
+                }
+
+                // Handle a link header reflecting that there's another page of data
+                if (response.Headers.TryGetValues("link", out var linkHeaderValues))
+                {
+                    var linkHeaderValue = linkHeaderValues.FirstOrDefault();
+                    if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
                     {
-                        yield return data;
+                        morePages = false;
+                    }
+                    else
+                    {
+                        var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
+                        url = nextLinkMatch.Groups["url"].Value;
                     }
                 }
                 else
-                {
-                    var newData = await JsonSerializer.DeserializeAsync<List<T>>(contentStream, cancellationToken: cancellationToken);
-
-                    foreach (var data in newData)
-                    {
-                        yield return data;
-                    }
-                }
-
-                if (!response.Headers.Contains("Location"))
                 {
                     morePages = false;
-                }
-                else
-                {
-                    url = response.Headers.Location.ToString();
                 }
             }
         }
@@ -223,10 +239,10 @@ namespace FreshdeskApi.Client
 
             if (body != null)
             {
-                httpMessage.Content = new StringContent(JsonSerializer.Serialize(body, new JsonSerializerOptions
-                {
-                    IgnoreNullValues = true
-                }), Encoding.UTF8, "application/json");
+                httpMessage.Content = new StringContent(
+                    JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore}), 
+                    Encoding.UTF8, 
+                    "application/json");
             }
 
             var response = await _httpClient
@@ -258,8 +274,11 @@ namespace FreshdeskApi.Client
             {
                 if (response.StatusCode == HttpStatusCode.NoContent) return default;
 
-                using var contentStream = await response.Content.ReadAsStreamAsync();
-                return await JsonSerializer.DeserializeAsync<T>(contentStream, cancellationToken: cancellationToken);
+                await using var contentStream = await response.Content.ReadAsStreamAsync();
+                using var sr = new StreamReader(contentStream);
+                using var reader = new JsonTextReader(sr);
+                var serializer = new JsonSerializer();
+                return serializer.Deserialize<T>(reader);
             }
 
             throw CreateApiException(response);

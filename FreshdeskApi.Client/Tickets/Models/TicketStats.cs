@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Tickets.Models
 {
@@ -11,28 +11,28 @@ namespace FreshdeskApi.Client.Tickets.Models
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class TicketStats
     {
-        [JsonPropertyName("agent_responded_at")]
+        [JsonProperty("agent_responded_at")]
         public DateTimeOffset? AgentRespondedAt { get; set; }
 
-        [JsonPropertyName("requester_responded_at")]
+        [JsonProperty("requester_responded_at")]
         public DateTimeOffset? RequesterRespondedAt { get; set; }
 
-        [JsonPropertyName("first_responded_at")]
+        [JsonProperty("first_responded_at")]
         public DateTimeOffset? FirstRespondedAt { get; set; }
 
-        [JsonPropertyName("status_updated_at")]
+        [JsonProperty("status_updated_at")]
         public DateTimeOffset? StatusUpdatedAt { get; set; }
 
-        [JsonPropertyName("reopened_at")]
+        [JsonProperty("reopened_at")]
         public DateTimeOffset? ReopenedAt { get; set; }
 
-        [JsonPropertyName("resolved_at")]
+        [JsonProperty("resolved_at")]
         public DateTimeOffset? ResolvedAt { get; set; }
 
-        [JsonPropertyName("closed_at")]
+        [JsonProperty("closed_at")]
         public DateTimeOffset? ClosedAt { get; set; }
 
-        [JsonPropertyName("pending_since")]
+        [JsonProperty("pending_since")]
         public DateTimeOffset? PendingSince { get; set; }
 
         public override string ToString()
