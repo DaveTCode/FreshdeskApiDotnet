@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-namespace FreshdeskApi.Client.Tickets.Models
+namespace FreshdeskApi.Client.Conversations.Models
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class ConversationEntry
@@ -29,7 +29,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public string SupportEmail { get; set; }
 
         [JsonProperty("source")]
-        public TicketSource Source { get; set; }
+        public ConversationSource Source { get; set; }
 
         [JsonProperty("category")]
         public long Category { get; set; }

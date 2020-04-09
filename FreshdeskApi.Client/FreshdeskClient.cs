@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.Agents;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
+using FreshdeskApi.Client.Conversations;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Solutions;
@@ -55,6 +56,8 @@ namespace FreshdeskApi.Client
 
         public TicketFieldsClient TicketFields { get; }
 
+        public ConversationsClient Conversations { get; }
+
         private readonly HttpClient _httpClient;
 
         private FreshdeskClient()
@@ -66,6 +69,7 @@ namespace FreshdeskApi.Client
             Companies = new FreshdeskCompaniesClient(this);
             Solutions = new FreshdeskSolutionClient(this);
             TicketFields = new TicketFieldsClient(this);
+            Conversations = new ConversationsClient(this);
         }
 
         /// <summary>

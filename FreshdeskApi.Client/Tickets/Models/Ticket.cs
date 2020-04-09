@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using FreshdeskApi.Client.Conversations.Models;
 using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Tickets.Models

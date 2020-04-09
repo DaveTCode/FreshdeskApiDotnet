@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Conversations.Models;
 using FreshdeskApi.Client.Tickets.Models;
 using FreshdeskApi.Client.Tickets.Requests;
 
