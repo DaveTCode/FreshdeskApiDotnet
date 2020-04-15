@@ -14,7 +14,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
             string twitterId = null, string uniqueExternalId = null, long? responderId = null, string[] ccEmails = null,
             Dictionary<string, object> customFields = null, DateTimeOffset? dueBy = null, long? emailConfigId = null,
             DateTimeOffset? firstResponseDueBy = null, long? groupId = null, long? productId = null, string[] tags = null,
-            long? companyId = null, string subject = null, string ticketType = null)
+            long? companyId = null, string subject = null, string ticketType = null, long? parentTicketId = null)
         {
             if (!requesterId.HasValue && email == null && facebookId == null && phoneNumber == null && twitterId == null && uniqueExternalId == null)
             {
@@ -44,6 +44,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
             CompanyId = companyId;
             Subject = subject;
             TicketType = ticketType;
+            ParentTicketId = parentTicketId;
         }
 
         /// Name of the requester
@@ -81,6 +82,12 @@ namespace FreshdeskApi.Client.Tickets.Requests
         /// Helps categorize the ticket according to the different kinds of issues your support team deals with. The default Value is null.
         [JsonProperty("type")]
         public string TicketType { get; }
+
+        /// <summary>
+        /// Requires child/parent relationships to be enabled on your instance
+        /// </summary>
+        [JsonProperty("parent_id")]
+        public long? ParentTicketId { get; }
 
         /// Status of the ticket. The default Value is 2.
         [JsonProperty("status")]
@@ -142,7 +149,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
 
         public override string ToString()
         {
-            return $"{nameof(RequesterName)}: {RequesterName}, {nameof(RequesterId)}: {RequesterId}, {nameof(Email)}: {Email}, {nameof(FacebookId)}: {FacebookId}, {nameof(PhoneNumber)}: {PhoneNumber}, {nameof(TwitterId)}: {TwitterId}, {nameof(UniqueExternalId)}: {UniqueExternalId}, {nameof(Subject)}: {Subject}, {nameof(TicketType)}: {TicketType}, {nameof(Status)}: {Status}, {nameof(Priority)}: {Priority}, {nameof(Description)}: {Description}, {nameof(ResponderId)}: {ResponderId}, {nameof(CcEmails)}: {CcEmails}, {nameof(CustomFields)}: {CustomFields}, {nameof(DueBy)}: {DueBy}, {nameof(EmailConfigId)}: {EmailConfigId}, {nameof(FirstResponseDueBy)}: {FirstResponseDueBy}, {nameof(GroupId)}: {GroupId}, {nameof(ProductId)}: {ProductId}, {nameof(Source)}: {Source}, {nameof(Tags)}: {Tags}, {nameof(CompanyId)}: {CompanyId}";
+            return $"{nameof(RequesterName)}: {RequesterName}, {nameof(RequesterId)}: {RequesterId}, {nameof(Email)}: {Email}, {nameof(FacebookId)}: {FacebookId}, {nameof(PhoneNumber)}: {PhoneNumber}, {nameof(TwitterId)}: {TwitterId}, {nameof(UniqueExternalId)}: {UniqueExternalId}, {nameof(Subject)}: {Subject}, {nameof(TicketType)}: {TicketType}, {nameof(ParentTicketId)}: {ParentTicketId}, {nameof(Status)}: {Status}, {nameof(Priority)}: {Priority}, {nameof(Description)}: {Description}, {nameof(ResponderId)}: {ResponderId}, {nameof(CcEmails)}: {CcEmails}, {nameof(CustomFields)}: {CustomFields}, {nameof(DueBy)}: {DueBy}, {nameof(EmailConfigId)}: {EmailConfigId}, {nameof(FirstResponseDueBy)}: {FirstResponseDueBy}, {nameof(GroupId)}: {GroupId}, {nameof(ProductId)}: {ProductId}, {nameof(Source)}: {Source}, {nameof(Tags)}: {Tags}, {nameof(CompanyId)}: {CompanyId}";
         }
     }
 }

@@ -35,9 +35,12 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// <summary>
         /// Set to true if the contact can see all tickets that are associated
         /// with the company to which they belong.
+        ///
+        /// This field is occasionally set to null instead of true/false.
+        /// Idiotic API, not the libraries fault.
         /// </summary>
         [JsonProperty("view_all_tickets")]
-        public bool ViewAllTickets { get; set; }
+        public bool? ViewAllTickets { get; set; }
 
         /// <summary>
         /// A short description of the contact
@@ -136,6 +139,9 @@ namespace FreshdeskApi.Client.Contacts.Models
 
         /// <summary>
         /// Additional companies associated with the contact
+        ///
+        /// Note that this field is only returned when getting a single
+        /// contact, not when listing/filtering.
         /// </summary>
         [JsonProperty("other_companies")]
         public ContactCompany[] OtherCompanies { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -55,6 +56,8 @@ namespace FreshdeskApi.Client.Contacts
             ContactCreateRequest request,
             CancellationToken cancellationToken = default)
         {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
             return await _freshdeskClient
                 .ApiOperationAsync<Contact>(HttpMethod.Post, "/api/v2/contacts", request, cancellationToken)
                 .ConfigureAwait(false);
@@ -83,10 +86,83 @@ namespace FreshdeskApi.Client.Contacts
             ListAllContactsRequest request,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
             await foreach (var contact in _freshdeskClient.GetPagedResults<Contact>(request.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return contact;
             }
+        }
+
+        /// <summary>
+        /// Update a contact with new details.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#update_contact
+        /// </summary>
+        /// 
+        /// <param name="contactId">
+        /// The unique identifier for the contact.
+        /// </param>
+        ///
+        /// <param name="request">
+        /// The details about the contact to update.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The newly updated contact</returns>
+        public async Task<Contact> UpdateContactAsync(
+            long contactId,
+            UpdateContactRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
+            return await _freshdeskClient
+                .ApiOperationAsync<Contact>(HttpMethod.Put, $"/api/v2/contacts/{contactId}", request, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Convert a contact into an agent
+        ///
+        /// Note:
+        /// 1. The contact must have an email address in order to be converted
+        ///    into an agent
+        /// 2. If the contact has 'other_emails' they will be deleted after
+        ///    the conversion
+        /// 3. If your account has already reached the maximum number of
+        ///    agents, the API request will fail with HTTP error code 403
+        /// 4. The agent whose credentials (identified by the API key) are
+        ///    used to make the API call should be authorised to convert a
+        ///    contact into an agent.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#make_agent
+        /// </summary>
+        /// 
+        /// <param name="contactId">
+        /// The unique contact identifier.
+        /// </param>
+        /// 
+        /// <param name="request">
+        /// Specify what agent specific information to set.
+        ///
+        /// e.g. Agent is fulltime or occasional
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns></returns>
+        public async Task<Contact> MakeAgentAsync(
+            long contactId,
+            MakeAgentRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
+            return await _freshdeskClient
+                .ApiOperationAsync<Contact>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/make_agent", request, cancellationToken)
+                .ConfigureAwait(false);
         }
     }
 }

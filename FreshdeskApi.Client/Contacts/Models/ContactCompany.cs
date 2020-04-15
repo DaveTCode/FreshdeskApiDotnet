@@ -8,7 +8,7 @@ namespace FreshdeskApi.Client.Contacts.Models
     /// </summary>
     public class ContactCompany
     {
-        [JsonProperty("id")]
+        [JsonProperty("company_id")]
         public long Id { get; set; }
 
         [JsonProperty("view_all_tickets")]

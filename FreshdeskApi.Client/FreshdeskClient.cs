@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Agents;
+using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
@@ -58,6 +59,8 @@ namespace FreshdeskApi.Client
 
         public ConversationsClient Conversations { get; }
 
+        public ChannelApiClient ChannelApi { get; }
+
         private readonly HttpClient _httpClient;
 
         private FreshdeskClient()
@@ -70,6 +73,7 @@ namespace FreshdeskApi.Client
             Solutions = new FreshdeskSolutionClient(this);
             TicketFields = new TicketFieldsClient(this);
             Conversations = new ConversationsClient(this);
+            ChannelApi = new ChannelApiClient(this);
         }
 
         /// <summary>
