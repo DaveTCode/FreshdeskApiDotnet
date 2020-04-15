@@ -15,8 +15,8 @@ namespace FreshdeskApi.Client.Channel.Requests
         [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; }
 
-        public ChannelCreateNoteRequest(long importId, string bodyHtml, bool? incoming = null, string[] notifyEmails = null, 
-            bool? isPrivate = null, long? userId = null, DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null) 
+        public ChannelCreateNoteRequest(long importId, string bodyHtml, bool? incoming = null, string[] notifyEmails = null,
+            bool? isPrivate = null, long? userId = null, DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
             : base(bodyHtml, incoming, notifyEmails, isPrivate, userId)
         {
             ImportId = importId;
