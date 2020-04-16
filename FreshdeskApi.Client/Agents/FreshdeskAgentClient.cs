@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
@@ -9,6 +10,11 @@ using FreshdeskApi.Client.Agents.Requests;
 
 namespace FreshdeskApi.Client.Agents
 {
+    /// <summary>
+    /// API endpoints specific to agents.
+    ///
+    /// c.f. https://developers.freshdesk.com/api/#agents for further details
+    /// </summary>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class FreshdeskAgentClient
     {
@@ -86,6 +92,30 @@ namespace FreshdeskApi.Client.Agents
         {
             await _freshdeskClient
                 .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create an agent and the underlying contact.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#create_agent
+        /// </summary>
+        /// 
+        /// <param name="request">
+        /// The request object containing the information to set on the agent
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The newly populated agent</returns>
+        public async Task<Agent> CreateAgentAsync(
+            CreateAgentRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
+            return await _freshdeskClient
+                .ApiOperationAsync<Agent>(HttpMethod.Post, $"/api/v2/agents", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }
