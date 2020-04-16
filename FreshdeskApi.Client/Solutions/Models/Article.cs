@@ -56,6 +56,14 @@ namespace FreshdeskApi.Client.Solutions.Models
         public long FolderId { get; set; }
 
         /// <summary>
+        /// Undocumented entry on the API which is not always filled in
+        ///
+        /// Represents the visibility of the containing folder
+        /// </summary>
+        [JsonProperty("folder_visibility")]
+        public FolderVisibility? FolderVisibility { get; set; }
+
+        /// <summary>
         /// Title of the solution article
         /// </summary>
         [JsonProperty("title")]
