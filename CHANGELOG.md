@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2020-04-16
+
+- Added support for creating agents
+- Added folder visibility to the article model for when it's retrieved
+
 ## [0.3.0] - 2020-04-15
 - Added support for category_name & folder_name on articles
 - Added support for making contacts into agents
@@ -27,7 +32,8 @@ First public release of the package
 - Agents API partially implemented
 - Companies API partially implemented
 
-[Unreleased]: https://github.com/DaveTCode/freshdeskapidotnet/compare/0.3.0...HEAD
+[Unreleased]: https://github.com/DaveTCode/freshdeskapidotnet/compare/0.4.0...HEAD
+[0.4.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.4.0...0.3.0
 [0.3.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.3.0...0.2.0
 [0.2.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.2.0...0.1.0
 [0.1.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.1.0
