@@ -95,7 +95,7 @@ namespace FreshdeskApi.Client.Agents.Requests
         [JsonProperty("time_zone")]
         public string TimeZone { get; }
 
-        public CreateAgentRequest(string email, TicketScope ticketScope, bool? occasional = null, string signatureHtml = null, long[] skillIds = null, long[] groupIds = null, long[] roleIds = null, string name= null, string phone = null, string mobile = null, string jobTitle = null, string language = null, string timeZone = null)
+        public CreateAgentRequest(string email, TicketScope ticketScope, bool? occasional = null, string signatureHtml = null, long[] skillIds = null, long[] groupIds = null, long[] roleIds = null, string name = null, string phone = null, string mobile = null, string jobTitle = null, string language = null, string timeZone = null)
         {
             Email = email;
             TicketScope = ticketScope;
