@@ -18,7 +18,7 @@ steps:
       installationPath: $(Agent.ToolsDirectory)/dotnet
 
   - script: export PATH="$PATH:/root/.dotnet/tools"
-  - script: dotnet tool install -g dotnet-format
+  - script: dotnet tool restore
   - script: dotnet format --check --dry-run -v diag
 
   - task: DotNetCoreCLI@2
@@ -59,6 +59,7 @@ steps:
       patchVersion: '0'
 
   - task: NuGetCommand@2
+    condition: and(succeeded(), or(startsWith(variables['Build.SourceBranch'], 'refs/tags/'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
     inputs:
       command: 'push'
       packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
