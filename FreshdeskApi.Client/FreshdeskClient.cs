@@ -212,10 +212,10 @@ namespace FreshdeskApi.Client
                 using var reader = new JsonTextReader(sr);
                 var serializer = new JsonSerializer();
 
-                var newData = (newStylePages)
-                    ? serializer.Deserialize<PagedResult<T>>(reader).Results
+                var newData = newStylePages
+                    ? serializer.Deserialize<PagedResult<T>>(reader)?.Results
                     : serializer.Deserialize<List<T>>(reader);
-                foreach (var data in newData)
+                foreach (var data in newData ?? new List<T>())
                 {
                     yield return data;
                 }
