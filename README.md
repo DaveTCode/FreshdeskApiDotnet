@@ -36,6 +36,36 @@ using var freshdeskClient = new FreshdeskClient("https://mydomain.freshdesk.com"
 var ticket = await freshdeskClient.Tickets.ViewTicketAsync(ticketId: 12345, includes: new TicketIncludes { Company = true });
 ```
 
+## API Coverage
+
+Not all of the Freshdesk API is covered, this table illustrates the current status of coverage by this library. Pull requests to add additional features are welcome.
+
+**API Area**|**Coverage**
+:-----:|:-----:
+Tickets|:heavy_check_mark:
+Ticket Fields|:heavy_check_mark:
+Conversations|:heavy_check_mark:
+Contacts|:heavy_check_mark:
+Agents|:heavy_check_mark:
+Skills|:x:
+Roles|:x:
+Groups|:heavy_check_mark:
+Companies|:heavy_check_mark:
+Canned Response Folders|:x:
+Discussions|:x:
+Solutions|:heavy_check_mark:
+Surveys|:x:
+Satisfaction Ratings|:x:
+Field Service Management|:x:
+Time Entries|:x:
+Email Configs|:x:
+Email Mailboxes|:x:
+Products|:x:
+Business Hours|:x:
+Scenario Automations|:x:
+SLA Policies|:x:
+Settings|:x:
+
 ## Development
 
 The library utilises C#8 features and therefore VS2019 or a suitable text editor are required for making changes.
