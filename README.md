@@ -4,9 +4,37 @@
 
 This is a dotnet standard library providing a thin wrapper around the Freshdesk API as described here: https://developers.freshdesk.com/api.
 
+At present this library requires .NET Standard 2.1 (for IAsyncEnumerable), if I get interest then I'll build a version of the library which
+doesn't make use of that feature and is therefore available in .NET Standard 2.0 (or possibly lower)
+
 ## Usage
 
-TODO
+This library provides a single client class which can be created in one of two ways:
+
+1. No existing HttpClient object (suitable for console applications)
+
+```
+using var freshdeskClient = new FreshdeskClient("https://mydomain.freshdesk.com", "APIKEY");
+```
+
+NOTE: Disposing the freshdeskClient will dispose the HttpClient object, as per https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/ you need to be careful when disposing HttpClient
+objects. Broadly speaking, don't make and dispose lots of FreshdeskClient objects using this model.
+
+2. Existing HttpClient object (suitable for asp.net applications or cases where you want more control over the HttpClient)
+
+```
+var freshdeskClient = new FreshdeskClient(myHttpClient);
+```
+
+NOTE: Typically you don't want to dispose the freshdesk client in this case.
+
+### Examples
+
+Get a single ticket, including the company information on the API response
+```
+using var freshdeskClient = new FreshdeskClient("https://mydomain.freshdesk.com", "APIKEY");
+var ticket = await freshdeskClient.Tickets.ViewTicketAsync(ticketId: 12345, includes: new TicketIncludes { Company = true });
+```
 
 ## Development
 
