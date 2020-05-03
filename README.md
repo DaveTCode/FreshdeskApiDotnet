@@ -13,7 +13,7 @@ This library provides a single client class which can be created in one of two w
 
 1. No existing HttpClient object (suitable for console applications)
 
-```
+```csharp
 using var freshdeskClient = new FreshdeskClient("https://mydomain.freshdesk.com", "APIKEY");
 ```
 
@@ -22,7 +22,7 @@ objects. Broadly speaking, don't make and dispose lots of FreshdeskClient object
 
 2. Existing HttpClient object (suitable for asp.net applications or cases where you want more control over the HttpClient)
 
-```
+```csharp
 var freshdeskClient = new FreshdeskClient(myHttpClient);
 ```
 
@@ -31,9 +31,12 @@ NOTE: Typically you don't want to dispose the freshdesk client in this case.
 ### Examples
 
 Get a single ticket, including the company information on the API response
-```
+```csharp
 using var freshdeskClient = new FreshdeskClient("https://mydomain.freshdesk.com", "APIKEY");
-var ticket = await freshdeskClient.Tickets.ViewTicketAsync(ticketId: 12345, includes: new TicketIncludes { Company = true });
+var ticket = await freshdeskClient.Tickets.ViewTicketAsync(
+  ticketId: 12345, 
+  includes: new TicketIncludes { Company = true }
+);
 ```
 
 ## API Coverage
