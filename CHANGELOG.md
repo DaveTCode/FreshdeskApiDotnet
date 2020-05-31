@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2020-05-31
+
+- Fixed serialization bug retrieving contacts with related companies from the ListContactsAsync api endpoint
+
 ## [0.4.0] - 2020-04-16
 
 - Added support for creating agents
