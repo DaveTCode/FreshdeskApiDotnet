@@ -82,13 +82,13 @@ namespace FreshdeskApi.Client.Contacts
         /// request is paged and iterating to the next entry may cause a new
         /// API call to get the next page.
         /// </returns>
-        public async IAsyncEnumerable<Contact> ListAllContactsAsync(
+        public async IAsyncEnumerable<ListContact> ListAllContactsAsync(
             ListAllContactsRequest request,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            await foreach (var contact in _freshdeskClient.GetPagedResults<Contact>(request.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var contact in _freshdeskClient.GetPagedResults<ListContact>(request.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return contact;
             }
