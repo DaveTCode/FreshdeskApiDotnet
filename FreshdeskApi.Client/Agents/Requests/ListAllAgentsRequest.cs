@@ -17,12 +17,12 @@ namespace FreshdeskApi.Client.Agents.Requests
         internal string UrlWithQueryString { get; }
 
         public ListAllAgentsRequest(
-            string email = null,
-            string mobile = null,
-            string phone = null,
+            string? email = null,
+            string? mobile = null,
+            string? phone = null,
             AgentState? agentState = null)
         {
-            var urlParams = new Dictionary<string, string>
+            var urlParams = new Dictionary<string, string?>
             {
                 { "email", email },
                 { "mobile", mobile },

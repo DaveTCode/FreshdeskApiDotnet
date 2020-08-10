@@ -10,16 +10,16 @@ namespace FreshdeskApi.Client.Contacts.Models
     public class Avatar
     {
         [JsonProperty("avatar_url")]
-        public string Url { get; set; }
+        public string? Url { get; set; }
 
         [JsonProperty("content_type")]
-        public string ContentType { get; set; }
+        public string? ContentType { get; set; }
 
         [JsonProperty("id")]
         public long Id { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("size")]
         public long Size { get; set; }

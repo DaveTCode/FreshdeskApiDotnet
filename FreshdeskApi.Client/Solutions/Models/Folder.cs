@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
+#pragma warning disable 8618
+
 namespace FreshdeskApi.Client.Solutions.Models
 {
     /// <summary>

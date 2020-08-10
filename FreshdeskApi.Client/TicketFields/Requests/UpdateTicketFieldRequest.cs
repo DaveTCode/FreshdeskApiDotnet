@@ -19,7 +19,7 @@ namespace FreshdeskApi.Client.TicketFields.Requests
         /// Ticket Field name to be displayed to customers
         /// </summary>
         [JsonProperty("label_for_customer")]
-        public string LabelForCustomers { get; }
+        public string? LabelForCustomers { get; }
 
         /// <summary>
         /// Display Ticket Field to customers
@@ -31,13 +31,13 @@ namespace FreshdeskApi.Client.TicketFields.Requests
         /// Display the name of the Ticket Field
         /// </summary>
         [JsonProperty("label")]
-        public string Label { get; }
+        public string? Label { get; }
 
         /// <summary>
         /// Ticket Field type. Can be custom_dropdown, custom_checkbox, custom_text, etc...
         /// </summary>
         [JsonProperty("type")]
-        public string Type { get; }
+        public string? Type { get; }
 
         /// <summary>
         /// Position in which the ticket field is displayed in the form. If not given, it will be displayed on top
@@ -69,12 +69,12 @@ namespace FreshdeskApi.Client.TicketFields.Requests
         /// but I'm dubious since the choice field can mean different things for different tickets
         /// </summary>
         [JsonProperty("choices")]
-        public object Choices { get; }
+        public object? Choices { get; }
 
 
-        public UpdateTicketFieldRequest(bool? customersCanEdit = null, string labelForCustomers = null, bool? displayedToCustomers = null,
-            string label = null, string type = null, long? position = null, bool? requiredForClosure = null, bool? requiredForAgents = null,
-            bool? requiredForCustomers = null, object choices = null)
+        public UpdateTicketFieldRequest(bool? customersCanEdit = null, string? labelForCustomers = null, bool? displayedToCustomers = null,
+            string? label = null, string? type = null, long? position = null, bool? requiredForClosure = null, bool? requiredForAgents = null,
+            bool? requiredForCustomers = null, object? choices = null)
         {
             CustomersCanEdit = customersCanEdit;
             LabelForCustomers = labelForCustomers;

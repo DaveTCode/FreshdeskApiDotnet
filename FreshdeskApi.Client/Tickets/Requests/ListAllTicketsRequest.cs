@@ -21,19 +21,19 @@ namespace FreshdeskApi.Client.Tickets.Requests
         public ListAllTicketsRequest(
             ListAllTicketsFilter? filter = null,
             long? requesterId = null,
-            string requesterEmail = null,
-            long? companyID = null,
+            string? requesterEmail = null,
+            long? companyId = null,
             DateTimeOffset? updatedSince = null,
             TicketIncludes? includes = default,
             TicketOrderBy? orderBy = default,
             TicketOrderDirection? orderDir = default)
         {
-            var urlParams = new Dictionary<string, string>
+            var urlParams = new Dictionary<string, string?>
             {
                 { "filter", filter?.QueryParameterValue() },
                 { "requester_id", requesterId?.ToString() },
                 { "email", requesterEmail },
-                { "company_id", companyID?.ToString() },
+                { "company_id", companyId?.ToString() },
                 { "updated_since", updatedSince?.ToString("yyyy-MM-ddTHH:mm:ssZ") },
                 { "includes", includes?.ToString() },
                 { "order_by", orderBy?.QueryParameterValue() },

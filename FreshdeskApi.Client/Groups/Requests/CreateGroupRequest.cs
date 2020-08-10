@@ -17,7 +17,7 @@ namespace FreshdeskApi.Client.Groups.Requests
         /// Description of the group
         /// </summary>
         [JsonProperty("description")]
-        public string Description { get; }
+        public string? Description { get; }
 
         /// <summary>
         /// The time after which an escalation email will be sent if a ticket
@@ -28,7 +28,7 @@ namespace FreshdeskApi.Client.Groups.Requests
         /// The default value is "30m"
         /// </summary>
         [JsonProperty("unassigned_for")]
-        public string UnassignedFor { get; }
+        public string? UnassignedFor { get; }
 
         /// <summary>
         /// The user to whom the escalation email is sent of a ticket is
@@ -50,9 +50,9 @@ namespace FreshdeskApi.Client.Groups.Requests
         /// Array of agent user ids
         /// </summary>
         [JsonProperty("agent_ids")]
-        public long[] AgentIds { get; }
+        public long[]? AgentIds { get; }
 
-        public CreateGroupRequest(string name, string description = null, string unassignedFor = null, long? escalateTo = null, bool? autoTicketAssign = null, long[] agentIds = null)
+        public CreateGroupRequest(string name, string? description = null, string? unassignedFor = null, long? escalateTo = null, bool? autoTicketAssign = null, long[]? agentIds = null)
         {
             Name = name;
             Description = description;

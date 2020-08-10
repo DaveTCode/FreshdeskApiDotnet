@@ -48,7 +48,7 @@ namespace FreshdeskApi.Client.Solutions
         /// <returns>The full group information</returns>
         public async Task<Category> ViewCategoryAsync(
             long categoryId,
-            string languageCode = null,
+            string? languageCode = null,
             CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
@@ -77,7 +77,7 @@ namespace FreshdeskApi.Client.Solutions
         /// next entry may cause a new API call to get the next page.
         /// </returns>
         public async IAsyncEnumerable<Category> ListAllCategoriesAsync(
-            string languageCode = null,
+            string? languageCode = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
@@ -182,7 +182,7 @@ namespace FreshdeskApi.Client.Solutions
         /// <returns>The full folder information in default language</returns>
         public async Task<Folder> GetFolderAsync(
             long folderId,
-            string languageCode = null,
+            string? languageCode = null,
             CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
@@ -217,7 +217,7 @@ namespace FreshdeskApi.Client.Solutions
         /// </returns>
         public async IAsyncEnumerable<Folder> GetAllFoldersInCategoryAsync(
             long categoryId,
-            string languageCode = null,
+            string? languageCode = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
@@ -343,7 +343,7 @@ namespace FreshdeskApi.Client.Solutions
         public async Task<Folder> UpdateFolderAsync(
             long folderId,
             UpdateFolderRequest request,
-            string languageCode = null,
+            string? languageCode = null,
             CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
@@ -447,7 +447,7 @@ namespace FreshdeskApi.Client.Solutions
         public async Task<Article> UpdateArticleAsync(
             long articleId,
             UpdateArticleRequest request,
-            string languageCode = null,
+            string? languageCode = null,
             CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
@@ -479,7 +479,7 @@ namespace FreshdeskApi.Client.Solutions
         /// <returns>The full article in the requested language</returns>
         public async Task<Article> ViewArticleAsync(
             long articleId,
-            string languageCode = null,
+            string? languageCode = null,
             CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
@@ -512,7 +512,7 @@ namespace FreshdeskApi.Client.Solutions
         /// </returns>
         public async IAsyncEnumerable<Article> ListArticlesInFolderAsync(
             long folderId,
-            string languageCode = null,
+            string? languageCode = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)

@@ -27,14 +27,14 @@ namespace FreshdeskApi.Client.Solutions.Requests
         /// Optional. Meta data for search engine optimization. Allows
         /// meta_title, meta_description and meta_keywords
         /// </summary>
-        public SeoData SeoData { get; }
+        public SeoData? SeoData { get; }
 
         /// <summary>
         /// Tags that have been associated with the solution article
         /// </summary>
-        public string[] Tags { get; }
+        public string[]? Tags { get; }
 
-        public CreateArticleRequest(string title, string description, ArticleStatus status, SeoData seoData = null, string[] tags = null)
+        public CreateArticleRequest(string title, string description, ArticleStatus status, SeoData? seoData = null, string[]? tags = null)
         {
             Title = title;
             Description = description;

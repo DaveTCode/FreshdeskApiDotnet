@@ -18,7 +18,7 @@ namespace FreshdeskApi.Client.Solutions.Requests
         /// <summary>
         /// Description of the solution folder
         /// </summary>
-        public string Description { get; }
+        public string? Description { get; }
 
         /// <summary>
         /// Accessibility of this folder.
@@ -32,9 +32,9 @@ namespace FreshdeskApi.Client.Solutions.Requests
         /// <seealso cref="FolderVisibility.SelectedCompanies"/> then this is set
         /// to the list of company ids that can view the folder.
         /// </summary>
-        public long[] CompanyIds { get; }
+        public long[]? CompanyIds { get; }
 
-        public CreateFolderRequest(string name, string description = null, FolderVisibility? visibility = null, long[] companyIds = null)
+        public CreateFolderRequest(string name, string? description = null, FolderVisibility? visibility = null, long[]? companyIds = null)
         {
             Name = name;
             Description = description;

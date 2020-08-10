@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using FreshdeskApi.Client.Conversations.Models;
 using Newtonsoft.Json;
 
+#pragma warning disable 8618
+
 namespace FreshdeskApi.Client.Tickets.Models
 {
     /// <summary>

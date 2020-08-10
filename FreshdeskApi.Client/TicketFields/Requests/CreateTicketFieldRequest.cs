@@ -8,16 +8,16 @@ namespace FreshdeskApi.Client.TicketFields.Requests
         public bool? CustomersCanEdit { get; }
 
         [JsonProperty("label_for_customers")]
-        public string LabelForCustomers { get; }
+        public string? LabelForCustomers { get; }
 
         [JsonProperty("displayed_to_customers")]
         public bool? DisplayedToCustomers { get; }
 
         [JsonProperty("label")]
-        public string Label { get; }
+        public string? Label { get; }
 
         [JsonProperty("type")]
-        public string FieldType { get; }
+        public string? FieldType { get; }
 
         [JsonProperty("position")]
         public long? Position { get; }
@@ -32,10 +32,10 @@ namespace FreshdeskApi.Client.TicketFields.Requests
         public bool? RequiredForCustomers { get; }
 
         [JsonProperty("choices")]
-        public object Choices { get; }
+        public object? Choices { get; }
 
-        public CreateTicketFieldRequest(bool? customersCanEdit = null, string labelForCustomers = null, bool? displayedToCustomers = null, string label = null, string fieldType = null,
-            long? position = null, bool? requiredForClosure = null, bool? requiredForAgents = null, bool? requiredForCustomers = null, object choices = null)
+        public CreateTicketFieldRequest(bool? customersCanEdit = null, string? labelForCustomers = null, bool? displayedToCustomers = null, string? label = null, string? fieldType = null,
+            long? position = null, bool? requiredForClosure = null, bool? requiredForAgents = null, bool? requiredForCustomers = null, object? choices = null)
         {
             CustomersCanEdit = customersCanEdit;
             LabelForCustomers = labelForCustomers;

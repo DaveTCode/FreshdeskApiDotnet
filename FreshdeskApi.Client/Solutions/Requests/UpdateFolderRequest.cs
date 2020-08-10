@@ -13,12 +13,12 @@ namespace FreshdeskApi.Client.Solutions.Requests
         /// Name of the solution folder - must be unique across all folders in
         /// the KB.
         /// </summary>
-        public string Name { get; }
+        public string? Name { get; }
 
         /// <summary>
         /// Description of the solution folder
         /// </summary>
-        public string Description { get; }
+        public string? Description { get; }
 
         /// <summary>
         /// Accessibility of this folder.
@@ -32,9 +32,9 @@ namespace FreshdeskApi.Client.Solutions.Requests
         /// <seealso cref="FolderVisibility.SelectedCompanies"/> then this is set
         /// to the list of company ids that can view the folder.
         /// </summary>
-        public long[] CompanyIds { get; }
+        public long[]? CompanyIds { get; }
 
-        public UpdateFolderRequest(string name = null, string description = null, FolderVisibility? visibility = null, long[] companyIds = null)
+        public UpdateFolderRequest(string? name = null, string? description = null, FolderVisibility? visibility = null, long[]? companyIds = null)
         {
             Name = name;
             Description = description;

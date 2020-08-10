@@ -21,6 +21,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Title>Freshdesk API Client</Title>
     <Version>0.4.1</Version>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

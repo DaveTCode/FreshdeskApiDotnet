@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
+#pragma warning disable 8618
+
 namespace FreshdeskApi.Client.Contacts.Models
 {
     /// <summary>

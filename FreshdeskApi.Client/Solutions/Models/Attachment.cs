@@ -2,6 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
+#pragma warning disable 8618
+
 namespace FreshdeskApi.Client.Solutions.Models
 {
     /// <summary>

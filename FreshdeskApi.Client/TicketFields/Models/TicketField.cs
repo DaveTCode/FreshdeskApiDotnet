@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+#pragma warning disable 8618
+
 namespace FreshdeskApi.Client.TicketFields.Models
 {
     public class TicketField

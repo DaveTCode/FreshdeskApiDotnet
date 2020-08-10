@@ -17,14 +17,14 @@ namespace FreshdeskApi.Client.Contacts.Requests
         internal string UrlWithQueryString { get; }
 
         public ListAllContactsRequest(
-            string email = null,
-            string mobile = null,
-            string phone = null,
+            string? email = null,
+            string? mobile = null,
+            string? phone = null,
             long? companyId = null,
             ContactState? contactState = null,
             DateTimeOffset? updatedSince = null)
         {
-            var urlParams = new Dictionary<string, string>
+            var urlParams = new Dictionary<string, string?>
             {
                 { "email", email },
                 { "mobile", mobile },
