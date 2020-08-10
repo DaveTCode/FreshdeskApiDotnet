@@ -78,7 +78,7 @@ namespace FreshdeskApi.Client
         public FreshdeskClient(HttpClient httpClient)
         {
             if (string.IsNullOrWhiteSpace(httpClient?.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
-        
+
             Tickets = new FreshdeskTicketClient(this);
             Contacts = new FreshdeskContactClient(this);
             Groups = new FreshdeskGroupClient(this);
@@ -88,7 +88,7 @@ namespace FreshdeskApi.Client
             TicketFields = new TicketFieldsClient(this);
             Conversations = new ConversationsClient(this);
             ChannelApi = new ChannelApiClient(this);
-            
+
             _httpClient = httpClient;
         }
 
@@ -278,7 +278,7 @@ namespace FreshdeskApi.Client
                 using var reader = new JsonTextReader(sr);
                 var serializer = new JsonSerializer();
 
-                return serializer.Deserialize<T>(reader) ?? throw new ArgumentNullException(nameof(serializer.Deserialize), "Deserialized response must not be null");;
+                return serializer.Deserialize<T>(reader) ?? throw new ArgumentNullException(nameof(serializer.Deserialize), "Deserialized response must not be null");
             }
 
             throw CreateApiException(response);
