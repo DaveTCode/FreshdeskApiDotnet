@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-#pragma warning disable 8618
-
 namespace FreshdeskApi.Client.Contacts.Models
 {
     /// <summary>
@@ -26,7 +24,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// Address of the contact
         /// </summary>
         [JsonProperty("address")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         /// <summary>
         /// ID of the primary company to which this contact belongs
@@ -48,7 +46,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// A short description of the contact
         /// </summary>
         [JsonProperty("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Primary email address of the contact. If you want to associate
@@ -56,7 +54,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// attribute
         /// </summary>
         [JsonProperty("email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// ID of the contact
@@ -68,64 +66,64 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// Job title of the contact
         /// </summary>
         [JsonProperty("job_title")]
-        public string JobTitle { get; set; }
+        public string? JobTitle { get; set; }
 
         /// <summary>
         /// Language of the contact
         /// </summary>
         [JsonProperty("language")]
-        public string Language { get; set; }
+        public string Language { get; set; } = null!;
 
         /// <summary>
         /// Mobile number of the contact
         /// </summary>
         [JsonProperty("mobile")]
-        public string Mobile { get; set; }
+        public string? Mobile { get; set; }
 
         /// <summary>
         /// Name of the contact
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Telephone number of the contact
         /// </summary>
         [JsonProperty("phone")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         /// <summary>
         /// Time zone in which the contact resides
         /// </summary>
         [JsonProperty("time_zone")]
-        public string TimeZone { get; set; }
+        public string TimeZone { get; set; } = null!;
 
         /// <summary>
         /// Twitter handle of the contact
         /// </summary>
         [JsonProperty("twitter_id")]
-        public string TwitterId { get; set; }
+        public string? TwitterId { get; set; }
 
         /// <summary>
         /// Key value pair containing the name and value of the custom fields.
         /// </summary>
         [JsonProperty("custom_fields")]
-        public Dictionary<string, object> CustomFields { get; set; }
+        public Dictionary<string, object>? CustomFields { get; set; }
 
         /// <summary>
         /// Tags associated with this contact
         /// </summary>
         [JsonProperty("tags")]
-        public string[] Tags { get; set; }
+        public string[]? Tags { get; set; }
 
         /// <summary>
         /// Additional emails associated with the contact
         /// </summary>
         [JsonProperty("other_emails")]
-        public string[] OtherEmails { get; set; }
+        public string[]? OtherEmails { get; set; }
 
         [JsonProperty("facebook_id")]
-        public string FacebookId { get; set; }
+        public string? FacebookId { get; set; }
 
         /// <summary>
         /// Contact creation timestamp
@@ -155,7 +153,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// Optional avatar of the contact
         /// </summary>
         [JsonProperty("avatar")]
-        public Avatar Avatar { get; set; }
+        public Avatar? Avatar { get; set; }
 
         public override string ToString()
         {
