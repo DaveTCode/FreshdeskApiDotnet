@@ -16,7 +16,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// Signature of the agent in HTML format
         /// </summary>
         [JsonProperty("signature")]
-        public string SignatureHtml { get; }
+        public string? SignatureHtml { get; }
 
         /// <summary>
         /// Ticket permission of the agent
@@ -31,13 +31,13 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// Skill ids associated with the agent
         /// </summary>
         [JsonProperty("skill_ids")]
-        public long[] SkillIds { get; }
+        public long[]? SkillIds { get; }
 
         /// <summary>
         /// Group ids associated with the agent
         /// </summary>
         [JsonProperty("group_ids")]
-        public long[] GroupIds { get; }
+        public long[]? GroupIds { get; }
 
         /// <summary>
         /// Role IDs associated with the agent. At least one role should be
@@ -47,9 +47,9 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// TODO - Does this imply not null with at least one entry?
         /// </summary>
         [JsonProperty("role_ids")]
-        public long[] RoleIds { get; }
+        public long[]? RoleIds { get; }
 
-        public MakeAgentRequest(bool? occasional = null, string signatureHtml = null, TicketScope? ticketScope = null, long[] skillIds = null, long[] groupIds = null, long[] roleIds = null)
+        public MakeAgentRequest(bool? occasional = null, string? signatureHtml = null, TicketScope? ticketScope = null, long[]? skillIds = null, long[]? groupIds = null, long[]? roleIds = null)
         {
             Occasional = occasional;
             SignatureHtml = signatureHtml;

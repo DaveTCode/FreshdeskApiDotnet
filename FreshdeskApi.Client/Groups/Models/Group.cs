@@ -23,13 +23,13 @@ namespace FreshdeskApi.Client.Groups.Models
         /// Name of the group
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Description of the group
         /// </summary>
         [JsonProperty("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// The ID of the user to whom an escalation email is sent if a ticket is unassigned.
@@ -47,7 +47,7 @@ namespace FreshdeskApi.Client.Groups.Models
         /// "3d" for 3 days
         /// </summary>
         [JsonProperty("unassigned_for")]
-        public string UnassignedFor { get; set; }
+        public string? UnassignedFor { get; set; }
 
         /// <summary>
         /// Unique ID of the business hour associated with the group
@@ -59,10 +59,10 @@ namespace FreshdeskApi.Client.Groups.Models
         /// Array of agent user IDs separated by commas.
         /// </summary>
         [JsonProperty("agent_ids")]
-        public long[] AgentIds { get; set; }
+        public long[]? AgentIds { get; set; }
 
         [JsonProperty("group_type")]
-        public string GroupType { get; set; }
+        public string? GroupType { get; set; }
 
         /// <summary>
         /// Group creation timestamp
@@ -83,7 +83,7 @@ namespace FreshdeskApi.Client.Groups.Models
         /// TODO - Turns out that it can an integer sometimes as well?? WTF
         /// </summary>
         [JsonProperty("auto_ticket_assign")]
-        public object AutoTicketAssign { get; set; }
+        public object? AutoTicketAssign { get; set; }
 
         public override string ToString()
         {

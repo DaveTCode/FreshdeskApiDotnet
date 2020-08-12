@@ -16,7 +16,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public bool Billable { get; set; }
 
         [JsonProperty("note")]
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
         [JsonProperty("timer_running")]
         public bool TimerRunning { get; set; }
@@ -31,7 +31,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public long TicketId { get; set; }
 
         [JsonProperty("time_spent")]
-        public string TimeSpent { get; set; }
+        public string? TimeSpent { get; set; }
 
         [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -63,8 +62,22 @@ namespace FreshdeskApi.Client
 
         private readonly HttpClient _httpClient;
 
-        private FreshdeskClient()
+        /// <summary>
+        /// Construct a freshdesk client object when you already have access
+        /// to HttpClient objects or want to otherwise pool them outside of
+        /// this client.
+        ///
+        /// It is recommended that you use this method in long lived
+        /// applications where many of these clients will be created.
+        /// </summary>
+        /// <param name="httpClient">
+        /// A HttpClient object with authentication and
+        /// <seealso cref="HttpClient.BaseAddress"/> already set.
+        /// </param>
+        public FreshdeskClient(HttpClient httpClient)
         {
+            if (string.IsNullOrWhiteSpace(httpClient?.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
+
             Tickets = new FreshdeskTicketClient(this);
             Contacts = new FreshdeskContactClient(this);
             Groups = new FreshdeskGroupClient(this);
@@ -74,6 +87,8 @@ namespace FreshdeskApi.Client
             TicketFields = new TicketFieldsClient(this);
             Conversations = new ConversationsClient(this);
             ChannelApi = new ChannelApiClient(this);
+
+            _httpClient = httpClient;
         }
 
         /// <summary>
@@ -95,36 +110,10 @@ namespace FreshdeskApi.Client
         /// perform whichever operations you are calling.
         /// </param>
         // ReSharper disable once UnusedMember.Global
-        public FreshdeskClient(string freshdeskDomain, string apiKey) : this()
+        public FreshdeskClient(
+            string freshdeskDomain, string apiKey
+        ) : this(new HttpClient().ConfigureFreshdeskApi(freshdeskDomain, apiKey))
         {
-            if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentOutOfRangeException(nameof(apiKey), apiKey, "API Key can't be blank");
-            if (string.IsNullOrWhiteSpace(freshdeskDomain)) throw new ArgumentOutOfRangeException(nameof(freshdeskDomain), freshdeskDomain, "Freshdesk domain can't be blank");
-
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(freshdeskDomain, UriKind.Absolute)
-            };
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.Default.GetBytes($"{apiKey}:X")));
-        }
-
-        /// <summary>
-        /// Construct a freshdesk client object when you already have access
-        /// to HttpClient objects or want to otherwise pool them outside of
-        /// this client.
-        ///
-        /// It is recommended that you use this method in long lived
-        /// applications where many of these clients will be created.
-        /// </summary>
-        /// <param name="httpClient">
-        /// A HttpClient object with authentication and
-        /// <seealso cref="HttpClient.BaseAddress"/> already set.
-        /// </param>
-        // ReSharper disable once UnusedMember.Global
-        public FreshdeskClient(HttpClient httpClient) : this()
-        {
-            if (string.IsNullOrWhiteSpace(httpClient?.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
-
-            _httpClient = httpClient;
         }
 
         private void SetRateLimitValues(HttpResponseMessage response)
@@ -164,7 +153,8 @@ namespace FreshdeskApi.Client
                 HttpStatusCode.Forbidden => new AuthorizationFailureException(response), // 400
                 HttpStatusCode.NotFound => new ResourceNotFoundException(response), // 400
                 HttpStatusCode.Conflict => new ResourceConflictException(response), // 400
-                _ => throw new GeneralApiException(response)
+                HttpStatusCode.NoContent => new EmptyFreshdeskResponse(response), // 204
+                _ => throw new GeneralApiException(response),
             };
         }
 
@@ -215,6 +205,7 @@ namespace FreshdeskApi.Client
                 var newData = newStylePages
                     ? serializer.Deserialize<PagedResult<T>>(reader)?.Results
                     : serializer.Deserialize<List<T>>(reader);
+
                 foreach (var data in newData ?? new List<T>())
                 {
                     yield return data;
@@ -241,7 +232,7 @@ namespace FreshdeskApi.Client
             }
         }
 
-        internal async Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object body = null, CancellationToken cancellationToken = default)
+        internal async Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
         {
             var httpMessage = new HttpRequestMessage(method, url);
 
@@ -278,15 +269,14 @@ namespace FreshdeskApi.Client
                 }
             }
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode && response.StatusCode != HttpStatusCode.NoContent)
             {
-                if (response.StatusCode == HttpStatusCode.NoContent) return default;
-
                 await using var contentStream = await response.Content.ReadAsStreamAsync();
                 using var sr = new StreamReader(contentStream);
                 using var reader = new JsonTextReader(sr);
                 var serializer = new JsonSerializer();
-                return serializer.Deserialize<T>(reader);
+
+                return serializer.Deserialize<T>(reader) ?? throw new ArgumentNullException(nameof(serializer.Deserialize), "Deserialized response must not be null");
             }
 
             throw CreateApiException(response);

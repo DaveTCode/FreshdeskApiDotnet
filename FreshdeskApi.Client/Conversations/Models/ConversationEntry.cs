@@ -8,10 +8,10 @@ namespace FreshdeskApi.Client.Conversations.Models
     public class ConversationEntry
     {
         [JsonProperty("body")]
-        public string Body { get; set; }
+        public string? Body { get; set; }
 
         [JsonProperty("body_text")]
-        public string BodyText { get; set; }
+        public string? BodyText { get; set; }
 
         [JsonProperty("id")]
         public long Id { get; set; }
@@ -26,7 +26,7 @@ namespace FreshdeskApi.Client.Conversations.Models
         public long UserId { get; set; }
 
         [JsonProperty("support_email")]
-        public string SupportEmail { get; set; }
+        public string? SupportEmail { get; set; }
 
         [JsonProperty("source")]
         public ConversationSource Source { get; set; }
@@ -38,16 +38,16 @@ namespace FreshdeskApi.Client.Conversations.Models
         public long TicketId { get; set; }
 
         [JsonProperty("to_emails")]
-        public string[] ToEmails { get; set; }
+        public string[]? ToEmails { get; set; }
 
         [JsonProperty("from_email")]
-        public string FromEmail { get; set; }
+        public string? FromEmail { get; set; }
 
         [JsonProperty("cc_emails")]
-        public string[] CcEmails { get; set; }
+        public string[]? CcEmails { get; set; }
 
         [JsonProperty("bcc_emails")]
-        public string[] BccEmails { get; set; }
+        public string[]? BccEmails { get; set; }
 
         [JsonProperty("email_failure_count")]
         public long? EmailFailureCount { get; set; }
@@ -62,7 +62,7 @@ namespace FreshdeskApi.Client.Conversations.Models
         public DateTimeOffset? UpdatedAt { get; set; }
 
         [JsonProperty("source_additional_info")]
-        public string SourceAdditionalInfo { get; set; }
+        public string? SourceAdditionalInfo { get; set; }
 
         public override string ToString()
         {

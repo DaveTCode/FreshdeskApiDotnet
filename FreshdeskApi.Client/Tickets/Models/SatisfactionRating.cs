@@ -27,7 +27,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public long AgentId { get; set; }
 
         [JsonProperty("feedback")]
-        public string Feedback { get; set; }
+        public string? Feedback { get; set; }
 
         [JsonProperty("group_id")]
         public long? GroupId { get; set; }
@@ -36,7 +36,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public long TicketId { get; set; }
 
         [JsonProperty("ratings")]
-        public Dictionary<string, int> Ratings { get; set; }
+        public Dictionary<string, int>? Ratings { get; set; }
 
         [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }

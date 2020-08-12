@@ -44,25 +44,25 @@ namespace FreshdeskApi.Client.Agents.Models
         /// Signature of the agent in HTML format
         /// </summary>
         [JsonProperty("signature")]
-        public string Signature { get; set; }
+        public string? Signature { get; set; }
 
         /// <summary>
         /// Group IDs associated with the agent
         /// </summary>
         [JsonProperty("group_ids")]
-        public long[] GroupIds { get; set; }
+        public long[]? GroupIds { get; set; }
 
         /// <summary>
         /// Role IDs associated with the agent
         /// </summary>
         [JsonProperty("role_ids")]
-        public long[] RoleIds { get; set; }
+        public long[]? RoleIds { get; set; }
 
         /// <summary>
         /// Skill ids associated with the agent
         /// </summary>
         [JsonProperty("skill_ids")]
-        public long[] SkillIds { get; set; }
+        public long[]? SkillIds { get; set; }
 
         /// <summary>
         /// Agent creation timestamp
@@ -87,14 +87,14 @@ namespace FreshdeskApi.Client.Agents.Models
         public DateTimeOffset? AvailableSince { get; set; }
 
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         /// <summary>
         /// All agents are also contacts, this is the full set of contact
         /// information about the agent.
         /// </summary>
         [JsonProperty("contact")]
-        public Contact Contact { get; set; }
+        public Contact? Contact { get; set; }
 
         public override string ToString()
         {

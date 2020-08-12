@@ -21,12 +21,12 @@ namespace FreshdeskApi.Client.Solutions.Models
         /// <summary>
         /// Name of the solution category
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Description of the solution category
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Solution Category creation timestamp
@@ -41,7 +41,7 @@ namespace FreshdeskApi.Client.Solutions.Models
         /// <summary>
         /// List of portal IDs where this category is visible
         /// </summary>
-        public long[] VisibleInPortals { get; set; }
+        public long[]? VisibleInPortals { get; set; }
 
         public override string ToString()
         {

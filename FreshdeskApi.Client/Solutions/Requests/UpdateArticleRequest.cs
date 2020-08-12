@@ -16,12 +16,12 @@ namespace FreshdeskApi.Client.Solutions.Requests
         /// <summary>
         /// Mandatory. Title of the solution article
         /// </summary>
-        public string Title { get; }
+        public string? Title { get; }
 
         /// <summary>
         /// Mandatory. Description of the solution article
         /// </summary>
-        public string Description { get; }
+        public string? Description { get; }
 
         /// <summary>
         /// Mandatory. The status of the article after creation
@@ -32,14 +32,14 @@ namespace FreshdeskApi.Client.Solutions.Requests
         /// Optional. Meta data for search engine optimization. Allows
         /// meta_title, meta_description and meta_keywords
         /// </summary>
-        public SeoData SeoData { get; }
+        public SeoData? SeoData { get; }
 
         /// <summary>
         /// Tags that have been associated with the solution article
         /// </summary>
-        public string[] Tags { get; }
+        public string[]? Tags { get; }
 
-        public UpdateArticleRequest(long? agentId = null, string title = null, string description = null, ArticleStatus? status = null, SeoData seoData = null, string[] tags = null)
+        public UpdateArticleRequest(long? agentId = null, string? title = null, string? description = null, ArticleStatus? status = null, SeoData? seoData = null, string[]? tags = null)
         {
             AgentId = agentId;
             Title = title;

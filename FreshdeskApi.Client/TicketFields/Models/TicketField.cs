@@ -16,19 +16,19 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// Name of the ticket field
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Display name for the field (as seen by agents)
         /// </summary>
         [JsonProperty("label")]
-        public string Label { get; set; }
+        public string? Label { get; set; }
 
         /// <summary>
         /// Description of the ticket field
         /// </summary>
         [JsonProperty("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Position in which the ticket field is displayed in the form
@@ -53,7 +53,7 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// field will be given (Examples custom_date, custom_text...)
         /// </summary>
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         /// <summary>
         /// Set to true if the field is not a custom field
@@ -71,7 +71,7 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// Display name for the field (as seen in the customer portal)
         /// </summary>
         [JsonProperty("label_for_customers")]
-        public string LabelForCustomers { get; set; }
+        public string? LabelForCustomers { get; set; }
 
         /// <summary>
         /// Set to true if the field is mandatory in the customer portal
@@ -110,7 +110,7 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// when a customer can add only company contacts to the CC list
         /// </summary>
         [JsonProperty("portal_cc_to")]
-        public string PortalCcTo { get; set; }
+        public string? PortalCcTo { get; set; }
 
         /// <summary>
         /// The type of this object is dependent on the type of the ticket
@@ -118,7 +118,7 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// its custom_dropdown then this is a list of possible choices.
         /// </summary>
         [JsonProperty("choices")]
-        public JToken Choices { get; set; }
+        public JToken? Choices { get; set; }
 
         /// <summary>
         /// True if the Ticket field is inside FSM section (Applicable only if

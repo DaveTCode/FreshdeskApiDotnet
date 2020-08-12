@@ -24,37 +24,37 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// attribute.
         /// </summary>
         [JsonProperty("email")]
-        public string Email { get; }
+        public string? Email { get; }
 
         /// <summary>
         /// Telephone number of the contact. Must be unique amongst all contacts.
         /// </summary>
         [JsonProperty("phone")]
-        public string Phone { get; }
+        public string? Phone { get; }
 
         /// <summary>
         /// Mobile number of the contact. Must be unique amongst all contacts.
         /// </summary>
         [JsonProperty("mobile")]
-        public string Mobile { get; }
+        public string? Mobile { get; }
 
         /// <summary>
         /// Twitter handle of the contact. Must be unique amongst all contacts.
         /// </summary>
         [JsonProperty("twitter_id")]
-        public string TwitterId { get; }
+        public string? TwitterId { get; }
 
         /// <summary>
         /// External ID of the contact. Must be unique amongst all contacts.
         /// </summary>
         [JsonProperty("unique_external_id")]
-        public string UniqueExternalId { get; }
+        public string? UniqueExternalId { get; }
 
         /// <summary>
         /// Additional emails associated with the contact
         /// </summary>
         [JsonProperty("other_emails")]
-        public string[] OtherEmails { get; }
+        public string[]? OtherEmails { get; }
 
         /// <summary>
         /// ID of the primary company to which this contact belongs
@@ -75,13 +75,13 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// (Estate plan and above.)
         /// </summary>
         [JsonProperty("other_companies")]
-        public long[] OtherCompanies { get; }
+        public long[]? OtherCompanies { get; }
 
         /// <summary>
         /// Address of the contact
         /// </summary>
         [JsonProperty("address")]
-        public string Address { get; }
+        public string? Address { get; }
 
         /// <summary>
         /// Key value pairs containing the name and value of the custom field.
@@ -91,19 +91,19 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// c.f. https://support.freshdesk.com/support/solutions/articles/216553
         /// </summary>
         [JsonProperty("custom_fields")]
-        public Dictionary<string, string> CustomFields { get; }
+        public Dictionary<string, string>? CustomFields { get; }
 
         /// <summary>
         /// A small description of the contact
         /// </summary>
         [JsonProperty("description")]
-        public string Description { get; }
+        public string? Description { get; }
 
         /// <summary>
         /// Job title of the contact
         /// </summary>
         [JsonProperty("job_title")]
-        public string JobTitle { get; }
+        public string? JobTitle { get; }
 
         /// <summary>
         /// Language of the contact. Default language is "en". This attribute
@@ -111,13 +111,13 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// plan and above)
         /// </summary>
         [JsonProperty("language")]
-        public string Language { get; }
+        public string? Language { get; }
 
         /// <summary>
         /// Tags associated with this contact
         /// </summary>
         [JsonProperty("tags")]
-        public string[] Tags { get; }
+        public string[]? Tags { get; }
 
         /// <summary>
         /// Time zone of the contact. Default value is the time zone of the
@@ -125,12 +125,12 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// feature is enabled (Garden plan and above)
         /// </summary>
         [JsonProperty("time_zone")]
-        public string TimeZone { get; }
+        public string? TimeZone { get; }
 
-        public ContactCreateRequest(string name, string email = null, string phone = null, string mobile = null, string twitterId = null,
-            string uniqueExternalId = null, string[] otherEmails = null, long? companyId = null, bool? viewAllTickets = null,
-            long[] otherCompanies = null, string address = null, Dictionary<string, string> customFields = null,
-            string description = null, string jobTitle = null, string language = null, string[] tags = null, string timeZone = null)
+        public ContactCreateRequest(string name, string? email = null, string? phone = null, string? mobile = null, string? twitterId = null,
+            string? uniqueExternalId = null, string[]? otherEmails = null, long? companyId = null, bool? viewAllTickets = null,
+            long[]? otherCompanies = null, string? address = null, Dictionary<string, string>? customFields = null,
+            string? description = null, string? jobTitle = null, string? language = null, string[]? tags = null, string? timeZone = null)
         {
             Name = name;
             Email = email;

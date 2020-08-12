@@ -15,7 +15,7 @@ namespace FreshdeskApi.Client.Channel.Requests
         [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; }
 
-        public ChannelCreateReplyRequest(long importId, string bodyHtml, string fromEmail = null, long? userId = null, string[] ccEmails = null, string[] bccEmails = null, DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
+        public ChannelCreateReplyRequest(long importId, string bodyHtml, string? fromEmail = null, long? userId = null, string[]? ccEmails = null, string[]? bccEmails = null, DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
             : base(bodyHtml, fromEmail, userId, ccEmails, bccEmails)
         {
             ImportId = importId;

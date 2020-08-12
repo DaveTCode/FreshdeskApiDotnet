@@ -67,7 +67,7 @@ namespace FreshdeskApi.Client.Solutions.Models
         /// Title of the solution article
         /// </summary>
         [JsonProperty("title")]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         /// <summary>
         /// Solution Article updated timestamp
@@ -79,38 +79,38 @@ namespace FreshdeskApi.Client.Solutions.Models
         /// Description of the solution article
         /// </summary>
         [JsonProperty("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Description of the solution article in plain text
         /// </summary>
         [JsonProperty("description_text")]
-        public string DescriptionText { get; set; }
+        public string? DescriptionText { get; set; }
 
         /// <summary>
         /// Meta data for search engine optimization. Allows meta_title,
         /// meta_description and meta_keywords
         /// </summary>
         [JsonProperty("seo_data")]
-        public SeoData SeoData { get; set; }
+        public SeoData? SeoData { get; set; }
 
         /// <summary>
         /// Tags that have been associated with the solution article
         /// </summary>
         [JsonProperty("tags")]
-        public string[] Tags { get; set; }
+        public string[]? Tags { get; set; }
 
         /// <summary>
         /// Undocumented field on https://developers.freshdesk.com/api/#solution_article_attributes
         /// </summary>
         [JsonProperty("attachments")]
-        public Attachment[] Attachments { get; set; }
+        public Attachment[]? Attachments { get; set; }
 
         /// <summary>
         /// Undocumented field on https://developers.freshdesk.com/api/#solution_article_attributes
         /// </summary>
         [JsonProperty("cloud_files")]
-        public object[] CloudFiles { get; set; }
+        public object[]? CloudFiles { get; set; }
 
         /// <summary>
         /// Number of upvotes for the solution article
@@ -146,13 +146,13 @@ namespace FreshdeskApi.Client.Solutions.Models
         /// Undocumented field on https://developers.freshdesk.com/api/#solution_article_attributes
         /// </summary>
         [JsonProperty("folder_name")]
-        public string FolderName { get; set; }
+        public string? FolderName { get; set; }
 
         /// <summary>
         /// Undocumented field on https://developers.freshdesk.com/api/#solution_article_attributes
         /// </summary>
         [JsonProperty("category_name")]
-        public string CategoryName { get; set; }
+        public string? CategoryName { get; set; }
 
         public override string ToString()
         {

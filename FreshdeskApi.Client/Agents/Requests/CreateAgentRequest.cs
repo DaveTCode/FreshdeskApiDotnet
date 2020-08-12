@@ -36,19 +36,19 @@ namespace FreshdeskApi.Client.Agents.Requests
         /// Signature of the agent in HTML format
         /// </summary>
         [JsonProperty("signature")]
-        public string SignatureHtml { get; }
+        public string? SignatureHtml { get; }
 
         /// <summary>
         /// Skill ids associated with the agent
         /// </summary>
         [JsonProperty("skill_ids")]
-        public long[] SkillIds { get; }
+        public long[]? SkillIds { get; }
 
         /// <summary>
         /// Group ids associated with the agent
         /// </summary>
         [JsonProperty("group_ids")]
-        public long[] GroupIds { get; }
+        public long[]? GroupIds { get; }
 
         /// <summary>
         /// Role IDs associated with the agent. At least one role should be
@@ -57,45 +57,45 @@ namespace FreshdeskApi.Client.Agents.Requests
         /// Current logged in agent can't update their role_ids
         /// </summary>
         [JsonProperty("role_ids")]
-        public long[] RoleIds { get; }
+        public long[]? RoleIds { get; }
 
         /// <summary>
         /// Name of the Agent
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; }
+        public string? Name { get; }
 
         /// <summary>
         /// Telephone number of the Agent.
         /// </summary>
         [JsonProperty("phone")]
-        public string Phone { get; }
+        public string? Phone { get; }
 
         /// <summary>
         /// Mobile number of the Agent
         /// </summary>
         [JsonProperty("mobile")]
-        public string Mobile { get; }
+        public string? Mobile { get; }
 
         /// <summary>
         /// Job title of the Agent
         /// </summary>
         [JsonProperty("job_title")]
-        public string JobTitle { get; }
+        public string? JobTitle { get; }
 
         /// <summary>
         /// Language of the Agent. Default language is "en"
         /// </summary>
         [JsonProperty("language")]
-        public string Language { get; }
+        public string? Language { get; }
 
         /// <summary>
         /// Time zone of the Agent. Default value is time zone of the domain
         /// </summary>
         [JsonProperty("time_zone")]
-        public string TimeZone { get; }
+        public string? TimeZone { get; }
 
-        public CreateAgentRequest(string email, TicketScope ticketScope, bool? occasional = null, string signatureHtml = null, long[] skillIds = null, long[] groupIds = null, long[] roleIds = null, string name = null, string phone = null, string mobile = null, string jobTitle = null, string language = null, string timeZone = null)
+        public CreateAgentRequest(string email, TicketScope ticketScope, bool? occasional = null, string? signatureHtml = null, long[]? skillIds = null, long[]? groupIds = null, long[]? roleIds = null, string? name = null, string? phone = null, string? mobile = null, string? jobTitle = null, string? language = null, string? timeZone = null)
         {
             Email = email;
             TicketScope = ticketScope;

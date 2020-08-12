@@ -13,7 +13,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public long Id { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public override string ToString()
         {

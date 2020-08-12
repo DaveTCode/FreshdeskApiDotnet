@@ -20,7 +20,7 @@ namespace FreshdeskApi.Client.Conversations.Requests
         /// global support email will be used.
         /// </summary>
         [JsonProperty("from_email")]
-        public string FromEmail { get; }
+        public string? FromEmail { get; }
 
         /// <summary>
         /// ID of the agent who is adding the note.
@@ -34,16 +34,16 @@ namespace FreshdeskApi.Client.Conversations.Requests
         /// Email address added in the 'cc' field of the outgoing ticket email.
         /// </summary>
         [JsonProperty("cc_emails")]
-        public string[] CcEmails { get; }
+        public string[]? CcEmails { get; }
 
         /// <summary>
         /// Email address added in the 'bcc' field of the outgoing ticket
         /// email.
         /// </summary>
         [JsonProperty("bcc_emails")]
-        public string[] BccEmails { get; }
+        public string[]? BccEmails { get; }
 
-        public CreateReplyRequest(string bodyHtml, string fromEmail = null, long? userId = null, string[] ccEmails = null, string[] bccEmails = null)
+        public CreateReplyRequest(string bodyHtml, string? fromEmail = null, long? userId = null, string[]? ccEmails = null, string[]? bccEmails = null)
         {
             BodyHtml = bodyHtml;
             FromEmail = fromEmail;

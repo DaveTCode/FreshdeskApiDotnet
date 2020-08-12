@@ -19,7 +19,7 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// Display name of the section
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Ticket Field ID to which the section is mapped
@@ -32,7 +32,7 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// are displayed as part of the section)
         /// </summary>
         [JsonProperty("ticket_field_ids")]
-        public long[] TicketFieldIds { get; set; }
+        public long[]? TicketFieldIds { get; set; }
 
         /// <summary>
         /// Set to true if the ticket field is a FSM field (Field Service
@@ -46,6 +46,6 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// displayed on choosing any one of the choices
         /// </summary>
         [JsonProperty("choice_ids")]
-        public long[] ChoiceIds { get; set; }
+        public long[]? ChoiceIds { get; set; }
     }
 }

@@ -15,16 +15,16 @@
         /// <summary>
         /// Description of the solution category
         /// </summary>
-        public string Description { get; }
+        public string? Description { get; }
 
         /// <summary>
         /// List of portal IDs where this category is visible.
         ///
         /// Allowed only if the account is configured with multiple portals.
         /// </summary>
-        public long[] VisibleInPortals { get; }
+        public long[]? VisibleInPortals { get; }
 
-        public CreateCategoryRequest(string name, string description = null, long[] visibleInPortals = null)
+        public CreateCategoryRequest(string name, string? description = null, long[]? visibleInPortals = null)
         {
             Name = name;
             Description = description;

@@ -28,7 +28,7 @@ namespace FreshdeskApi.Client.Conversations.Requests
         /// note.
         /// </summary>
         [JsonProperty("notify_emails")]
-        public string[] NotifyEmails { get; }
+        public string[]? NotifyEmails { get; }
 
         /// <summary>
         /// Set to true if the note is private. The default value is true.
@@ -44,7 +44,7 @@ namespace FreshdeskApi.Client.Conversations.Requests
         [JsonProperty("user_id")]
         public long? UserId { get; }
 
-        public CreateNoteRequest(string bodyHtml, bool? incoming = null, string[] notifyEmails = null, bool? isPrivate = null, long? userId = null)
+        public CreateNoteRequest(string bodyHtml, bool? incoming = null, string[]? notifyEmails = null, bool? isPrivate = null, long? userId = null)
         {
             BodyHtml = bodyHtml;
             Incoming = incoming;
