@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -154,7 +153,8 @@ namespace FreshdeskApi.Client
                 HttpStatusCode.Forbidden => new AuthorizationFailureException(response), // 400
                 HttpStatusCode.NotFound => new ResourceNotFoundException(response), // 400
                 HttpStatusCode.Conflict => new ResourceConflictException(response), // 400
-                _ => throw new GeneralApiException(response)
+                HttpStatusCode.NoContent => new EmptyFreshdeskResponse(response), // 204
+                _ => throw new GeneralApiException(response),
             };
         }
 
@@ -269,10 +269,8 @@ namespace FreshdeskApi.Client
                 }
             }
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode && response.StatusCode != HttpStatusCode.NoContent)
             {
-                if (response.StatusCode == HttpStatusCode.NoContent) return default!;
-
                 await using var contentStream = await response.Content.ReadAsStreamAsync();
                 using var sr = new StreamReader(contentStream);
                 using var reader = new JsonTextReader(sr);

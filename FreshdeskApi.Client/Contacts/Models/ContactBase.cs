@@ -72,7 +72,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// Language of the contact
         /// </summary>
         [JsonProperty("language")]
-        public string Language { get; set; } = null!;
+        public string? Language { get; set; }
 
         /// <summary>
         /// Mobile number of the contact
@@ -84,7 +84,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// Name of the contact
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; }
 
         /// <summary>
         /// Telephone number of the contact
@@ -96,7 +96,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// Time zone in which the contact resides
         /// </summary>
         [JsonProperty("time_zone")]
-        public string TimeZone { get; set; } = null!;
+        public string? TimeZone { get; set; }
 
         /// <summary>
         /// Twitter handle of the contact
