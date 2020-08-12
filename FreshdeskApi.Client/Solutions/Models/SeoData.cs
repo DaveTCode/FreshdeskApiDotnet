@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-#pragma warning disable 8618
-
 namespace FreshdeskApi.Client.Solutions.Models
 {
     /// <summary>
@@ -14,13 +12,13 @@ namespace FreshdeskApi.Client.Solutions.Models
     public class SeoData
     {
         [JsonProperty("meta_title")]
-        public string MetaTitle { get; set; }
+        public string? MetaTitle { get; set; }
 
         [JsonProperty("meta_description")]
-        public string MetaDescription { get; set; }
+        public string? MetaDescription { get; set; }
 
         [JsonProperty("meta_keywords")]
-        public string MetaKeywords { get; set; }
+        public string? MetaKeywords { get; set; }
 
         public override string ToString()
         {

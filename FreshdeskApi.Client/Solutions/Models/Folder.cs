@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-#pragma warning disable 8618
-
 namespace FreshdeskApi.Client.Solutions.Models
 {
     /// <summary>
@@ -29,12 +27,12 @@ namespace FreshdeskApi.Client.Solutions.Models
         /// <summary>
         /// Name of the solution folder
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Description of the solution folder
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Accessibility of this folder.

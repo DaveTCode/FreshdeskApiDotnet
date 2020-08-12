@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-#pragma warning disable 8618
-
 namespace FreshdeskApi.Client.Contacts.Models
 {
     public class Contact : ContactBase
@@ -13,6 +11,6 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// contact, not when listing/filtering.
         /// </summary>
         [JsonProperty("other_companies")]
-        public ContactCompany[] OtherCompanies { get; set; }
+        public ContactCompany[]? OtherCompanies { get; set; }
     }
 }

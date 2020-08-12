@@ -4,8 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using FreshdeskApi.Client.Conversations.Models;
 using Newtonsoft.Json;
 
-#pragma warning disable 8618
-
 namespace FreshdeskApi.Client.Tickets.Models
 {
     /// <summary>
@@ -17,16 +15,16 @@ namespace FreshdeskApi.Client.Tickets.Models
     public class Ticket
     {
         [JsonProperty("cc_emails")]
-        public string[] CcEmails { get; set; }
+        public string[]? CcEmails { get; set; }
 
         [JsonProperty("fwd_emails")]
-        public string[] FwdEmails { get; set; }
+        public string[]? FwdEmails { get; set; }
 
         [JsonProperty("reply_cc_emails")]
-        public string[] ReplyCcEmails { get; set; }
+        public string[]? ReplyCcEmails { get; set; }
 
         [JsonProperty("ticket_cc_emails")]
-        public string[] TicketCcEmails { get; set; }
+        public string[]? TicketCcEmails { get; set; }
 
         [JsonProperty("fr_escalated")]
         public bool FirstResponseTimeEscalated { get; set; }
@@ -59,16 +57,16 @@ namespace FreshdeskApi.Client.Tickets.Models
         public TicketStatus Status { get; set; }
 
         [JsonProperty("subject")]
-        public string Subject { get; set; }
+        public string? Subject { get; set; }
 
         [JsonProperty("association_type")]
         public TicketAssociationType? AssociationType { get; set; }
 
         [JsonProperty("associated_ticket_list")]
-        public long[] AssociatedTicketList { get; set; }
+        public long[]? AssociatedTicketList { get; set; }
 
         [JsonProperty("to_emails")]
-        public string[] ToEmails { get; set; }
+        public string[]? ToEmails { get; set; }
 
         [JsonProperty("product_id")]
         public long? ProductId { get; set; }
@@ -77,7 +75,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public long Id { get; set; }
 
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         [JsonProperty("due_by")]
         public DateTimeOffset DueBy { get; set; }
@@ -89,13 +87,13 @@ namespace FreshdeskApi.Client.Tickets.Models
         public bool IsEscalated { get; set; }
 
         [JsonProperty("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [JsonProperty("description_text")]
-        public string DescriptionText { get; set; }
+        public string? DescriptionText { get; set; }
 
         [JsonProperty("custom_fields")]
-        public Dictionary<string, object> CustomFields { get; set; }
+        public Dictionary<string, object>? CustomFields { get; set; }
 
         [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
@@ -104,13 +102,13 @@ namespace FreshdeskApi.Client.Tickets.Models
         public DateTimeOffset? UpdatedAt { get; set; }
 
         [JsonProperty("tags")]
-        public string[] Tags { get; set; }
+        public string[]? Tags { get; set; }
 
         [JsonProperty("attachments")]
-        public object[] Attachments { get; set; }
+        public object[]? Attachments { get; set; }
 
         [JsonProperty("source_additional_info")]
-        public string SourceAdditionalInfo { get; set; }
+        public string? SourceAdditionalInfo { get; set; }
 
         [JsonProperty("deleted")]
         public bool Deleted { get; set; }
@@ -119,25 +117,25 @@ namespace FreshdeskApi.Client.Tickets.Models
         /// Optional include, excluded by default and will therefore be null.
         /// </summary>
         [JsonProperty("stats")]
-        public TicketStats Stats { get; set; }
+        public TicketStats? Stats { get; set; }
 
         /// <summary>
         /// Optional include, excluded by default and will therefore be null.
         /// </summary>
         [JsonProperty("requester")]
-        public Requester Requester { get; set; }
+        public Requester? Requester { get; set; }
 
         /// <summary>
         /// Optional include, excluded by default and will therefore be null.
         /// </summary>
         [JsonProperty("conversations")]
-        public ConversationEntry[] Conversations { get; set; }
+        public ConversationEntry[]? Conversations { get; set; }
 
         /// <summary>
         /// Optional include, excluded by default and will therefore be null.
         /// </summary>
         [JsonProperty("company")]
-        public TicketCompany Company { get; set; }
+        public TicketCompany? Company { get; set; }
 
         public override string ToString()
         {

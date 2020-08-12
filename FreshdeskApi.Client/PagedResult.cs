@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-#pragma warning disable 8618
-
 namespace FreshdeskApi.Client
 {
     /// <summary>
@@ -16,6 +14,6 @@ namespace FreshdeskApi.Client
         public long? Total { get; set; }
 
         [JsonProperty("results")]
-        public List<T> Results { get; set; }
+        public List<T>? Results { get; set; }
     }
 }

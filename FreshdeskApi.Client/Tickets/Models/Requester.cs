@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-#pragma warning disable 8618
-
 namespace FreshdeskApi.Client.Tickets.Models
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -12,16 +10,16 @@ namespace FreshdeskApi.Client.Tickets.Models
         public long Id { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [JsonProperty("mobile")]
-        public string Mobile { get; set; }
+        public string? Mobile { get; set; }
 
         [JsonProperty("phone")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         public override string ToString()
         {

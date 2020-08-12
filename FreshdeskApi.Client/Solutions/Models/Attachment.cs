@@ -2,8 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-#pragma warning disable 8618
-
 namespace FreshdeskApi.Client.Solutions.Models
 {
     /// <summary>
@@ -18,10 +16,10 @@ namespace FreshdeskApi.Client.Solutions.Models
         public long Id { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("content_type")]
-        public string ContentType { get; set; }
+        public string? ContentType { get; set; }
 
         [JsonProperty("size")]
         public long Size { get; set; }
@@ -33,7 +31,7 @@ namespace FreshdeskApi.Client.Solutions.Models
         public DateTimeOffset UpdatedAt { get; set; }
 
         [JsonProperty("attachment_url")]
-        public Uri AttachmentUrl { get; set; }
+        public Uri? AttachmentUrl { get; set; }
 
         public override string ToString()
         {
