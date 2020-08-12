@@ -75,6 +75,7 @@ namespace FreshdeskApi.Client.Contacts
         /// unblocked/undeleted contacts.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -84,11 +85,12 @@ namespace FreshdeskApi.Client.Contacts
         /// </returns>
         public async IAsyncEnumerable<ListContact> ListAllContactsAsync(
             ListAllContactsRequest request,
+            PaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            await foreach (var contact in _freshdeskClient.GetPagedResults<ListContact>(request.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var contact in _freshdeskClient.GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return contact;
             }

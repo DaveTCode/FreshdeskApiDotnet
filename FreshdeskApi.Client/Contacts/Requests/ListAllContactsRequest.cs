@@ -22,7 +22,8 @@ namespace FreshdeskApi.Client.Contacts.Requests
             string? phone = null,
             long? companyId = null,
             ContactState? contactState = null,
-            DateTimeOffset? updatedSince = null)
+            DateTimeOffset? updatedSince = null
+        )
         {
             var urlParams = new Dictionary<string, string?>
             {

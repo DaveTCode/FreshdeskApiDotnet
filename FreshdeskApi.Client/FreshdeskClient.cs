@@ -158,10 +158,22 @@ namespace FreshdeskApi.Client
             };
         }
 
-        internal async IAsyncEnumerable<T> GetPagedResults<T>(string url, bool newStylePages, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        internal async IAsyncEnumerable<T> GetPagedResults<T>(
+            string url,
+            PaginationConfiguration? pagingConfiguration,
+            bool newStylePages,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            if (url.Contains("?")) url += "&page=1";
-            else url += "?page=1";
+            pagingConfiguration ??= new PaginationConfiguration();
+
+            var page = pagingConfiguration.StartingPage;
+            if (url.Contains("?")) url += $"&page={page}";
+            else url += $"?page={page}";
+
+            if (pagingConfiguration.PageSize.HasValue)
+            {
+                url += $"&per_page={pagingConfiguration.PageSize}";
+            }
 
             var morePages = true;
 
@@ -211,6 +223,8 @@ namespace FreshdeskApi.Client
                     yield return data;
                 }
 
+                pagingConfiguration.ProcessedPage?.Invoke(page);
+
                 // Handle a link header reflecting that there's another page of data
                 if (response.Headers.TryGetValues("link", out var linkHeaderValues))
                 {
@@ -223,6 +237,7 @@ namespace FreshdeskApi.Client
                     {
                         var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
                         url = nextLinkMatch.Groups["url"].Value;
+                        page++;
                     }
                 }
                 else
