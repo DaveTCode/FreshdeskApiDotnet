@@ -9,7 +9,7 @@ doesn't make use of that feature and is therefore available in .NET Standard 2.0
 
 ## Usage
 
-This library provides a single client class which can be created in one of two ways:
+This library provides a single client class which can be created in one of several ways:
 
 1. No existing HttpClient object (suitable for console applications)
 
@@ -27,6 +27,14 @@ var freshdeskClient = new FreshdeskClient(myHttpClient);
 ```
 
 NOTE: Typically you don't want to dispose the freshdesk client in this case.
+
+3. Using `Microsoft.Extensions.DependencyInjection`
+
+```csharp
+serviceCollection.AddHttpClient<IFreshdeskClient, FreshdeskClient>(client => {
+  client.ConfigureFreshdeskApi(freshdeskConfiguration.Domain, freshdeskConfiguration.ApiKey); 
+})
+```
 
 ### Examples
 

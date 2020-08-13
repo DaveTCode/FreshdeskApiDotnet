@@ -1,23 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
+﻿using FreshdeskApi.Client.Companies.Models;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using FreshdeskApi.Client.Companies.Models;
 
 namespace FreshdeskApi.Client.Companies
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
+    public interface IFreshdeskCompaniesClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
-
-        public FreshdeskCompaniesClient(FreshdeskClient freshdeskClient)
-        {
-            _freshdeskClient = freshdeskClient;
-        }
-
         /// <summary>
         /// Retrieve all details about a single company by its id.
         ///
@@ -30,14 +19,9 @@ namespace FreshdeskApi.Client.Companies
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The full company information</returns>
-        public async Task<Company> ViewCompanyAsync(
+        Task<Company> ViewCompanyAsync(
             long companyId,
-            CancellationToken cancellationToken = default)
-        {
-            return await _freshdeskClient
-                .ApiOperationAsync<Company>(HttpMethod.Get, $"/api/v2/companies/{companyId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all available companies
@@ -51,14 +35,8 @@ namespace FreshdeskApi.Client.Companies
         /// The full set of companies, this request is paged and iterating to the
         /// next entry may cause a new API call to get the next page.
         /// </returns>
-        public async IAsyncEnumerable<Company> ListAllCompaniesAsync(
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await foreach (var company in _freshdeskClient.GetPagedResults<Company>("/api/v2/companies", false, cancellationToken).ConfigureAwait(false))
-            {
-                yield return company;
-            }
-        }
+        IAsyncEnumerable<Company> ListAllCompaniesAsync(
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Filter the full set of companies with a filter of the form:
@@ -80,14 +58,8 @@ namespace FreshdeskApi.Client.Companies
         /// The filtered set of companies, this request is paged and iterating 
         /// to the next entry may cause a new API call to get the next page.
         /// </returns>
-        public async IAsyncEnumerable<Company> FilterCompaniesAsync(
+        IAsyncEnumerable<Company> FilterCompaniesAsync(
             string encodedQuery,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await foreach (var company in _freshdeskClient.GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", true, cancellationToken).ConfigureAwait(false))
-            {
-                yield return company;
-            }
-        }
+            CancellationToken cancellationToken = default);
     }
 }

@@ -136,7 +136,7 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// The set of ticket fields which are nested within this one, note
         /// that not all fields are populated on nested ticket fields.
         /// </summary>
-        public TicketField[] NestedTicketFields { get; set; }
+        public TicketField[]? NestedTicketFields { get; set; }
 
         public override string ToString()
         {

@@ -24,7 +24,7 @@ using Newtonsoft.Json;
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
 {
-    public class FreshdeskClient : IDisposable
+    public class FreshdeskClient : IFreshdeskClient, IDisposable
     {
         /// <summary>
         /// Note this is obviously not a full method for parsing RFC5988 link
@@ -42,23 +42,23 @@ namespace FreshdeskApi.Client
 
         public long RateLimitTotal { get; private set; } = -1;
 
-        public FreshdeskTicketClient Tickets { get; }
+        public IFreshdeskTicketClient Tickets { get; }
 
-        public FreshdeskContactClient Contacts { get; }
+        public IFreshdeskContactClient Contacts { get; }
 
-        public FreshdeskGroupClient Groups { get; }
+        public IFreshdeskGroupClient Groups { get; }
 
-        public FreshdeskAgentClient Agents { get; }
+        public IFreshdeskAgentClient Agents { get; }
 
-        public FreshdeskCompaniesClient Companies { get; }
+        public IFreshdeskCompaniesClient Companies { get; }
 
-        public FreshdeskSolutionClient Solutions { get; }
+        public IFreshdeskSolutionClient Solutions { get; }
 
-        public TicketFieldsClient TicketFields { get; }
+        public ITicketFieldsClient TicketFields { get; }
 
-        public ConversationsClient Conversations { get; }
+        public IConversationsClient Conversations { get; }
 
-        public ChannelApiClient ChannelApi { get; }
+        public IChannelApiClient ChannelApi { get; }
 
         private readonly HttpClient _httpClient;
 

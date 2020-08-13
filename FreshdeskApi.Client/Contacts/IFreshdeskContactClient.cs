@@ -1,25 +1,13 @@
-﻿using System;
+﻿using FreshdeskApi.Client.Contacts.Models;
+using FreshdeskApi.Client.Contacts.Requests;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FreshdeskApi.Client.Contacts.Models;
-using FreshdeskApi.Client.Contacts.Requests;
 
 namespace FreshdeskApi.Client.Contacts
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class FreshdeskContactClient : IFreshdeskContactClient
+    public interface IFreshdeskContactClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
-
-        public FreshdeskContactClient(FreshdeskClient freshdeskClient)
-        {
-            _freshdeskClient = freshdeskClient;
-        }
-
         /// <summary>
         /// Retrieve all details about a single contact by their id.
         ///
@@ -32,14 +20,9 @@ namespace FreshdeskApi.Client.Contacts
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The full contact information</returns>
-        public async Task<Contact> ViewContactAsync(
+        Task<Contact> ViewContactAsync(
             long contactId,
-            CancellationToken cancellationToken = default)
-        {
-            return await _freshdeskClient
-                .ApiOperationAsync<Contact>(HttpMethod.Get, $"/api/v2/contacts/{contactId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new contact with the specified information
@@ -52,16 +35,9 @@ namespace FreshdeskApi.Client.Contacts
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The newly created contact</returns>
-        public async Task<Contact> CreateContactAsync(
+        Task<Contact> CreateContactAsync(
             ContactCreateRequest request,
-            CancellationToken cancellationToken = default)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-
-            return await _freshdeskClient
-                .ApiOperationAsync<Contact>(HttpMethod.Post, "/api/v2/contacts", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Filter the list of contacts according to a set of predefined filters.
@@ -82,17 +58,9 @@ namespace FreshdeskApi.Client.Contacts
         /// request is paged and iterating to the next entry may cause a new
         /// API call to get the next page.
         /// </returns>
-        public async IAsyncEnumerable<ListContact> ListAllContactsAsync(
+        IAsyncEnumerable<ListContact> ListAllContactsAsync(
             ListAllContactsRequest request,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-
-            await foreach (var contact in _freshdeskClient.GetPagedResults<ListContact>(request.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
-            {
-                yield return contact;
-            }
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a contact with new details.
@@ -111,17 +79,10 @@ namespace FreshdeskApi.Client.Contacts
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The newly updated contact</returns>
-        public async Task<Contact> UpdateContactAsync(
+        Task<Contact> UpdateContactAsync(
             long contactId,
             UpdateContactRequest request,
-            CancellationToken cancellationToken = default)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-
-            return await _freshdeskClient
-                .ApiOperationAsync<Contact>(HttpMethod.Put, $"/api/v2/contacts/{contactId}", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Convert a contact into an agent
@@ -153,16 +114,9 @@ namespace FreshdeskApi.Client.Contacts
         /// <param name="cancellationToken"></param>
         ///
         /// <returns></returns>
-        public async Task<Contact> MakeAgentAsync(
+        Task<Contact> MakeAgentAsync(
             long contactId,
             MakeAgentRequest request,
-            CancellationToken cancellationToken = default)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-
-            return await _freshdeskClient
-                .ApiOperationAsync<Contact>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/make_agent", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
     }
 }
