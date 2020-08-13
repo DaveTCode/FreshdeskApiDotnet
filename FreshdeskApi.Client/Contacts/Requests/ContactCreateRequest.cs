@@ -91,7 +91,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// c.f. https://support.freshdesk.com/support/solutions/articles/216553
         /// </summary>
         [JsonProperty("custom_fields")]
-        public Dictionary<string, string>? CustomFields { get; }
+        public Dictionary<string, object>? CustomFields { get; }
 
         /// <summary>
         /// A small description of the contact
@@ -129,7 +129,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
 
         public ContactCreateRequest(string name, string? email = null, string? phone = null, string? mobile = null, string? twitterId = null,
             string? uniqueExternalId = null, string[]? otherEmails = null, long? companyId = null, bool? viewAllTickets = null,
-            long[]? otherCompanies = null, string? address = null, Dictionary<string, string>? customFields = null,
+            long[]? otherCompanies = null, string? address = null, Dictionary<string, object>? customFields = null,
             string? description = null, string? jobTitle = null, string? language = null, string[]? tags = null, string? timeZone = null)
         {
             Name = name;
