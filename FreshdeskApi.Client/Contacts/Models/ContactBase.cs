@@ -141,7 +141,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// External ID of the contact
         /// </summary>
         [JsonProperty("unique_external_id")]
-        public long? UniqueExternalId { get; set; }
+        public string? UniqueExternalId { get; set; }
 
         [JsonProperty("twitter_profile_status")]
         public bool TwitterProfileStatus { get; set; }
