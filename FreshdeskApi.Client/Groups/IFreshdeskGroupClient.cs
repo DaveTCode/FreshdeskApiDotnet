@@ -1,25 +1,13 @@
-﻿using System;
+﻿using FreshdeskApi.Client.Groups.Models;
+using FreshdeskApi.Client.Groups.Requests;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FreshdeskApi.Client.Groups.Models;
-using FreshdeskApi.Client.Groups.Requests;
 
 namespace FreshdeskApi.Client.Groups
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class FreshdeskGroupClient : IFreshdeskGroupClient
+    public interface IFreshdeskGroupClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
-
-        public FreshdeskGroupClient(FreshdeskClient freshdeskClient)
-        {
-            _freshdeskClient = freshdeskClient;
-        }
-
         /// <summary>
         /// Retrieve all details about a single group by its id.
         ///
@@ -32,14 +20,9 @@ namespace FreshdeskApi.Client.Groups
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The full group information</returns>
-        public async Task<Group> ViewGroupAsync(
+        Task<Group> ViewGroupAsync(
             long groupId,
-            CancellationToken cancellationToken = default)
-        {
-            return await _freshdeskClient
-                .ApiOperationAsync<Group>(HttpMethod.Get, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all available groups
@@ -53,14 +36,8 @@ namespace FreshdeskApi.Client.Groups
         /// The full set of groups, this request is paged and iterating to the
         /// next entry may cause a new API call to get the next page.
         /// </returns>
-        public async IAsyncEnumerable<Group> ListAllGroupsAsync(
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await foreach (var group in _freshdeskClient.GetPagedResults<Group>("/api/v2/groups", false, cancellationToken).ConfigureAwait(false))
-            {
-                yield return group;
-            }
-        }
+        IAsyncEnumerable<Group> ListAllGroupsAsync(
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a group from the Freshdesk instance.
@@ -77,14 +54,9 @@ namespace FreshdeskApi.Client.Groups
         /// </param>
         ///
         /// <param name="cancellationToken"></param>
-        public async Task DeleteGroupAsync(
+        Task DeleteGroupAsync(
             long groupId,
-            CancellationToken cancellationToken = default)
-        {
-            await _freshdeskClient
-                .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false); ;
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new group of agents
@@ -99,13 +71,8 @@ namespace FreshdeskApi.Client.Groups
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The newly created group</returns>
-        public async Task<Group> CreateGroupAsync(
+        Task<Group> CreateGroupAsync(
             CreateGroupRequest request,
-            CancellationToken cancellationToken = default)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-
-            return await _freshdeskClient.ApiOperationAsync<Group>(HttpMethod.Post, "/api/v2/groups", request, cancellationToken);
-        }
+            CancellationToken cancellationToken = default);
     }
 }

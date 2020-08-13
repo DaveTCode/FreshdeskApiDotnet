@@ -17,22 +17,22 @@ namespace FreshdeskApi.Client
 
         long RateLimitTotal { get; }
 
-        FreshdeskTicketClient Tickets { get; }
+        IFreshdeskTicketClient Tickets { get; }
 
-        FreshdeskContactClient Contacts { get; }
+        IFreshdeskContactClient Contacts { get; }
 
-        FreshdeskGroupClient Groups { get; }
+        IFreshdeskGroupClient Groups { get; }
 
-        FreshdeskAgentClient Agents { get; }
+        IFreshdeskAgentClient Agents { get; }
 
-        FreshdeskCompaniesClient Companies { get; }
+        IFreshdeskCompaniesClient Companies { get; }
 
-        FreshdeskSolutionClient Solutions { get; }
+        IFreshdeskSolutionClient Solutions { get; }
 
-        TicketFieldsClient TicketFields { get; }
+        ITicketFieldsClient TicketFields { get; }
 
-        ConversationsClient Conversations { get; }
+        IConversationsClient Conversations { get; }
 
-        ChannelApiClient ChannelApi { get; }
+        IChannelApiClient ChannelApi { get; }
     }
 }

@@ -1,25 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using FreshdeskApi.Client.Conversations.Models;
+﻿using FreshdeskApi.Client.Conversations.Models;
 using FreshdeskApi.Client.Tickets.Models;
 using FreshdeskApi.Client.Tickets.Requests;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FreshdeskApi.Client.Tickets
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class FreshdeskTicketClient : IFreshdeskTicketClient
+    public interface IFreshdeskTicketClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
-
-        public FreshdeskTicketClient(FreshdeskClient freshdeskClient)
-        {
-            _freshdeskClient = freshdeskClient;
-        }
-
         /// <summary>
         /// Get all information about a single ticket by <see cref="ticketId"/>
         ///
@@ -38,22 +27,10 @@ namespace FreshdeskApi.Client.Tickets
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The full ticket information</returns>
-        public async Task<Ticket> ViewTicketAsync(
+        Task<Ticket> ViewTicketAsync(
             long ticketId,
             TicketIncludes? includes = default,
-            CancellationToken cancellationToken = default)
-        {
-            var url = $"/api/v2/tickets/{ticketId}";
-
-            if (includes.HasValue)
-            {
-                url += $"?include={includes}";
-            }
-
-            return await _freshdeskClient
-                .ApiOperationAsync<Ticket>(HttpMethod.Get, url, cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// View all tickets applying the required filters.
@@ -75,15 +52,9 @@ namespace FreshdeskApi.Client.Tickets
         /// therefore if there are multiple pages of results iterating to the next item
         /// may cause an API call.
         /// </returns>
-        public async IAsyncEnumerable<Ticket> ListAllTicketsAsync(
+        IAsyncEnumerable<Ticket> ListAllTicketsAsync(
             ListAllTicketsRequest listAllTicketsRequest,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>(listAllTicketsRequest.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
-            {
-                yield return ticket;
-            }
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Filter all tickets according to the query language described in the
@@ -104,15 +75,9 @@ namespace FreshdeskApi.Client.Tickets
         /// therefore if there are multiple pages of results iterating to the next item
         /// may cause an API call.
         /// </returns>
-        public async IAsyncEnumerable<Ticket> FilterTicketsAsync(
+        IAsyncEnumerable<Ticket> FilterTicketsAsync(
             string encodedQuery,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", true, cancellationToken).ConfigureAwait(false))
-            {
-                yield return ticket;
-            }
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new ticket in Freshdesk.
@@ -129,14 +94,9 @@ namespace FreshdeskApi.Client.Tickets
         /// <returns>
         /// The newly created ticket with its ID included.
         /// </returns>
-        public async Task<Ticket> CreateTicketAsync(
+        Task<Ticket> CreateTicketAsync(
             CreateTicketRequest createTicketRequest,
-            CancellationToken cancellationToken = default)
-        {
-            return await _freshdeskClient
-                .ApiOperationAsync<Ticket>(HttpMethod.Post, "/api/v2/tickets", createTicketRequest, cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new ticket in Freshdesk.
@@ -157,15 +117,10 @@ namespace FreshdeskApi.Client.Tickets
         /// <returns>
         /// The updated ticket with all the new values as seen by the API.
         /// </returns>
-        public async Task<Ticket> UpdateTicketAsync(
+        Task<Ticket> UpdateTicketAsync(
             long ticketId,
             UpdateTicketRequest updateTicketRequest,
-            CancellationToken cancellationToken = default)
-        {
-            return await _freshdeskClient
-                .ApiOperationAsync<Ticket>(HttpMethod.Put, $"/api/v2/tickets/{ticketId}", updateTicketRequest, cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete the ticket with id <see cref="ticketId"/>
@@ -178,14 +133,9 @@ namespace FreshdeskApi.Client.Tickets
         /// </param>
         ///
         /// <param name="cancellationToken"></param>
-        public async Task DeleteTicketAsync(
+        Task DeleteTicketAsync(
             long ticketId,
-            CancellationToken cancellationToken = default)
-        {
-            await _freshdeskClient
-                .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/tickets/{ticketId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Restore a previously deleted ticket.
@@ -198,14 +148,9 @@ namespace FreshdeskApi.Client.Tickets
         /// </param>
         ///
         /// <param name="cancellationToken"></param>
-        public async Task RestoreTicketAsync(
+        Task RestoreTicketAsync(
             long ticketId,
-            CancellationToken cancellationToken = default)
-        {
-            await _freshdeskClient
-                .ApiOperationAsync<string>(HttpMethod.Put, $"/api/v2/tickets/{ticketId}/restore", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the full set of conversation entries for a given ticket.
@@ -232,15 +177,9 @@ namespace FreshdeskApi.Client.Tickets
         /// from the API can be paged this is async and iterating to the next
         /// entry may cause another API call if there are several pages.
         /// </returns>
-        public async IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
+        IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
             long ticketId,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await foreach (var conversationEntry in _freshdeskClient.GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", false, cancellationToken).ConfigureAwait(false))
-            {
-                yield return conversationEntry;
-            }
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the full set of time entries for a given ticket.
@@ -267,15 +206,9 @@ namespace FreshdeskApi.Client.Tickets
         /// from the API can be paged this is async and iterating to the next
         /// entry may cause another API call if there are several pages.
         /// </returns>
-        public async IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
+        IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
             long ticketId,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await foreach (var timeEntry in _freshdeskClient.GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", false, cancellationToken).ConfigureAwait(false))
-            {
-                yield return timeEntry;
-            }
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the full set of satisfaction ratings for a given ticket.
@@ -302,14 +235,8 @@ namespace FreshdeskApi.Client.Tickets
         /// from the API can be paged this is async and iterating to the next
         /// entry may cause another API call if there are several pages.
         /// </returns>
-        public async IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
+        IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
             long ticketId,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            await foreach (var satisfactionRating in _freshdeskClient.GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", false, cancellationToken).ConfigureAwait(false))
-            {
-                yield return satisfactionRating;
-            }
-        }
+            CancellationToken cancellationToken = default);
     }
 }

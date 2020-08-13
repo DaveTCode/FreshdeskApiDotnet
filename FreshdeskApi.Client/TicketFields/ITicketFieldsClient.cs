@@ -1,31 +1,13 @@
-﻿using System;
+﻿using FreshdeskApi.Client.TicketFields.Models;
+using FreshdeskApi.Client.TicketFields.Requests;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using FreshdeskApi.Client.TicketFields.Models;
-using FreshdeskApi.Client.TicketFields.Requests;
 
 namespace FreshdeskApi.Client.TicketFields
 {
-    /// <summary>
-    /// Covers API calls referring to the ticket field configuration.
-    ///
-    /// Note that only admin users can access these API calls.
-    ///
-    /// c.f. https://developers.freshdesk.com/api/#ticket-fields
-    /// </summary>
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class TicketFieldsClient : ITicketFieldsClient
+    public interface ITicketFieldsClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
-
-        public TicketFieldsClient(FreshdeskClient freshdeskClient)
-        {
-            _freshdeskClient = freshdeskClient;
-        }
-
         /// <summary>
         /// Return the full list of ticket fields
         ///
@@ -38,13 +20,8 @@ namespace FreshdeskApi.Client.TicketFields
         /// A list of all configured ticket fields, note that this API is not
         /// paged so an entire list is returned every time.
         /// </returns>
-        public async Task<List<TicketField>> ListAllTicketFieldsAsync(
-            CancellationToken cancellationToken = default)
-        {
-            return await _freshdeskClient
-                .ApiOperationAsync<List<TicketField>>(HttpMethod.Get, "/api/v2/ticket_fields", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        Task<List<TicketField>> ListAllTicketFieldsAsync(
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Return a single ticket field by it's id
@@ -59,14 +36,9 @@ namespace FreshdeskApi.Client.TicketFields
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The complete ticket field information</returns>
-        public async Task<TicketField> ViewTicketFieldAsync(
+        Task<TicketField> ViewTicketFieldAsync(
             long ticketFieldId,
-            CancellationToken cancellationToken = default)
-        {
-            return await _freshdeskClient
-                .ApiOperationAsync<TicketField>(HttpMethod.Get, $"/api/v2/admin/ticket_fields/{ticketFieldId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a ticket field
@@ -79,14 +51,9 @@ namespace FreshdeskApi.Client.TicketFields
         /// </param>
         ///
         /// <param name="cancellationToken"></param>
-        public async Task DeleteTicketFieldAsync(
+        Task DeleteTicketFieldAsync(
             long ticketFieldId,
-            CancellationToken cancellationToken = default)
-        {
-            await _freshdeskClient
-                .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/admin/ticket_fields/{ticketFieldId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new ticket field
@@ -96,16 +63,9 @@ namespace FreshdeskApi.Client.TicketFields
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<TicketField> CreateTicketFieldAsync(
+        Task<TicketField> CreateTicketFieldAsync(
             CreateTicketFieldRequest request,
-            CancellationToken cancellationToken = default)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-
-            return await _freshdeskClient
-                .ApiOperationAsync<TicketField>(HttpMethod.Post, "/api/v2/admin/ticket_fields", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a ticket field with new properties.
@@ -124,19 +84,10 @@ namespace FreshdeskApi.Client.TicketFields
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The newly updated ticket field</returns>
-        public async Task<TicketField> UpdateTicketFieldAsync(
+        Task<TicketField> UpdateTicketFieldAsync(
             long ticketFieldId,
             UpdateTicketFieldRequest request,
-            CancellationToken cancellationToken = default)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-
-            return await _freshdeskClient
-                .ApiOperationAsync<TicketField>(HttpMethod.Put, $"/api/v2/admin/ticket_fields/{ticketFieldId}", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        #region Sections
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns the set of sections within a ticket field
@@ -154,14 +105,9 @@ namespace FreshdeskApi.Client.TicketFields
         /// All the sections in a single list (since the API is not
         /// paged)
         /// </returns>
-        public async Task<List<Section>> ListAllSectionsAsync(
+        Task<List<Section>> ListAllSectionsAsync(
             long ticketFieldId,
-            CancellationToken cancellationToken = default)
-        {
-            return await _freshdeskClient
-                .ApiOperationAsync<List<Section>>(HttpMethod.Get, $"/api/v2/admin/ticket_fields/{ticketFieldId}/sections", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all details about a specific section.
@@ -182,15 +128,10 @@ namespace FreshdeskApi.Client.TicketFields
         /// <returns>
         /// All details about the section
         /// </returns>
-        public async Task<Section> ViewSectionAsync(
+        Task<Section> ViewSectionAsync(
             long ticketFieldId,
             long sectionId,
-            CancellationToken cancellationToken = default)
-        {
-            return await _freshdeskClient
-                .ApiOperationAsync<Section>(HttpMethod.Get, $"/api/v2/admin/ticket_fields/{ticketFieldId}/sections/{sectionId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a section
@@ -205,15 +146,10 @@ namespace FreshdeskApi.Client.TicketFields
         /// <param name="sectionId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task DeleteSectionAsync(
+        Task DeleteSectionAsync(
             long ticketFieldId,
             long sectionId,
-            CancellationToken cancellationToken = default)
-        {
-            await _freshdeskClient
-                .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/admin/ticket_fields/{ticketFieldId}/sections/{sectionId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new section within a ticket field.
@@ -232,17 +168,10 @@ namespace FreshdeskApi.Client.TicketFields
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The newly created section</returns>
-        public async Task<Section> CreateSectionAsync(
+        Task<Section> CreateSectionAsync(
             long ticketFieldId,
             CreateSectionRequest request,
-            CancellationToken cancellationToken = default)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-
-            return await _freshdeskClient
-                .ApiOperationAsync<Section>(HttpMethod.Post, $"/api/v2/admin/ticket_fields/{ticketFieldId}/sections", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a section within a ticket field.
@@ -265,19 +194,10 @@ namespace FreshdeskApi.Client.TicketFields
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The updated section</returns>
-        public async Task<Section> UpdateSectionAsync(
+        Task<Section> UpdateSectionAsync(
             long ticketFieldId,
             long sectionId,
             UpdateSectionRequest request,
-            CancellationToken cancellationToken = default)
-        {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-
-            return await _freshdeskClient
-                .ApiOperationAsync<Section>(HttpMethod.Put, $"/api/v2/admin/ticket_fields/{ticketFieldId}/sections/{sectionId}", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        #endregion
+            CancellationToken cancellationToken = default);
     }
 }
