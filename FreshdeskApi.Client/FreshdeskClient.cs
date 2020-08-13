@@ -24,7 +24,7 @@ using Newtonsoft.Json;
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
 {
-    public class FreshdeskClient : IDisposable
+    public class FreshdeskClient : IFreshdeskClient, IDisposable
     {
         /// <summary>
         /// Note this is obviously not a full method for parsing RFC5988 link
