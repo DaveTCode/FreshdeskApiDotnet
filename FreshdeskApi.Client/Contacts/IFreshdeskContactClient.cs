@@ -51,6 +51,7 @@ namespace FreshdeskApi.Client.Contacts
         /// unblocked/undeleted contacts.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -60,6 +61,7 @@ namespace FreshdeskApi.Client.Contacts
         /// </returns>
         IAsyncEnumerable<ListContact> ListAllContactsAsync(
             ListAllContactsRequest request,
+            PaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>

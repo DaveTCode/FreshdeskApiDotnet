@@ -29,6 +29,7 @@ namespace FreshdeskApi.Client.Companies
         /// c.f. https://developers.freshdesk.com/api/#list_all_companies
         /// </summary>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -36,6 +37,7 @@ namespace FreshdeskApi.Client.Companies
         /// next entry may cause a new API call to get the next page.
         /// </returns>
         IAsyncEnumerable<Company> ListAllCompaniesAsync(
+            PaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -52,6 +54,7 @@ namespace FreshdeskApi.Client.Companies
         /// Will be appended with ?query="encodedQuery" so don't enclose in quotes.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -60,6 +63,7 @@ namespace FreshdeskApi.Client.Companies
         /// </returns>
         IAsyncEnumerable<Company> FilterCompaniesAsync(
             string encodedQuery,
+            PaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
     }
 }

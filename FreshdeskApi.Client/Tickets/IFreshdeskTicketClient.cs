@@ -45,6 +45,7 @@ namespace FreshdeskApi.Client.Tickets
         /// A request object with required filters filled in.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -54,6 +55,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<Ticket> ListAllTicketsAsync(
             ListAllTicketsRequest listAllTicketsRequest,
+            PaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -68,6 +70,7 @@ namespace FreshdeskApi.Client.Tickets
         /// (ticket_field:integer or ticket_field:'string') AND ticket_field:boolean
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -77,6 +80,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<Ticket> FilterTicketsAsync(
             string encodedQuery,
+            PaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -170,6 +174,7 @@ namespace FreshdeskApi.Client.Tickets
         /// An existing ticket in the Freshdesk instance.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -179,6 +184,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
             long ticketId,
+            PaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -199,6 +205,7 @@ namespace FreshdeskApi.Client.Tickets
         /// An existing ticket in the Freshdesk instance.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -208,6 +215,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
             long ticketId,
+            PaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -228,6 +236,7 @@ namespace FreshdeskApi.Client.Tickets
         /// An existing ticket in the Freshdesk instance.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -237,6 +246,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
             long ticketId,
+            PaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
     }
 }
