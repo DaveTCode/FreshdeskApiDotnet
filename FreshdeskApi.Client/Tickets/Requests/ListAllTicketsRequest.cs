@@ -35,7 +35,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
                 { "email", requesterEmail },
                 { "company_id", companyId?.ToString() },
                 { "updated_since", updatedSince?.ToString("yyyy-MM-ddTHH:mm:ssZ") },
-                { "includes", includes?.ToString() },
+                { "include", includes?.ToString() },
                 { "order_by", orderBy?.QueryParameterValue() },
                 { "order_type", orderDir?.QueryParameterValue() }
             }.Where(x => x.Value != null)
