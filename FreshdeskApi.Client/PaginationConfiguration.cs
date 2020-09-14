@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace FreshdeskApi.Client
 {
@@ -8,6 +9,8 @@ namespace FreshdeskApi.Client
 
         public int? PageSize { get; set; }
 
-        public Action<int>? ProcessedPage { get; set; }
+        public Func<int, Task>? BeforeProcessingPage { get; set; }
+
+        public Func<int, Task>? ProcessedPage { get; set; }
     }
 }
