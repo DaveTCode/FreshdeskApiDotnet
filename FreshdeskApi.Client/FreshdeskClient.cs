@@ -220,7 +220,7 @@ namespace FreshdeskApi.Client
 
                 if (pagingConfiguration.BeforeProcessingPageAsync != null)
                 {
-                    await pagingConfiguration.BeforeProcessingPageAsync.Invoke(page).ConfigureAwait(false);
+                    await pagingConfiguration.BeforeProcessingPageAsync(page, cancellationToken).ConfigureAwait(false);
                 }
 
                 foreach (var data in newData ?? new List<T>())
@@ -230,7 +230,7 @@ namespace FreshdeskApi.Client
 
                 if (pagingConfiguration.ProcessedPageAsync != null)
                 {
-                    await pagingConfiguration.ProcessedPageAsync.Invoke(page).ConfigureAwait(false);
+                    await pagingConfiguration.ProcessedPageAsync(page, cancellationToken).ConfigureAwait(false);
                 }
 
                 // Handle a link header reflecting that there's another page of data

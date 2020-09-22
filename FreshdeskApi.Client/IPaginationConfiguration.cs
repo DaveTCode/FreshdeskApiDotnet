@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace FreshdeskApi.Client
@@ -19,14 +19,16 @@ namespace FreshdeskApi.Client
         /// </summary>
         int? PageSize { get; }
 
+        public delegate Task ProcessPageDelegate(int page, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// This event is invoked right after deserialization of the page
         /// </summary>
-        Func<int, Task>? BeforeProcessingPageAsync { get; }
+        ProcessPageDelegate? BeforeProcessingPageAsync { get; }
 
         /// <summary>
         /// This event is invoked after processing of all items on given page 
         /// </summary>
-        Func<int, Task>? ProcessedPageAsync { get; }
+        ProcessPageDelegate? ProcessedPageAsync { get; }
     }
 }

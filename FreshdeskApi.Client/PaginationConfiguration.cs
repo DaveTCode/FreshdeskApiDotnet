@@ -1,19 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace FreshdeskApi.Client
+﻿namespace FreshdeskApi.Client
 {
     public sealed class PaginationConfiguration : IPaginationConfiguration
     {
+        /// <param name="startingPage">Page to start from. Default 1</param>
+        /// <param name="pageSize">Page size, default unspecified</param>
+        /// <param name="beforeProcessingPageAsync">Hook before page is processed, optional</param>
+        /// <param name="processedPageAsync">Hook after page is processed, optional</param>
         public PaginationConfiguration(
-            int? pageSize = null,
             int startingPage = 1,
-            Func<int, Task>? beforeProcessingPageAsync = null,
-            Func<int, Task>? processedPageAsync = null
+            int? pageSize = null,
+            IPaginationConfiguration.ProcessPageDelegate? beforeProcessingPageAsync = null,
+            IPaginationConfiguration.ProcessPageDelegate? processedPageAsync = null
         )
         {
-            PageSize = pageSize;
             StartingPage = startingPage;
+            PageSize = pageSize;
             BeforeProcessingPageAsync = beforeProcessingPageAsync;
             ProcessedPageAsync = processedPageAsync;
         }
@@ -22,8 +23,8 @@ namespace FreshdeskApi.Client
 
         public int? PageSize { get; }
 
-        public Func<int, Task>? BeforeProcessingPageAsync { get; }
+        public IPaginationConfiguration.ProcessPageDelegate? BeforeProcessingPageAsync { get; }
 
-        public Func<int, Task>? ProcessedPageAsync { get; }
+        public IPaginationConfiguration.ProcessPageDelegate? ProcessedPageAsync { get; }
     }
 }
