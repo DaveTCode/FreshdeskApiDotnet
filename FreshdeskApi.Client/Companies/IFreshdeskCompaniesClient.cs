@@ -37,7 +37,7 @@ namespace FreshdeskApi.Client.Companies
         /// next entry may cause a new API call to get the next page.
         /// </returns>
         IAsyncEnumerable<Company> ListAllCompaniesAsync(
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace FreshdeskApi.Client.Companies
         /// </returns>
         IAsyncEnumerable<Company> FilterCompaniesAsync(
             string encodedQuery,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
     }
 }

@@ -61,7 +61,7 @@ namespace FreshdeskApi.Client.Contacts
         /// </returns>
         IAsyncEnumerable<ListContact> ListAllContactsAsync(
             ListAllContactsRequest request,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>

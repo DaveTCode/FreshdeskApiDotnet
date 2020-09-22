@@ -46,7 +46,7 @@ namespace FreshdeskApi.Client.Agents
         /// </returns>
         IAsyncEnumerable<Agent> ListAllAgentsAsync(
             ListAllAgentsRequest request,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>

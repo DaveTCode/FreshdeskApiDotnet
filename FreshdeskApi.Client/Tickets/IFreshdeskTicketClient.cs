@@ -55,7 +55,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<Ticket> ListAllTicketsAsync(
             ListAllTicketsRequest listAllTicketsRequest,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<Ticket> FilterTicketsAsync(
             string encodedQuery,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
             long ticketId,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
             long ticketId,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
             long ticketId,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
     }
 }

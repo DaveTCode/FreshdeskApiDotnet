@@ -160,7 +160,7 @@ namespace FreshdeskApi.Client
 
         internal async IAsyncEnumerable<T> GetPagedResults<T>(
             string url,
-            PaginationConfiguration? pagingConfiguration,
+            IPaginationConfiguration? pagingConfiguration,
             bool newStylePages,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {

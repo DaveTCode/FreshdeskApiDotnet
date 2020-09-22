@@ -79,7 +79,7 @@ namespace FreshdeskApi.Client.Solutions
         /// </returns>
         public async IAsyncEnumerable<Category> ListAllCategoriesAsync(
             string? languageCode = null,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
@@ -221,7 +221,7 @@ namespace FreshdeskApi.Client.Solutions
         public async IAsyncEnumerable<Folder> GetAllFoldersInCategoryAsync(
             long categoryId,
             string? languageCode = null,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
@@ -518,7 +518,7 @@ namespace FreshdeskApi.Client.Solutions
         public async IAsyncEnumerable<Article> ListArticlesInFolderAsync(
             long folderId,
             string? languageCode = null,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
@@ -568,7 +568,7 @@ namespace FreshdeskApi.Client.Solutions
         /// </returns>
         public async IAsyncEnumerable<Article> SearchSolutionsAsync(
             string termUnencoded,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = $"/api/v2/search/solutions?term={Uri.EscapeDataString(termUnencoded)}";

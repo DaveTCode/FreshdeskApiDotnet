@@ -53,7 +53,7 @@ namespace FreshdeskApi.Client.Companies
         /// next entry may cause a new API call to get the next page.
         /// </returns>
         public async IAsyncEnumerable<Company> ListAllCompaniesAsync(
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             await foreach (var company in _freshdeskClient.GetPagedResults<Company>("/api/v2/companies", pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
@@ -85,7 +85,7 @@ namespace FreshdeskApi.Client.Companies
         /// </returns>
         public async IAsyncEnumerable<Company> FilterCompaniesAsync(
             string encodedQuery,
-            PaginationConfiguration? pagingConfiguration = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             await foreach (var company in _freshdeskClient.GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", pagingConfiguration, true, cancellationToken).ConfigureAwait(false))
