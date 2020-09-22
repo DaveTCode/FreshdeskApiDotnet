@@ -218,9 +218,9 @@ namespace FreshdeskApi.Client
                     ? serializer.Deserialize<PagedResult<T>>(reader)?.Results
                     : serializer.Deserialize<List<T>>(reader);
 
-                if (pagingConfiguration.BeforeProcessingPage != null)
+                if (pagingConfiguration.BeforeProcessingPageAsync != null)
                 {
-                    await pagingConfiguration.BeforeProcessingPage.Invoke(page);
+                    await pagingConfiguration.BeforeProcessingPageAsync.Invoke(page).ConfigureAwait(false);
                 }
 
                 foreach (var data in newData ?? new List<T>())
@@ -228,9 +228,9 @@ namespace FreshdeskApi.Client
                     yield return data;
                 }
 
-                if (pagingConfiguration.ProcessedPage != null)
+                if (pagingConfiguration.ProcessedPageAsync != null)
                 {
-                    await pagingConfiguration.ProcessedPage.Invoke(page);
+                    await pagingConfiguration.ProcessedPageAsync.Invoke(page).ConfigureAwait(false);
                 }
 
                 // Handle a link header reflecting that there's another page of data
