@@ -58,6 +58,7 @@ namespace FreshdeskApi.Client.Agents
         /// agents.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -67,9 +68,10 @@ namespace FreshdeskApi.Client.Agents
         /// </returns>
         public async IAsyncEnumerable<Agent> ListAllAgentsAsync(
             ListAllAgentsRequest request,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var agent in _freshdeskClient.GetPagedResults<Agent>(request.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var agent in _freshdeskClient.GetPagedResults<Agent>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return agent;
             }

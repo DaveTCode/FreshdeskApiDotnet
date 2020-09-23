@@ -158,10 +158,22 @@ namespace FreshdeskApi.Client
             };
         }
 
-        internal async IAsyncEnumerable<T> GetPagedResults<T>(string url, bool newStylePages, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        internal async IAsyncEnumerable<T> GetPagedResults<T>(
+            string url,
+            IPaginationConfiguration? pagingConfiguration,
+            bool newStylePages,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            if (url.Contains("?")) url += "&page=1";
-            else url += "?page=1";
+            pagingConfiguration ??= new PaginationConfiguration();
+
+            var page = pagingConfiguration.StartingPage;
+            if (url.Contains("?")) url += $"&page={page}";
+            else url += $"?page={page}";
+
+            if (pagingConfiguration.PageSize.HasValue)
+            {
+                url += $"&per_page={pagingConfiguration.PageSize}";
+            }
 
             var morePages = true;
 
@@ -206,9 +218,19 @@ namespace FreshdeskApi.Client
                     ? serializer.Deserialize<PagedResult<T>>(reader)?.Results
                     : serializer.Deserialize<List<T>>(reader);
 
+                if (pagingConfiguration.BeforeProcessingPageAsync != null)
+                {
+                    await pagingConfiguration.BeforeProcessingPageAsync(page, cancellationToken).ConfigureAwait(false);
+                }
+
                 foreach (var data in newData ?? new List<T>())
                 {
                     yield return data;
+                }
+
+                if (pagingConfiguration.ProcessedPageAsync != null)
+                {
+                    await pagingConfiguration.ProcessedPageAsync(page, cancellationToken).ConfigureAwait(false);
                 }
 
                 // Handle a link header reflecting that there's another page of data
@@ -223,6 +245,7 @@ namespace FreshdeskApi.Client
                     {
                         var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
                         url = nextLinkMatch.Groups["url"].Value;
+                        page++;
                     }
                 }
                 else

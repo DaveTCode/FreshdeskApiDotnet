@@ -43,6 +43,7 @@ namespace FreshdeskApi.Client.Solutions
         /// Defaults to null which means don't translate.
         /// </param>
         /// 
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -51,6 +52,7 @@ namespace FreshdeskApi.Client.Solutions
         /// </returns>
         IAsyncEnumerable<Category> ListAllCategoriesAsync(
             string? languageCode = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -148,6 +150,7 @@ namespace FreshdeskApi.Client.Solutions
         /// which means use the default language untranslated.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -157,6 +160,7 @@ namespace FreshdeskApi.Client.Solutions
         IAsyncEnumerable<Folder> GetAllFoldersInCategoryAsync(
             long categoryId,
             string? languageCode = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -379,6 +383,7 @@ namespace FreshdeskApi.Client.Solutions
         /// means getting the default language version.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -388,6 +393,7 @@ namespace FreshdeskApi.Client.Solutions
         IAsyncEnumerable<Article> ListArticlesInFolderAsync(
             long folderId,
             string? languageCode = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -415,6 +421,7 @@ namespace FreshdeskApi.Client.Solutions
         /// The terms to search for, not yet URL encoded.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -423,6 +430,7 @@ namespace FreshdeskApi.Client.Solutions
         /// </returns>
         IAsyncEnumerable<Article> SearchSolutionsAsync(
             string termUnencoded,
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
     }
 }

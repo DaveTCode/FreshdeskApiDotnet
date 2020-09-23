@@ -70,6 +70,7 @@ namespace FreshdeskApi.Client.Solutions
         /// Defaults to null which means don't translate.
         /// </param>
         /// 
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -78,13 +79,14 @@ namespace FreshdeskApi.Client.Solutions
         /// </returns>
         public async IAsyncEnumerable<Category> ListAllCategoriesAsync(
             string? languageCode = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
                 ? "/api/v2/solutions/categories"
                 : $"/api/v2/solutions/categories/{languageCode}";
 
-            await foreach (var category in _freshdeskClient.GetPagedResults<Category>(url, false, cancellationToken))
+            await foreach (var category in _freshdeskClient.GetPagedResults<Category>(url, pagingConfiguration, false, cancellationToken))
             {
                 yield return category;
             }
@@ -209,6 +211,7 @@ namespace FreshdeskApi.Client.Solutions
         /// which means use the default language untranslated.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -218,13 +221,14 @@ namespace FreshdeskApi.Client.Solutions
         public async IAsyncEnumerable<Folder> GetAllFoldersInCategoryAsync(
             long categoryId,
             string? languageCode = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
                 ? $"/api/v2/solutions/categories/{categoryId}/folders"
                 : $"/api/v2/solutions/categories/{categoryId}/folders/{languageCode}";
 
-            await foreach (var folder in _freshdeskClient.GetPagedResults<Folder>(url, false, cancellationToken))
+            await foreach (var folder in _freshdeskClient.GetPagedResults<Folder>(url, pagingConfiguration, false, cancellationToken))
             {
                 yield return folder;
             }
@@ -504,6 +508,7 @@ namespace FreshdeskApi.Client.Solutions
         /// means getting the default language version.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -513,13 +518,14 @@ namespace FreshdeskApi.Client.Solutions
         public async IAsyncEnumerable<Article> ListArticlesInFolderAsync(
             long folderId,
             string? languageCode = null,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = string.IsNullOrWhiteSpace(languageCode)
                 ? $"/api/v2/solutions/folders/{folderId}/articles"
                 : $"/api/v2/solutions/folders/{folderId}/articles/{languageCode}";
 
-            await foreach (var article in _freshdeskClient.GetPagedResults<Article>(url, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var article in _freshdeskClient.GetPagedResults<Article>(url, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return article;
             }
@@ -553,6 +559,7 @@ namespace FreshdeskApi.Client.Solutions
         /// The terms to search for, not yet URL encoded.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -561,11 +568,12 @@ namespace FreshdeskApi.Client.Solutions
         /// </returns>
         public async IAsyncEnumerable<Article> SearchSolutionsAsync(
             string termUnencoded,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var url = $"/api/v2/search/solutions?term={Uri.EscapeDataString(termUnencoded)}";
 
-            await foreach (var article in _freshdeskClient.GetPagedResults<Article>(url, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var article in _freshdeskClient.GetPagedResults<Article>(url, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return article;
             }

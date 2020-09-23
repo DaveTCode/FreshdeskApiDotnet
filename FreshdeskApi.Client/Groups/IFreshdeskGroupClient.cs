@@ -30,6 +30,7 @@ namespace FreshdeskApi.Client.Groups
         /// c.f. https://developers.freshdesk.com/api/#list_all_groups
         /// </summary>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -37,6 +38,7 @@ namespace FreshdeskApi.Client.Groups
         /// next entry may cause a new API call to get the next page.
         /// </returns>
         IAsyncEnumerable<Group> ListAllGroupsAsync(
+            IPaginationConfiguration? pagingConfiguration = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>

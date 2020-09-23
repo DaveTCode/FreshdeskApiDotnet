@@ -68,6 +68,7 @@ namespace FreshdeskApi.Client.Tickets
         /// A request object with required filters filled in.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -77,9 +78,10 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         public async IAsyncEnumerable<Ticket> ListAllTicketsAsync(
             ListAllTicketsRequest listAllTicketsRequest,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>(listAllTicketsRequest.UrlWithQueryString, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>(listAllTicketsRequest.UrlWithQueryString, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return ticket;
             }
@@ -97,6 +99,7 @@ namespace FreshdeskApi.Client.Tickets
         /// (ticket_field:integer or ticket_field:'string') AND ticket_field:boolean
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -106,9 +109,10 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         public async IAsyncEnumerable<Ticket> FilterTicketsAsync(
             string encodedQuery,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", true, cancellationToken).ConfigureAwait(false))
+            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", pagingConfiguration, true, cancellationToken).ConfigureAwait(false))
             {
                 yield return ticket;
             }
@@ -225,6 +229,7 @@ namespace FreshdeskApi.Client.Tickets
         /// An existing ticket in the Freshdesk instance.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -234,9 +239,10 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         public async IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
             long ticketId,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var conversationEntry in _freshdeskClient.GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", false, cancellationToken).ConfigureAwait(false))
+            await foreach (var conversationEntry in _freshdeskClient.GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return conversationEntry;
             }
@@ -260,6 +266,7 @@ namespace FreshdeskApi.Client.Tickets
         /// An existing ticket in the Freshdesk instance.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -269,9 +276,10 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         public async IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
             long ticketId,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var timeEntry in _freshdeskClient.GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", false, cancellationToken).ConfigureAwait(false))
+            await foreach (var timeEntry in _freshdeskClient.GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return timeEntry;
             }
@@ -295,6 +303,7 @@ namespace FreshdeskApi.Client.Tickets
         /// An existing ticket in the Freshdesk instance.
         /// </param>
         ///
+        /// <param name="pagingConfiguration"></param>
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>
@@ -304,9 +313,10 @@ namespace FreshdeskApi.Client.Tickets
         /// </returns>
         public async IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
             long ticketId,
+            IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var satisfactionRating in _freshdeskClient.GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", false, cancellationToken).ConfigureAwait(false))
+            await foreach (var satisfactionRating in _freshdeskClient.GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
             {
                 yield return satisfactionRating;
             }
