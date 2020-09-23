@@ -232,7 +232,7 @@ namespace FreshdeskApi.Client
             }
         }
 
-        internal async Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
+        private HttpRequestMessage CreateHttpRequestMessage(HttpMethod method, string url, object? body)
         {
             var httpMessage = new HttpRequestMessage(method, url);
 
@@ -241,13 +241,29 @@ namespace FreshdeskApi.Client
                 httpMessage.Content = new StringContent(
                     JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
                     Encoding.UTF8,
-                    "application/json");
+                    "application/json"
+                );
             }
+
+            return httpMessage;
+        }
+
+        private async Task<HttpResponseMessage> ExecuteRequestAsync(HttpMethod method, string url, object? body, CancellationToken cancellationToken)
+        {
+            var httpMessage = CreateHttpRequestMessage(method, url, body);
 
             var response = await _httpClient
                 .SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                 .ConfigureAwait(false);
+
             SetRateLimitValues(response);
+
+            return response;
+        }
+
+        internal async Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
+        {
+            var response = await ExecuteRequestAsync(method, url, body, cancellationToken);
 
             // Handle rate limiting by waiting the specified amount of time
             while (response.StatusCode == (HttpStatusCode)429)
@@ -255,10 +271,8 @@ namespace FreshdeskApi.Client
                 if (response.Headers.RetryAfter.Delta.HasValue)
                 {
                     await Task.Delay(response.Headers.RetryAfter.Delta.Value, cancellationToken);
-                    response = await _httpClient
-                        .SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-                        .ConfigureAwait(false);
-                    SetRateLimitValues(response);
+
+                    response = await ExecuteRequestAsync(method, url, body, cancellationToken);
                 }
                 else
                 {
