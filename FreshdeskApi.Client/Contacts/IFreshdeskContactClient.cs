@@ -120,5 +120,35 @@ namespace FreshdeskApi.Client.Contacts
             long contactId,
             MakeAgentRequest request,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Export contacts with the specified information
+        /// </summary>
+        ///
+        /// <param name="request">
+        /// All the details of the fields to be exported.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>A list of exported contacts</returns>
+        Task<ExportCsv> StartExportContactsAsync(
+            ContactsExportRequest request,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Check if an export has completed
+        /// </summary>
+        ///
+        /// <param name="request">
+        /// The Id of the export being checked.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The ExportCsv object which contains an export url to be used</returns>
+        Task<ExportCsv> GetExportStatusAsync(
+            ExportCsv export,
+            CancellationToken cancellationToken = default);
     }
 }

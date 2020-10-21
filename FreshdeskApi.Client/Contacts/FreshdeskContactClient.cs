@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -164,6 +165,74 @@ namespace FreshdeskApi.Client.Contacts
 
             return await _freshdeskClient
                 .ApiOperationAsync<Contact>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/make_agent", request, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Export contacts with the specified information
+        /// </summary>
+        ///
+        /// <param name="request">
+        /// All the fields of the contacts to be retrieved.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The ExportCsv object which contains an ID to be used</returns>
+        public async Task<ExportCsv> StartExportContactsAsync(
+            ContactsExportRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
+            return await _freshdeskClient
+                .ApiOperationAsync<ExportCsv>(HttpMethod.Post, "/api/v2/contacts/export", request, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check if an export has completed
+        /// </summary>
+        ///
+        /// <param name="export">
+        /// The export being checked.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The ExportCsv object which contains an export url to be used</returns>
+        public async Task<ExportCsv> GetExportStatusAsync(
+            ExportCsv export,
+            CancellationToken cancellationToken = default)
+        {
+            if (export == null) throw new ArgumentNullException(nameof(export), "Export must not be null");
+            if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Export Id must not be null");
+
+            return await _freshdeskClient
+                .ApiOperationAsync<ExportCsv>(HttpMethod.Get, $"/api/v2/contacts/export/{export.Id}", export, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Merge a primary contact with secondary contacts
+        /// </summary>
+        ///
+        /// <param name="request">
+        /// Primary and secondary contacts being merged.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The http response</returns>
+        public async Task MergeContactsAsync(
+            MergeContactsRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+            if (request.SecondaryContactIds == null || !request.SecondaryContactIds.Any()) throw new ArgumentNullException(nameof(request.SecondaryContactIds), "Secondary Ids must not be null or empty");
+
+            await _freshdeskClient
+                .ApiOperationAsync<string>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }
