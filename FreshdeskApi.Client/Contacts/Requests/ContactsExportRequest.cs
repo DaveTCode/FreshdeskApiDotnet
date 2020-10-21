@@ -16,7 +16,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// Fields including default fields and custom fields, all of which are mandatory
         /// </summary>
         [JsonProperty("fields")]
-        public Fields AllFields { get; set; }
+        public Fields AllFields { get; }
 
         public class Fields
         {
@@ -24,22 +24,29 @@ namespace FreshdeskApi.Client.Contacts.Requests
             /// The default fields in Freshdesk
             /// </summary>
             [JsonProperty("default_fields")]
-            public List<string>? DefaultFields { get; set; }
+            public List<string> DefaultFields { get; }
 
             /// <summary>
             /// The custom fields in Freshdesk
             /// </summary>
             [JsonProperty("custom_fields")]
-            public List<string>? CustomFields { get; set; }
+            public List<string> CustomFields { get; }
+
+            public Fields(List<string> defaultFields, List<string> customFields)
+            {
+                DefaultFields = defaultFields;
+                CustomFields = customFields;
+            }
+
+            public override string ToString()
+            {
+                return $"{nameof(DefaultFields)}: {DefaultFields}, {nameof(CustomFields)}: {CustomFields}";
+            }
         }
 
         public ContactsExportRequest(List<string> defaultFields, List<string> customFields)
         {
-            AllFields = new Fields
-            {
-                DefaultFields = defaultFields,
-                CustomFields = customFields
-            };
+            AllFields = new Fields(defaultFields, customFields);
         }
 
         public override string ToString()

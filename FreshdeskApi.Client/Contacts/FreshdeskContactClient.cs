@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -223,14 +224,15 @@ namespace FreshdeskApi.Client.Contacts
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The http response</returns>
-        public async Task<HttpResponseMessage> MergeContactsAsync(
+        public async Task MergeContactsAsync(
             MergeContactsRequest request,
             CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+            if (request.SecondaryContactIds == null || !request.SecondaryContactIds.Any()) throw new ArgumentNullException(nameof(request.SecondaryContactIds), "Secondary Ids must not be null or empty");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<HttpResponseMessage>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
+            await _freshdeskClient
+                .ApiOperationAsync<string>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }
