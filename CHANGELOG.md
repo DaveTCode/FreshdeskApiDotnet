@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2020-10-21
+
+- Fix bug with no response functions throwing exception
+
 ## [0.5.6] - 2020-10-21
 
 - Add support for merging contacts
@@ -41,7 +45,8 @@ First public release of the package
 - Agents API partially implemented
 - Companies API partially implemented
 
-[Unreleased]: https://github.com/DaveTCode/freshdeskapidotnet/compare/0.4.0...HEAD
+[Unreleased]: https://github.com/DaveTCode/freshdeskapidotnet/compare/0.6.0...HEAD
+[0.6.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.6.0...0.5.6
 [0.5.6]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.5.6...0.4.0
 [0.4.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.4.0...0.3.0
 [0.3.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.3.0...0.2.0
