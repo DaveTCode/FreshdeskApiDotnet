@@ -1,7 +1,6 @@
 ﻿using FreshdeskApi.Client.Contacts.Models;
 using FreshdeskApi.Client.Contacts.Requests;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -150,21 +149,6 @@ namespace FreshdeskApi.Client.Contacts
         /// <returns>The ExportCsv object which contains an export url to be used</returns>
         Task<ExportCsv> GetExportStatusAsync(
             ExportCsv export,
-            CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Merge a primary contact with secondary contacts
-        /// </summary>
-        ///
-        /// <param name="request">
-        /// Primary and secondary contacts being merged.
-        /// </param>
-        ///
-        /// <param name="cancellationToken"></param>
-        ///
-        /// <returns>The http response</returns>
-        Task<HttpResponseMessage> MergeContactsAsync(
-            MergeContactsRequest request,
             CancellationToken cancellationToken = default);
     }
 }
