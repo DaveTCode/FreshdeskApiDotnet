@@ -166,7 +166,7 @@ namespace FreshdeskApi.Client.Contacts
                 .ApiOperationAsync<Contact>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/make_agent", request, cancellationToken)
                 .ConfigureAwait(false);
         }
-        
+
         /// <summary>
         /// Export contacts with the specified information
         /// </summary>

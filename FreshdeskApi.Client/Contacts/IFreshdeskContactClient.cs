@@ -120,7 +120,7 @@ namespace FreshdeskApi.Client.Contacts
             long contactId,
             MakeAgentRequest request,
             CancellationToken cancellationToken = default);
-        
+
         /// <summary>
         /// Export contacts with the specified information
         /// </summary>
