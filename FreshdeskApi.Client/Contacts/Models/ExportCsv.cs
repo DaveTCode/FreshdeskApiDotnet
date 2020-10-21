@@ -21,5 +21,17 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// </summary>
         [JsonProperty("download_url")]
         public string? DownloadUrl { get; set; }
+
+        /// <summary>
+        /// Error message if an error occurs
+        /// </summary>
+        [JsonProperty("message")]
+        public string? Message { get; set; }
+
+        /// <summary>
+        /// Code error if an error occurs
+        /// </summary>
+        [JsonProperty("code")]
+        public string? CodeError { get; set; }
     }
 }
