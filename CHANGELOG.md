@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.6] - 2020-10-21
+
+- Add support for merging contacts
+- Add support for exporting contacts
+
 ## [0.4.1] - 2020-05-31
 
 - Fixed serialization bug retrieving contacts with related companies from the ListContactsAsync api endpoint
@@ -37,6 +42,7 @@ First public release of the package
 - Companies API partially implemented
 
 [Unreleased]: https://github.com/DaveTCode/freshdeskapidotnet/compare/0.4.0...HEAD
+[0.5.6]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.5.6...0.4.0
 [0.4.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.4.0...0.3.0
 [0.3.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.3.0...0.2.0
 [0.2.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.2.0...0.1.0
