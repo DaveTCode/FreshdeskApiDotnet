@@ -93,7 +93,7 @@ namespace FreshdeskApi.Client.Agents
             CancellationToken cancellationToken = default)
         {
             await _freshdeskClient
-                .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
 

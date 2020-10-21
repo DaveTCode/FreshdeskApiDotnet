@@ -187,7 +187,7 @@ namespace FreshdeskApi.Client.Tickets
             CancellationToken cancellationToken = default)
         {
             await _freshdeskClient
-                .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/tickets/{ticketId}", cancellationToken: cancellationToken)
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/tickets/{ticketId}", cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -207,7 +207,7 @@ namespace FreshdeskApi.Client.Tickets
             CancellationToken cancellationToken = default)
         {
             await _freshdeskClient
-                .ApiOperationAsync<string>(HttpMethod.Put, $"/api/v2/tickets/{ticketId}/restore", cancellationToken: cancellationToken)
+                .ApiOperationAsync<object>(HttpMethod.Put, $"/api/v2/tickets/{ticketId}/restore", cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
 

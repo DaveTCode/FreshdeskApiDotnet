@@ -110,7 +110,7 @@ namespace FreshdeskApi.Client.Solutions
             long categoryId,
             CancellationToken cancellationToken = default)
         {
-            await _freshdeskClient.ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/solutions/categories/{categoryId}", cancellationToken: cancellationToken);
+            await _freshdeskClient.ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/solutions/categories/{categoryId}", cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace FreshdeskApi.Client.Solutions
             long folderId,
             CancellationToken cancellationToken = default)
         {
-            await _freshdeskClient.ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/solutions/folders/{folderId}", cancellationToken: cancellationToken).ConfigureAwait(false);
+            await _freshdeskClient.ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/solutions/folders/{folderId}", cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -546,7 +546,7 @@ namespace FreshdeskApi.Client.Solutions
             long articleId,
             CancellationToken cancellationToken = default)
         {
-            await _freshdeskClient.ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/solutions/articles/{articleId}", cancellationToken: cancellationToken).ConfigureAwait(false);
+            await _freshdeskClient.ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/solutions/articles/{articleId}", cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

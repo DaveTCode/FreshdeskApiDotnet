@@ -153,7 +153,6 @@ namespace FreshdeskApi.Client
                 HttpStatusCode.Forbidden => new AuthorizationFailureException(response), // 400
                 HttpStatusCode.NotFound => new ResourceNotFoundException(response), // 400
                 HttpStatusCode.Conflict => new ResourceConflictException(response), // 400
-                HttpStatusCode.NoContent => new EmptyFreshdeskResponse(response), // 204
                 _ => throw new GeneralApiException(response),
             };
         }
@@ -285,6 +284,7 @@ namespace FreshdeskApi.Client
         }
 
         internal async Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
+            where T : new()
         {
             var response = await ExecuteRequestAsync(method, url, body, cancellationToken);
 
@@ -306,8 +306,10 @@ namespace FreshdeskApi.Client
                 }
             }
 
-            if (response.IsSuccessStatusCode && response.StatusCode != HttpStatusCode.NoContent)
+            if (response.IsSuccessStatusCode)
             {
+                if (response.StatusCode == HttpStatusCode.NoContent) return new T();
+
                 await using var contentStream = await response.Content.ReadAsStreamAsync();
                 using var sr = new StreamReader(contentStream);
                 using var reader = new JsonTextReader(sr);

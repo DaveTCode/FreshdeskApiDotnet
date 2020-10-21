@@ -232,7 +232,7 @@ namespace FreshdeskApi.Client.Contacts
             if (request.SecondaryContactIds == null || !request.SecondaryContactIds.Any()) throw new ArgumentNullException(nameof(request.SecondaryContactIds), "Secondary Ids must not be null or empty");
 
             await _freshdeskClient
-                .ApiOperationAsync<string>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
+                .ApiOperationAsync<object>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }
