@@ -150,5 +150,20 @@ namespace FreshdeskApi.Client.Contacts
         Task<ExportCsv> GetExportStatusAsync(
             ExportCsv export,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Merge a primary contact with secondary contacts
+        /// </summary>
+        ///
+        /// <param name="request">
+        /// Primary and secondary contacts being merged.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The http response</returns>
+        Task MergeContactsAsync(
+            MergeContactsRequest request,
+            CancellationToken cancellationToken = default);
     }
 }
