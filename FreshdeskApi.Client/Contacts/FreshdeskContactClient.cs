@@ -204,7 +204,8 @@ namespace FreshdeskApi.Client.Contacts
             ExportCsv export,
             CancellationToken cancellationToken = default)
         {
-            if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Request must not be null");
+            if (export == null) throw new ArgumentNullException(nameof(export), "Export must not be null");
+            if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Export Id must not be null");
 
             return await _freshdeskClient
                 .ApiOperationAsync<ExportCsv>(HttpMethod.Get, $"/api/v2/contacts/export/{export.Id}", export, cancellationToken)
