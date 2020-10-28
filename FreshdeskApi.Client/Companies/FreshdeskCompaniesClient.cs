@@ -159,7 +159,7 @@ namespace FreshdeskApi.Client.Companies
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The newly updated company</returns>
-        public async Task<Company> UpdateContactAsync(
+        public async Task<Company> UpdateCompanyAsync(
             long companyId,
             UpdateCompanyRequest request,
             CancellationToken cancellationToken = default)
