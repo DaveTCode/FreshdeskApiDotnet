@@ -94,7 +94,7 @@ namespace FreshdeskApi.Client.Conversations
             CancellationToken cancellationToken = default)
         {
             await _client
-                .ApiOperationAsync<string>(HttpMethod.Delete, $"/api/v2/conversations/{conversationEntryId}", cancellationToken: cancellationToken)
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/conversations/{conversationEntryId}", cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
 
