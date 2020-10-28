@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace FreshdeskApi.Client.Contacts.Requests
+namespace FreshdeskApi.Client.Companies.Requests
 {
     /// <summary>
     /// A class containing the fields passed back for the exported companies.

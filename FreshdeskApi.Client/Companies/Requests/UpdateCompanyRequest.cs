@@ -59,6 +59,7 @@ namespace FreshdeskApi.Client.Companies.Requests
         /// </summary>
         [JsonProperty("industry")]
         public string? Industry { get; }
+
         /// <summary>
         /// Key value pairs containing the name and value of the custom field.
         /// Only dates in the format YYYY-MM-DD are accepted as input for

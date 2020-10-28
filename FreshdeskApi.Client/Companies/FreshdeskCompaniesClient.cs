@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Companies.Models;
 using FreshdeskApi.Client.Companies.Requests;
-using FreshdeskApi.Client.Contacts.Requests;
 
 namespace FreshdeskApi.Client.Companies
 {
@@ -138,7 +137,7 @@ namespace FreshdeskApi.Client.Companies
             if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Export Id must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<ExportCsv>(HttpMethod.Get, $"/api/v2/contacts/export/{export.Id}", export, cancellationToken)
+                .ApiOperationAsync<ExportCsv>(HttpMethod.Get, $"/api/v2/companies/export/{export.Id}", export, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -150,7 +149,7 @@ namespace FreshdeskApi.Client.Companies
         /// </summary>
         /// 
         /// <param name="companyId">
-        /// The unique identifier for the contact.
+        /// The unique identifier for the company.
         /// </param>
         ///
         /// <param name="request">
