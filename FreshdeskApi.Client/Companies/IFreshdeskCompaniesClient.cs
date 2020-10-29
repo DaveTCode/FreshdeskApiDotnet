@@ -1,4 +1,5 @@
 ﻿using FreshdeskApi.Client.Companies.Models;
+using FreshdeskApi.Client.Companies.Requests;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -64,6 +65,59 @@ namespace FreshdeskApi.Client.Companies
         IAsyncEnumerable<Company> FilterCompaniesAsync(
             string encodedQuery,
             IPaginationConfiguration? pagingConfiguration = null,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Export companies with the specified information
+        /// </summary>
+        ///
+        /// <param name="request">
+        /// All the fields of the companies to be retrieved.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The ExportCsv object which contains an ID to be used</returns>
+        Task<ExportCsv> StartExportContactsAsync(
+            CompaniesExportRequest request,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Check if an export has completed
+        /// </summary>
+        ///
+        /// <param name="export">
+        /// The export being checked.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The ExportCsv object which contains an export url to be used</returns>
+        Task<ExportCsv> GetExportStatusAsync(
+            ExportCsv export,
+            CancellationToken cancellationToken = default);
+
+
+        /// <summary>
+        /// Update a company with new details.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#update_company
+        /// </summary>
+        /// 
+        /// <param name="companyId">
+        /// The unique identifier for the company.
+        /// </param>
+        ///
+        /// <param name="request">
+        /// The details about the company to update.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The newly updated company</returns>
+        Task<Company> UpdateCompanyAsync(
+            long companyId,
+            UpdateCompanyRequest request,
             CancellationToken cancellationToken = default);
     }
 }
