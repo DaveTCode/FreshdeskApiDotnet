@@ -1,8 +1,15 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace FreshdeskApi.Client.Companies.Models
+namespace FreshdeskApi.Client
 {
+    /// <summary>
+    /// Defines the set of properties returned when exporting from Freshdesk
+    /// e.g. can export companies or contacts
+    ///
+    /// c.f. https://developers.freshdesk.com/api/#export_company
+    /// c.f. https://developers.freshdesk.com/api/#export_contact
+    /// </summary>
     public class ExportCsv
     {
         /// <summary>
@@ -45,10 +52,10 @@ namespace FreshdeskApi.Client.Companies.Models
         /// Information on errors that have occurred
         /// </summary>
         [JsonProperty("errors")]
-        public List<Errors>? Errors { get; set; }
+        public List<ExportError>? ListExportErrors { get; set; }
     }
 
-    public class Errors
+    public class ExportError
     {
         /// <summary>
         /// Field entered that was invalid if field failure
@@ -66,7 +73,7 @@ namespace FreshdeskApi.Client.Companies.Models
         /// Code error if an error occurs
         /// </summary>
         [JsonProperty("code")]
-        public Errors? Code { get; set; }
+        public string? Code { get; set; }
 
     }
 }

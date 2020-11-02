@@ -10,6 +10,7 @@ using FreshdeskApi.Client.Companies.Requests;
 
 namespace FreshdeskApi.Client.Companies
 {
+    /// <inheritdoc />
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
     {
@@ -20,18 +21,7 @@ namespace FreshdeskApi.Client.Companies
             _freshdeskClient = freshdeskClient;
         }
 
-        /// <summary>
-        /// Retrieve all details about a single company by its id.
-        ///
-        /// c.f. https://developers.freshdesk.com/api/#view_company
-        /// </summary>
-        /// <param name="companyId">
-        /// The unique identifier for the company.
-        /// </param>
-        ///
-        /// <param name="cancellationToken"></param>
-        ///
-        /// <returns>The full company information</returns>
+        /// <inheritdoc />
         public async Task<Company> ViewCompanyAsync(
             long companyId,
             CancellationToken cancellationToken = default)
@@ -41,19 +31,7 @@ namespace FreshdeskApi.Client.Companies
                 .ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// List all available companies
-        ///
-        /// c.f. https://developers.freshdesk.com/api/#list_all_companies
-        /// </summary>
-        ///
-        /// <param name="pagingConfiguration"></param>
-        /// <param name="cancellationToken"></param>
-        ///
-        /// <returns>
-        /// The full set of companies, this request is paged and iterating to the
-        /// next entry may cause a new API call to get the next page.
-        /// </returns>
+        /// <inheritdoc />
         public async IAsyncEnumerable<Company> ListAllCompaniesAsync(
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -64,27 +42,7 @@ namespace FreshdeskApi.Client.Companies
             }
         }
 
-        /// <summary>
-        /// Filter the full set of companies with a filter of the form:
-        ///
-        /// (company_field:integer OR company_field:'string') AND company_field:boolean
-        ///
-        /// c.f. https://developers.freshdesk.com/api/#filter_companies
-        /// </summary>
-        /// 
-        /// <param name="encodedQuery">
-        /// The full query string with params encoded properly.
-        ///
-        /// Will be appended with ?query="encodedQuery" so don't enclose in quotes.
-        /// </param>
-        ///
-        /// <param name="pagingConfiguration"></param>
-        /// <param name="cancellationToken"></param>
-        ///
-        /// <returns>
-        /// The filtered set of companies, this request is paged and iterating 
-        /// to the next entry may cause a new API call to get the next page.
-        /// </returns>
+        /// <inheritdoc />
         public async IAsyncEnumerable<Company> FilterCompaniesAsync(
             string encodedQuery,
             IPaginationConfiguration? pagingConfiguration = null,
@@ -96,18 +54,8 @@ namespace FreshdeskApi.Client.Companies
             }
         }
 
-        /// <summary>
-        /// Export companies with the specified information
-        /// </summary>
-        ///
-        /// <param name="request">
-        /// All the fields of the companies to be retrieved.
-        /// </param>
-        ///
-        /// <param name="cancellationToken"></param>
-        ///
-        /// <returns>The ExportCsv object which contains an ID to be used</returns>
-        public async Task<ExportCsv> StartExportContactsAsync(
+        /// <inheritdoc />
+        public async Task<ExportCsv> StartExportCompaniesAsync(
             CompaniesExportRequest request,
             CancellationToken cancellationToken = default)
         {
@@ -118,17 +66,7 @@ namespace FreshdeskApi.Client.Companies
                 .ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Check if an export has completed
-        /// </summary>
-        ///
-        /// <param name="export">
-        /// The export being checked.
-        /// </param>
-        ///
-        /// <param name="cancellationToken"></param>
-        ///
-        /// <returns>The ExportCsv object which contains an export url to be used</returns>
+        /// <inheritdoc />
         public async Task<ExportCsv> GetExportStatusAsync(
             ExportCsv export,
             CancellationToken cancellationToken = default)
@@ -141,24 +79,7 @@ namespace FreshdeskApi.Client.Companies
                 .ConfigureAwait(false);
         }
 
-
-        /// <summary>
-        /// Update a company with new details.
-        ///
-        /// c.f. https://developers.freshdesk.com/api/#update_company
-        /// </summary>
-        /// 
-        /// <param name="companyId">
-        /// The unique identifier for the company.
-        /// </param>
-        ///
-        /// <param name="request">
-        /// The details about the company to update.
-        /// </param>
-        ///
-        /// <param name="cancellationToken"></param>
-        ///
-        /// <returns>The newly updated company</returns>
+        /// <inheritdoc />
         public async Task<Company> UpdateCompanyAsync(
             long companyId,
             UpdateCompanyRequest request,

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FreshdeskApi.Client.Companies
 {
+    // compile with: -doc:DocFileName.xml
     public interface IFreshdeskCompaniesClient
     {
         /// <summary>
@@ -77,8 +78,8 @@ namespace FreshdeskApi.Client.Companies
         ///
         /// <param name="cancellationToken"></param>
         ///
-        /// <returns>The ExportCsv object which contains an ID to be used</returns>
-        Task<ExportCsv> StartExportContactsAsync(
+        /// <returns>Returns an ExportCsv which can be passed to GetExportStatusAsync to monitor the status of the export asynchronously</returns>
+        Task<ExportCsv> StartExportCompaniesAsync(
             CompaniesExportRequest request,
             CancellationToken cancellationToken = default);
 
