@@ -88,7 +88,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// custom date fields.
         /// </summary>
         [JsonProperty("custom_fields")]
-        public Dictionary<string, object>? CustomFields { get; }
+        public Dictionary<string, object?>? CustomFields { get; }
 
         /// <summary>
         /// A small description of the contact
@@ -126,7 +126,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
 
         public UpdateContactRequest(string? name = null, string? email = null, string? phone = null, string? mobile = null, string? twitterId = null,
             string? uniqueExternalId = null, string[]? otherEmails = null, long? companyId = null, bool? viewAllTickets = null,
-            ContactCompany[]? otherCompanies = null, string? address = null, Dictionary<string, object>? customFields = null, string? description = null,
+            ContactCompany[]? otherCompanies = null, string? address = null, Dictionary<string, object?>? customFields = null, string? description = null,
             string? jobTitle = null, string? language = null, string[]? tags = null, string? timeZone = null)
         {
             Name = name;

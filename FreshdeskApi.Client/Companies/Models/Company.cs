@@ -48,7 +48,7 @@ namespace FreshdeskApi.Client.Companies.Models
         /// Key value pairs containing the names and values of custom fields.
         /// </summary>
         [JsonProperty("custom_fields")]
-        public Dictionary<string, object>? CustomFields { get; set; }
+        public Dictionary<string, object?>? CustomFields { get; set; }
 
         /// <summary>
         /// Company creation timestamp

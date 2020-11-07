@@ -66,10 +66,10 @@ namespace FreshdeskApi.Client.Companies.Requests
         /// custom date fields.
         /// </summary>
         [JsonProperty("custom_fields")]
-        public Dictionary<string, object>? CustomFields { get; }
+        public Dictionary<string, object?>? CustomFields { get; }
 
         public UpdateCompanyRequest(string? name = null, string[]? domains = null, string? description = null, string? note = null, string? healthScore = null,
-            string? accountTier = null, DateTime? renewalDate = null, string? industry = null, Dictionary<string, object>? customFields = null)
+            string? accountTier = null, DateTime? renewalDate = null, string? industry = null, Dictionary<string, object?>? customFields = null)
         {
             Name = name;
             Domains = domains;

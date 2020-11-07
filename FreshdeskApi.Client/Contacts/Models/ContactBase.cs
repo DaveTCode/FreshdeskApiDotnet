@@ -108,7 +108,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// Key value pair containing the name and value of the custom fields.
         /// </summary>
         [JsonProperty("custom_fields")]
-        public Dictionary<string, object>? CustomFields { get; set; }
+        public Dictionary<string, object?>? CustomFields { get; set; }
 
         /// <summary>
         /// Tags associated with this contact

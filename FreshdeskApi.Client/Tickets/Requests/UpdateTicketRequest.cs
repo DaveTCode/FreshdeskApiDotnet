@@ -16,7 +16,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
         public UpdateTicketRequest(TicketStatus? status = null, TicketPriority? priority = null, TicketSource? source = null,
             string? description = null, string? requesterName = null, long? requesterId = null, string? email = null, string? facebookId = null,
             string? phoneNumber = null, string? twitterId = null, string? uniqueExternalId = null, long? responderId = null,
-            Dictionary<string, string>? customFields = null, DateTimeOffset? dueBy = null, long? emailConfigId = null,
+            Dictionary<string, string?>? customFields = null, DateTimeOffset? dueBy = null, long? emailConfigId = null,
             DateTimeOffset? firstResponseDueBy = null, long? groupId = null, long? productId = null, string[]? tags = null,
             long? companyId = null, string? subject = null, string? ticketType = null)
         {
@@ -98,7 +98,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
 
         /// Key value pairs containing the names and values of custom fields.
         [JsonProperty("custom_fields")]
-        public Dictionary<string, string>? CustomFields { get; }
+        public Dictionary<string, string?>? CustomFields { get; }
 
         /// Timestamp that denotes when the ticket is due to be resolved
         [JsonProperty("due_by")]
