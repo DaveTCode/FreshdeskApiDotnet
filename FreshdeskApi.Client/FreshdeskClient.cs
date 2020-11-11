@@ -209,7 +209,6 @@ namespace FreshdeskApi.Client
                     throw CreateApiException(response);
                 }
 
-                var contentString = response.Content.ReadAsStringAsync().Result;
                 await using var contentStream = await response.Content.ReadAsStreamAsync();
                 using var sr = new StreamReader(contentStream);
                 using var reader = new JsonTextReader(sr);
@@ -249,10 +248,9 @@ namespace FreshdeskApi.Client
                         page++;
                     }
                 }
-                else if (contentString != null)
+                else if (newStylePages)
                 {
-                    var results = JObject.Parse(contentString)["results"];
-                    if (results != null && results.HasValues && page < 10 && url.Contains("page"))
+                    if (newData != null && newData.Any() && page < 10 && url.Contains("page"))
                     {
                         url = url.Replace($"page={page}", $"page={page + 1}");
                         page++;
