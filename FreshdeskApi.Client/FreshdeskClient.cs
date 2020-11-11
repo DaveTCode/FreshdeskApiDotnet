@@ -20,6 +20,7 @@ using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
@@ -208,6 +209,7 @@ namespace FreshdeskApi.Client
                     throw CreateApiException(response);
                 }
 
+                var contentString = response.Content.ReadAsStringAsync().Result;
                 await using var contentStream = await response.Content.ReadAsStreamAsync();
                 using var sr = new StreamReader(contentStream);
                 using var reader = new JsonTextReader(sr);
@@ -245,6 +247,19 @@ namespace FreshdeskApi.Client
                         var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
                         url = nextLinkMatch.Groups["url"].Value;
                         page++;
+                    }
+                }
+                else if (contentString != null)
+                {
+                    var results = JObject.Parse(contentString)["results"];
+                    if (results != null && results.HasValues && page < 10 && url.Contains("page"))
+                    {
+                        url = url.Replace($"page={page}", $"page={page + 1}");
+                        page++;
+                    }
+                    else
+                    {
+                        morePages = false;
                     }
                 }
                 else
