@@ -20,7 +20,6 @@ using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
