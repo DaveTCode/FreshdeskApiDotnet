@@ -20,6 +20,7 @@ using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
@@ -245,6 +246,21 @@ namespace FreshdeskApi.Client
                         var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
                         url = nextLinkMatch.Groups["url"].Value;
                         page++;
+                    }
+                }
+                else if (newStylePages)
+                {
+                    // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
+                    // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.
+                    // as can be seen here: https://developers.freshdesk.com/api/#filter_tickets
+                    if (newData != null && newData.Any() && page < 10 && url.Contains("page"))
+                    {
+                        url = url.Replace($"page={page}", $"page={page + 1}");
+                        page++;
+                    }
+                    else
+                    {
+                        morePages = false;
                     }
                 }
                 else
