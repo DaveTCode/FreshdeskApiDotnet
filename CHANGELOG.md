@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.5] - 2020-11-12
+
+- Fixed issue where certain pageable endpoints would only return the first page
+
 ## [0.7.0] - 2020-11-03
 
 - Added functionality to export companies

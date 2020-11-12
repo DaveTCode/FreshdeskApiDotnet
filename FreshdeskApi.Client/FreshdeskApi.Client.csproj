@@ -20,7 +20,7 @@
     <PackageTags>Freshdesk;Rest;Api</PackageTags>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Title>Freshdesk API Client</Title>
-    <Version>0.7.0</Version>
+    <Version>0.7.5</Version>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -36,6 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\License.md" Pack="true" PackagePath="$(PackageLicenseFile)" />
+    <None Include="..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
 </Project>
