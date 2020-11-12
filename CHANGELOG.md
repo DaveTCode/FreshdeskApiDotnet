@@ -55,7 +55,8 @@ First public release of the package
 - Agents API partially implemented
 - Companies API partially implemented
 
-[Unreleased]: https://github.com/DaveTCode/freshdeskapidotnet/compare/0.7.0...HEAD
+[Unreleased]: https://github.com/DaveTCode/freshdeskapidotnet/compare/0.7.5...HEAD
+[0.7.5]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.7.5...0.7.0
 [0.7.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.7.0...0.6.0
 [0.6.0]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.6.0...0.5.6
 [0.5.6]: https://github.com/DaveTCode/freshdeskapidotnet/releases/tag/0.5.6...0.4.0
