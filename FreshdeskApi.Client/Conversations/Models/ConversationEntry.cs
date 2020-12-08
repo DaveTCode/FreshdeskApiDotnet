@@ -23,7 +23,7 @@ namespace FreshdeskApi.Client.Conversations.Models
         public bool Private { get; set; }
 
         [JsonProperty("user_id")]
-        public long UserId { get; set; }
+        public long? UserId { get; set; }
 
         [JsonProperty("support_email")]
         public string? SupportEmail { get; set; }
