@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.6] - 2020-12-08
+
+- Fix serializing issue on conversations with null user id (stupid freshdesk api)
+
 ## [0.7.5] - 2020-11-12
 
 - Fixed issue where certain pageable endpoints would only return the first page
