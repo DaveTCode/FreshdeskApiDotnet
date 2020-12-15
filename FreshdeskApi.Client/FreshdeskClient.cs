@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -19,8 +21,8 @@ using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
+using FreshdeskApi.Client.Tickets.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
@@ -270,13 +272,17 @@ namespace FreshdeskApi.Client
             }
         }
 
-        private HttpRequestMessage CreateHttpRequestMessage(HttpMethod method, string url, object? body)
+        private HttpRequestMessage CreateHttpRequestMessage<T>(HttpMethod method, string url, T? body, IEnumerable<FileAttachment>? files)
+            where T : class
         {
+
             var httpMessage = new HttpRequestMessage(method, url);
 
             if (body != null)
             {
-                httpMessage.Content = new StringContent(
+                httpMessage.Content = (files != null && files.Count() > 0) ?
+                    GetMultipartContent(body, files) :
+                    new StringContent(
                     JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
                     Encoding.UTF8,
                     "application/json"
@@ -286,9 +292,54 @@ namespace FreshdeskApi.Client
             return httpMessage;
         }
 
-        private async Task<HttpResponseMessage> ExecuteRequestAsync(HttpMethod method, string url, object? body, CancellationToken cancellationToken)
+        private HttpContent GetMultipartContent<T>(T? body, IEnumerable<FileAttachment>? files)
+            where T : class
         {
-            var httpMessage = CreateHttpRequestMessage(method, url, body);
+            var form = new MultipartFormDataContent();
+            if (body == null) return form;
+
+            foreach (var property in typeof(T).GetProperties() ?? Array.Empty<PropertyInfo>())
+            {
+                if (property.GetCustomAttribute<JsonIgnoreAttribute>() != null) continue;
+
+                var value = property.GetValue(body);
+                if (value != null)
+                {
+                    var propertyValue = property.PropertyType.IsEnum ?
+                        ((int)value).ToString() :
+                        value.ToString();
+
+                    var jProperty = property.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName;
+                    var stringContent = new StringContent(propertyValue);
+                    stringContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                    {
+                        Name = $"\"{jProperty ?? property.Name}\""
+                    };
+                    form.Add(stringContent);
+                }
+            }
+
+            // Attach files, if any
+            foreach (var file in files ?? Array.Empty<FileAttachment>())
+            {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                var content = new ByteArrayContent(file.FileBytes, 0, file.FileBytes.Length);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                {
+                    FileName = file.Name,
+                    Name = "attachments[]"
+                };
+                form.Add(content, "attachments[]");
+            }
+
+            return form;
+        }
+
+        private async Task<HttpResponseMessage> ExecuteRequestAsync<T>(HttpMethod method, string url, T? body, CancellationToken cancellationToken, IEnumerable<FileAttachment>? files)
+            where T : class
+        {
+            var httpMessage = CreateHttpRequestMessage(method, url, body, files);
 
             var response = await _httpClient
                 .SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
@@ -299,10 +350,14 @@ namespace FreshdeskApi.Client
             return response;
         }
 
-        internal async Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
+        internal Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
+            where T : new() => ApiOperationAsync<T, object>(method, url, body, cancellationToken, null);
+
+        internal async Task<T> ApiOperationAsync<T, R>(HttpMethod method, string url, R? body, CancellationToken cancellationToken = default, IEnumerable<FileAttachment>? files = null)
             where T : new()
+            where R : class
         {
-            var response = await ExecuteRequestAsync(method, url, body, cancellationToken);
+            var response = await ExecuteRequestAsync(method, url, body, cancellationToken, files);
 
             // Handle rate limiting by waiting the specified amount of time
             while (response.StatusCode == (HttpStatusCode)429)
@@ -311,7 +366,7 @@ namespace FreshdeskApi.Client
                 {
                     await Task.Delay(response.Headers.RetryAfter.Delta.Value, cancellationToken);
 
-                    response = await ExecuteRequestAsync(method, url, body, cancellationToken);
+                    response = await ExecuteRequestAsync(method, url, body, cancellationToken, files);
                 }
                 else
                 {

@@ -26,8 +26,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FreshdeskApi.Client\FreshdeskApi.Client.csproj" />
-  </ItemGroup>
-
 </Project>

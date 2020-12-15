@@ -11,6 +11,7 @@ namespace FreshdeskApi.Client.Exceptions
     /// </summary>
     public class InvalidFreshdeskRequest : FreshdeskApiException
     {
+        internal InvalidFreshdeskRequest(string message) : base(message) { }
         internal InvalidFreshdeskRequest(HttpResponseMessage response) : base(response)
         {
         }
