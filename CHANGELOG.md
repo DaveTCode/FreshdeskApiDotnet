@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.8] - 2020-12-17
+
+- Fix for merging contacts with certain field combinations
+
 ## [0.7.6] - 2020-12-08
 
 - Fix serializing issue on conversations with null user id (stupid freshdesk api)
