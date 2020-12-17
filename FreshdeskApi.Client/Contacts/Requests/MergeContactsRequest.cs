@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FreshdeskApi.Client.Contacts.Models;
 using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Contacts.Requests
@@ -17,10 +18,18 @@ namespace FreshdeskApi.Client.Contacts.Requests
         [JsonProperty("secondary_contact_ids")]
         public List<long> SecondaryContactIds { get; }
 
-        public MergeContactsRequest(long primaryContactId, List<long> secondaryContactIds)
+        /// <summary>
+        /// Contact infromation that can be updated in a merge. Phone, Mobile, Twitter Id and 
+        /// Unique external values are mandatory if they are present in both primary and secondary contacts.
+        /// </summary>
+        [JsonProperty("contact")]
+        public MergeContactFields? Contact { get; }
+
+        public MergeContactsRequest(long primaryContactId, List<long> secondaryContactIds, MergeContactFields? contact = null)
         {
             PrimaryContactId = primaryContactId;
             SecondaryContactIds = secondaryContactIds;
+            Contact = contact;
         }
     }
 }
