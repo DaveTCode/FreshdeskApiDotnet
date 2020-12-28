@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 using FreshdeskApi.Client.Tickets.Models;
-using System.Linq;
+using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Tickets.Requests
 {
@@ -150,7 +150,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
         [JsonProperty("company_id")]
         public long? CompanyId { get; }
 
-        [JsonIgnore]
+        [JsonIgnore, Multipart(Name = "attachments")]
         public IEnumerable<FileAttachment>? Files { get; }
 
         public override string ToString()

@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,8 +19,8 @@ using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
-using FreshdeskApi.Client.Tickets.Models;
 using Newtonsoft.Json;
+using TiberHealth.Serializer;
 
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
@@ -272,74 +270,30 @@ namespace FreshdeskApi.Client
             }
         }
 
-        private HttpRequestMessage CreateHttpRequestMessage<T>(HttpMethod method, string url, T? body, IEnumerable<FileAttachment>? files)
-            where T : class
+        private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)
+            where TBody : class
         {
 
             var httpMessage = new HttpRequestMessage(method, url);
 
             if (body != null)
             {
-                httpMessage.Content = (files != null && files.Count() > 0) ?
-                    GetMultipartContent(body, files) :
+                httpMessage.Content = body.SerializeAsJson() ?
                     new StringContent(
                     JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
                     Encoding.UTF8,
                     "application/json"
-                );
+                ) :
+                FormDataSerializer.Serialize(body);
             }
 
             return httpMessage;
         }
 
-        private HttpContent GetMultipartContent<T>(T? body, IEnumerable<FileAttachment>? files)
-            where T : class
+        private async Task<HttpResponseMessage> ExecuteRequestAsync<TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken)
+            where TBody : class
         {
-            var form = new MultipartFormDataContent();
-            if (body == null) return form;
-
-            foreach (var property in typeof(T).GetProperties() ?? Array.Empty<PropertyInfo>())
-            {
-                if (property.GetCustomAttribute<JsonIgnoreAttribute>() != null) continue;
-
-                var value = property.GetValue(body);
-                if (value != null)
-                {
-                    var propertyValue = property.PropertyType.IsEnum ?
-                        ((int)value).ToString() :
-                        value.ToString();
-
-                    var jProperty = property.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName;
-                    var stringContent = new StringContent(propertyValue);
-                    stringContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                    {
-                        Name = $"\"{jProperty ?? property.Name}\""
-                    };
-                    form.Add(stringContent);
-                }
-            }
-
-            // Attach files, if any
-            foreach (var file in files ?? Array.Empty<FileAttachment>())
-            {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-                var content = new ByteArrayContent(file.FileBytes, 0, file.FileBytes.Length);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-                content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                {
-                    FileName = file.Name,
-                    Name = "attachments[]"
-                };
-                form.Add(content, "attachments[]");
-            }
-
-            return form;
-        }
-
-        private async Task<HttpResponseMessage> ExecuteRequestAsync<T>(HttpMethod method, string url, T? body, CancellationToken cancellationToken, IEnumerable<FileAttachment>? files)
-            where T : class
-        {
-            var httpMessage = CreateHttpRequestMessage(method, url, body, files);
+            var httpMessage = CreateHttpRequestMessage(method, url, body);
 
             var response = await _httpClient
                 .SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
@@ -351,13 +305,13 @@ namespace FreshdeskApi.Client
         }
 
         internal Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
-            where T : new() => ApiOperationAsync<T, object>(method, url, body, cancellationToken, null);
+            where T : new() => ApiOperationAsync<T, object>(method, url, body, cancellationToken);
 
-        internal async Task<T> ApiOperationAsync<T, R>(HttpMethod method, string url, R? body, CancellationToken cancellationToken = default, IEnumerable<FileAttachment>? files = null)
+        internal async Task<T> ApiOperationAsync<T, TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken = default)
             where T : new()
-            where R : class
+            where TBody : class
         {
-            var response = await ExecuteRequestAsync(method, url, body, cancellationToken, files);
+            var response = await ExecuteRequestAsync(method, url, body, cancellationToken);
 
             // Handle rate limiting by waiting the specified amount of time
             while (response.StatusCode == (HttpStatusCode)429)
@@ -366,7 +320,7 @@ namespace FreshdeskApi.Client
                 {
                     await Task.Delay(response.Headers.RetryAfter.Delta.Value, cancellationToken);
 
-                    response = await ExecuteRequestAsync(method, url, body, cancellationToken, files);
+                    response = await ExecuteRequestAsync(method, url, body, cancellationToken);
                 }
                 else
                 {
@@ -389,6 +343,7 @@ namespace FreshdeskApi.Client
                 return serializer.Deserialize<T>(reader) ?? throw new ArgumentNullException(nameof(serializer.Deserialize), "Deserialized response must not be null");
             }
 
+            var content = response.Content.ReadAsStringAsync();
             throw CreateApiException(response);
         }
 

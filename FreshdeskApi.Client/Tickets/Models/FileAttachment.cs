@@ -1,8 +1,8 @@
-﻿using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Tickets.Models
 {
+    [MultipartFile(ContentType = "MimeType", FileName = "Name", Value = "FileBytes")]
     public class FileAttachment
     {
         public string? Name { get; set; }

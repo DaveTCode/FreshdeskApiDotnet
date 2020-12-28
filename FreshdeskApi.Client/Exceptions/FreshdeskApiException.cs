@@ -18,8 +18,6 @@ namespace FreshdeskApi.Client.Exceptions
         /// </summary>
         public HttpResponseMessage? Response { get; }
 
-        internal FreshdeskApiException(string message) : base(message) { }
-
         internal FreshdeskApiException(HttpResponseMessage response)
         {
             Response = response;

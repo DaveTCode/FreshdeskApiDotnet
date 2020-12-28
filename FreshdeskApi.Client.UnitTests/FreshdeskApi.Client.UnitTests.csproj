@@ -29,4 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FreshdeskApi.Client\FreshdeskApi.Client.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
 </Project>

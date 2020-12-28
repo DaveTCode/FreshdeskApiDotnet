@@ -139,7 +139,7 @@ namespace FreshdeskApi.Client.Tickets
             CancellationToken cancellationToken = default)
         {
             return await _freshdeskClient
-                .ApiOperationAsync<Ticket, CreateTicketRequest>(HttpMethod.Post, "/api/v2/tickets", createTicketRequest, cancellationToken, createTicketRequest.Files)
+                .ApiOperationAsync<Ticket, CreateTicketRequest>(HttpMethod.Post, "/api/v2/tickets", createTicketRequest, cancellationToken)
                 .ConfigureAwait(false);
         }
 
