@@ -343,7 +343,6 @@ namespace FreshdeskApi.Client
                 return serializer.Deserialize<T>(reader) ?? throw new ArgumentNullException(nameof(serializer.Deserialize), "Deserialized response must not be null");
             }
 
-            var content = response.Content.ReadAsStringAsync();
             throw CreateApiException(response);
         }
 

@@ -14,6 +14,5 @@ namespace FreshdeskApi.Client
         internal static bool SerializeAsJson(this object body) =>
             !(body is CreateTicketRequest request) ||
             (request.Files == null || request.Files.Count() == 0);
-
     }
 }
