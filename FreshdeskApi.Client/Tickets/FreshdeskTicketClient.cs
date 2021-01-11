@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -138,7 +139,7 @@ namespace FreshdeskApi.Client.Tickets
             CancellationToken cancellationToken = default)
         {
             return await _freshdeskClient
-                .ApiOperationAsync<Ticket>(HttpMethod.Post, "/api/v2/tickets", createTicketRequest, cancellationToken)
+                .ApiOperationAsync<Ticket, CreateTicketRequest>(HttpMethod.Post, "/api/v2/tickets", createTicketRequest, cancellationToken)
                 .ConfigureAwait(false);
         }
 

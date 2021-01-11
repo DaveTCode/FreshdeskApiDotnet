@@ -20,7 +20,7 @@ using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using TiberHealth.Serializer;
 
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
@@ -270,23 +270,28 @@ namespace FreshdeskApi.Client
             }
         }
 
-        private HttpRequestMessage CreateHttpRequestMessage(HttpMethod method, string url, object? body)
+        private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)
+            where TBody : class
         {
+
             var httpMessage = new HttpRequestMessage(method, url);
 
             if (body != null)
             {
-                httpMessage.Content = new StringContent(
+                httpMessage.Content = body.SerializeAsJson() ?
+                    new StringContent(
                     JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
                     Encoding.UTF8,
                     "application/json"
-                );
+                ) :
+                FormDataSerializer.Serialize(body);
             }
 
             return httpMessage;
         }
 
-        private async Task<HttpResponseMessage> ExecuteRequestAsync(HttpMethod method, string url, object? body, CancellationToken cancellationToken)
+        private async Task<HttpResponseMessage> ExecuteRequestAsync<TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken)
+            where TBody : class
         {
             var httpMessage = CreateHttpRequestMessage(method, url, body);
 
@@ -299,8 +304,12 @@ namespace FreshdeskApi.Client
             return response;
         }
 
-        internal async Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
+        internal Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
+            where T : new() => ApiOperationAsync<T, object>(method, url, body, cancellationToken);
+
+        internal async Task<T> ApiOperationAsync<T, TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken = default)
             where T : new()
+            where TBody : class
         {
             var response = await ExecuteRequestAsync(method, url, body, cancellationToken);
 
