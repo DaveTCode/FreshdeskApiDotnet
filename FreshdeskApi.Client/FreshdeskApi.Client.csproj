@@ -20,7 +20,7 @@
     <PackageTags>Freshdesk;Rest;Api</PackageTags>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Title>Freshdesk API Client</Title>
-    <Version>0.7.8</Version>
+    <Version>0.8.0</Version>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 

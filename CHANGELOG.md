@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2020-01-22
+
+- Added support for ticket attachments thanks to contributions from @tiberheath
+
 ## [0.7.8] - 2020-12-17
 
 - Fix for merging contacts with certain field combinations
