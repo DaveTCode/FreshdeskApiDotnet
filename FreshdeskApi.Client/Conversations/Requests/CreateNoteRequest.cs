@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Conversations.Requests
 {
@@ -43,14 +45,19 @@ namespace FreshdeskApi.Client.Conversations.Requests
         /// </summary>
         [JsonProperty("user_id")]
         public long? UserId { get; }
+        
+        [JsonIgnore, Multipart(Name = "attachments")]
+        public IEnumerable<FileAttachment>? Files { get; }
 
-        public CreateNoteRequest(string bodyHtml, bool? incoming = null, string[]? notifyEmails = null, bool? isPrivate = null, long? userId = null)
+        public CreateNoteRequest(string bodyHtml, bool? incoming = null, string[]? notifyEmails = null, bool? isPrivate = null, long? userId = null,
+            IEnumerable<FileAttachment>? files = null)
         {
             BodyHtml = bodyHtml;
             Incoming = incoming;
             NotifyEmails = notifyEmails;
             IsPrivate = isPrivate;
             UserId = userId;
+            Files = files;
         }
 
         public override string ToString()

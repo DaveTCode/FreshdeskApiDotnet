@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FreshdeskApi.Client.Tickets.Models;
 using Newtonsoft.Json;
+using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Tickets.Requests
 {
@@ -18,7 +19,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
             string? phoneNumber = null, string? twitterId = null, string? uniqueExternalId = null, long? responderId = null,
             Dictionary<string, string?>? customFields = null, DateTimeOffset? dueBy = null, long? emailConfigId = null,
             DateTimeOffset? firstResponseDueBy = null, long? groupId = null, long? productId = null, string[]? tags = null,
-            long? companyId = null, string? subject = null, string? ticketType = null)
+            long? companyId = null, string? subject = null, string? ticketType = null, IEnumerable<FileAttachment>? files = null)
         {
             Status = status;
             Priority = priority;
@@ -42,6 +43,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
             CompanyId = companyId;
             Subject = subject;
             TicketType = ticketType;
+            Files = files;
         }
 
         /// Name of the requester
@@ -133,6 +135,9 @@ namespace FreshdeskApi.Client.Tickets.Requests
         /// Company ID of the requester. This attribute can only be set if the Multiple Companies feature is enabled (Estate plan and above)
         [JsonProperty("company_id")]
         public long? CompanyId { get; }
+        
+        [JsonIgnore, Multipart(Name = "attachments")]
+        public IEnumerable<FileAttachment>? Files { get; }
 
         public override string ToString()
         {

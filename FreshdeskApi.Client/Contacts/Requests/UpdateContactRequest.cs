@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FreshdeskApi.Client.Contacts.Models;
 using Newtonsoft.Json;
+using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Contacts.Requests
 {
@@ -123,11 +124,14 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// </summary>
         [JsonProperty("time_zone")]
         public string? TimeZone { get; }
+        
+        [JsonIgnore, Multipart(Name = "avatar")]
+        public FileAttachment? Avatar { get; }
 
         public UpdateContactRequest(string? name = null, string? email = null, string? phone = null, string? mobile = null, string? twitterId = null,
             string? uniqueExternalId = null, string[]? otherEmails = null, long? companyId = null, bool? viewAllTickets = null,
             ContactCompany[]? otherCompanies = null, string? address = null, Dictionary<string, object?>? customFields = null, string? description = null,
-            string? jobTitle = null, string? language = null, string[]? tags = null, string? timeZone = null)
+            string? jobTitle = null, string? language = null, string[]? tags = null, string? timeZone = null, FileAttachment? avatar = null)
         {
             Name = name;
             Email = email;
@@ -146,6 +150,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
             Language = language;
             Tags = tags;
             TimeZone = timeZone;
+            Avatar = avatar;
         }
 
         public override string ToString()

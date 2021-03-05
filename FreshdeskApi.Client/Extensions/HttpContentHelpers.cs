@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using FreshdeskApi.Client.Contacts.Requests;
+using FreshdeskApi.Client.Conversations.Requests;
 using FreshdeskApi.Client.Tickets.Requests;
 
 namespace FreshdeskApi.Client.Extensions
@@ -12,9 +14,34 @@ namespace FreshdeskApi.Client.Extensions
         /// <returns>Boolean indicating if the body should be serialized as JSON.</returns>
         internal static bool SerializeAsJson(this object body)
         {
-            if (body is CreateTicketRequest request)
+            if (body is CreateTicketRequest createTicketRequest)
             {
-                return request.Files == null || !request.Files.Any();
+                return createTicketRequest.Files == null || !createTicketRequest.Files.Any();
+            }
+
+            if (body is UpdateTicketRequest updateTicketRequest)
+            {
+                return updateTicketRequest.Files == null || !updateTicketRequest.Files.Any();
+            }
+
+            if (body is ContactCreateRequest contactCreateRequest)
+            {
+                return contactCreateRequest.Avatar == null;
+            }
+
+            if (body is UpdateContactRequest updateContactRequest)
+            {
+                return updateContactRequest.Avatar == null;
+            }
+
+            if (body is CreateReplyRequest createReplyRequest)
+            {
+                return createReplyRequest.Files == null || !createReplyRequest.Files.Any();
+            }
+
+            if (body is UpdateNoteRequest updateNoteRequest)
+            {
+                return updateNoteRequest.Files == null || !updateNoteRequest.Files.Any();
             }
 
             return true;

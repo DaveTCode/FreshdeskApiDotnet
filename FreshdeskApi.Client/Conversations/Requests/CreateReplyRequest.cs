@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Conversations.Requests
 {
@@ -43,13 +45,18 @@ namespace FreshdeskApi.Client.Conversations.Requests
         [JsonProperty("bcc_emails")]
         public string[]? BccEmails { get; }
 
-        public CreateReplyRequest(string bodyHtml, string? fromEmail = null, long? userId = null, string[]? ccEmails = null, string[]? bccEmails = null)
+        [JsonIgnore, Multipart(Name = "attachments")]
+        public IEnumerable<FileAttachment>? Files { get; }
+
+        public CreateReplyRequest(string bodyHtml, string? fromEmail = null, long? userId = null, string[]? ccEmails = null, string[]? bccEmails = null,
+            IEnumerable<FileAttachment>? files = null)
         {
             BodyHtml = bodyHtml;
             FromEmail = fromEmail;
             UserId = userId;
             CcEmails = ccEmails;
             BccEmails = bccEmails;
+            Files = files;
         }
 
         public override string ToString()

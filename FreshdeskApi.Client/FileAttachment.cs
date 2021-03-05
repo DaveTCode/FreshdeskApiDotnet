@@ -1,6 +1,6 @@
 ﻿using TiberHealth.Serializer.Attributes;
 
-namespace FreshdeskApi.Client.Tickets.Models
+namespace FreshdeskApi.Client
 {
     [MultipartFile(ContentType = "MimeType", FileName = "Name", Value = "FileBytes")]
     public class FileAttachment
