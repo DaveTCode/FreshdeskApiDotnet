@@ -15,6 +15,7 @@ using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
 using FreshdeskApi.Client.Exceptions;
+using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
@@ -77,7 +78,9 @@ namespace FreshdeskApi.Client
         /// </param>
         public FreshdeskClient(HttpClient httpClient)
         {
-            if (string.IsNullOrWhiteSpace(httpClient?.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
+            if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
+
+            if (string.IsNullOrWhiteSpace(httpClient.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
 
             Tickets = new FreshdeskTicketClient(this);
             Contacts = new FreshdeskContactClient(this);
@@ -278,13 +281,13 @@ namespace FreshdeskApi.Client
 
             if (body != null)
             {
-                httpMessage.Content = body.SerializeAsJson() ?
-                    new StringContent(
-                    JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                    Encoding.UTF8,
-                    "application/json"
-                ) :
-                FormDataSerializer.Serialize(body);
+                httpMessage.Content = body.SerializeAsJson()
+                    ? new StringContent(
+                        JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore}),
+                        Encoding.UTF8,
+                        "application/json"
+                    )
+                    : FormDataSerializer.Serialize(body);
             }
 
             return httpMessage;
@@ -348,7 +351,7 @@ namespace FreshdeskApi.Client
 
         public void Dispose()
         {
-            _httpClient?.Dispose();
+            _httpClient.Dispose();
         }
     }
 }

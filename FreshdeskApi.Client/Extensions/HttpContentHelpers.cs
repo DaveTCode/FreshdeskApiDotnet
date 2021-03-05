@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using FreshdeskApi.Client.Tickets.Requests;
 
-namespace FreshdeskApi.Client
+namespace FreshdeskApi.Client.Extensions
 {
     public static class HttpContentHelpers
     {
@@ -11,8 +10,14 @@ namespace FreshdeskApi.Client
         /// </summary>
         /// <param name="body">Body object to be serialized</param>
         /// <returns>Boolean indicating if the body should be serialized as JSON.</returns>
-        internal static bool SerializeAsJson(this object body) =>
-            !(body is CreateTicketRequest request) ||
-            (request.Files == null || request.Files.Count() == 0);
+        internal static bool SerializeAsJson(this object body)
+        {
+            if (body is CreateTicketRequest request)
+            {
+                return request.Files == null || !request.Files.Any();
+            }
+
+            return true;
+        }
     }
 }
