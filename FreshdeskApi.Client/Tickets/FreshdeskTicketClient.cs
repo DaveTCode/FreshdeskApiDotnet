@@ -82,7 +82,9 @@ namespace FreshdeskApi.Client.Tickets
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>(listAllTicketsRequest.UrlWithQueryString, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var ticket in _freshdeskClient
+                .GetPagedResults<Ticket>(listAllTicketsRequest.UrlWithQueryString, pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return ticket;
             }
@@ -113,7 +115,9 @@ namespace FreshdeskApi.Client.Tickets
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var ticket in _freshdeskClient.GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", pagingConfiguration, true, cancellationToken).ConfigureAwait(false))
+            await foreach (var ticket in _freshdeskClient
+                .GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", pagingConfiguration, true, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return ticket;
             }
@@ -168,7 +172,7 @@ namespace FreshdeskApi.Client.Tickets
             CancellationToken cancellationToken = default)
         {
             return await _freshdeskClient
-                .ApiOperationAsync<Ticket>(HttpMethod.Put, $"/api/v2/tickets/{ticketId}", updateTicketRequest, cancellationToken: cancellationToken)
+                .ApiOperationAsync<Ticket, UpdateTicketRequest>(HttpMethod.Put, $"/api/v2/tickets/{ticketId}", updateTicketRequest, cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -243,7 +247,9 @@ namespace FreshdeskApi.Client.Tickets
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var conversationEntry in _freshdeskClient.GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var conversationEntry in _freshdeskClient
+                .GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return conversationEntry;
             }
@@ -280,7 +286,9 @@ namespace FreshdeskApi.Client.Tickets
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var timeEntry in _freshdeskClient.GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var timeEntry in _freshdeskClient
+                .GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return timeEntry;
             }
@@ -317,7 +325,9 @@ namespace FreshdeskApi.Client.Tickets
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var satisfactionRating in _freshdeskClient.GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var satisfactionRating in _freshdeskClient
+                .GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return satisfactionRating;
             }

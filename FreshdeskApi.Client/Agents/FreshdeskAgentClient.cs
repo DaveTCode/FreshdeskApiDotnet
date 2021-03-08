@@ -71,7 +71,9 @@ namespace FreshdeskApi.Client.Agents
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var agent in _freshdeskClient.GetPagedResults<Agent>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var agent in _freshdeskClient
+                .GetPagedResults<Agent>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return agent;
             }
@@ -117,7 +119,7 @@ namespace FreshdeskApi.Client.Agents
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<Agent>(HttpMethod.Post, $"/api/v2/agents", request, cancellationToken)
+                .ApiOperationAsync<Agent, CreateAgentRequest>(HttpMethod.Post, $"/api/v2/agents", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }

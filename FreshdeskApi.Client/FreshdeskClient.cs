@@ -223,7 +223,8 @@ namespace FreshdeskApi.Client
 
                 if (pagingConfiguration.BeforeProcessingPageAsync != null)
                 {
-                    await pagingConfiguration.BeforeProcessingPageAsync(page, cancellationToken).ConfigureAwait(false);
+                    await pagingConfiguration.BeforeProcessingPageAsync(page, cancellationToken)
+                        .ConfigureAwait(false);
                 }
 
                 foreach (var data in newData ?? new List<T>())
@@ -233,7 +234,8 @@ namespace FreshdeskApi.Client
 
                 if (pagingConfiguration.ProcessedPageAsync != null)
                 {
-                    await pagingConfiguration.ProcessedPageAsync(page, cancellationToken).ConfigureAwait(false);
+                    await pagingConfiguration.ProcessedPageAsync(page, cancellationToken)
+                        .ConfigureAwait(false);
                 }
 
                 // Handle a link header reflecting that there's another page of data
@@ -307,8 +309,8 @@ namespace FreshdeskApi.Client
             return response;
         }
 
-        internal Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
-            where T : new() => ApiOperationAsync<T, object>(method, url, body, cancellationToken);
+        internal Task<T> ApiOperationAsync<T>(HttpMethod method, string url, CancellationToken cancellationToken = default)
+            where T : new() => ApiOperationAsync<T, object>(method, url, null, cancellationToken);
 
         internal async Task<T> ApiOperationAsync<T, TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken = default)
             where T : new()

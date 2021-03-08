@@ -47,7 +47,7 @@ namespace FreshdeskApi.Client.Conversations
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _client
-                .ApiOperationAsync<ConversationEntry>(HttpMethod.Post, $"/api/v2/tickets/{ticketId}/reply", request, cancellationToken)
+                .ApiOperationAsync<ConversationEntry, CreateReplyRequest>(HttpMethod.Post, $"/api/v2/tickets/{ticketId}/reply", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -76,7 +76,7 @@ namespace FreshdeskApi.Client.Conversations
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _client
-                .ApiOperationAsync<ConversationEntry>(HttpMethod.Post, $"/api/v2/tickets/{ticketId}/notes", request, cancellationToken)
+                .ApiOperationAsync<ConversationEntry, CreateNoteRequest>(HttpMethod.Post, $"/api/v2/tickets/{ticketId}/notes", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -123,7 +123,7 @@ namespace FreshdeskApi.Client.Conversations
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _client
-                .ApiOperationAsync<ConversationEntry>(HttpMethod.Put, $"/api/v2/conversations/{conversationEntryId}", request, cancellationToken)
+                .ApiOperationAsync<ConversationEntry, UpdateNoteRequest>(HttpMethod.Put, $"/api/v2/conversations/{conversationEntryId}", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }

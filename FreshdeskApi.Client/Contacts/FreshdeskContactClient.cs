@@ -60,7 +60,7 @@ namespace FreshdeskApi.Client.Contacts
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<Contact>(HttpMethod.Post, "/api/v2/contacts", request, cancellationToken)
+                .ApiOperationAsync<Contact, ContactCreateRequest>(HttpMethod.Post, "/api/v2/contacts", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -91,7 +91,9 @@ namespace FreshdeskApi.Client.Contacts
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            await foreach (var contact in _freshdeskClient.GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var contact in _freshdeskClient
+                .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return contact;
             }
@@ -122,7 +124,7 @@ namespace FreshdeskApi.Client.Contacts
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<Contact>(HttpMethod.Put, $"/api/v2/contacts/{contactId}", request, cancellationToken)
+                .ApiOperationAsync<Contact, UpdateContactRequest>(HttpMethod.Put, $"/api/v2/contacts/{contactId}", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -164,7 +166,7 @@ namespace FreshdeskApi.Client.Contacts
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<Contact>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/make_agent", request, cancellationToken)
+                .ApiOperationAsync<Contact, MakeAgentRequest>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/make_agent", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -186,7 +188,7 @@ namespace FreshdeskApi.Client.Contacts
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<ExportCsv>(HttpMethod.Post, "/api/v2/contacts/export", request, cancellationToken)
+                .ApiOperationAsync<ExportCsv, ContactsExportRequest>(HttpMethod.Post, "/api/v2/contacts/export", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -209,7 +211,7 @@ namespace FreshdeskApi.Client.Contacts
             if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Export Id must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<ExportCsv>(HttpMethod.Get, $"/api/v2/contacts/export/{export.Id}", export, cancellationToken)
+                .ApiOperationAsync<ExportCsv, ExportCsv>(HttpMethod.Get, $"/api/v2/contacts/export/{export.Id}", export, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -229,10 +231,11 @@ namespace FreshdeskApi.Client.Contacts
             CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-            if (request.SecondaryContactIds == null || !request.SecondaryContactIds.Any()) throw new ArgumentNullException(nameof(request.SecondaryContactIds), "Secondary Ids must not be null or empty");
+            if (request.SecondaryContactIds == null || !request.SecondaryContactIds.Any())
+                throw new ArgumentNullException(nameof(request.SecondaryContactIds), "Secondary Ids must not be null or empty");
 
             await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
+                .ApiOperationAsync<object, MergeContactsRequest>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }
