@@ -283,7 +283,7 @@ namespace FreshdeskApi.Client
             {
                 httpMessage.Content = body.SerializeAsJson()
                     ? new StringContent(
-                        JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore}),
+                        JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
                         Encoding.UTF8,
                         "application/json"
                     )

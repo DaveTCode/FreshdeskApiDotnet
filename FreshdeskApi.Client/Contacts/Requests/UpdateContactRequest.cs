@@ -124,7 +124,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// </summary>
         [JsonProperty("time_zone")]
         public string? TimeZone { get; }
-        
+
         [JsonIgnore, Multipart(Name = "avatar")]
         public FileAttachment? Avatar { get; }
 

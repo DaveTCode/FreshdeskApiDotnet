@@ -45,7 +45,7 @@ namespace FreshdeskApi.Client.Conversations.Requests
         /// </summary>
         [JsonProperty("user_id")]
         public long? UserId { get; }
-        
+
         [JsonIgnore, Multipart(Name = "attachments")]
         public IEnumerable<FileAttachment>? Files { get; }
 

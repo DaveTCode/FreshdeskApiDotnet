@@ -135,7 +135,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
         /// Company ID of the requester. This attribute can only be set if the Multiple Companies feature is enabled (Estate plan and above)
         [JsonProperty("company_id")]
         public long? CompanyId { get; }
-        
+
         [JsonIgnore, Multipart(Name = "attachments")]
         public IEnumerable<FileAttachment>? Files { get; }
 
