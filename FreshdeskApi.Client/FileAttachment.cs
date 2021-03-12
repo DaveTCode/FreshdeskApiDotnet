@@ -6,7 +6,9 @@ namespace FreshdeskApi.Client
     public class FileAttachment
     {
         public string? Name { get; set; }
+
         public string? MimeType { get; set; }
+
         public byte[]? FileBytes { get; set; }
     }
 }

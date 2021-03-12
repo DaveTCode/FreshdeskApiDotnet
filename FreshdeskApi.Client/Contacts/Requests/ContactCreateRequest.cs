@@ -11,7 +11,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
     /// 
     /// c.f. https://developers.freshdesk.com/api/#create_contact
     /// </summary>
-    public class ContactCreateRequest
+    public class ContactCreateRequest : IRequestWithAttachment
     {
         /// <summary>
         /// Name of the contact
@@ -156,6 +156,8 @@ namespace FreshdeskApi.Client.Contacts.Requests
             TimeZone = timeZone;
             Avatar = avatar;
         }
+
+        public bool IsMultipartFormDataRequired() => Avatar == null;
 
         public override string ToString()
         {

@@ -10,7 +10,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
     ///
     /// c.f. https://developers.freshdesk.com/api/#update_contact
     /// </summary>
-    public class UpdateContactRequest
+    public class UpdateContactRequest : IRequestWithAttachment
     {
         /// <summary>
         /// Name of the contact
@@ -152,6 +152,8 @@ namespace FreshdeskApi.Client.Contacts.Requests
             TimeZone = timeZone;
             Avatar = avatar;
         }
+
+        public bool IsMultipartFormDataRequired() => Avatar == null;
 
         public override string ToString()
         {

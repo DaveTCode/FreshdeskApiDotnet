@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FreshdeskApi.Client.Tickets.Models;
 using Newtonsoft.Json;
 using TiberHealth.Serializer.Attributes;
@@ -12,7 +13,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
     /// required for a ticket. Any object set to null will be left unchanged.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class UpdateTicketRequest
+    public class UpdateTicketRequest : IRequestWithAttachment
     {
         public UpdateTicketRequest(TicketStatus? status = null, TicketPriority? priority = null, TicketSource? source = null,
             string? description = null, string? requesterName = null, long? requesterId = null, string? email = null, string? facebookId = null,
@@ -138,6 +139,8 @@ namespace FreshdeskApi.Client.Tickets.Requests
 
         [JsonIgnore, Multipart(Name = "attachments")]
         public IEnumerable<FileAttachment>? Files { get; }
+
+        public bool IsMultipartFormDataRequired() => Files == null || !Files.Any();
 
         public override string ToString()
         {

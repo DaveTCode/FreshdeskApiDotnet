@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using TiberHealth.Serializer.Attributes;
 
@@ -9,7 +10,7 @@ namespace FreshdeskApi.Client.Conversations.Requests
     ///
     /// c.f. https://developers.freshdesk.com/api/#reply_ticket
     /// </summary>
-    public class CreateReplyRequest
+    public class CreateReplyRequest : IRequestWithAttachment
     {
         /// <summary>
         /// Content of the note in HTML format
@@ -58,6 +59,8 @@ namespace FreshdeskApi.Client.Conversations.Requests
             BccEmails = bccEmails;
             Files = files;
         }
+        
+        public bool IsMultipartFormDataRequired() => Files == null || !Files.Any();
 
         public override string ToString()
         {

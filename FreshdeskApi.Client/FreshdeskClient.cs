@@ -276,18 +276,17 @@ namespace FreshdeskApi.Client
         private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)
             where TBody : class
         {
-
             var httpMessage = new HttpRequestMessage(method, url);
 
             if (body != null)
             {
-                httpMessage.Content = body.SerializeAsJson()
-                    ? new StringContent(
-                        JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                httpMessage.Content = body.IsMultipartFormDataRequired()
+                    ? FormDataSerializer.Serialize(body)
+                    : new StringContent(
+                        JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore}),
                         Encoding.UTF8,
                         "application/json"
-                    )
-                    : FormDataSerializer.Serialize(body);
+                    );
             }
 
             return httpMessage;
