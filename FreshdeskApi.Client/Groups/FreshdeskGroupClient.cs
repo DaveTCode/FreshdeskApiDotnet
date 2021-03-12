@@ -58,7 +58,9 @@ namespace FreshdeskApi.Client.Groups
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var group in _freshdeskClient.GetPagedResults<Group>("/api/v2/groups", pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var group in _freshdeskClient
+                .GetPagedResults<Group>("/api/v2/groups", pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return group;
             }
@@ -85,7 +87,7 @@ namespace FreshdeskApi.Client.Groups
         {
             await _freshdeskClient
                 .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false); ;
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +109,9 @@ namespace FreshdeskApi.Client.Groups
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient.ApiOperationAsync<Group>(HttpMethod.Post, "/api/v2/groups", request, cancellationToken);
+            return await _freshdeskClient
+                .ApiOperationAsync<Group, CreateGroupRequest>(HttpMethod.Post, "/api/v2/groups", request, cancellationToken)
+                .ConfigureAwait(false);
         }
     }
 }

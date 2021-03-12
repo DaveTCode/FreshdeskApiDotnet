@@ -15,6 +15,7 @@ using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
 using FreshdeskApi.Client.Exceptions;
+using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
@@ -77,7 +78,9 @@ namespace FreshdeskApi.Client
         /// </param>
         public FreshdeskClient(HttpClient httpClient)
         {
-            if (string.IsNullOrWhiteSpace(httpClient?.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
+            if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
+
+            if (string.IsNullOrWhiteSpace(httpClient.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
 
             Tickets = new FreshdeskTicketClient(this);
             Contacts = new FreshdeskContactClient(this);
@@ -273,18 +276,17 @@ namespace FreshdeskApi.Client
         private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)
             where TBody : class
         {
-
             var httpMessage = new HttpRequestMessage(method, url);
 
             if (body != null)
             {
-                httpMessage.Content = body.SerializeAsJson() ?
-                    new StringContent(
-                    JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                    Encoding.UTF8,
-                    "application/json"
-                ) :
-                FormDataSerializer.Serialize(body);
+                httpMessage.Content = body.IsMultipartFormDataRequired()
+                    ? FormDataSerializer.Serialize(body)
+                    : new StringContent(
+                        JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                        Encoding.UTF8,
+                        "application/json"
+                    );
             }
 
             return httpMessage;
@@ -304,8 +306,8 @@ namespace FreshdeskApi.Client
             return response;
         }
 
-        internal Task<T> ApiOperationAsync<T>(HttpMethod method, string url, object? body = null, CancellationToken cancellationToken = default)
-            where T : new() => ApiOperationAsync<T, object>(method, url, body, cancellationToken);
+        internal Task<T> ApiOperationAsync<T>(HttpMethod method, string url, CancellationToken cancellationToken = default)
+            where T : new() => ApiOperationAsync<T, object>(method, url, null, cancellationToken);
 
         internal async Task<T> ApiOperationAsync<T, TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken = default)
             where T : new()
@@ -348,7 +350,7 @@ namespace FreshdeskApi.Client
 
         public void Dispose()
         {
-            _httpClient?.Dispose();
+            _httpClient.Dispose();
         }
     }
 }

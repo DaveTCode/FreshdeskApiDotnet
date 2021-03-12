@@ -31,7 +31,7 @@ namespace FreshdeskApi.Client.Channel
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _client
-                .ApiOperationAsync<Ticket>(HttpMethod.Post, "/api/channel/v2/tickets", request, cancellationToken)
+                .ApiOperationAsync<Ticket, ChannelCreateTicketRequest>(HttpMethod.Post, "/api/channel/v2/tickets", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -43,7 +43,7 @@ namespace FreshdeskApi.Client.Channel
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _client
-                .ApiOperationAsync<ConversationEntry>(HttpMethod.Post, $"/api/channel/v2/tickets/{ticketId}/reply", request, cancellationToken)
+                .ApiOperationAsync<ConversationEntry, ChannelCreateReplyRequest>(HttpMethod.Post, $"/api/channel/v2/tickets/{ticketId}/reply", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -55,7 +55,7 @@ namespace FreshdeskApi.Client.Channel
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _client
-                .ApiOperationAsync<ConversationEntry>(HttpMethod.Post, $"/api/channel/v2/tickets/{ticketId}/notes", request, cancellationToken)
+                .ApiOperationAsync<ConversationEntry, ChannelCreateNoteRequest>(HttpMethod.Post, $"/api/channel/v2/tickets/{ticketId}/notes", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }
