@@ -82,13 +82,25 @@ namespace FreshdeskApi.Client.Companies
         /// <inheritdoc />
         public async Task<Company> UpdateCompanyAsync(
             long companyId,
-            UpdateCompanyRequest request,
+            CompanyRequest request,
             CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
                 .ApiOperationAsync<Company>(HttpMethod.Put, $"/api/v2/companies/{companyId}", request, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<Company> AddCompanyAsync(
+            CompanyRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
+            return await _freshdeskClient
+                .ApiOperationAsync<Company>(HttpMethod.Post, $"/api/v2/companies", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }
