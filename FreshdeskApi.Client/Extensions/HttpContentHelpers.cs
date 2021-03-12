@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using FreshdeskApi.Client.Tickets.Requests;
-
-namespace FreshdeskApi.Client
+﻿namespace FreshdeskApi.Client.Extensions
 {
     public static class HttpContentHelpers
     {
@@ -11,8 +7,14 @@ namespace FreshdeskApi.Client
         /// </summary>
         /// <param name="body">Body object to be serialized</param>
         /// <returns>Boolean indicating if the body should be serialized as JSON.</returns>
-        internal static bool SerializeAsJson(this object body) =>
-            !(body is CreateTicketRequest request) ||
-            (request.Files == null || request.Files.Count() == 0);
+        internal static bool IsMultipartFormDataRequired<TRequest>(this TRequest body)
+        {
+            if (body is IRequestWithAttachment requestWithAttachment)
+            {
+                return requestWithAttachment.IsMultipartFormDataRequired();
+            }
+
+            return true;
+        }
     }
 }

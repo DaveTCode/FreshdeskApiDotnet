@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FreshdeskApi.Client.Tickets.Models;
 using Newtonsoft.Json;
 using TiberHealth.Serializer.Attributes;
@@ -8,7 +9,7 @@ using TiberHealth.Serializer.Attributes;
 namespace FreshdeskApi.Client.Tickets.Requests
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class CreateTicketRequest
+    public class CreateTicketRequest : IRequestWithAttachment
     {
         public CreateTicketRequest(TicketStatus status, TicketPriority priority, TicketSource source, string description, string? requesterName = null,
             long? requesterId = null, string? email = null, string? facebookId = null, string? phoneNumber = null,
@@ -152,6 +153,8 @@ namespace FreshdeskApi.Client.Tickets.Requests
 
         [JsonIgnore, Multipart(Name = "attachments")]
         public IEnumerable<FileAttachment>? Files { get; }
+
+        public bool IsMultipartFormDataRequired() => Files == null || !Files.Any();
 
         public override string ToString()
         {

@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
+using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Conversations.Requests
 {
@@ -7,7 +10,7 @@ namespace FreshdeskApi.Client.Conversations.Requests
     ///
     /// c.f. https://developers.freshdesk.com/api/#reply_ticket
     /// </summary>
-    public class CreateReplyRequest
+    public class CreateReplyRequest : IRequestWithAttachment
     {
         /// <summary>
         /// Content of the note in HTML format
@@ -43,14 +46,21 @@ namespace FreshdeskApi.Client.Conversations.Requests
         [JsonProperty("bcc_emails")]
         public string[]? BccEmails { get; }
 
-        public CreateReplyRequest(string bodyHtml, string? fromEmail = null, long? userId = null, string[]? ccEmails = null, string[]? bccEmails = null)
+        [JsonIgnore, Multipart(Name = "attachments")]
+        public IEnumerable<FileAttachment>? Files { get; }
+
+        public CreateReplyRequest(string bodyHtml, string? fromEmail = null, long? userId = null, string[]? ccEmails = null, string[]? bccEmails = null,
+            IEnumerable<FileAttachment>? files = null)
         {
             BodyHtml = bodyHtml;
             FromEmail = fromEmail;
             UserId = userId;
             CcEmails = ccEmails;
             BccEmails = bccEmails;
+            Files = files;
         }
+
+        public bool IsMultipartFormDataRequired() => Files == null || !Files.Any();
 
         public override string ToString()
         {

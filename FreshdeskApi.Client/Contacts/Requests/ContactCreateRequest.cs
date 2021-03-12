@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Contacts.Requests
 {
@@ -10,7 +11,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
     /// 
     /// c.f. https://developers.freshdesk.com/api/#create_contact
     /// </summary>
-    public class ContactCreateRequest
+    public class ContactCreateRequest : IRequestWithAttachment
     {
         /// <summary>
         /// Name of the contact
@@ -127,10 +128,14 @@ namespace FreshdeskApi.Client.Contacts.Requests
         [JsonProperty("time_zone")]
         public string? TimeZone { get; }
 
+        [JsonIgnore, Multipart(Name = "avatar")]
+        public FileAttachment? Avatar { get; }
+
         public ContactCreateRequest(string name, string? email = null, string? phone = null, string? mobile = null, string? twitterId = null,
             string? uniqueExternalId = null, string[]? otherEmails = null, long? companyId = null, bool? viewAllTickets = null,
             long[]? otherCompanies = null, string? address = null, Dictionary<string, object>? customFields = null,
-            string? description = null, string? jobTitle = null, string? language = null, string[]? tags = null, string? timeZone = null)
+            string? description = null, string? jobTitle = null, string? language = null, string[]? tags = null, string? timeZone = null,
+            FileAttachment? avatar = null)
         {
             Name = name;
             Email = email;
@@ -149,7 +154,10 @@ namespace FreshdeskApi.Client.Contacts.Requests
             Language = language;
             Tags = tags;
             TimeZone = timeZone;
+            Avatar = avatar;
         }
+
+        public bool IsMultipartFormDataRequired() => Avatar == null;
 
         public override string ToString()
         {
