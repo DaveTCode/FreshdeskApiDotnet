@@ -118,7 +118,7 @@ namespace FreshdeskApi.Client.Companies
         /// <returns>The newly updated company</returns>
         Task<Company> UpdateCompanyAsync(
             long companyId,
-            CompanyRequest request,
+            UpdateCompanyRequest request,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -134,8 +134,8 @@ namespace FreshdeskApi.Client.Companies
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The newly updated company</returns>
-        Task<Company> AddCompanyAsync(
-            CompanyRequest request,
+        Task<Company> CreateCompanyAsync(
+            CreateCompanyRequest request,
             CancellationToken cancellationToken = default);
     }
 }

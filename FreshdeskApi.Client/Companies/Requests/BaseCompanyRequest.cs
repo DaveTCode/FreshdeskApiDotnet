@@ -5,12 +5,9 @@ using Newtonsoft.Json;
 namespace FreshdeskApi.Client.Companies.Requests
 {
     /// <summary>
-    /// Defines the set of properties to add or update on a comapny
-    ///
-    /// c.f. https://developers.freshdesk.com/api/#create_company
-    /// c.f. https://developers.freshdesk.com/api/#update_company
+    /// Base classe for the Create and Update company requests
     /// </summary>
-    public class CompanyRequest
+    public abstract class BaseCompanyRequest
     {
         /// <summary>
         /// Name of the company - this has to be unique
@@ -69,8 +66,8 @@ namespace FreshdeskApi.Client.Companies.Requests
         [JsonProperty("custom_fields")]
         public Dictionary<string, object?>? CustomFields { get; }
 
-        public CompanyRequest(string? name = null, string[]? domains = null, string? description = null, string? note = null, string? healthScore = null,
-            string? accountTier = null, DateTime? renewalDate = null, string? industry = null, Dictionary<string, object?>? customFields = null)
+        public BaseCompanyRequest(string? name = null, string[]? domains = null, string? description = null, string? note = null, string? healthScore = null,
+           string? accountTier = null, DateTime? renewalDate = null, string? industry = null, Dictionary<string, object?>? customFields = null)
         {
             Name = name;
             Domains = domains;

@@ -82,7 +82,7 @@ namespace FreshdeskApi.Client.Companies
         /// <inheritdoc />
         public async Task<Company> UpdateCompanyAsync(
             long companyId,
-            CompanyRequest request,
+            UpdateCompanyRequest request,
             CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
@@ -93,8 +93,8 @@ namespace FreshdeskApi.Client.Companies
         }
 
         /// <inheritdoc />
-        public async Task<Company> AddCompanyAsync(
-            CompanyRequest request,
+        public async Task<Company> CreateCompanyAsync(
+            CreateCompanyRequest request,
             CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
