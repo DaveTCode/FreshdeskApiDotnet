@@ -18,10 +18,5 @@ namespace FreshdeskApi.Client.Companies.Requests
             )
         {
         }
-
-        public override string ToString()
-        {
-            return $"{nameof(Name)}: {Name}, {nameof(Domains)}: {Domains}, {nameof(Description)}: {Description}, {nameof(Note)}: {Note}, {nameof(HealthScore)}: {HealthScore}, {nameof(AccountTier)}: {AccountTier}, {nameof(RenewalDate)}: {RenewalDate}, {nameof(Industry)}: {Industry}, {nameof(CustomFields)}: {CustomFields}";
-        }
     }
 }
