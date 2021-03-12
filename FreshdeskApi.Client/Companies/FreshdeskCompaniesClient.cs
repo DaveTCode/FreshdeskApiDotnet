@@ -36,7 +36,9 @@ namespace FreshdeskApi.Client.Companies
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var company in _freshdeskClient.GetPagedResults<Company>("/api/v2/companies", pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var company in _freshdeskClient
+                .GetPagedResults<Company>("/api/v2/companies", pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return company;
             }
@@ -48,7 +50,9 @@ namespace FreshdeskApi.Client.Companies
             IPaginationConfiguration? pagingConfiguration = null,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            await foreach (var company in _freshdeskClient.GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", pagingConfiguration, true, cancellationToken).ConfigureAwait(false))
+            await foreach (var company in _freshdeskClient
+                .GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", pagingConfiguration, true, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return company;
             }
@@ -62,7 +66,7 @@ namespace FreshdeskApi.Client.Companies
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<ExportCsv>(HttpMethod.Post, "/api/v2/companies/export", request, cancellationToken)
+                .ApiOperationAsync<ExportCsv, CompaniesExportRequest>(HttpMethod.Post, "/api/v2/companies/export", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -75,7 +79,7 @@ namespace FreshdeskApi.Client.Companies
             if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Export Id must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<ExportCsv>(HttpMethod.Get, $"/api/v2/companies/export/{export.Id}", export, cancellationToken)
+                .ApiOperationAsync<ExportCsv, ExportCsv>(HttpMethod.Get, $"/api/v2/companies/export/{export.Id}", export, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -88,7 +92,7 @@ namespace FreshdeskApi.Client.Companies
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<Company>(HttpMethod.Put, $"/api/v2/companies/{companyId}", request, cancellationToken)
+                .ApiOperationAsync<Company, UpdateCompanyRequest>(HttpMethod.Put, $"/api/v2/companies/{companyId}", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }

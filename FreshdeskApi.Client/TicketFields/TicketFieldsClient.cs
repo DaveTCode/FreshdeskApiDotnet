@@ -103,7 +103,7 @@ namespace FreshdeskApi.Client.TicketFields
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<TicketField>(HttpMethod.Post, "/api/v2/admin/ticket_fields", request, cancellationToken)
+                .ApiOperationAsync<TicketField, CreateTicketFieldRequest>(HttpMethod.Post, "/api/v2/admin/ticket_fields", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -132,7 +132,7 @@ namespace FreshdeskApi.Client.TicketFields
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<TicketField>(HttpMethod.Put, $"/api/v2/admin/ticket_fields/{ticketFieldId}", request, cancellationToken)
+                .ApiOperationAsync<TicketField, UpdateTicketFieldRequest>(HttpMethod.Put, $"/api/v2/admin/ticket_fields/{ticketFieldId}", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -240,7 +240,7 @@ namespace FreshdeskApi.Client.TicketFields
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<Section>(HttpMethod.Post, $"/api/v2/admin/ticket_fields/{ticketFieldId}/sections", request, cancellationToken)
+                .ApiOperationAsync<Section, CreateSectionRequest>(HttpMethod.Post, $"/api/v2/admin/ticket_fields/{ticketFieldId}/sections", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -274,7 +274,7 @@ namespace FreshdeskApi.Client.TicketFields
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<Section>(HttpMethod.Put, $"/api/v2/admin/ticket_fields/{ticketFieldId}/sections/{sectionId}", request, cancellationToken)
+                .ApiOperationAsync<Section, UpdateSectionRequest>(HttpMethod.Put, $"/api/v2/admin/ticket_fields/{ticketFieldId}/sections/{sectionId}", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 

@@ -55,7 +55,9 @@ namespace FreshdeskApi.Client.Solutions
                 ? $"/api/v2/solutions/categories/{categoryId}"
                 : $"/api/v2/solutions/categories/{categoryId}/{languageCode}";
 
-            return await _freshdeskClient.ApiOperationAsync<Category>(HttpMethod.Get, url, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await _freshdeskClient
+                .ApiOperationAsync<Category>(HttpMethod.Get, url, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -86,7 +88,9 @@ namespace FreshdeskApi.Client.Solutions
                 ? "/api/v2/solutions/categories"
                 : $"/api/v2/solutions/categories/{languageCode}";
 
-            await foreach (var category in _freshdeskClient.GetPagedResults<Category>(url, pagingConfiguration, false, cancellationToken))
+            await foreach (var category in _freshdeskClient
+                .GetPagedResults<Category>(url, pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return category;
             }
@@ -110,7 +114,9 @@ namespace FreshdeskApi.Client.Solutions
             long categoryId,
             CancellationToken cancellationToken = default)
         {
-            await _freshdeskClient.ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/solutions/categories/{categoryId}", cancellationToken: cancellationToken);
+            await _freshdeskClient
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/solutions/categories/{categoryId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -135,7 +141,9 @@ namespace FreshdeskApi.Client.Solutions
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
 
-            return await _freshdeskClient.ApiOperationAsync<Category>(HttpMethod.Put, $"/api/v2/solutions/categories/{categoryId}", request, cancellationToken: cancellationToken);
+            return await _freshdeskClient
+                .ApiOperationAsync<Category, UpdateCategoryRequest>(HttpMethod.Put, $"/api/v2/solutions/categories/{categoryId}", request, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -156,7 +164,9 @@ namespace FreshdeskApi.Client.Solutions
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
 
-            return await _freshdeskClient.ApiOperationAsync<Category>(HttpMethod.Post, $"/api/v2/solutions/categories", request, cancellationToken: cancellationToken);
+            return await _freshdeskClient
+                .ApiOperationAsync<Category, CreateCategoryRequest>(HttpMethod.Post, $"/api/v2/solutions/categories", request, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         #endregion
@@ -191,7 +201,9 @@ namespace FreshdeskApi.Client.Solutions
                 ? $"/api/v2/solutions/folders/{folderId}"
                 : $"/api/v2/solutions/folders/{folderId}/{languageCode}";
 
-            return await _freshdeskClient.ApiOperationAsync<Folder>(HttpMethod.Get, url, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await _freshdeskClient
+                .ApiOperationAsync<Folder>(HttpMethod.Get, url, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -228,7 +240,9 @@ namespace FreshdeskApi.Client.Solutions
                 ? $"/api/v2/solutions/categories/{categoryId}/folders"
                 : $"/api/v2/solutions/categories/{categoryId}/folders/{languageCode}";
 
-            await foreach (var folder in _freshdeskClient.GetPagedResults<Folder>(url, pagingConfiguration, false, cancellationToken))
+            await foreach (var folder in _freshdeskClient.
+                GetPagedResults<Folder>(url, pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return folder;
             }
@@ -252,7 +266,9 @@ namespace FreshdeskApi.Client.Solutions
             long folderId,
             CancellationToken cancellationToken = default)
         {
-            await _freshdeskClient.ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/solutions/folders/{folderId}", cancellationToken: cancellationToken).ConfigureAwait(false);
+            await _freshdeskClient
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/solutions/folders/{folderId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -279,7 +295,9 @@ namespace FreshdeskApi.Client.Solutions
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
 
-            return await _freshdeskClient.ApiOperationAsync<Folder>(HttpMethod.Post, $"/api/v2/solutions/categories/{categoryId}/folders", request, cancellationToken).ConfigureAwait(false);
+            return await _freshdeskClient
+                .ApiOperationAsync<Folder, CreateFolderRequest>(HttpMethod.Post, $"/api/v2/solutions/categories/{categoryId}/folders", request, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -313,7 +331,9 @@ namespace FreshdeskApi.Client.Solutions
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
             if (string.IsNullOrWhiteSpace(languageCode)) throw new ArgumentOutOfRangeException(nameof(languageCode), languageCode, "Language code must be set to something");
 
-            return await _freshdeskClient.ApiOperationAsync<Folder>(HttpMethod.Post, $"/api/v2/solutions/folders/{folderId}/{languageCode}", request, cancellationToken).ConfigureAwait(false);
+            return await _freshdeskClient
+                .ApiOperationAsync<Folder, CreateFolderRequest>(HttpMethod.Post, $"/api/v2/solutions/folders/{folderId}/{languageCode}", request, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -356,7 +376,9 @@ namespace FreshdeskApi.Client.Solutions
                 ? $"/api/v2/solutions/folders/{folderId}"
                 : $"/api/v2/solutions/folders/{folderId}/{languageCode}";
 
-            return await _freshdeskClient.ApiOperationAsync<Folder>(HttpMethod.Put, url, request, cancellationToken).ConfigureAwait(false);
+            return await _freshdeskClient
+                .ApiOperationAsync<Folder, UpdateFolderRequest>(HttpMethod.Put, url, request, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         #endregion
@@ -387,7 +409,9 @@ namespace FreshdeskApi.Client.Solutions
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
 
-            return await _freshdeskClient.ApiOperationAsync<Article>(HttpMethod.Post, $"/api/v2/solutions/folders/{folderId}/articles", request, cancellationToken).ConfigureAwait(false);
+            return await _freshdeskClient
+                .ApiOperationAsync<Article, CreateArticleRequest>(HttpMethod.Post, $"/api/v2/solutions/folders/{folderId}/articles", request, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -421,7 +445,9 @@ namespace FreshdeskApi.Client.Solutions
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
             if (string.IsNullOrWhiteSpace(languageCode)) throw new ArgumentOutOfRangeException(nameof(languageCode), languageCode, "The language code must not be empty");
 
-            return await _freshdeskClient.ApiOperationAsync<Article>(HttpMethod.Post, $"/api/v2/solutions/articles/{articleId}/{languageCode}", request, cancellationToken).ConfigureAwait(false);
+            return await _freshdeskClient
+                .ApiOperationAsync<Article, CreateArticleRequest>(HttpMethod.Post, $"/api/v2/solutions/articles/{articleId}/{languageCode}", request, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -460,7 +486,9 @@ namespace FreshdeskApi.Client.Solutions
                 ? $"/api/v2/solutions/articles/{articleId}"
                 : $"/api/v2/solutions/articles/{articleId}/{languageCode}";
 
-            return await _freshdeskClient.ApiOperationAsync<Article>(HttpMethod.Put, url, request, cancellationToken).ConfigureAwait(false);
+            return await _freshdeskClient
+                .ApiOperationAsync<Article, UpdateArticleRequest>(HttpMethod.Put, url, request, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -490,7 +518,9 @@ namespace FreshdeskApi.Client.Solutions
                 ? $"/api/v2/solutions/articles/{articleId}"
                 : $"/api/v2/solutions/articles/{articleId}/{languageCode}";
 
-            return await _freshdeskClient.ApiOperationAsync<Article>(HttpMethod.Get, url, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await _freshdeskClient
+                .ApiOperationAsync<Article>(HttpMethod.Get, url, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -525,7 +555,9 @@ namespace FreshdeskApi.Client.Solutions
                 ? $"/api/v2/solutions/folders/{folderId}/articles"
                 : $"/api/v2/solutions/folders/{folderId}/articles/{languageCode}";
 
-            await foreach (var article in _freshdeskClient.GetPagedResults<Article>(url, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var article in _freshdeskClient
+                .GetPagedResults<Article>(url, pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return article;
             }
@@ -546,7 +578,9 @@ namespace FreshdeskApi.Client.Solutions
             long articleId,
             CancellationToken cancellationToken = default)
         {
-            await _freshdeskClient.ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/solutions/articles/{articleId}", cancellationToken: cancellationToken).ConfigureAwait(false);
+            await _freshdeskClient
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/solutions/articles/{articleId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -573,7 +607,9 @@ namespace FreshdeskApi.Client.Solutions
         {
             var url = $"/api/v2/search/solutions?term={Uri.EscapeDataString(termUnencoded)}";
 
-            await foreach (var article in _freshdeskClient.GetPagedResults<Article>(url, pagingConfiguration, false, cancellationToken).ConfigureAwait(false))
+            await foreach (var article in _freshdeskClient
+                .GetPagedResults<Article>(url, pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
             {
                 yield return article;
             }
