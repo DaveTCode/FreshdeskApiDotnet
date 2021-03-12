@@ -104,7 +104,7 @@ namespace FreshdeskApi.Client.Companies
             if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
             return await _freshdeskClient
-                .ApiOperationAsync<Company>(HttpMethod.Post, $"/api/v2/companies", request, cancellationToken)
+                .ApiOperationAsync<Company, CreateCompanyRequest>(HttpMethod.Post, $"/api/v2/companies", request, cancellationToken)
                 .ConfigureAwait(false);
         }
     }
