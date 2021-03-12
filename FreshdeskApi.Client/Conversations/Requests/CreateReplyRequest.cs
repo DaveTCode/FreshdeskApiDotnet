@@ -59,7 +59,7 @@ namespace FreshdeskApi.Client.Conversations.Requests
             BccEmails = bccEmails;
             Files = files;
         }
-        
+
         public bool IsMultipartFormDataRequired() => Files == null || !Files.Any();
 
         public override string ToString()
