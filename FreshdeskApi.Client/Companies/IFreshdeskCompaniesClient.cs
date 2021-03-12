@@ -1,8 +1,8 @@
-﻿using FreshdeskApi.Client.Companies.Models;
-using FreshdeskApi.Client.Companies.Requests;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Companies.Models;
+using FreshdeskApi.Client.Companies.Requests;
 
 namespace FreshdeskApi.Client.Companies
 {

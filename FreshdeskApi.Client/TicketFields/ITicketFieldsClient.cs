@@ -1,8 +1,8 @@
-﻿using FreshdeskApi.Client.TicketFields.Models;
-using FreshdeskApi.Client.TicketFields.Requests;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.TicketFields.Models;
+using FreshdeskApi.Client.TicketFields.Requests;
 
 namespace FreshdeskApi.Client.TicketFields
 {

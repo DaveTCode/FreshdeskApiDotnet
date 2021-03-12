@@ -1,9 +1,9 @@
-﻿using FreshdeskApi.Client.Conversations.Models;
-using FreshdeskApi.Client.Tickets.Models;
-using FreshdeskApi.Client.Tickets.Requests;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Conversations.Models;
+using FreshdeskApi.Client.Tickets.Models;
+using FreshdeskApi.Client.Tickets.Requests;
 
 namespace FreshdeskApi.Client.Tickets
 {

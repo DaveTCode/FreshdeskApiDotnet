@@ -1,8 +1,8 @@
-﻿using FreshdeskApi.Client.Groups.Models;
-using FreshdeskApi.Client.Groups.Requests;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Groups.Models;
+using FreshdeskApi.Client.Groups.Requests;
 
 namespace FreshdeskApi.Client.Groups
 {

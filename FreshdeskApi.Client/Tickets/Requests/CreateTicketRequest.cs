@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Newtonsoft.Json;
 using FreshdeskApi.Client.Tickets.Models;
+using Newtonsoft.Json;
 using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Tickets.Requests

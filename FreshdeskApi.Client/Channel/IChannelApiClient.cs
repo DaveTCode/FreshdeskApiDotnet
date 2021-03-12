@@ -1,8 +1,8 @@
-﻿using FreshdeskApi.Client.Channel.Requests;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using FreshdeskApi.Client.Channel.Requests;
 using FreshdeskApi.Client.Conversations.Models;
 using FreshdeskApi.Client.Tickets.Models;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FreshdeskApi.Client.Channel
 {
