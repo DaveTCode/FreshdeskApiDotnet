@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using Newtonsoft.Json;
 using FreshdeskApi.Client.Contacts.Models;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Agents.Models
 {
