@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 namespace FreshdeskApi.Client.Companies.Requests
 {
     /// <summary>
-    /// Defines the set of properties to update a comapny
+    /// Defines the set of properties to create a comapny
     ///
-    /// c.f. https://developers.freshdesk.com/api/#update_company
+    /// c.f. https://developers.freshdesk.com/api/#create_company
     /// </summary>
-    public class UpdateCompanyRequest : BaseCompanyRequest
+    public class CreateCompanyRequest : BaseCompanyRequest
     {
-        public UpdateCompanyRequest(string? name = null, string[]? domains = null, string? description = null, string? note = null, string? healthScore = null,
+        public CreateCompanyRequest(string name, string[]? domains = null, string? description = null, string? note = null, string? healthScore = null,
             string? accountTier = null, DateTime? renewalDate = null, string? industry = null, Dictionary<string, object?>? customFields = null) : base
             (
                 name, domains, description, note, healthScore, accountTier, renewalDate, industry, customFields

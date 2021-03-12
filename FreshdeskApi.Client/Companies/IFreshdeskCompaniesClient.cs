@@ -120,5 +120,22 @@ namespace FreshdeskApi.Client.Companies
             long companyId,
             UpdateCompanyRequest request,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Add a company with new details.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#create_company
+        /// </summary>
+        ///
+        /// <param name="request">
+        /// The details about the company to update.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The newly updated company</returns>
+        Task<Company> CreateCompanyAsync(
+            CreateCompanyRequest request,
+            CancellationToken cancellationToken = default);
     }
 }
