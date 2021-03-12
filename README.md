@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/DaveTCode/FreshdeskApiDotnet/actions/workflows/ci-master.yml/badge.svg?branch=master)](https://github.com/DaveTCode/FreshdeskApiDotnet/actions/workflows/ci-master.yml)
+[![Build Status](https://github.com/DaveTCode/FreshdeskApiDotnet/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/DaveTCode/FreshdeskApiDotnet/actions/workflows/build.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DaveTCode_FreshdeskApiDotnet&metric=alert_status)](https://sonarcloud.io/dashboard?id=DaveTCode_FreshdeskApiDotnet)
 [![NuGet](https://img.shields.io/nuget/v/Freshdesk.Api.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Freshdesk.Api/)
 
