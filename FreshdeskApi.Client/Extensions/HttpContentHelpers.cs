@@ -14,7 +14,7 @@
                 return requestWithAttachment.IsMultipartFormDataRequired();
             }
 
-            return true;
+            return false;
         }
     }
 }
