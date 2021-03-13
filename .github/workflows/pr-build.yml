@@ -25,7 +25,7 @@ jobs:
         with:
           # shallow clone disabled as recommended by SonarCLoud - https://github.com/marketplace/actions/sonarcloud-scan
           fetch-depth: 0
-      - name: Build
+      - name: Build & test
         run: |
           dotnet build --configuration Release
           dotnet test --nologo --no-build --configuration Release
