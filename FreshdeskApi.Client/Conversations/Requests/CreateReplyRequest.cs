@@ -60,7 +60,7 @@ namespace FreshdeskApi.Client.Conversations.Requests
             Files = files;
         }
 
-        public bool IsMultipartFormDataRequired() => Files == null || !Files.Any();
+        public bool IsMultipartFormDataRequired() => Files != null && Files.Any();
 
         public override string ToString()
         {

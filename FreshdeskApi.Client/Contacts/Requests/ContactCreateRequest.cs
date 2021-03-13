@@ -157,7 +157,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
             Avatar = avatar;
         }
 
-        public bool IsMultipartFormDataRequired() => Avatar == null;
+        public bool IsMultipartFormDataRequired() => Avatar != null;
 
         public override string ToString()
         {

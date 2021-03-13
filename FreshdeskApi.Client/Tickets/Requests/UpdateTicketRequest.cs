@@ -140,7 +140,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
         [JsonIgnore, Multipart(Name = "attachments")]
         public IEnumerable<FileAttachment>? Files { get; }
 
-        public bool IsMultipartFormDataRequired() => Files == null || !Files.Any();
+        public bool IsMultipartFormDataRequired() => Files != null && Files.Any();
 
         public override string ToString()
         {
