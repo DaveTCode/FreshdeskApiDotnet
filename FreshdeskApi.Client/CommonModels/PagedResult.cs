@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
+// TODO move to namespace with BC-break release
 namespace FreshdeskApi.Client
 {
     /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Conversations.Models;
 using Newtonsoft.Json;
 
@@ -105,7 +106,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public string[]? Tags { get; set; }
 
         [JsonProperty("attachments")]
-        public object[]? Attachments { get; set; }
+        public AttachmentResponse[]? Attachments { get; set; }
 
         [JsonProperty("source_additional_info")]
         public string? SourceAdditionalInfo { get; set; }

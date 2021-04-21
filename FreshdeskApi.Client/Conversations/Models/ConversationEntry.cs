@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using FreshdeskApi.Client.CommonModels;
 using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Conversations.Models
@@ -7,6 +8,9 @@ namespace FreshdeskApi.Client.Conversations.Models
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class ConversationEntry
     {
+        [JsonProperty("attachments")]
+        public AttachmentResponse[]? Attachments { get; set; }
+        
         [JsonProperty("body")]
         public string? Body { get; set; }
 
