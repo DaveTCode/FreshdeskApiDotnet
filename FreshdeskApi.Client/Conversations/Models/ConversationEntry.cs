@@ -10,7 +10,7 @@ namespace FreshdeskApi.Client.Conversations.Models
     {
         [JsonProperty("attachments")]
         public AttachmentResponse[]? Attachments { get; set; }
-        
+
         [JsonProperty("body")]
         public string? Body { get; set; }
 
