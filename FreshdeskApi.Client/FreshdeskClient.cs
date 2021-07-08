@@ -283,6 +283,9 @@ namespace FreshdeskApi.Client
                 {
                     morePages = false;
                 }
+
+                // it is safe to call it repeatably
+                disposingCollection.Dispose();
             }
         }
 
