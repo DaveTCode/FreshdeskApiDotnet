@@ -17,6 +17,7 @@ using FreshdeskApi.Client.Conversations;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Groups;
+using FreshdeskApi.Client.Infrastructure;
 using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
@@ -26,6 +27,7 @@ using TiberHealth.Serializer;
 [assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 namespace FreshdeskApi.Client
 {
+    // ReSharper disable once RedundantExtendsListEntry
     public class FreshdeskClient : IFreshdeskClient, IDisposable
     {
         /// <summary>
@@ -177,6 +179,8 @@ namespace FreshdeskApi.Client
             {
                 url += $"&per_page={pagingConfiguration.PageSize}";
             }
+            
+            using var disposingCollection = new DisposingCollection();
 
             var morePages = true;
 
@@ -185,6 +189,7 @@ namespace FreshdeskApi.Client
                 var response = await _httpClient
                     .GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                     .ConfigureAwait(false);
+                
                 SetRateLimitValues(response);
 
                 // Handle rate limiting by waiting the specified amount of time
@@ -192,10 +197,15 @@ namespace FreshdeskApi.Client
                 {
                     if (response.Headers.RetryAfter.Delta.HasValue)
                     {
+                        // response reference will be replaced soon
+                        disposingCollection.Add(response);
+
                         await Task.Delay(response.Headers.RetryAfter.Delta.Value, cancellationToken);
+                        
                         response = await _httpClient
                             .GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                             .ConfigureAwait(false);
+                        
                         SetRateLimitValues(response);
                     }
                     else
@@ -211,6 +221,9 @@ namespace FreshdeskApi.Client
                 {
                     throw CreateApiException(response);
                 }
+                
+                // response will not be used outside of this method (i.e. in Exception)
+                disposingCollection.Add(response);
 
                 await using var contentStream = await response.Content.ReadAsStreamAsync();
                 using var sr = new StreamReader(contentStream);
@@ -295,7 +308,7 @@ namespace FreshdeskApi.Client
         private async Task<HttpResponseMessage> ExecuteRequestAsync<TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken)
             where TBody : class
         {
-            var httpMessage = CreateHttpRequestMessage(method, url, body);
+            using var httpMessage = CreateHttpRequestMessage(method, url, body);
 
             var response = await _httpClient
                 .SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
@@ -313,6 +326,8 @@ namespace FreshdeskApi.Client
             where T : new()
             where TBody : class
         {
+            using var disposingCollection = new DisposingCollection();
+            
             var response = await ExecuteRequestAsync(method, url, body, cancellationToken);
 
             // Handle rate limiting by waiting the specified amount of time
@@ -320,6 +335,9 @@ namespace FreshdeskApi.Client
             {
                 if (response.Headers.RetryAfter.Delta.HasValue)
                 {
+                    // response reference will be replaced soon
+                    disposingCollection.Add(response);
+
                     await Task.Delay(response.Headers.RetryAfter.Delta.Value, cancellationToken);
 
                     response = await ExecuteRequestAsync(method, url, body, cancellationToken);
@@ -335,6 +353,9 @@ namespace FreshdeskApi.Client
 
             if (response.IsSuccessStatusCode)
             {
+                // response will not be used outside of this method
+                disposingCollection.Add(response);
+
                 if (response.StatusCode == HttpStatusCode.NoContent) return new T();
 
                 await using var contentStream = await response.Content.ReadAsStreamAsync();

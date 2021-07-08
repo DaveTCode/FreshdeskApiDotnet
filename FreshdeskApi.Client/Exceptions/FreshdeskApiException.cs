@@ -10,7 +10,7 @@ namespace FreshdeskApi.Client.Exceptions
     /// Will always contain <see cref="HttpResponseMessage"/> with the
     /// request/response details.
     /// </summary>
-    public abstract class FreshdeskApiException : Exception
+    public abstract class FreshdeskApiException : Exception, IDisposable
     {
         /// <summary>
         /// The HTTP response which Freshdesk returned, will often contain
@@ -21,6 +21,11 @@ namespace FreshdeskApi.Client.Exceptions
         internal FreshdeskApiException(HttpResponseMessage response)
         {
             Response = response;
+        }
+
+        public void Dispose()
+        {
+            Response.Dispose();
         }
     }
 }
