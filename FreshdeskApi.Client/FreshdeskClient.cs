@@ -179,7 +179,7 @@ namespace FreshdeskApi.Client
             {
                 url += $"&per_page={pagingConfiguration.PageSize}";
             }
-            
+
             using var disposingCollection = new DisposingCollection();
 
             var morePages = true;
@@ -189,7 +189,7 @@ namespace FreshdeskApi.Client
                 var response = await _httpClient
                     .GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                     .ConfigureAwait(false);
-                
+
                 SetRateLimitValues(response);
 
                 // Handle rate limiting by waiting the specified amount of time
@@ -201,11 +201,11 @@ namespace FreshdeskApi.Client
                         disposingCollection.Add(response);
 
                         await Task.Delay(response.Headers.RetryAfter.Delta.Value, cancellationToken);
-                        
+
                         response = await _httpClient
                             .GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                             .ConfigureAwait(false);
-                        
+
                         SetRateLimitValues(response);
                     }
                     else
@@ -221,7 +221,7 @@ namespace FreshdeskApi.Client
                 {
                     throw CreateApiException(response);
                 }
-                
+
                 // response will not be used outside of this method (i.e. in Exception)
                 disposingCollection.Add(response);
 
@@ -330,7 +330,7 @@ namespace FreshdeskApi.Client
             where TBody : class
         {
             using var disposingCollection = new DisposingCollection();
-            
+
             var response = await ExecuteRequestAsync(method, url, body, cancellationToken);
 
             // Handle rate limiting by waiting the specified amount of time
