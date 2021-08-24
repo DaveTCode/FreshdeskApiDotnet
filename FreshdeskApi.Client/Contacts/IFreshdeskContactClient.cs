@@ -167,7 +167,7 @@ namespace FreshdeskApi.Client.Contacts
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Delete a contact.
+        /// Soft Delete a Contact.
         ///
         /// c.f. https://developers.freshdesk.com/api/#delete_contact
         /// </summary>
@@ -175,15 +175,32 @@ namespace FreshdeskApi.Client.Contacts
         /// <param name="contactId">
         /// The contact to delete.
         /// </param>
-        /// 
-        /// <param name="hardDelete">
-        /// Hard delete a contact to completely remove it from the portal. Can be used for GDPR compliance.
-        /// </param>
+        ///
         ///
         /// <param name="cancellationToken"></param>
         Task DeleteContactAsync(
             long contactId,
-            bool hardDelete,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Permanently Delete a Contact<br />
+        /// Hard delete a contact to completely remove it from the portal. Can be used for GDPR compliance.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#hard_delete_contact
+        /// </summary>
+        ///
+        /// <param name="contactId">
+        /// The contact to delete.
+        /// </param>
+        /// 
+        /// <param name="force">
+        /// Send as true to force hard delete of a contact that is not already soft deleted
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        Task PermanentlyDeleteContactAsync(
+            long contactId,
+            bool force,
             CancellationToken cancellationToken = default);
     }
 }

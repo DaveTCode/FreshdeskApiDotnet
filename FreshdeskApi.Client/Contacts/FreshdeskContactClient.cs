@@ -243,11 +243,21 @@ namespace FreshdeskApi.Client.Contacts
         /// <inheritdoc />
         public async Task DeleteContactAsync(
             long contactId,
-            bool hardDelete,
             CancellationToken cancellationToken = default)
         {
             await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}{(hardDelete ? "/hard_delete" : "")}", cancellationToken: cancellationToken)
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task PermanentlyDeleteContactAsync(
+            long contactId,
+            bool force,
+            CancellationToken cancellationToken = default)
+        {
+            await _freshdeskClient
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}/hard_delete{(force ? "?force=true" : "")}", cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
     }
