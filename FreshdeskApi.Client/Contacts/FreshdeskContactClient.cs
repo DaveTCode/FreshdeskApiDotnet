@@ -247,7 +247,7 @@ namespace FreshdeskApi.Client.Contacts
             CancellationToken cancellationToken = default)
         {
             await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}{(hardDelete?"/hard_delete":"")}", cancellationToken: cancellationToken)
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}{(hardDelete ? "/hard_delete" : "")}", cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
     }
