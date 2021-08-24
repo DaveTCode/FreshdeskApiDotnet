@@ -238,5 +238,17 @@ namespace FreshdeskApi.Client.Contacts
                 .ApiOperationAsync<object, MergeContactsRequest>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
                 .ConfigureAwait(false);
         }
+
+
+        /// <inheritdoc />
+        public async Task DeleteContactAsync(
+            long contactId,
+            bool hardDelete,
+            CancellationToken cancellationToken = default)
+        {
+            await _freshdeskClient
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}{(hardDelete?"/hard_delete":"")}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
     }
 }

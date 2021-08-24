@@ -165,5 +165,25 @@ namespace FreshdeskApi.Client.Contacts
         Task MergeContactsAsync(
             MergeContactsRequest request,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Delete a contact.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#delete_contact
+        /// </summary>
+        ///
+        /// <param name="contactId">
+        /// The contact to delete.
+        /// </param>
+        /// 
+        /// <param name="hardDelete">
+        /// Hard delete a contact to completely remove it from the portal. Can be used for GDPR compliance.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        Task DeleteContactAsync(
+            long contactId,
+            bool hardDelete,
+            CancellationToken cancellationToken = default);
     }
 }
