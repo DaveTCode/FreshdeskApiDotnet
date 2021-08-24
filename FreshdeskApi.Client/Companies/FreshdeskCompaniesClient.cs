@@ -107,5 +107,15 @@ namespace FreshdeskApi.Client.Companies
                 .ApiOperationAsync<Company, CreateCompanyRequest>(HttpMethod.Post, $"/api/v2/companies", request, cancellationToken)
                 .ConfigureAwait(false);
         }
+
+        /// <inheritdoc />
+        public async Task DeleteCompanyAsync(
+            long companyId,
+            CancellationToken cancellationToken = default)
+        {
+            await _freshdeskClient
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/companies/{companyId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
     }
 }

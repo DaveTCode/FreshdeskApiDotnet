@@ -137,5 +137,20 @@ namespace FreshdeskApi.Client.Companies
         Task<Company> CreateCompanyAsync(
             CreateCompanyRequest request,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Delete a company.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#delete_company
+        /// </summary>
+        ///
+        /// <param name="companyId">
+        /// The company to delete.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        Task DeleteCompanyAsync(
+            long companyId,
+            CancellationToken cancellationToken = default);
     }
 }
