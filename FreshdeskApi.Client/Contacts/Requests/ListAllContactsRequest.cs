@@ -30,7 +30,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
                 { "email", email },
                 { "mobile", mobile },
                 { "phone", phone },
-                { "companyId", companyId?.ToString() },
+                { "company_id", companyId?.ToString() },
                 { "state", contactState?.GetQueryStringValue() },
                 { "_updated_since", updatedSince?.ToString("yyyy-MM-ddTHH:mm:ssZ") }
             }.Where(x => x.Value != null)
