@@ -8,6 +8,6 @@ namespace FreshdeskApi.Client.Contacts.Models
         /// Additional companies associated with the contact
         /// </summary>
         [JsonProperty("other_companies")]
-        public long[]? OtherCompanies { get; set; }
+        public long[]? OtherCompanies { get; set; } //NOTE: ContactCompany would be logical but that is not supported in the API
     }
 }
