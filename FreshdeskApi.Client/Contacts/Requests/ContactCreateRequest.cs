@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FreshdeskApi.Client.Contacts.Models;
 using Newtonsoft.Json;
 using TiberHealth.Serializer.Attributes;
 
@@ -76,7 +77,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
         /// (Estate plan and above.)
         /// </summary>
         [JsonProperty("other_companies")]
-        public long[]? OtherCompanies { get; }
+        public ContactCompany[]? OtherCompanies { get; }
 
         /// <summary>
         /// Address of the contact
@@ -133,7 +134,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
 
         public ContactCreateRequest(string name, string? email = null, string? phone = null, string? mobile = null, string? twitterId = null,
             string? uniqueExternalId = null, string[]? otherEmails = null, long? companyId = null, bool? viewAllTickets = null,
-            long[]? otherCompanies = null, string? address = null, Dictionary<string, object>? customFields = null,
+            ContactCompany[]? otherCompanies = null, string? address = null, Dictionary<string, object>? customFields = null,
             string? description = null, string? jobTitle = null, string? language = null, string[]? tags = null, string? timeZone = null,
             FileAttachment? avatar = null)
         {
