@@ -138,9 +138,16 @@ namespace FreshdeskApi.Client.Tickets.Models
         [JsonProperty("company")]
         public TicketCompany? Company { get; set; }
 
+
+
+        [JsonProperty("archived")]
+        public bool Archived { get; set; }
+
+
+
         public override string ToString()
         {
-            return $"{nameof(CcEmails)}: {CcEmails}, {nameof(FwdEmails)}: {FwdEmails}, {nameof(ReplyCcEmails)}: {ReplyCcEmails}, {nameof(TicketCcEmails)}: {TicketCcEmails}, {nameof(FirstResponseTimeEscalated)}: {FirstResponseTimeEscalated}, {nameof(Spam)}: {Spam}, {nameof(EmailConfigId)}: {EmailConfigId}, {nameof(GroupId)}: {GroupId}, {nameof(Priority)}: {Priority}, {nameof(RequesterId)}: {RequesterId}, {nameof(ResponderId)}: {ResponderId}, {nameof(Source)}: {Source}, {nameof(CompanyId)}: {CompanyId}, {nameof(Status)}: {Status}, {nameof(Subject)}: {Subject}, {nameof(AssociationType)}: {AssociationType}, {nameof(AssociatedTicketList)}: {AssociatedTicketList}, {nameof(ToEmails)}: {ToEmails}, {nameof(ProductId)}: {ProductId}, {nameof(Id)}: {Id}, {nameof(Type)}: {Type}, {nameof(DueBy)}: {DueBy}, {nameof(FirstResponseDueBy)}: {FirstResponseDueBy}, {nameof(IsEscalated)}: {IsEscalated}, {nameof(DescriptionText)}: {DescriptionText}, {nameof(CustomFields)}: {CustomFields}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(Tags)}: {Tags}, {nameof(Attachments)}: {Attachments}, {nameof(SourceAdditionalInfo)}: {SourceAdditionalInfo}, {nameof(Deleted)}: {Deleted}, {nameof(Stats)}: {Stats}, {nameof(Requester)}: {Requester}, {nameof(Conversations)}: {Conversations}, {nameof(Company)}: {Company}";
+            return $"{nameof(CcEmails)}: {CcEmails}, {nameof(FwdEmails)}: {FwdEmails}, {nameof(ReplyCcEmails)}: {ReplyCcEmails}, {nameof(TicketCcEmails)}: {TicketCcEmails}, {nameof(FirstResponseTimeEscalated)}: {FirstResponseTimeEscalated}, {nameof(Spam)}: {Spam}, {nameof(EmailConfigId)}: {EmailConfigId}, {nameof(GroupId)}: {GroupId}, {nameof(Priority)}: {Priority}, {nameof(RequesterId)}: {RequesterId}, {nameof(ResponderId)}: {ResponderId}, {nameof(Source)}: {Source}, {nameof(CompanyId)}: {CompanyId}, {nameof(Status)}: {Status}, {nameof(Subject)}: {Subject}, {nameof(AssociationType)}: {AssociationType}, {nameof(AssociatedTicketList)}: {AssociatedTicketList}, {nameof(ToEmails)}: {ToEmails}, {nameof(ProductId)}: {ProductId}, {nameof(Id)}: {Id}, {nameof(Type)}: {Type}, {nameof(DueBy)}: {DueBy}, {nameof(FirstResponseDueBy)}: {FirstResponseDueBy}, {nameof(IsEscalated)}: {IsEscalated}, {nameof(DescriptionText)}: {DescriptionText}, {nameof(CustomFields)}: {CustomFields}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(Tags)}: {Tags}, {nameof(Attachments)}: {Attachments}, {nameof(SourceAdditionalInfo)}: {SourceAdditionalInfo}, {nameof(Deleted)}: {Deleted}, {nameof(Stats)}: {Stats}, {nameof(Requester)}: {Requester}, {nameof(Conversations)}: {Conversations}, {nameof(Company)}: {Company}, {nameof(Archived)}: {Archived}";
         }
     }
 }
