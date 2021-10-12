@@ -332,5 +332,69 @@ namespace FreshdeskApi.Client.Tickets
                 yield return satisfactionRating;
             }
         }
+
+
+        /// <summary>
+        /// Get all information about a single archive ticket by <see cref="ticketId"/>
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#archive_tickets
+        /// </summary>
+        /// 
+        /// <param name="ticketId">
+        /// The unique identifier of the archive ticket.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The full ticket information</returns>
+        public async Task<ArchivedTicket> ViewArchiveTicketAsync(
+            long ticketId,
+            CancellationToken cancellationToken = default)
+        {
+            var url = $"/api/v2/tickets/archived/{ticketId}";
+
+            return await _freshdeskClient
+                .ApiOperationAsync<ArchivedTicket>(HttpMethod.Get, url, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the full set of conversation entries for a given archive ticket.
+        ///
+        /// This can be consumed by using:
+        /// <code>
+        /// await foreach (var conversationEntry in GetArchiveTicketConversations(ticketId))
+        /// {
+        ///   // Do something
+        /// }
+        /// </code>
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#archive_tickets
+        /// </summary>
+        /// 
+        /// <param name="ticketId">
+        /// An existing archive ticket in the Freshdesk instance.
+        /// </param>
+        ///
+        /// <param name="pagingConfiguration"></param>
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>
+        /// An iterable of conversation entries, since the results
+        /// from the API can be paged this is async and iterating to the next
+        /// entry may cause another API call if there are several pages.
+        /// </returns>
+        public async IAsyncEnumerable<ConversationEntry> GetArchiveTicketConversationsAsync(
+            long ticketId,
+            IPaginationConfiguration? pagingConfiguration = null,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            await foreach (var conversationEntry in _freshdeskClient
+                .GetPagedResults<ConversationEntry>($"/api/v2/tickets/archived/{ticketId}/conversations", pagingConfiguration, false, cancellationToken)
+                .ConfigureAwait(false))
+            {
+                yield return conversationEntry;
+            }
+        }
     }
 }
