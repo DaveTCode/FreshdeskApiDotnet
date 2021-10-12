@@ -347,14 +347,14 @@ namespace FreshdeskApi.Client.Tickets
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The full ticket information</returns>
-        public async Task<Ticket> ViewArchiveTicketAsync(
+        public async Task<ArchivedTicket> ViewArchiveTicketAsync(
             long ticketId,
             CancellationToken cancellationToken = default)
         {
             var url = $"/api/v2/tickets/archived/{ticketId}";
 
             return await _freshdeskClient
-                .ApiOperationAsync<Ticket>(HttpMethod.Get, url, cancellationToken: cancellationToken)
+                .ApiOperationAsync<ArchivedTicket>(HttpMethod.Get, url, cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
 

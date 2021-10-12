@@ -263,7 +263,7 @@ namespace FreshdeskApi.Client.Tickets
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The full ticket information</returns>
-        Task<Ticket> ViewArchiveTicketAsync(
+        Task<ArchivedTicket> ViewArchiveTicketAsync(
             long ticketId,
             CancellationToken cancellationToken = default);
 
