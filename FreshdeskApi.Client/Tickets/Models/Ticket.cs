@@ -138,12 +138,8 @@ namespace FreshdeskApi.Client.Tickets.Models
         [JsonProperty("company")]
         public TicketCompany? Company { get; set; }
 
-
-
         [JsonProperty("archived")]
         public bool Archived { get; set; }
-
-
 
         public override string ToString()
         {
