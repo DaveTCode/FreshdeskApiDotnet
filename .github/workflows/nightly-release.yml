@@ -7,10 +7,14 @@ on:
 
 jobs:
   publish:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
+      - name: Setup .Net Core 5.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
       - uses: actions/checkout@v2
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
