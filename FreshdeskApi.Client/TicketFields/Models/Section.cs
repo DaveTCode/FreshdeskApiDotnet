@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.TicketFields.Models
 {

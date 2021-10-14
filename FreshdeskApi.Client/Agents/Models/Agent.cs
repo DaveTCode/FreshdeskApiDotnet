@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using FreshdeskApi.Client.Contacts.Models;
 using Newtonsoft.Json;

@@ -1,4 +1,4 @@
-﻿using FreshdeskApi.Client.Tickets.Requests;
+using FreshdeskApi.Client.Tickets.Requests;
 using Xunit;
 
 namespace FreshdeskApi.Client.UnitTests.Tickets.Requests

@@ -1,4 +1,4 @@
-﻿using FreshdeskApi.Client.Agents.Models;
+using FreshdeskApi.Client.Agents.Models;
 using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Contacts.Requests

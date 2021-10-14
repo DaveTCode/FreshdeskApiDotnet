@@ -1,4 +1,4 @@
-﻿namespace FreshdeskApi.Client.Conversations.Models
+namespace FreshdeskApi.Client.Conversations.Models
 {
     /// <summary>
     /// Different sources from which a conversation entry can come from.
