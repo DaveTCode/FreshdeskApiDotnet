@@ -1,4 +1,6 @@
-﻿namespace FreshdeskApi.Client.Solutions.Requests
+using Newtonsoft.Json;
+
+namespace FreshdeskApi.Client.Solutions.Requests
 {
     /// <summary>
     /// Contains the information required to update a category
@@ -10,11 +12,13 @@
         /// <summary>
         /// Name of the solution category
         /// </summary>
+        [JsonProperty("name")]
         public string? Name { get; }
 
         /// <summary>
         /// Description of the solution category
         /// </summary>
+        [JsonProperty("description")]
         public string? Description { get; }
 
         /// <summary>
@@ -22,6 +26,7 @@
         ///
         /// Allowed only if the account is configured with multiple portals.
         /// </summary>
+        [JsonProperty("visible_in_portals")]
         public long[]? VisibleInPortals { get; }
 
         public UpdateCategoryRequest(string? name = null, string? description = null, long[]? visibleInPortals = null)

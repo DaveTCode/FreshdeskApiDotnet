@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FreshdeskApi.Client.Contacts.Models;
 using Newtonsoft.Json;
 

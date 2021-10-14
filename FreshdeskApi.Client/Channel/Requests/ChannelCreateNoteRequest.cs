@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FreshdeskApi.Client.Conversations.Requests;
 using Newtonsoft.Json;
 

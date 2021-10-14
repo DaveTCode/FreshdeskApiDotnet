@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Channel.Requests;
 using FreshdeskApi.Client.Conversations.Models;

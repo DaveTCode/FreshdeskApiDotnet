@@ -1,4 +1,4 @@
-﻿namespace FreshdeskApi.Client.Solutions.Models
+namespace FreshdeskApi.Client.Solutions.Models
 {
     /// <summary>
     /// Refers to the status of an article in the KB.

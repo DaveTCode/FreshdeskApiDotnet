@@ -1,4 +1,4 @@
-﻿namespace FreshdeskApi.Client.Extensions
+namespace FreshdeskApi.Client.Extensions
 {
     public static class HttpContentHelpers
     {

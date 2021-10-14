@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Tickets.Models

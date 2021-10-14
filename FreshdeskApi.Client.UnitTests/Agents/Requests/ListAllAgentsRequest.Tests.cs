@@ -1,4 +1,4 @@
-﻿using FreshdeskApi.Client.Agents.Requests;
+using FreshdeskApi.Client.Agents.Requests;
 using Xunit;
 
 namespace FreshdeskApi.Client.UnitTests.Agents.Requests

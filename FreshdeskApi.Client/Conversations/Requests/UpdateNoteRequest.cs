@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using TiberHealth.Serializer.Attributes;
@@ -15,6 +15,7 @@ namespace FreshdeskApi.Client.Conversations.Requests
         /// <summary>
         /// Content of the note in HTML
         /// </summary>
+        [JsonProperty("body")]
         public string BodyHtml { get; }
 
         [JsonIgnore, Multipart(Name = "attachments")]

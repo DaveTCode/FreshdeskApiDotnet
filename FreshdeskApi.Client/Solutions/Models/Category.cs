@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Solutions.Models
 {
@@ -16,31 +17,37 @@ namespace FreshdeskApi.Client.Solutions.Models
         /// <summary>
         /// Unique ID of the solution category
         /// </summary>
+        [JsonProperty("id")]
         public long Id { get; set; }
 
         /// <summary>
         /// Name of the solution category
         /// </summary>
+        [JsonProperty("name")]
         public string? Name { get; set; }
 
         /// <summary>
         /// Description of the solution category
         /// </summary>
+        [JsonProperty("description")]
         public string? Description { get; set; }
 
         /// <summary>
         /// Solution Category creation timestamp
         /// </summary>
+        [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// Solution Category updated timestamp
         /// </summary>
+        [JsonProperty("updated_at")]
         public DateTimeOffset UpdatedAt { get; set; }
 
         /// <summary>
         /// List of portal IDs where this category is visible
         /// </summary>
+        [JsonProperty("visible_in_portals")]
         public long[]? VisibleInPortals { get; set; }
 
         public override string ToString()

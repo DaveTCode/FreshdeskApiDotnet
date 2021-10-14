@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using FreshdeskApi.Client.Contacts.Requests;
 using FreshdeskApi.Client.Conversations.Requests;

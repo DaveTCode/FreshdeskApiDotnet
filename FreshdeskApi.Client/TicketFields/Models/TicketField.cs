@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -124,18 +124,21 @@ namespace FreshdeskApi.Client.TicketFields.Models
         /// True if the Ticket field is inside FSM section (Applicable only if
         /// FSM is enabled)
         /// </summary>
+        [JsonProperty("is_fsm")]
         public bool? IsFsm { get; set; }
 
         /// <summary>
         /// True if the choice update is in progress (Applicable for the
         /// fields which has 100+ choices)
         /// </summary>
+        [JsonProperty("field_update_in_progress")]
         public bool? FieldUpdateInProgress { get; set; }
 
         /// <summary>
         /// The set of ticket fields which are nested within this one, note
         /// that not all fields are populated on nested ticket fields.
         /// </summary>
+        [JsonProperty("nested_ticket_fields")]
         public TicketField[]? NestedTicketFields { get; set; }
 
         public override string ToString()

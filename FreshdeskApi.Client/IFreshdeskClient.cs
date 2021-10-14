@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FreshdeskApi.Client.Agents;
 using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;

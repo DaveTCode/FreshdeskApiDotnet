@@ -1,4 +1,4 @@
-﻿using TiberHealth.Serializer.Attributes;
+using TiberHealth.Serializer.Attributes;
 
 // TODO move to namespace with BC-break release
 namespace FreshdeskApi.Client
