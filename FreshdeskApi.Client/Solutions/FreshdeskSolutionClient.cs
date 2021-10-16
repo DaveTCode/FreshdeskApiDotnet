@@ -135,16 +135,12 @@ namespace FreshdeskApi.Client.Solutions
         ///
         /// <returns>The contents of the category after the update</returns>
         [Obsolete("Use UpdateCategoryAsync with language parameter instead.")]
-        public async Task<Category> UpdateCategoryAsync(
+        public Task<Category> UpdateCategoryAsync(
             long categoryId,
             UpdateCategoryRequest request,
             CancellationToken cancellationToken = default)
         {
-            if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
-
-            return await _freshdeskClient
-                .ApiOperationAsync<Category, UpdateCategoryRequest>(HttpMethod.Put, $"/api/v2/solutions/categories/{categoryId}", request, cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+            return UpdateCategoryAsync(categoryId, request, null, cancellationToken);
         }
 
         /// <summary>
