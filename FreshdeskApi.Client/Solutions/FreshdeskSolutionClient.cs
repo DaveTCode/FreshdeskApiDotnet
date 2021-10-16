@@ -134,6 +134,7 @@ namespace FreshdeskApi.Client.Solutions
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The contents of the category after the update</returns>
+        [Obsolete("Use UpdateCategoryAsync with language parameter instead.")]
         public async Task<Category> UpdateCategoryAsync(
             long categoryId,
             UpdateCategoryRequest request,
@@ -145,6 +146,46 @@ namespace FreshdeskApi.Client.Solutions
                 .ApiOperationAsync<Category, UpdateCategoryRequest>(HttpMethod.Put, $"/api/v2/solutions/categories/{categoryId}", request, cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// Update a category, changing the description, portals it's visible on or the name 
+        /// </summary>
+        ///
+        /// <param name="categoryId">
+        /// The unique identifier of the category to update.
+        /// </param>
+        ///
+        /// <param name="languageCode">
+        /// The language code (e.g. es) which the translation corresponds to.
+        ///
+        /// Defaults to null which means update the default language version
+        /// of the category.
+        /// </param>
+        /// 
+        /// <param name="request">
+        /// The object defining what updates we want to make.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The contents of the category after the update</returns>
+        public async Task<Category> UpdateCategoryAsync(
+            long categoryId,
+            UpdateCategoryRequest request,
+            string? languageCode = null,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
+
+            var url = string.IsNullOrWhiteSpace(languageCode)
+                ? $"/api/v2/solutions/categories/{categoryId}"
+                : $"/api/v2/solutions/categories/{categoryId}/{languageCode}";
+
+            return await _freshdeskClient
+                .ApiOperationAsync<Category, UpdateCategoryRequest>(HttpMethod.Put, url, request, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
 
         /// <summary>
         /// Create a new category setting the name, description and portals
@@ -166,6 +207,40 @@ namespace FreshdeskApi.Client.Solutions
 
             return await _freshdeskClient
                 .ApiOperationAsync<Category, CreateCategoryRequest>(HttpMethod.Post, $"/api/v2/solutions/categories", request, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Given a category, this creates a translation of that category into the
+        /// requested language code.
+        /// </summary>
+        /// 
+        /// <param name="categoryId">
+        /// The unique identifier for the category
+        /// </param>
+        ///
+        /// <param name="languageCode">
+        /// The language code (e.g. es) which the translation corresponds to.
+        /// </param>
+        /// 
+        /// <param name="request">
+        /// The object defining what updates we want to make.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The contents of the category including it's new id</returns>
+        public async Task<Category> CreateCategoryTranslationAsync(
+            long categoryId,
+            string languageCode,
+            CreateCategoryRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
+            if (string.IsNullOrWhiteSpace(languageCode)) throw new ArgumentOutOfRangeException(nameof(languageCode), languageCode, "Language code must be set to something");
+
+            return await _freshdeskClient
+                .ApiOperationAsync<Category, CreateCategoryRequest>(HttpMethod.Post, $"/api/v2/solutions/categories/{categoryId}/{languageCode}", request, cancellationToken)
                 .ConfigureAwait(false);
         }
 

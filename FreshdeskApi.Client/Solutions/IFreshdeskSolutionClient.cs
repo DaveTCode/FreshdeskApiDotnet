@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -88,9 +89,38 @@ namespace FreshdeskApi.Client.Solutions
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The contents of the category after the update</returns>
+        [Obsolete("Use UpdateCategoryAsync with language parameter instead.")]
         Task<Category> UpdateCategoryAsync(
             long categoryId,
             UpdateCategoryRequest request,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update a category, changing the description, portals it's visible on or the name 
+        /// </summary>
+        ///
+        /// <param name="categoryId">
+        /// The unique identifier of the category to update.
+        /// </param>
+        ///
+        /// <param name="languageCode">
+        /// The language code (e.g. es) which the translation corresponds to.
+        ///
+        /// Defaults to null which means update the default language version
+        /// of the category.
+        /// </param>
+        /// 
+        /// <param name="request">
+        /// The object defining what updates we want to make.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The contents of the category after the update</returns>
+        Task<Category> UpdateCategoryAsync(
+            long categoryId,
+            UpdateCategoryRequest request,
+            string? languageCode = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -106,6 +136,32 @@ namespace FreshdeskApi.Client.Solutions
         ///
         /// <returns>The contents of the category including it's new id</returns>
         Task<Category> CreateCategoryAsync(
+            CreateCategoryRequest request,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Given a category, this creates a translation of that category into the
+        /// requested language code.
+        /// </summary>
+        /// 
+        /// <param name="categoryId">
+        /// The unique identifier for the category
+        /// </param>
+        ///
+        /// <param name="languageCode">
+        /// The language code (e.g. es) which the translation corresponds to.
+        /// </param>
+        /// 
+        /// <param name="request">
+        /// The object defining what updates we want to make.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The contents of the category including it's new id</returns>
+        public Task<Category> CreateCategoryTranslationAsync(
+            long categoryId,
+            string languageCode,
             CreateCategoryRequest request,
             CancellationToken cancellationToken = default);
 
