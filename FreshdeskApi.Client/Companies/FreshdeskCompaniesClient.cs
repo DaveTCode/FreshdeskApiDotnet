@@ -15,9 +15,9 @@ namespace FreshdeskApi.Client.Companies
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
+        private readonly IFreshdeskHttpClient _freshdeskClient;
 
-        public FreshdeskCompaniesClient(FreshdeskClient freshdeskClient)
+        public FreshdeskCompaniesClient(IFreshdeskHttpClient freshdeskClient)
         {
             _freshdeskClient = freshdeskClient;
         }

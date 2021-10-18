@@ -13,9 +13,9 @@ namespace FreshdeskApi.Client.Groups
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class FreshdeskGroupClient : IFreshdeskGroupClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
+        private readonly IFreshdeskHttpClient _freshdeskClient;
 
-        public FreshdeskGroupClient(FreshdeskClient freshdeskClient)
+        public FreshdeskGroupClient(IFreshdeskHttpClient freshdeskClient)
         {
             _freshdeskClient = freshdeskClient;
         }

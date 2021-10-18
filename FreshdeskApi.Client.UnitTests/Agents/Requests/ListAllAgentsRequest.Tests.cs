@@ -10,7 +10,7 @@ namespace FreshdeskApi.Client.UnitTests.Agents.Requests
         {
             var listAllAgentsRequest = new ListAllAgentsRequest();
 
-            Assert.Equal("/api/v2/agents", listAllAgentsRequest.UrlWithQueryString);
+            Assert.Equal("UrlWithQueryString: /api/v2/agents", listAllAgentsRequest.ToString());
         }
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -14,9 +13,9 @@ namespace FreshdeskApi.Client.Tickets
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class FreshdeskTicketClient : IFreshdeskTicketClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
+        private readonly IFreshdeskHttpClient _freshdeskClient;
 
-        public FreshdeskTicketClient(FreshdeskClient freshdeskClient)
+        public FreshdeskTicketClient(IFreshdeskHttpClient freshdeskClient)
         {
             _freshdeskClient = freshdeskClient;
         }

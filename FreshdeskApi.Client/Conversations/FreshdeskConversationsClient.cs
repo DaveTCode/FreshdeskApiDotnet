@@ -13,11 +13,11 @@ namespace FreshdeskApi.Client.Conversations
     /// tickets.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class ConversationsClient : IConversationsClient
+    public class FreshdeskConversationsClient : IFreshdeskConversationsClient
     {
-        private readonly FreshdeskClient _client;
+        private readonly IFreshdeskHttpClient _client;
 
-        public ConversationsClient(FreshdeskClient client)
+        public FreshdeskConversationsClient(IFreshdeskHttpClient client)
         {
             _client = client;
         }

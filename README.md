@@ -18,7 +18,8 @@ This library provides a single client class which can be created in one of sever
 1. No existing HttpClient object (suitable for console applications)
 
 ```csharp
-using var freshdeskClient = new FreshdeskClient("https://mydomain.freshdesk.com", "APIKEY");
+using var freshdeskHttpClient = new FreshdeskHttpClient("https://mydomain.freshdesk.com", "APIKEY");
+var freshdeskClient = FreshdeskClient.Create(freshdeskHttpClient);
 ```
 
 NOTE: Disposing the freshdeskClient will dispose the HttpClient object, as per https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/ you need to be careful when disposing HttpClient
@@ -27,7 +28,8 @@ objects. Broadly speaking, don't make and dispose lots of FreshdeskClient object
 2. Existing HttpClient object (suitable for asp.net applications or cases where you want more control over the HttpClient)
 
 ```csharp
-var freshdeskClient = new FreshdeskClient(myHttpClient);
+var freshdeskHttpClient = new FreshdeskHttpClient(myHttpClient);
+var freshdeskClient = FreshdeskClient.Create(freshdeskHttpClient);
 ```
 
 NOTE: Typically you don't want to dispose the freshdesk client in this case.
@@ -35,17 +37,27 @@ NOTE: Typically you don't want to dispose the freshdesk client in this case.
 3. Using `Microsoft.Extensions.DependencyInjection`
 
 ```csharp
-serviceCollection.AddHttpClient<IFreshdeskClient, FreshdeskClient>(client => {
-  client.ConfigureFreshdeskApi(freshdeskConfiguration.Domain, freshdeskConfiguration.ApiKey); 
+using FreshdeskApi.Client.Extensions;
+
+serviceCollection.AddFreshdeskApiClient(options => {
+  options.FreshdeskDomain = "https://<mydomain>.freshdesk.com";
+  options.FreshdeskDomain = "APIKEY"; 
 })
+
+...
+
+container.GetRequiredService<IFreshdeskClient>();
+container.GetRequiredService<IFreshdeskTicketClient>();
+container.GetRequiredService<IFreshdesk...Client>();
 ```
 
 ### Examples
 
 Get a single ticket, including the company information on the API response
 ```csharp
-using var freshdeskClient = new FreshdeskClient("https://mydomain.freshdesk.com", "APIKEY");
-var ticket = await freshdeskClient.Tickets.ViewTicketAsync(
+using var freshdeskHttpClient = new FreshdeskHttpClient("https://mydomain.freshdesk.com", "APIKEY");
+var freshdeskTicketClient = new FreshdeskTicketClient(freshdeskHttpClient);
+var ticket = await freshdeskTicketClient.ViewTicketAsync(
   ticketId: 12345, 
   includes: new TicketIncludes { Company = true }
 );

@@ -5,7 +5,7 @@ using FreshdeskApi.Client.Conversations.Requests;
 
 namespace FreshdeskApi.Client.Conversations
 {
-    public interface IConversationsClient
+    public interface IFreshdeskConversationsClient
     {
         /// <summary>
         /// Create a reply to a ticket.

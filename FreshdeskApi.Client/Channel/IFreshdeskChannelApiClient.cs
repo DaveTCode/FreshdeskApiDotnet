@@ -6,7 +6,7 @@ using FreshdeskApi.Client.Tickets.Models;
 
 namespace FreshdeskApi.Client.Channel
 {
-    public interface IChannelApiClient
+    public interface IFreshdeskChannelApiClient
     {
         Task<Ticket> CreateTicketAsync(
             ChannelCreateTicketRequest request,

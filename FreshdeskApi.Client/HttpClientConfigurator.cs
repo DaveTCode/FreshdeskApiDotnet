@@ -2,11 +2,13 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using FreshdeskApi.Client.Extensions;
 
 namespace FreshdeskApi.Client
 {
     public static class HttpClientConfigurator
     {
+        [Obsolete("Use " + nameof(IocExtensions.AddFreshdeskApiClient) + " instead")]
         public static HttpClient ConfigureFreshdeskApi(this HttpClient httpClient, string freshdeskDomain, string apiKey)
         {
             if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentOutOfRangeException(nameof(apiKey), apiKey, "API Key can't be blank");

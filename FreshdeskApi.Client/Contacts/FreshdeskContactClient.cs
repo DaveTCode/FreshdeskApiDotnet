@@ -15,9 +15,9 @@ namespace FreshdeskApi.Client.Contacts
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class FreshdeskContactClient : IFreshdeskContactClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
+        private readonly IFreshdeskHttpClient _freshdeskClient;
 
-        public FreshdeskContactClient(FreshdeskClient freshdeskClient)
+        public FreshdeskContactClient(IFreshdeskHttpClient freshdeskClient)
         {
             _freshdeskClient = freshdeskClient;
         }

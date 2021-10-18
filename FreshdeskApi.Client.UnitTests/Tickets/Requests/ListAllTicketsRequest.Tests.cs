@@ -10,7 +10,7 @@ namespace FreshdeskApi.Client.UnitTests.Tickets.Requests
         {
             var listAllTicketsRequest = new ListAllTicketsRequest();
 
-            Assert.Equal("/api/v2/tickets", listAllTicketsRequest.UrlWithQueryString);
+            Assert.Equal("UrlWithQueryString: /api/v2/tickets", listAllTicketsRequest.ToString());
         }
     }
 }
