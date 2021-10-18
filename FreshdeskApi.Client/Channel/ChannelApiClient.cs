@@ -17,9 +17,9 @@ namespace FreshdeskApi.Client.Channel
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class ChannelApiClient : IChannelApiClient
     {
-        private readonly FreshdeskClient _client;
+        private readonly IFreshdeskHttpClient _client;
 
-        public ChannelApiClient(FreshdeskClient client)
+        public ChannelApiClient(IFreshdeskHttpClient client)
         {
             _client = client;
         }

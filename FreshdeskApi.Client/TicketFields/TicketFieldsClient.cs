@@ -19,9 +19,9 @@ namespace FreshdeskApi.Client.TicketFields
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class TicketFieldsClient : ITicketFieldsClient
     {
-        private readonly FreshdeskClient _freshdeskClient;
+        private readonly IFreshdeskHttpClient _freshdeskClient;
 
-        public TicketFieldsClient(FreshdeskClient freshdeskClient)
+        public TicketFieldsClient(IFreshdeskHttpClient freshdeskClient)
         {
             _freshdeskClient = freshdeskClient;
         }

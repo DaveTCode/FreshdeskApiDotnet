@@ -1,4 +1,3 @@
-using System;
 using FreshdeskApi.Client.Agents;
 using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
@@ -11,12 +10,8 @@ using FreshdeskApi.Client.Tickets;
 
 namespace FreshdeskApi.Client
 {
-    public interface IFreshdeskClient : IDisposable
+    public interface IFreshdeskClient
     {
-        long RateLimitRemaining { get; }
-
-        long RateLimitTotal { get; }
-
         IFreshdeskTicketClient Tickets { get; }
 
         IFreshdeskContactClient Contacts { get; }

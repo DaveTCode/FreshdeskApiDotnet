@@ -15,9 +15,9 @@ namespace FreshdeskApi.Client.Conversations
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class ConversationsClient : IConversationsClient
     {
-        private readonly FreshdeskClient _client;
+        private readonly IFreshdeskHttpClient _client;
 
-        public ConversationsClient(FreshdeskClient client)
+        public ConversationsClient(IFreshdeskHttpClient client)
         {
             _client = client;
         }
