@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Agents;
 using FreshdeskApi.Client.Channel;
+using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;

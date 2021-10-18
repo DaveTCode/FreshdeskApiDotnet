@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Contacts.Requests;
 using FreshdeskApi.Client.Conversations.Requests;
 using FreshdeskApi.Client.Tickets.Models;

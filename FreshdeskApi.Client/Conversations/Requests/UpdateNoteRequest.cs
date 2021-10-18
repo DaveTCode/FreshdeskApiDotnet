@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FreshdeskApi.Client.CommonModels;
 using Newtonsoft.Json;
 using TiberHealth.Serializer.Attributes;
 

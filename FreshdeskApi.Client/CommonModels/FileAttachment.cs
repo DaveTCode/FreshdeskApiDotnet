@@ -1,7 +1,6 @@
 using TiberHealth.Serializer.Attributes;
 
-// TODO move to namespace with BC-break release
-namespace FreshdeskApi.Client
+namespace FreshdeskApi.Client.CommonModels
 {
     [MultipartFile(ContentType = "MimeType", FileName = "Name", Value = "FileBytes")]
     public class FileAttachment

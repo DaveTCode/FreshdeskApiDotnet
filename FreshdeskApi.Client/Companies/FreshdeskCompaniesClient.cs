@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Companies.Models;
 using FreshdeskApi.Client.Companies.Requests;
 
