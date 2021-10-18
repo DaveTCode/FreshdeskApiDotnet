@@ -89,12 +89,41 @@ namespace FreshdeskApi.Client.Solutions
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The contents of the category after the update</returns>
-        [Obsolete("Use UpdateCategoryAsync with language parameter instead.")]
+        [Obsolete("Use " + nameof(UpdateCategoryAsync) + " with languageCode parameter instead.")]
         Task<Category> UpdateCategoryAsync(
             long categoryId,
             UpdateCategoryRequest request,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default) => UpdateCategoryAsync(categoryId, languageCode: null, request, cancellationToken);
 
+        /// <summary>
+        /// Update a category, changing the description, portals it's visible on or the name 
+        /// </summary>
+        ///
+        /// <param name="categoryId">
+        /// The unique identifier of the category to update.
+        /// </param>
+        ///
+        /// <param name="languageCode">
+        /// The language code (e.g. es) which the translation corresponds to.
+        ///
+        /// Defaults to null which means update the default language version
+        /// of the category.
+        /// </param>
+        /// 
+        /// <param name="request">
+        /// The object defining what updates we want to make.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>The contents of the category after the update</returns>
+        [Obsolete("Use " + nameof(UpdateCategoryAsync) + " with languageCode parameter on second position instead.")]
+        Task<Category> UpdateCategoryAsync(
+            long categoryId,
+            UpdateCategoryRequest request,
+            string? languageCode = null,
+            CancellationToken cancellationToken = default) => UpdateCategoryAsync(categoryId, languageCode, request, cancellationToken);
+        
         /// <summary>
         /// Update a category, changing the description, portals it's visible on or the name 
         /// </summary>
@@ -119,8 +148,8 @@ namespace FreshdeskApi.Client.Solutions
         /// <returns>The contents of the category after the update</returns>
         Task<Category> UpdateCategoryAsync(
             long categoryId,
+            string? languageCode,
             UpdateCategoryRequest request,
-            string? languageCode = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -395,10 +424,41 @@ namespace FreshdeskApi.Client.Solutions
         /// <returns>
         /// The updated article (translated if languageCode is passed)
         /// </returns>
+        [Obsolete("Use " + nameof(UpdateArticleAsync) + " with languageCode parameter on second position instead.")]
         Task<Article> UpdateArticleAsync(
             long articleId,
             UpdateArticleRequest request,
             string? languageCode = null,
+            CancellationToken cancellationToken = default) => UpdateArticleAsync(articleId, languageCode, request, cancellationToken);
+
+        /// <summary>
+        /// Update an article (or it's translation) with the requested data.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
+        /// </summary>
+        /// 
+        /// <param name="articleId">
+        /// The unique identifier for the article.
+        /// </param>
+        /// 
+        /// <param name="request">
+        /// Defines the properties to be updated.
+        /// </param>
+        /// 
+        /// <param name="languageCode">
+        /// Optional. If set then the languageCode version of the article will
+        /// be updated instead of the default article.
+        /// </param>
+        ///
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>
+        /// The updated article (translated if languageCode is passed)
+        /// </returns>
+        Task<Article> UpdateArticleAsync(
+            long articleId,
+            string? languageCode,
+            UpdateArticleRequest request,
             CancellationToken cancellationToken = default);
 
         /// <summary>

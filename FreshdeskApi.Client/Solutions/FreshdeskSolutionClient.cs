@@ -126,30 +126,6 @@ namespace FreshdeskApi.Client.Solutions
         /// <param name="categoryId">
         /// The unique identifier of the category to update.
         /// </param>
-        /// 
-        /// <param name="request">
-        /// The object defining what updates we want to make.
-        /// </param>
-        ///
-        /// <param name="cancellationToken"></param>
-        ///
-        /// <returns>The contents of the category after the update</returns>
-        [Obsolete("Use UpdateCategoryAsync with language parameter instead.")]
-        public Task<Category> UpdateCategoryAsync(
-            long categoryId,
-            UpdateCategoryRequest request,
-            CancellationToken cancellationToken = default)
-        {
-            return UpdateCategoryAsync(categoryId, request, null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Update a category, changing the description, portals it's visible on or the name 
-        /// </summary>
-        ///
-        /// <param name="categoryId">
-        /// The unique identifier of the category to update.
-        /// </param>
         ///
         /// <param name="languageCode">
         /// The language code (e.g. es) which the translation corresponds to.
@@ -167,8 +143,8 @@ namespace FreshdeskApi.Client.Solutions
         /// <returns>The contents of the category after the update</returns>
         public async Task<Category> UpdateCategoryAsync(
             long categoryId,
+            string? languageCode,
             UpdateCategoryRequest request,
-            string? languageCode = null,
             CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
@@ -181,7 +157,6 @@ namespace FreshdeskApi.Client.Solutions
                 .ApiOperationAsync<Category, UpdateCategoryRequest>(HttpMethod.Put, url, request, cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
-
 
         /// <summary>
         /// Create a new category setting the name, description and portals
@@ -547,8 +522,8 @@ namespace FreshdeskApi.Client.Solutions
         /// </returns>
         public async Task<Article> UpdateArticleAsync(
             long articleId,
+            string? languageCode,
             UpdateArticleRequest request,
-            string? languageCode = null,
             CancellationToken cancellationToken = default)
         {
             if (request == null) throw new ArgumentNullException(nameof(request), "The request must not be null");
