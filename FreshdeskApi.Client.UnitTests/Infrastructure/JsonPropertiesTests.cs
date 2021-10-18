@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FreshdeskApi.Client.CommonModels;
 using Newtonsoft.Json;
 using Xunit;
 using Xunit.Sdk;
@@ -17,7 +18,13 @@ namespace FreshdeskApi.Client.UnitTests.Infrastructure
 
             var missingJsonProperty = new List<(Type classType, string propertyName)>();
 
+            var ignoredTypes = new[]
+            {
+                typeof(FileAttachment),
+            };
+
             foreach (var type in freshdeskClientType.Assembly.GetTypes()
+                .Where(x => !ignoredTypes.Contains(x))
                 .Where(x => x.IsClass)
                 .Where(x => x.Namespace?.StartsWith(freshdeskClientType.Namespace!) == true)
                 .Where(x => new[] { ".CommonModels", ".Models", ".Requests", }.Any(n => x.Namespace!.EndsWith(n)))
