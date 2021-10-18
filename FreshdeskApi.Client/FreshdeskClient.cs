@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using FreshdeskApi.Client.Agents;
 using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
@@ -9,8 +8,6 @@ using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
-
-[assembly: InternalsVisibleTo("FreshdeskApi.Client.UnitTests")]
 
 namespace FreshdeskApi.Client
 {
@@ -75,7 +72,7 @@ namespace FreshdeskApi.Client
         /// A HttpClient object with authentication and
         /// <seealso cref="HttpClient.BaseAddress"/> already set.
         /// </param>
-        public FreshdeskClient(IFreshdeskHttpClient httpClient) : this(
+        public static FreshdeskClient Create(IFreshdeskHttpClient httpClient) => new(
             new FreshdeskTicketClient(httpClient),
             new FreshdeskContactClient(httpClient),
             new FreshdeskGroupClient(httpClient),
@@ -85,9 +82,7 @@ namespace FreshdeskApi.Client
             new FreshdeskTicketFieldsClient(httpClient),
             new FreshdeskConversationsClient(httpClient),
             new FreshdeskChannelApiClient(httpClient)
-        )
-        {
-        }
+        );
 
         /// <summary>
         /// Construct a freshdesk client object from just domain and api key.
@@ -108,10 +103,8 @@ namespace FreshdeskApi.Client
         /// perform whichever operations you are calling.
         /// </param>
         // ReSharper disable once UnusedMember.Global
-        public FreshdeskClient(
+        public static FreshdeskClient Create(
             string freshdeskDomain, string apiKey
-        ) : this(new FreshdeskHttpClient(freshdeskDomain, apiKey))
-        {
-        }
+        ) => Create(new FreshdeskHttpClient(freshdeskDomain, apiKey));
     }
 }

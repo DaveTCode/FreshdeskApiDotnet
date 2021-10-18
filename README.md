@@ -19,7 +19,7 @@ This library provides a single client class which can be created in one of sever
 
 ```csharp
 using var freshdeskHttpClient = new FreshdeskHttpClient("https://mydomain.freshdesk.com", "APIKEY");
-using var freshdeskClient = new FreshdeskClient(freshdeskHttpClient);
+var freshdeskClient = FreshdeskClient.Create(freshdeskHttpClient);
 ```
 
 NOTE: Disposing the freshdeskClient will dispose the HttpClient object, as per https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/ you need to be careful when disposing HttpClient
@@ -29,7 +29,7 @@ objects. Broadly speaking, don't make and dispose lots of FreshdeskClient object
 
 ```csharp
 var freshdeskHttpClient = new FreshdeskHttpClient(myHttpClient);
-var freshdeskClient = new FreshdeskClient(freshdeskHttpClient);
+var freshdeskClient = FreshdeskClient.Create(freshdeskHttpClient);
 ```
 
 NOTE: Typically you don't want to dispose the freshdesk client in this case.
@@ -43,6 +43,12 @@ serviceCollection.AddFreshdeskApiClient(options => {
   options.FreshdeskDomain = "https://<mydomain>.freshdesk.com";
   options.FreshdeskDomain = "APIKEY"; 
 })
+
+...
+
+container.GetRequiredService<IFreshdeskClient>();
+container.GetRequiredService<IFreshdeskTicketClient>();
+container.GetRequiredService<IFreshdesk...Client>();
 ```
 
 ### Examples
@@ -50,7 +56,7 @@ serviceCollection.AddFreshdeskApiClient(options => {
 Get a single ticket, including the company information on the API response
 ```csharp
 using var freshdeskHttpClient = new FreshdeskHttpClient("https://mydomain.freshdesk.com", "APIKEY");
-using var freshdeskTicketClient = new FreshdeskTicketClient(freshdeskHttpClient);
+var freshdeskTicketClient = new FreshdeskTicketClient(freshdeskHttpClient);
 var ticket = await freshdeskTicketClient.ViewTicketAsync(
   ticketId: 12345, 
   includes: new TicketIncludes { Company = true }
