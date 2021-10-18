@@ -123,7 +123,7 @@ namespace FreshdeskApi.Client.Solutions
             UpdateCategoryRequest request,
             string? languageCode = null,
             CancellationToken cancellationToken = default) => UpdateCategoryAsync(categoryId, languageCode, request, cancellationToken);
-        
+
         /// <summary>
         /// Update a category, changing the description, portals it's visible on or the name 
         /// </summary>
