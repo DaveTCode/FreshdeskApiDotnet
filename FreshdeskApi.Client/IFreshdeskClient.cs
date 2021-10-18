@@ -24,10 +24,10 @@ namespace FreshdeskApi.Client
 
         IFreshdeskSolutionClient Solutions { get; }
 
-        ITicketFieldsClient TicketFields { get; }
+        IFreshdeskTicketFieldsClient TicketFields { get; }
 
-        IConversationsClient Conversations { get; }
+        IFreshdeskConversationsClient Conversations { get; }
 
-        IChannelApiClient ChannelApi { get; }
+        IFreshdeskChannelApiClient ChannelApi { get; }
     }
 }

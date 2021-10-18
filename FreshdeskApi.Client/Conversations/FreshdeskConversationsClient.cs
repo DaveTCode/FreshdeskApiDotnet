@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Conversations.Models;
@@ -5,8 +8,20 @@ using FreshdeskApi.Client.Conversations.Requests;
 
 namespace FreshdeskApi.Client.Conversations
 {
-    public interface IConversationsClient
+    /// <summary>
+    /// API endpoints specific to creating/updating conversations on Freshdesk
+    /// tickets.
+    /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    public class FreshdeskConversationsClient : IFreshdeskConversationsClient
     {
+        private readonly IFreshdeskHttpClient _client;
+
+        public FreshdeskConversationsClient(IFreshdeskHttpClient client)
+        {
+            _client = client;
+        }
+
         /// <summary>
         /// Create a reply to a ticket.
         ///
@@ -24,10 +39,17 @@ namespace FreshdeskApi.Client.Conversations
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The full conversation entry</returns>
-        Task<ConversationEntry> CreateReplyAsync(
+        public async Task<ConversationEntry> CreateReplyAsync(
             long ticketId,
             CreateReplyRequest request,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
+            return await _client
+                .ApiOperationAsync<ConversationEntry, CreateReplyRequest>(HttpMethod.Post, $"/api/v2/tickets/{ticketId}/reply", request, cancellationToken)
+                .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Add a public/private note to a ticket.
@@ -46,10 +68,17 @@ namespace FreshdeskApi.Client.Conversations
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The full conversation entry</returns>
-        Task<ConversationEntry> CreateNoteAsync(
+        public async Task<ConversationEntry> CreateNoteAsync(
             long ticketId,
             CreateNoteRequest request,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
+            return await _client
+                .ApiOperationAsync<ConversationEntry, CreateNoteRequest>(HttpMethod.Post, $"/api/v2/tickets/{ticketId}/notes", request, cancellationToken)
+                .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Delete a conversation entry (either reply or note).
@@ -60,9 +89,14 @@ namespace FreshdeskApi.Client.Conversations
         /// <param name="conversationEntryId">The entry to delete</param>
         ///
         /// <param name="cancellationToken"></param>
-        Task DeleteConversationEntryAsync(
+        public async Task DeleteConversationEntryAsync(
             long conversationEntryId,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default)
+        {
+            await _client
+                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/conversations/{conversationEntryId}", cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Update an existing public/private note.
@@ -81,9 +115,16 @@ namespace FreshdeskApi.Client.Conversations
         /// <param name="cancellationToken"></param>
         ///
         /// <returns>The updated note</returns>
-        Task<ConversationEntry> UpdateNoteAsync(
+        public async Task<ConversationEntry> UpdateNoteAsync(
             long conversationEntryId,
             UpdateNoteRequest request,
-            CancellationToken cancellationToken = default);
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+
+            return await _client
+                .ApiOperationAsync<ConversationEntry, UpdateNoteRequest>(HttpMethod.Put, $"/api/v2/conversations/{conversationEntryId}", request, cancellationToken)
+                .ConfigureAwait(false);
+        }
     }
 }

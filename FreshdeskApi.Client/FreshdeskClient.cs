@@ -2,7 +2,6 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using FreshdeskApi.Client.Agents;
 using FreshdeskApi.Client.Channel;
-using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
@@ -15,7 +14,9 @@ using FreshdeskApi.Client.Tickets;
 
 namespace FreshdeskApi.Client
 {
-    // ReSharper disable once RedundantExtendsListEntry
+    /// <summary>
+    /// Wrapper for all supported API clients
+    /// </summary>
     public class FreshdeskClient : IFreshdeskClient
     {
         public IFreshdeskTicketClient Tickets { get; }
@@ -30,11 +31,37 @@ namespace FreshdeskApi.Client
 
         public IFreshdeskSolutionClient Solutions { get; }
 
-        public ITicketFieldsClient TicketFields { get; }
+        public IFreshdeskTicketFieldsClient TicketFields { get; }
 
-        public IConversationsClient Conversations { get; }
+        public IFreshdeskConversationsClient Conversations { get; }
 
-        public IChannelApiClient ChannelApi { get; }
+        public IFreshdeskChannelApiClient ChannelApi { get; }
+
+        /// <summary>
+        /// Default constructor for DependencyInjection
+        /// </summary>
+        public FreshdeskClient(
+            IFreshdeskTicketClient freshdeskTicketClient,
+            IFreshdeskContactClient freshdeskContactClient,
+            IFreshdeskGroupClient freshdeskGroupClient,
+            IFreshdeskAgentClient freshdeskAgentClient,
+            IFreshdeskCompaniesClient freshdeskCompaniesClient,
+            IFreshdeskSolutionClient freshdeskSolutionClient,
+            IFreshdeskTicketFieldsClient freshdeskTicketFieldsClient,
+            IFreshdeskConversationsClient freshdeskConversationsClient,
+            IFreshdeskChannelApiClient freshdeskChannelApiClient
+        )
+        {
+            Tickets = freshdeskTicketClient;
+            Contacts = freshdeskContactClient;
+            Groups = freshdeskGroupClient;
+            Agents = freshdeskAgentClient;
+            Companies = freshdeskCompaniesClient;
+            Solutions = freshdeskSolutionClient;
+            TicketFields = freshdeskTicketFieldsClient;
+            Conversations = freshdeskConversationsClient;
+            ChannelApi = freshdeskChannelApiClient;
+        }
 
         /// <summary>
         /// Construct a freshdesk client object when you already have access
@@ -48,17 +75,18 @@ namespace FreshdeskApi.Client
         /// A HttpClient object with authentication and
         /// <seealso cref="HttpClient.BaseAddress"/> already set.
         /// </param>
-        public FreshdeskClient(IFreshdeskHttpClient httpClient)
+        public FreshdeskClient(IFreshdeskHttpClient httpClient) : this(
+            new FreshdeskTicketClient(httpClient),
+            new FreshdeskContactClient(httpClient),
+            new FreshdeskGroupClient(httpClient),
+            new FreshdeskAgentClient(httpClient),
+            new FreshdeskCompaniesClient(httpClient),
+            new FreshdeskSolutionClient(httpClient),
+            new FreshdeskTicketFieldsClient(httpClient),
+            new FreshdeskConversationsClient(httpClient),
+            new FreshdeskChannelApiClient(httpClient)
+        )
         {
-            Tickets = new FreshdeskTicketClient(httpClient);
-            Contacts = new FreshdeskContactClient(httpClient);
-            Groups = new FreshdeskGroupClient(httpClient);
-            Agents = new FreshdeskAgentClient(httpClient);
-            Companies = new FreshdeskCompaniesClient(httpClient);
-            Solutions = new FreshdeskSolutionClient(httpClient);
-            TicketFields = new TicketFieldsClient(httpClient);
-            Conversations = new ConversationsClient(httpClient);
-            ChannelApi = new ChannelApiClient(httpClient);
         }
 
         /// <summary>
