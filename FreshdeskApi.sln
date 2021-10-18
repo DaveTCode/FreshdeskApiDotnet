@@ -17,6 +17,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreshdeskApi.Client.UnitTests", "FreshdeskApi.Client.UnitTests\FreshdeskApi.Client.UnitTests.csproj", "{ECAC7D31-2841-461E-8F8E-EE10E23BC6AD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{3D7DC059-5E8F-4008-9F89-7859850880D0}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\nightly-release.yml = .github\workflows\nightly-release.yml
+		.github\workflows\pr-build.yml = .github\workflows\pr-build.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,5 +45,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F55C2486-99E6-4864-8C3A-DEFC2338816F}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D7DC059-5E8F-4008-9F89-7859850880D0} = {0214EC65-97D8-4820-9157-14C6F6C5ACC3}
 	EndGlobalSection
 EndGlobal
