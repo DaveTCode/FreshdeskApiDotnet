@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-// TODO move to namespace with BC-break release
-namespace FreshdeskApi.Client
+namespace FreshdeskApi.Client.CommonModels
 {
     /// <summary>
     /// Defines the set of properties returned when exporting from Freshdesk
