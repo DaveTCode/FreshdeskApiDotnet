@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using FreshdeskApi.Client.Agents;
@@ -17,29 +18,26 @@ namespace FreshdeskApi.Client.Extensions
 {
     public static class IocExtensions
     {
-        public static IServiceCollection AddFreshdeskApiClient(this IServiceCollection serviceCollection, Action<FreshdeskConfiguration> options)
+        public static IServiceCollection AddFreshdeskApiClient(
+            this IServiceCollection serviceCollection,
+            Action<FreshdeskConfiguration> options,
+            Action<IHttpClientBuilder>? configureHttpClientBuilder = null
+        )
         {
             serviceCollection.Configure(options);
 
-            return serviceCollection.AddFreshdeskApiClient();
+            return serviceCollection.AddFreshdeskApiClient(configureHttpClientBuilder);
         }
 
-        public static IServiceCollection AddFreshdeskApiClient(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddFreshdeskApiClient(
+            this IServiceCollection serviceCollection,
+            Action<IHttpClientBuilder>? configureHttpClientBuilder = null
+        )
         {
             serviceCollection.AddOptions();
 
-            serviceCollection.AddHttpClient<IFreshdeskHttpClient, FreshdeskHttpClient>(static (serviceProvider, httpClient) =>
-            {
-                var options = serviceProvider.GetRequiredService<IOptions<FreshdeskConfiguration>>();
-
-                var freshdeskConfiguration = options.Value;
-
-                httpClient.BaseAddress = new Uri(freshdeskConfiguration.FreshdeskDomain, UriKind.Absolute);
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                    "Basic",
-                    Convert.ToBase64String(Encoding.Default.GetBytes($"{freshdeskConfiguration.ApiKey}:X"))
-                );
-            });
+            var httpClientBuilder = serviceCollection.AddHttpClient<IFreshdeskHttpClient, FreshdeskHttpClient>(ConfigureFreshdeskHttpClient);
+            configureHttpClientBuilder?.Invoke(httpClientBuilder);
 
             serviceCollection.AddScoped<IFreshdeskTicketClient, FreshdeskTicketClient>();
             serviceCollection.AddScoped<IFreshdeskContactClient, FreshdeskContactClient>();
@@ -54,6 +52,19 @@ namespace FreshdeskApi.Client.Extensions
             serviceCollection.AddScoped<IFreshdeskClient, FreshdeskClient>();
 
             return serviceCollection;
+        }
+
+        public static void ConfigureFreshdeskHttpClient(IServiceProvider serviceProvider, HttpClient httpClient)
+        {
+            var options = serviceProvider.GetRequiredService<IOptions<FreshdeskConfiguration>>();
+
+            var freshdeskConfiguration = options.Value;
+
+            httpClient.BaseAddress = new Uri(freshdeskConfiguration.FreshdeskDomain, UriKind.Absolute);
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Basic",
+                Convert.ToBase64String(Encoding.Default.GetBytes($"{freshdeskConfiguration.ApiKey}:X"))
+            );
         }
 
         public class FreshdeskConfiguration
