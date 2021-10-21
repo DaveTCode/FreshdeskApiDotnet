@@ -17,7 +17,7 @@ namespace FreshdeskApi.Client.Exceptions
         /// useful diagnostics about the failure.
         /// </summary>
         public HttpResponseMessage Response { get; }
-
+        
         internal FreshdeskApiException(HttpResponseMessage response)
         {
             Response = response;
