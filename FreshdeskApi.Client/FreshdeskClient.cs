@@ -5,6 +5,7 @@ using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
 using FreshdeskApi.Client.Groups;
+using FreshdeskApi.Client.Products;
 using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
@@ -21,6 +22,8 @@ namespace FreshdeskApi.Client
         public IFreshdeskContactClient Contacts { get; }
 
         public IFreshdeskGroupClient Groups { get; }
+        
+        public IFreshdeskProductClient Products { get; }
 
         public IFreshdeskAgentClient Agents { get; }
 
@@ -41,6 +44,7 @@ namespace FreshdeskApi.Client
             IFreshdeskTicketClient freshdeskTicketClient,
             IFreshdeskContactClient freshdeskContactClient,
             IFreshdeskGroupClient freshdeskGroupClient,
+            IFreshdeskProductClient freshdeskProductClient,
             IFreshdeskAgentClient freshdeskAgentClient,
             IFreshdeskCompaniesClient freshdeskCompaniesClient,
             IFreshdeskSolutionClient freshdeskSolutionClient,
@@ -52,6 +56,7 @@ namespace FreshdeskApi.Client
             Tickets = freshdeskTicketClient;
             Contacts = freshdeskContactClient;
             Groups = freshdeskGroupClient;
+            Products = freshdeskProductClient;
             Agents = freshdeskAgentClient;
             Companies = freshdeskCompaniesClient;
             Solutions = freshdeskSolutionClient;
@@ -76,6 +81,7 @@ namespace FreshdeskApi.Client
             new FreshdeskTicketClient(httpClient),
             new FreshdeskContactClient(httpClient),
             new FreshdeskGroupClient(httpClient),
+            new FreshdeskProductClient(httpClient),
             new FreshdeskAgentClient(httpClient),
             new FreshdeskCompaniesClient(httpClient),
             new FreshdeskSolutionClient(httpClient),
