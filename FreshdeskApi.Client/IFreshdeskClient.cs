@@ -18,7 +18,7 @@ namespace FreshdeskApi.Client
         IFreshdeskContactClient Contacts { get; }
 
         IFreshdeskGroupClient Groups { get; }
-        
+
         IFreshdeskProductClient Products { get; }
 
         IFreshdeskAgentClient Agents { get; }

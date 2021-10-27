@@ -22,7 +22,7 @@ namespace FreshdeskApi.Client
         public IFreshdeskContactClient Contacts { get; }
 
         public IFreshdeskGroupClient Groups { get; }
-        
+
         public IFreshdeskProductClient Products { get; }
 
         public IFreshdeskAgentClient Agents { get; }
