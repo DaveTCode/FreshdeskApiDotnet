@@ -87,7 +87,7 @@ Field Service Management|:x:
 Time Entries|:x:
 Email Configs|:x:
 Email Mailboxes|:x:
-Products|:x:
+Products|:heavy_check_mark:
 Business Hours|:x:
 Scenario Automations|:x:
 SLA Policies|:x:
