@@ -87,7 +87,7 @@ Field Service Management|:x:
 Time Entries|:x:
 Email Configs|:x:
 Email Mailboxes|:x:
-Products|:x:
+Products|:heavy_check_mark:
 Business Hours|:x:
 Scenario Automations|:x:
 SLA Policies|:x:
@@ -95,6 +95,6 @@ Settings|:x:
 
 ## Development
 
-The library utilises C#8 features and therefore VS2019 or a suitable text editor are required for making changes.
+The library utilises C#9 features and therefore VS2019 or a suitable text editor are required for making changes.
 
 Please feel free to send pull requests or raise Github issues.
