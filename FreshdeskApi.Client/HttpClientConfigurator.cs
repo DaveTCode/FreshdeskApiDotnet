@@ -1,23 +1,18 @@
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using FreshdeskApi.Client.Extensions;
 
 namespace FreshdeskApi.Client
 {
     public static class HttpClientConfigurator
     {
-        [Obsolete("Use " + nameof(IocExtensions.AddFreshdeskApiClient) + " instead")]
-        public static HttpClient ConfigureFreshdeskApi(this HttpClient httpClient, string freshdeskDomain, string apiKey)
+        [Obsolete("Use " + nameof(IocExtensions.ConfigureHttpClient) + " instead")]
+        public static HttpClient ConfigureFreshdeskApi(
+            this HttpClient httpClient, string freshdeskDomain, string apiKey
+        ) => httpClient.ConfigureHttpClient(new IocExtensions.FreshdeskConfiguration
         {
-            if (string.IsNullOrWhiteSpace(apiKey)) throw new ArgumentOutOfRangeException(nameof(apiKey), apiKey, "API Key can't be blank");
-            if (string.IsNullOrWhiteSpace(freshdeskDomain)) throw new ArgumentOutOfRangeException(nameof(freshdeskDomain), freshdeskDomain, "Freshdesk domain can't be blank");
-
-            httpClient.BaseAddress = new Uri(freshdeskDomain, UriKind.Absolute);
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.Default.GetBytes($"{apiKey}:X")));
-
-            return httpClient;
-        }
+            FreshdeskDomain = freshdeskDomain,
+            ApiKey = apiKey,
+        });
     }
 }

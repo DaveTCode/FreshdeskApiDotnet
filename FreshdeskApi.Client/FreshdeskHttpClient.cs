@@ -79,7 +79,11 @@ namespace FreshdeskApi.Client
         // ReSharper disable once UnusedMember.Global
         public FreshdeskHttpClient(
             string freshdeskDomain, string apiKey
-        ) : this(new HttpClient().ConfigureFreshdeskApi(freshdeskDomain, apiKey))
+        ) : this(new HttpClient().ConfigureHttpClient(new IocExtensions.FreshdeskConfiguration
+        {
+            FreshdeskDomain = freshdeskDomain,
+            ApiKey = apiKey,
+        }))
         {
         }
 
