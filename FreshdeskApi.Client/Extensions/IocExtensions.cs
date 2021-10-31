@@ -62,11 +62,25 @@ namespace FreshdeskApi.Client.Extensions
 
             var freshdeskConfiguration = options.Value;
 
-            httpClient.BaseAddress = new Uri(freshdeskConfiguration.FreshdeskDomain, UriKind.Absolute);
+            httpClient.ConfigureHttpClient(freshdeskConfiguration);
+        }
+
+        public static HttpClient ConfigureHttpClient(this HttpClient httpClient, FreshdeskConfiguration freshdeskConfiguration)
+        {
+            var apiKey = string.IsNullOrWhiteSpace(freshdeskConfiguration.ApiKey)
+                ? throw new ArgumentOutOfRangeException(nameof(freshdeskConfiguration.ApiKey), freshdeskConfiguration.ApiKey, "API Key can't be blank")
+                : freshdeskConfiguration.ApiKey;
+            var freshdeskDomain = string.IsNullOrWhiteSpace(freshdeskConfiguration.FreshdeskDomain)
+                ? throw new ArgumentOutOfRangeException(nameof(freshdeskConfiguration.FreshdeskDomain), freshdeskConfiguration.FreshdeskDomain, "Freshdesk domain can't be blank")
+                : freshdeskConfiguration.FreshdeskDomain;
+
+            httpClient.BaseAddress = new Uri(freshdeskDomain, UriKind.Absolute);
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                 "Basic",
-                Convert.ToBase64String(Encoding.Default.GetBytes($"{freshdeskConfiguration.ApiKey}:X"))
+                Convert.ToBase64String(Encoding.Default.GetBytes($"{apiKey}:X"))
             );
+
+            return httpClient;
         }
 
         public class FreshdeskConfiguration
