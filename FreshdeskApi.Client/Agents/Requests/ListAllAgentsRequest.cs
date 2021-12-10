@@ -29,7 +29,7 @@ namespace FreshdeskApi.Client.Agents.Requests
                 { "phone", phone },
                 { "state", agentState?.GetQueryStringValue() }
             }.Where(x => x.Value != null)
-                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value)}")
+                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value!)}")
                 .ToList();
 
             UrlWithQueryString = ListAllContactsUrl +
