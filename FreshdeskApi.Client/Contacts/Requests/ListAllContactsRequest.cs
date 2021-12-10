@@ -34,7 +34,7 @@ namespace FreshdeskApi.Client.Contacts.Requests
                 { "state", contactState?.GetQueryStringValue() },
                 { "_updated_since", updatedSince?.ToString("yyyy-MM-ddTHH:mm:ssZ") }
             }.Where(x => x.Value != null)
-                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value)}")
+                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value!)}")
                 .ToList();
 
             UrlWithQueryString = ListAllContactsUrl +

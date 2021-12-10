@@ -39,7 +39,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
                 { "order_by", orderBy?.QueryParameterValue() },
                 { "order_type", orderDir?.QueryParameterValue() }
             }.Where(x => x.Value != null)
-                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value)}")
+                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value!)}")
                 .ToList();
 
             UrlWithQueryString = ListAllTicketsUrl +

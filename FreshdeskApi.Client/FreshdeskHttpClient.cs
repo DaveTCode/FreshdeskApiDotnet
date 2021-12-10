@@ -160,12 +160,13 @@ namespace FreshdeskApi.Client
                 // Handle rate limiting by waiting the specified amount of time
                 while (response.StatusCode == (HttpStatusCode)429)
                 {
-                    if (response.Headers.RetryAfter.Delta.HasValue)
+                    var retryAfterDelta = response.Headers.RetryAfter?.Delta;
+                    if (retryAfterDelta.HasValue)
                     {
                         // response reference will be replaced soon
                         disposingCollection.Add(response);
 
-                        await Task.Delay(response.Headers.RetryAfter.Delta.Value, cancellationToken);
+                        await Task.Delay(retryAfterDelta.Value, cancellationToken);
 
                         response = await _httpClient
                             .GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
@@ -190,7 +191,11 @@ namespace FreshdeskApi.Client
                 // response will not be used outside of this method (i.e. in Exception)
                 disposingCollection.Add(response);
 
-                await using var contentStream = await response.Content.ReadAsStreamAsync();
+                await using var contentStream = await response.Content.ReadAsStreamAsync(
+#if NET
+                    cancellationToken
+#endif
+                );
                 using var sr = new StreamReader(contentStream);
                 using var reader = new JsonTextReader(sr);
                 var serializer = new JsonSerializer();
@@ -301,12 +306,13 @@ namespace FreshdeskApi.Client
             // Handle rate limiting by waiting the specified amount of time
             while (response.StatusCode == (HttpStatusCode)429)
             {
-                if (response.Headers.RetryAfter.Delta.HasValue)
+                var retryAfterDelta = response.Headers.RetryAfter?.Delta;
+                if (retryAfterDelta.HasValue)
                 {
                     // response reference will be replaced soon
                     disposingCollection.Add(response);
 
-                    await Task.Delay(response.Headers.RetryAfter.Delta.Value, cancellationToken);
+                    await Task.Delay(retryAfterDelta.Value, cancellationToken);
 
                     response = await ExecuteRequestAsync(method, url, body, cancellationToken);
                 }
@@ -326,7 +332,11 @@ namespace FreshdeskApi.Client
 
                 if (response.StatusCode == HttpStatusCode.NoContent) return new T();
 
-                await using var contentStream = await response.Content.ReadAsStreamAsync();
+                await using var contentStream = await response.Content.ReadAsStreamAsync(
+#if NET
+                    cancellationToken
+#endif
+                );
                 using var sr = new StreamReader(contentStream);
                 using var reader = new JsonTextReader(sr);
                 var serializer = new JsonSerializer();
