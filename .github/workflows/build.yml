@@ -18,10 +18,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.11
-      - name: Setup .Net Core 5.0.x
+      - name: Setup .Net 5.0.x
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
+      - name: Setup .Net 6.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
       - uses: actions/checkout@v2
         with:
           # shallow clone disabled as recommended by SonarCLoud - https://github.com/marketplace/actions/sonarcloud-scan
@@ -65,11 +69,15 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
       - uses: actions/checkout@v2
-      - name: Setup .Net Core 5.0.x
+      - name: Setup .Net 5.0.x
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
-      - name: Tool restore with .Net Core
+      - name: Setup .Net 6.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+      - name: Tool restore with .Net
         run: dotnet tool restore
       - name: .Net Format
-        run: dotnet format --check -v diag
+        run: dotnet format --verify-no-changes -v diag
