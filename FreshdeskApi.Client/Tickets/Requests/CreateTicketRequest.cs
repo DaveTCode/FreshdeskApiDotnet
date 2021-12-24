@@ -65,7 +65,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
         public string? Email { get; }
 
         /// Facebook ID of the requester. If no contact exists with this facebook_id, then a new contact will be created.
-        [JsonProperty("facebook_id ")]
+        [JsonProperty("facebook_id")]
         public string? FacebookId { get; }
 
         /// Phone number of the requester. If no contact exists with this phone number in Freshdesk, it will be added as a new contact. If the phone number is set and the email address is not, then the name attribute is mandatory.
@@ -73,11 +73,11 @@ namespace FreshdeskApi.Client.Tickets.Requests
         public string? PhoneNumber { get; }
 
         /// Twitter handle of the requester. If no contact exists with this handle in Freshdesk, it will be added as a new contact.
-        [JsonProperty("twitter_id ")]
+        [JsonProperty("twitter_id")]
         public string? TwitterId { get; }
 
         /// External ID of the requester. If no contact exists with this external ID in Freshdesk, they will be added as a new contact.
-        [JsonProperty("unique_external_id ")]
+        [JsonProperty("unique_external_id")]
         public string? UniqueExternalId { get; }
 
         /// Subject of the ticket. The default Value is null.
