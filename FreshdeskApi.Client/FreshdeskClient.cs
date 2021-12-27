@@ -27,7 +27,7 @@ namespace FreshdeskApi.Client
         public IFreshdeskProductClient Products { get; }
 
         public IFreshdeskMeClient Me { get; }
-        
+
         public IFreshdeskAgentClient Agents { get; }
 
         public IFreshdeskCompaniesClient Companies { get; }
