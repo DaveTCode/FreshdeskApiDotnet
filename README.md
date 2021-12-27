@@ -75,7 +75,7 @@ Conversations|:heavy_check_mark:
 Contacts|:heavy_check_mark:
 Agents|:heavy_check_mark:
 Skills|:x:
-Roles|:x:
+Roles|:heavy_check_mark:
 Groups|:heavy_check_mark:
 Companies|:heavy_check_mark:
 Canned Response Folders|:x:
