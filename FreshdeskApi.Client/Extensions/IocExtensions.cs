@@ -9,6 +9,7 @@ using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
 using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Products;
+using FreshdeskApi.Client.Roles;
 using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
@@ -43,6 +44,7 @@ namespace FreshdeskApi.Client.Extensions
             serviceCollection.AddScoped<IFreshdeskTicketClient, FreshdeskTicketClient>();
             serviceCollection.AddScoped<IFreshdeskContactClient, FreshdeskContactClient>();
             serviceCollection.AddScoped<IFreshdeskGroupClient, FreshdeskGroupClient>();
+            serviceCollection.AddScoped<IFreshdeskRoleClient, FreshdeskRoleClient>();
             serviceCollection.AddScoped<IFreshdeskProductClient, FreshdeskProductClient>();
             serviceCollection.AddScoped<IFreshdeskAgentClient, FreshdeskAgentClient>();
             serviceCollection.AddScoped<IFreshdeskCompaniesClient, FreshdeskCompaniesClient>();
