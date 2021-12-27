@@ -1,10 +1,10 @@
-using FreshdeskApi.Client.Roles.Models;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Roles.Models;
 
 namespace FreshdeskApi.Client.Roles
 {
