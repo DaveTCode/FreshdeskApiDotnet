@@ -1,0 +1,6 @@
+{
+  "Freshdesk": {
+    "FreshdeskDomain": "https://<domain>.freshdesk.com",
+    "ApiKey": null,
+  }
+}

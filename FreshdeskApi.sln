@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshdeskApi.Demo", "FreshdeskApi.Demo\FreshdeskApi.Demo.csproj", "{9EA22FA2-B180-44CD-BA1C-743446800DCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{ECAC7D31-2841-461E-8F8E-EE10E23BC6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECAC7D31-2841-461E-8F8E-EE10E23BC6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECAC7D31-2841-461E-8F8E-EE10E23BC6AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EA22FA2-B180-44CD-BA1C-743446800DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EA22FA2-B180-44CD-BA1C-743446800DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EA22FA2-B180-44CD-BA1C-743446800DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EA22FA2-B180-44CD-BA1C-743446800DCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
