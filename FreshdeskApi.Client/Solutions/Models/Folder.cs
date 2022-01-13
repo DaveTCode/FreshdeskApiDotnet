@@ -84,6 +84,6 @@ namespace FreshdeskApi.Client.Solutions.Models
         SelectedCompanies = 4,
         Bots = 5,
         SelectedContactSegments = 6,
-        SelectedCompanySegments = 7
+        SelectedCompanySegments = 7,
     }
 }
