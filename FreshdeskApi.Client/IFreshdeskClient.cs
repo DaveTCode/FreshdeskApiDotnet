@@ -20,11 +20,11 @@ namespace FreshdeskApi.Client
         IFreshdeskContactClient Contacts { get; }
 
         IFreshdeskGroupClient Groups { get; }
-        
+
         IFreshdeskRoleClient Roles { get; }
 
         IFreshdeskProductClient Products { get; }
-        
+
         IFreshdeskMeClient Me { get; }
 
         IFreshdeskAgentClient Agents { get; }
