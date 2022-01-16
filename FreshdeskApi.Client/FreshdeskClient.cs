@@ -123,6 +123,6 @@ namespace FreshdeskApi.Client
         // ReSharper disable once UnusedMember.Global
         public static FreshdeskClient Create(
             string freshdeskDomain, string apiKey
-        ) => Create(new FreshdeskHttpClient(freshdeskDomain, apiKey));
+        ) => Create(FreshdeskHttpClient.Create(freshdeskDomain, apiKey));
     }
 }

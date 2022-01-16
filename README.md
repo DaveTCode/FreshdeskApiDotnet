@@ -18,7 +18,7 @@ This library provides a single client class which can be created in one of sever
 1. No existing HttpClient object (suitable for console applications)
 
 ```csharp
-using var freshdeskHttpClient = new FreshdeskHttpClient("https://mydomain.freshdesk.com", "APIKEY");
+using var freshdeskHttpClient = FreshdeskHttpClient.Create("https://mydomain.freshdesk.com", "APIKEY");
 var freshdeskClient = FreshdeskClient.Create(freshdeskHttpClient);
 ```
 

@@ -77,15 +77,13 @@ namespace FreshdeskApi.Client
         /// perform whichever operations you are calling.
         /// </param>
         // ReSharper disable once UnusedMember.Global
-        public FreshdeskHttpClient(
+        public static FreshdeskHttpClient Create(
             string freshdeskDomain, string apiKey
-        ) : this(new HttpClient().ConfigureHttpClient(new IocExtensions.FreshdeskConfiguration
+        ) => new(new HttpClient().ConfigureHttpClient(new IocExtensions.FreshdeskConfiguration
         {
             FreshdeskDomain = freshdeskDomain,
             ApiKey = apiKey,
-        }))
-        {
-        }
+        }));
 
         private void SetRateLimitValues(HttpResponseMessage response)
         {
