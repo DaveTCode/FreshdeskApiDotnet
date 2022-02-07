@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
@@ -74,6 +75,23 @@ namespace FreshdeskApi.Client.Solutions.Models
         /// </summary>
         [JsonProperty("updated_at")]
         public DateTimeOffset UpdatedAt { get; set; }
+
+        /// <summary>
+        /// IDs of the companies to whom this solution folder is visible
+        /// </summary>
+        [JsonProperty("company_ids")]
+        public List<long>? VisibleByCompanyIds { get; set; }
+        /// <summary>
+        /// IDs of the contact segments to whom this solution folder is visible
+        /// </summary>
+        [JsonProperty("contact_segment_ids")]
+        public List<long>? VisibleByContactSegmentIds { get; set; }
+
+        /// <summary>
+        /// IDs of the company segments to whom this solution folder is visible
+        /// </summary>
+        [JsonProperty("company_segment_ids")]
+        public List<long>? VisibleByCompanySegmentIds { get; set; }
     }
 
     public enum FolderVisibility
