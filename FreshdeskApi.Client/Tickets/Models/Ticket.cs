@@ -109,7 +109,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         public AttachmentResponse[]? Attachments { get; set; }
 
         [JsonProperty("source_additional_info")]
-        public string? SourceAdditionalInfo { get; set; }
+        public Dictionary<string, object?>? SourceAdditionalInfo { get; set; }
 
         [JsonProperty("deleted")]
         public bool Deleted { get; set; }
