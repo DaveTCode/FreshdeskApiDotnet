@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FreshdeskApi.Client.CommonModels;
 using Newtonsoft.Json;
@@ -66,7 +67,7 @@ namespace FreshdeskApi.Client.Conversations.Models
         public DateTimeOffset? UpdatedAt { get; set; }
 
         [JsonProperty("source_additional_info")]
-        public string? SourceAdditionalInfo { get; set; }
+        public Dictionary<string, object?>? SourceAdditionalInfo { get; set; }
 
         public override string ToString()
         {
