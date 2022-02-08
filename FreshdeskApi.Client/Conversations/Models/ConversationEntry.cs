@@ -58,7 +58,7 @@ namespace FreshdeskApi.Client.Conversations.Models
         public long? EmailFailureCount { get; set; }
 
         [JsonProperty("outgoing_failures")]
-        public long? OutgoingFailures { get; set; }
+        public Dictionary<string, object?>? OutgoingFailures { get; set; }
 
         [JsonProperty("created_at")]
         public DateTimeOffset CreatedAt { get; set; }
