@@ -147,6 +147,30 @@ namespace FreshdeskApi.Client.Tickets
         }
 
         /// <summary>
+        /// Create a new outbound email in Freshdesk.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#create_outbound_email
+        /// </summary>
+        /// 
+        /// <param name="createOutboundEmailRequest">
+        /// Describes the values of all the fields in the new outbound email.
+        /// </param>
+        /// 
+        /// <param name="cancellationToken"></param>
+        ///
+        /// <returns>
+        /// The newly created ticket with its ID included.
+        /// </returns>
+        public async Task<Ticket> CreateOutboundEmailAsync(
+            CreateOutboundEmailRequest createOutboundEmailRequest,
+            CancellationToken cancellationToken = default)
+        {
+            return await _freshdeskClient
+                .ApiOperationAsync<Ticket, CreateOutboundEmailRequest>(HttpMethod.Post, "/api/v2/tickets/outbound_email", createOutboundEmailRequest, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Create a new ticket in Freshdesk.
         /// 
         /// c.f. https://developers.freshdesk.com/api/#create_ticket
