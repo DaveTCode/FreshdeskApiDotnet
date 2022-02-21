@@ -37,7 +37,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
         }
 
         /// <summary>
-        /// Name of the requester
+        /// Name of the requester.
         /// </summary>
         [JsonProperty("name")]
         public string? RequesterName { get; }
@@ -49,25 +49,25 @@ namespace FreshdeskApi.Client.Tickets.Requests
         public string? Email { get; }
 
         /// <summary>
-        /// Subject of the ticket. The default Value is null.
+        /// Subject of the ticket. The default Value is <see langword="null"/>.
         /// </summary>
         [JsonProperty("subject")]
         public string Subject { get; }
 
         /// <summary>
-        /// Helps categorize the ticket according to the different kinds of issues your support team deals with. The default Value is null.
+        /// Helps categorize the ticket according to the different kinds of issues your support team deals with. The default Value is <see langword="null"/>.
         /// </summary>
         [JsonProperty("type")]
         public string? TicketType { get; }
 
         /// <summary>
-        /// Status of the ticket. The default Value is 5.
+        /// Status of the ticket. The default Value is <see cref="TicketStatus.Closed"/>.
         /// </summary>
         [JsonProperty("status")]
         public TicketStatus Status { get; }
 
         /// <summary>
-        /// Priority of the ticket. The default value is 1.
+        /// Priority of the ticket. The default value is <see cref="TicketPriority.Low"/>.
         /// </summary>
         [JsonProperty("priority")]
         public TicketPriority Priority { get; }
@@ -79,13 +79,19 @@ namespace FreshdeskApi.Client.Tickets.Requests
         public string? Description { get; }
 
         /// <summary>
+        /// Email address added in the 'cc' field of the incoming ticket email.
+        /// </summary>
+        [JsonProperty("cc_emails")]
+        public string[]? CcEmails { get; }
+
+        /// <summary>
         /// Key value pairs containing the names and values of custom fields.
         /// </summary>
         [JsonProperty("custom_fields")]
         public Dictionary<string, object>? CustomFields { get; }
 
         /// <summary>
-        /// Timestamp that denotes when the ticket is due to be resolved
+        /// Timestamp that denotes when the ticket is due to be resolved.
         /// </summary>
         [JsonProperty("due_by")]
         public DateTimeOffset? DueBy { get; }
@@ -97,28 +103,22 @@ namespace FreshdeskApi.Client.Tickets.Requests
         public long? EmailConfigId { get; }
 
         /// <summary>
-        /// Timestamp that denotes when the first response is due
+        /// Timestamp that denotes when the first response is due.
         /// </summary>
         [JsonProperty("fr_due_by")]
         public DateTimeOffset? FirstResponseDueBy { get; }
 
         /// <summary>
-        /// ID of the group to which the ticket has been assigned. The default value is the ID of the group that is associated with the given email_config_id
+        /// ID of the group to which the ticket has been assigned. The default value is the ID of the group that is associated with the given <see cref="EmailConfigId"/>.
         /// </summary>
         [JsonProperty("group_id")]
         public long? GroupId { get; }
 
         /// <summary>
-        /// Tags that have been associated with the ticket
+        /// Tags that have been associated with the ticket.
         /// </summary>
         [JsonProperty("tags")]
         public string[]? Tags { get; }
-
-        /// <summary>
-        /// Email address added in the 'cc' field of the incoming ticket email
-        /// </summary>
-        [JsonProperty("cc_emails")]
-        public string[]? CcEmails { get; }
 
         /// <summary>
         /// Ticket attachments. The total size of these attachments cannot exceed 20MB.
