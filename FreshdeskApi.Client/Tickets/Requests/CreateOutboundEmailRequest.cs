@@ -12,7 +12,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class CreateOutboundEmailRequest : IRequestWithAttachment
     {
-        public CreateOutboundEmailRequest(TicketStatus status, TicketPriority priority, string? subject, string description,
+        public CreateOutboundEmailRequest(TicketStatus status, TicketPriority priority, string subject, string description,
             string email, long emailConfigId, string? requesterName = null, string[]? ccEmails = null,
             Dictionary<string, object>? customFields = null, DateTimeOffset? dueBy = null,
             DateTimeOffset? firstResponseDueBy = null, long? groupId = null, string[]? tags = null,
@@ -52,7 +52,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
         /// Subject of the ticket. The default Value is null.
         /// </summary>
         [JsonProperty("subject")]
-        public string? Subject { get; }
+        public string Subject { get; }
 
         /// <summary>
         /// Helps categorize the ticket according to the different kinds of issues your support team deals with. The default Value is null.
