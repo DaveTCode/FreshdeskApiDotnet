@@ -16,7 +16,7 @@ namespace FreshdeskApi.Client.Tickets.Requests
             string email, long emailConfigId, string? requesterName = null, string[]? ccEmails = null,
             Dictionary<string, object>? customFields = null, DateTimeOffset? dueBy = null,
             DateTimeOffset? firstResponseDueBy = null, long? groupId = null, string[]? tags = null,
-            long? companyId = null, string? ticketType = null,
+            string? ticketType = null,
             IEnumerable<FileAttachment>? files = null)
         {
             Status = status;
