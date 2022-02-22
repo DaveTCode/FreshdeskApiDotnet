@@ -52,106 +52,155 @@ namespace FreshdeskApi.Client.Tickets.Requests
             Files = files;
         }
 
-        /// Name of the requester
+        /// <summary>
+        /// Name of the requester.
+        /// </summary>
         [JsonProperty("name")]
         public string? RequesterName { get; }
 
+        /// <summary>
         /// User ID of the requester. For existing contacts, the requester_id can be passed instead of the requester email.
+        /// </summary>
         [JsonProperty("requester_id")]
         public long? RequesterId { get; }
 
+        /// <summary>
         /// Email address of the requester. If no contact exists with this email address in Freshdesk, it will be added as a new contact.
+        /// </summary>
         [JsonProperty("email")]
         public string? Email { get; }
 
+        /// <summary>
         /// Facebook ID of the requester. If no contact exists with this facebook_id, then a new contact will be created.
+        /// </summary>
         [JsonProperty("facebook_id")]
         public string? FacebookId { get; }
 
+        /// <summary>
         /// Phone number of the requester. If no contact exists with this phone number in Freshdesk, it will be added as a new contact. If the phone number is set and the email address is not, then the name attribute is mandatory.
+        /// </summary>
         [JsonProperty("phone")]
         public string? PhoneNumber { get; }
 
+        /// <summary>
         /// Twitter handle of the requester. If no contact exists with this handle in Freshdesk, it will be added as a new contact.
+        /// </summary>
         [JsonProperty("twitter_id")]
         public string? TwitterId { get; }
 
+        /// <summary>
         /// External ID of the requester. If no contact exists with this external ID in Freshdesk, they will be added as a new contact.
+        /// </summary>
         [JsonProperty("unique_external_id")]
         public string? UniqueExternalId { get; }
 
-        /// Subject of the ticket. The default Value is null.
+        /// <summary>
+        /// Subject of the ticket. The default Value is <see langword="null"/>.
+        /// </summary>
         [JsonProperty("subject")]
         public string? Subject { get; }
 
-        /// Helps categorize the ticket according to the different kinds of issues your support team deals with. The default Value is null.
+        /// <summary>
+        /// Helps categorize the ticket according to the different kinds of issues your support team deals with. The default Value is <see langword="null"/>.
+        /// </summary>
         [JsonProperty("type")]
         public string? TicketType { get; }
 
         /// <summary>
-        /// Requires child/parent relationships to be enabled on your instance
+        /// Requires child/parent relationships to be enabled on your instance.
         /// </summary>
         [JsonProperty("parent_id")]
         public long? ParentTicketId { get; }
 
-        /// Status of the ticket. The default Value is 2.
+        /// <summary>
+        /// Status of the ticket. The default Value is <see cref="TicketStatus.Open"/>.
+        /// </summary>
         [JsonProperty("status")]
         public TicketStatus Status { get; }
 
-        /// Priority of the ticket. The default value is 1.
+        /// <summary>
+        /// Priority of the ticket. The default value is <see cref="TicketPriority.Low"/>.
+        /// </summary>
         [JsonProperty("priority")]
         public TicketPriority Priority { get; }
 
+        /// <summary>
         /// HTML content of the ticket.
+        /// </summary>
         [JsonProperty("description")]
         public string Description { get; }
 
-        /// ID of the agent to whom the ticket has been assigned
+        /// <summary>
+        /// ID of the agent to whom the ticket has been assigned.
+        /// </summary>
         [JsonProperty("responder_id")]
         public long? ResponderId { get; }
 
-        /// Email address added in the 'cc' field of the incoming ticket email
+        /// <summary>
+        /// Email address added in the 'cc' field of the incoming ticket email.
+        /// </summary>
         [JsonProperty("cc_emails")]
         public string[]? CcEmails { get; }
 
+        /// <summary>
         /// Key value pairs containing the names and values of custom fields.
+        /// </summary>
         [JsonProperty("custom_fields")]
         public Dictionary<string, object>? CustomFields { get; }
 
-        /// Timestamp that denotes when the ticket is due to be resolved
+        /// <summary>
+        /// Timestamp that denotes when the ticket is due to be resolved.
+        /// </summary>
         [JsonProperty("due_by")]
         public DateTimeOffset? DueBy { get; }
 
+        /// <summary>
         /// ID of email config which is used for this ticket. (i.e., support@yourcompany.com/sales@yourcompany.com)
-        /// If product_id is given and email_config_id is not given, product's primary email_config_id will be set
+        /// If <see cref="ProductId"/> is given and <see cref="EmailConfigId"/> is not given, product's primary <see cref="EmailConfigId"/> will be set.
+        /// </summary>
         [JsonProperty("email_config_id")]
         public long? EmailConfigId { get; }
 
-        /// Timestamp that denotes when the first response is due
+        /// <summary>
+        /// Timestamp that denotes when the first response is due.
+        /// </summary>
         [JsonProperty("fr_due_by")]
         public DateTimeOffset? FirstResponseDueBy { get; }
 
-        /// ID of the group to which the ticket has been assigned. The default value is the ID of the group that is associated with the given email_config_id
+        /// <summary>
+        /// ID of the group to which the ticket has been assigned. The default value is the ID of the group that is associated with the given <see cref="EmailConfigId"/>.
+        /// </summary>
         [JsonProperty("group_id")]
         public long? GroupId { get; }
 
+        /// <summary>
         /// ID of the product to which the ticket is associated.
-        /// It will be ignored if the email_config_id attribute is set in the request.
+        /// It will be ignored if the <see cref="EmailConfigId"/> attribute is set in the request.
+        /// </summary>
         [JsonProperty("product_id")]
         public long? ProductId { get; }
 
-        /// The channel through which the ticket was created. The default value is 2.
+        /// <summary>
+        /// The channel through which the ticket was created. The default value is <see cref="TicketSource.Portal"/>.
+        /// </summary>
         [JsonProperty("source")]
         public TicketSource Source { get; }
 
-        /// Tags that have been associated with the ticket
+        /// <summary>
+        /// Tags that have been associated with the ticket.
+        /// </summary>
         [JsonProperty("tags")]
         public string[]? Tags { get; }
 
-        /// Company ID of the requester. This attribute can only be set if the Multiple Companies feature is enabled (Estate plan and above)
+        /// <summary>
+        /// Company ID of the requester. This attribute can only be set if the Multiple Companies feature is enabled (Estate plan and above).
+        /// </summary>
         [JsonProperty("company_id")]
         public long? CompanyId { get; }
 
+        /// <summary>
+        /// Ticket attachments. The total size of these attachments cannot exceed 20MB.
+        /// </summary>
         [JsonIgnore, Multipart(Name = "attachments")]
         public IEnumerable<FileAttachment>? Files { get; }
 
