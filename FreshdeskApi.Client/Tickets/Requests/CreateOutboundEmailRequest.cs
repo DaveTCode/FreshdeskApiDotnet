@@ -50,6 +50,9 @@ namespace FreshdeskApi.Client.Tickets.Requests
 
         /// <summary>
         /// Subject of the ticket. The default Value is <see langword="null"/>.
+        /// 
+        /// Note:
+        /// Call fails with <see langword="null"/> value. 
         /// </summary>
         [JsonProperty("subject")]
         public string Subject { get; }
