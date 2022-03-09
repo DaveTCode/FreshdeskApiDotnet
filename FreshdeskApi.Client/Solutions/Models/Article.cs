@@ -101,6 +101,14 @@ namespace FreshdeskApi.Client.Solutions.Models
         public string[]? Tags { get; set; }
 
         /// <summary>
+        /// Platforms that have been associated with the solution folder.
+        /// 
+        /// NOTE: This is property is read only and not documented.
+        /// </summary>
+        [JsonProperty("platforms")]
+        public Platform[]? Platforms { get; set; }
+
+        /// <summary>
         /// Undocumented field on https://developers.freshdesk.com/api/#solution_article_attributes
         /// </summary>
         [JsonProperty("attachments")]
