@@ -144,7 +144,7 @@ namespace FreshdeskApi.Client.Contacts.Models
         public string? UniqueExternalId { get; set; }
 
         [JsonProperty("twitter_profile_status")]
-        public bool TwitterProfileStatus { get; set; }
+        public bool? TwitterProfileStatus { get; set; }
 
         [JsonProperty("twitter_followers_count")]
         public long? TwitterFollowersCount { get; set; }
