@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+// TODO remove me after resolving: https://github.com/dotnet/roslyn-analyzers/issues/6141
+#pragma warning disable CA1852
+
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration(static configurationBuilder =>
     {

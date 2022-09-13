@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using FreshdeskApi.Client.Agents;
 using FreshdeskApi.Client.Channel;
@@ -120,9 +121,13 @@ namespace FreshdeskApi.Client
         /// The API key from freshdesk of a user with sufficient permissions to
         /// perform whichever operations you are calling.
         /// </param>
-        // ReSharper disable once UnusedMember.Global
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
         public static FreshdeskClient Create(
             string freshdeskDomain, string apiKey
-        ) => Create(FreshdeskHttpClient.Create(freshdeskDomain, apiKey));
+        ) => Create(
+#pragma warning disable CA2000 // Helper method for testing purposes, ignoring dispose issue
+            FreshdeskHttpClient.Create(freshdeskDomain, apiKey)
+#pragma warning restore CA2000
+        );
     }
 }
