@@ -38,7 +38,7 @@ namespace FreshdeskApi.Client.Tickets.Models
         /// Causes description and descriptiontext fields to be included when listing tickets.
         /// </summary>
         public bool Description;
-        
+
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -48,7 +48,7 @@ namespace FreshdeskApi.Client.Tickets.Models
             if (Requester) sb.Append(",requester");
             if (Stats) sb.Append(",stats");
             if (Description) sb.Append(",description");
-            
+
             return sb.ToString().TrimStart(',');
         }
     }
