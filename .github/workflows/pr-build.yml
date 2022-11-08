@@ -23,9 +23,6 @@ jobs:
           dotnet-version: '7.0.x'
           dotnet-quality: 'preview'
       - uses: actions/checkout@v3
-        with:
-          # shallow clone disabled as recommended by SonarCLoud - https://github.com/marketplace/actions/sonarcloud-scan
-          fetch-depth: 0
       - name: Build & test
         run: |
           dotnet build --configuration Release
