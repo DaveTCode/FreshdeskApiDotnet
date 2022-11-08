@@ -21,6 +21,7 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '7.0.x'
+          dotnet-quality: 'preview'
       - uses: actions/checkout@v2
         with:
           # shallow clone disabled as recommended by SonarCLoud - https://github.com/marketplace/actions/sonarcloud-scan
@@ -40,6 +41,7 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '7.0.x'
+          dotnet-quality: 'preview'
       - name: Restore
         run: dotnet restore --nologo
       - name: .Net Format
