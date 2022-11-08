@@ -21,8 +21,10 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddFreshdeskApiClient(options =>
         {
             var freshdeskConfiguration = hostBuilder.Configuration.GetSection("Freshdesk");
-            options.FreshdeskDomain = freshdeskConfiguration[nameof(options.FreshdeskDomain)];
-            options.ApiKey = freshdeskConfiguration[nameof(options.ApiKey)];
+            options.FreshdeskDomain = freshdeskConfiguration[nameof(options.FreshdeskDomain)]
+                                      ?? throw new NullReferenceException($"{nameof(options.FreshdeskDomain)} not specified in appsettings.json5:Freshdesk");
+            options.ApiKey = freshdeskConfiguration[nameof(options.ApiKey)]
+                             ?? throw new NullReferenceException($"{nameof(options.ApiKey)} not specified in appsettings.json5:Freshdesk");
         });
     })
     .Build();
