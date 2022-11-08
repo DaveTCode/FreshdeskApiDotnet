@@ -34,7 +34,7 @@ jobs:
           dotnet build --configuration Release
           dotnet test --nologo --no-build --configuration Release
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@1.7
+        uses: sonarsource/sonarcloud-github-action@v1.7
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
