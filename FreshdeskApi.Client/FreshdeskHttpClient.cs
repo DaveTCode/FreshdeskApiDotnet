@@ -149,65 +149,19 @@ namespace FreshdeskApi.Client
 
             while (morePages)
             {
-                var response = await _httpClient
-                    .GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-                    .ConfigureAwait(false);
-
-                SetRateLimitValues(response);
-
-                // Handle rate limiting by waiting the specified amount of time
-                while (response.StatusCode == (HttpStatusCode)429)
-                {
-                    var retryAfterDelta = response.Headers.RetryAfter?.Delta;
-                    if (retryAfterDelta.HasValue)
-                    {
-                        // response reference will be replaced soon
-                        disposingCollection.Add(response);
-
-                        await Task.Delay(retryAfterDelta.Value, cancellationToken);
-
-                        response = await _httpClient
-                            .GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-                            .ConfigureAwait(false);
-
-                        SetRateLimitValues(response);
-                    }
-                    else
-                    {
-                        // Rate limit response received without a time before
-                        // retry, throw an exception rather than guess a sensible
-                        // limit
-                        throw new GeneralApiException(response);
-                    }
-                }
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw CreateApiException(response);
-                }
-
-                // response will not be used outside of this method (i.e. in Exception)
-                disposingCollection.Add(response);
-
-                await using var contentStream = await response.Content.ReadAsStreamAsync(
-#if NET
+                var (newData, linkHeaderValues) = await ExecuteAndParseAsync<T>(
+                    new Uri(url),
+                    newStylePages,
+                    disposingCollection,
                     cancellationToken
-#endif
                 );
-                using var sr = new StreamReader(contentStream);
-                using var reader = new JsonTextReader(sr);
-                var serializer = new JsonSerializer();
-
-                var newData = newStylePages
-                    ? serializer.Deserialize<PagedResult<T>>(reader)?.Results
-                    : serializer.Deserialize<List<T>>(reader);
 
                 if (pagingConfiguration.BeforeProcessingPageAsync != null)
                 {
                     await pagingConfiguration.BeforeProcessingPageAsync(page, cancellationToken).ConfigureAwait(false);
                 }
 
-                foreach (var data in newData ?? new List<T>())
+                foreach (var data in newData)
                 {
                     yield return data;
                 }
@@ -218,7 +172,7 @@ namespace FreshdeskApi.Client
                 }
 
                 // Handle a link header reflecting that there's another page of data
-                if (response.Headers.TryGetValues("link", out var linkHeaderValues))
+                if (linkHeaderValues != null)
                 {
                     var linkHeaderValue = linkHeaderValues.FirstOrDefault();
                     if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
@@ -237,7 +191,7 @@ namespace FreshdeskApi.Client
                     // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
                     // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.
                     // as can be seen here: https://developers.freshdesk.com/api/#filter_tickets
-                    if (newData != null && newData.Any() && page < 10 && url.Contains("page"))
+                    if (newData.Any() && page < 10 && url.Contains("page"))
                     {
                         url = url.Replace($"page={page}", $"page={page + 1}");
                         page++;
@@ -255,6 +209,78 @@ namespace FreshdeskApi.Client
                 // it is safe to call it repeatably
                 disposingCollection.Dispose();
             }
+        }
+
+        private async Task<(ICollection<T> newData, ICollection<string>? linkHeaderValues)> ExecuteAndParseAsync<T>(
+            Uri url,
+            bool newStylePages,
+            DisposingCollection disposingCollection,
+            CancellationToken cancellationToken
+        )
+        {
+            var response = await _httpClient
+                .GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                .ConfigureAwait(false);
+
+            SetRateLimitValues(response);
+
+            // Handle rate limiting by waiting the specified amount of time
+            while (response.StatusCode == (HttpStatusCode)429)
+            {
+                var retryAfterDelta = response.Headers.RetryAfter?.Delta;
+                if (retryAfterDelta.HasValue)
+                {
+                    // response reference will be replaced soon
+                    disposingCollection.Add(response);
+
+                    await Task.Delay(retryAfterDelta.Value, cancellationToken);
+
+                    response = await _httpClient
+                        .GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    SetRateLimitValues(response);
+                }
+                else
+                {
+                    // Rate limit response received without a time before
+                    // retry, throw an exception rather than guess a sensible
+                    // limit
+#pragma warning disable CA2000 // Receiver of the FreshdeskApiException is responsible for disposing
+                    throw new GeneralApiException(response);
+#pragma warning restore CA2000
+                }
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+#pragma warning disable CA2000 // Receiver of the FreshdeskApiException is responsible for disposing
+                throw CreateApiException(response);
+#pragma warning restore CA2000
+            }
+
+            // response will not be used outside of this method (i.e. in Exception)
+            disposingCollection.Add(response);
+
+            await using var contentStream = await response.Content.ReadAsStreamAsync(
+#if NET
+                    cancellationToken
+#endif
+            );
+            using var sr = new StreamReader(contentStream);
+            using var reader = new JsonTextReader(sr);
+            var serializer = new JsonSerializer();
+
+            var newData = newStylePages
+                ? serializer.Deserialize<PagedResult<T>>(reader)?.Results
+                : serializer.Deserialize<List<T>>(reader);
+
+            if (!response.Headers.TryGetValues("link", out var linkHeaderValues))
+            {
+                linkHeaderValues = null;
+            }
+
+            return (newData ?? new List<T>(), linkHeaderValues?.ToList());
         }
 
         private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)
@@ -319,7 +345,9 @@ namespace FreshdeskApi.Client
                     // Rate limit response received without a time before
                     // retry, throw an exception rather than guess a sensible
                     // limit
+#pragma warning disable CA2000 // Receiver of the FreshdeskApiException is responsible for disposing
                     throw new GeneralApiException(response);
+#pragma warning restore CA2000
                 }
             }
 
@@ -342,7 +370,9 @@ namespace FreshdeskApi.Client
                 return serializer.Deserialize<T>(reader) ?? throw new ArgumentNullException(nameof(serializer.Deserialize), "Deserialized response must not be null");
             }
 
+#pragma warning disable CA2000 // Receiver of the FreshdeskApiException is responsible for disposing
             throw CreateApiException(response);
+#pragma warning restore CA2000
         }
 
         public void Dispose()

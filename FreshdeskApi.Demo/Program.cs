@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+// TODO remove me after resolving: https://github.com/dotnet/roslyn-analyzers/issues/6141
+#pragma warning disable CA1852
+
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration(static configurationBuilder =>
     {
@@ -18,8 +21,10 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddFreshdeskApiClient(options =>
         {
             var freshdeskConfiguration = hostBuilder.Configuration.GetSection("Freshdesk");
-            options.FreshdeskDomain = freshdeskConfiguration[nameof(options.FreshdeskDomain)];
-            options.ApiKey = freshdeskConfiguration[nameof(options.ApiKey)];
+            options.FreshdeskDomain = freshdeskConfiguration[nameof(options.FreshdeskDomain)]
+                                      ?? throw new NullReferenceException($"{nameof(options.FreshdeskDomain)} not specified in appsettings.json5:Freshdesk");
+            options.ApiKey = freshdeskConfiguration[nameof(options.ApiKey)]
+                             ?? throw new NullReferenceException($"{nameof(options.ApiKey)} not specified in appsettings.json5:Freshdesk");
         });
     })
     .Build();
