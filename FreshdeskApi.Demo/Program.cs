@@ -2,6 +2,7 @@ using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Contacts.Requests;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
+using FreshdeskApi.Demo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,6 +44,7 @@ try
                 email: null,
                 phone: null
             ),
+            new PagingConfiguration(0, 2),
             cancellationToken: cancellationTokenSource.Token
         )
     )
