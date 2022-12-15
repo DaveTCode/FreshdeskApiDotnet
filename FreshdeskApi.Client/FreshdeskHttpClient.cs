@@ -150,7 +150,7 @@ namespace FreshdeskApi.Client
             while (morePages)
             {
                 var (newData, linkHeaderValues) = await ExecuteAndParseAsync<T>(
-                    new Uri(url),
+                    new Uri(url, UriKind.Relative),
                     newStylePages,
                     disposingCollection,
                     cancellationToken
