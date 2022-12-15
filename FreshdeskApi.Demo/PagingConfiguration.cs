@@ -1,4 +1,4 @@
-﻿using FreshdeskApi.Client;
+using FreshdeskApi.Client;
 
 namespace FreshdeskApi.Demo;
 
