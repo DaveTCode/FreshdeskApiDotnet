@@ -44,7 +44,7 @@ try
                 email: null,
                 phone: null
             ),
-            new PagingConfiguration(0, 2),
+            new PagingConfiguration(1, 2),
             cancellationToken: cancellationTokenSource.Token
         )
     )
