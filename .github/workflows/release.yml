@@ -18,7 +18,6 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.0.x'
-          dotnet-quality: 'preview'
       - uses: actions/checkout@v3
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
@@ -35,7 +34,7 @@ jobs:
       - name: build with .Net
         run: dotnet build --configuration Release
       - name: Pack with .Net
-        run: dotnet pack --configuration Release --output nuget-packages -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+        run: dotnet pack --configuration Release --output nuget-packages -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }} FreshdeskApi.Client/FreshdeskApi.Client.csproj
       - uses: actions/upload-artifact@v3
         with:
           name: Nuget-packages-${{ steps.gitversion.outputs.nuGetVersionV2 }}
