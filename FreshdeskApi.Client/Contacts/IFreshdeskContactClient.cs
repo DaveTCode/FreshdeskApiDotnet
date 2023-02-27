@@ -203,7 +203,7 @@ namespace FreshdeskApi.Client.Contacts
             long contactId,
             bool force,
             CancellationToken cancellationToken = default);
-        
+
         /// <summary>
         /// Used to send an activation email to an existing contact for email verification.
         ///

@@ -261,7 +261,7 @@ namespace FreshdeskApi.Client.Contacts
                 .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}/hard_delete{(force ? "?force=true" : "")}", cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
-                
+
         /// <inheritdoc />
         public async Task SendInviteAsync(
             long contactId,
