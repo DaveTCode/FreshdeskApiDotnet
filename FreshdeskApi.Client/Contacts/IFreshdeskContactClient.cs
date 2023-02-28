@@ -203,5 +203,19 @@ namespace FreshdeskApi.Client.Contacts
             long contactId,
             bool force,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Used to send an activation email to an existing contact for email verification.
+        ///
+        /// c.f. https://developers.freshdesk.com/api/#send_invite
+        /// </summary>
+        /// <param name="contactId">
+        /// The contact to invite
+        /// </param>
+        /// 
+        /// <param name="cancellationToken"></param>
+        Task SendInviteAsync(
+            long contactId,
+            CancellationToken cancellationToken = default);
     }
 }
