@@ -1,4 +1,4 @@
-﻿name: Nightly MyGet Package Deploy
+name: Nightly MyGet Package Deploy
 
 on:
   push:
@@ -23,12 +23,12 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.15
+        uses: gittools/actions/gitversion/setup@v0.10.2
         with:
           versionSpec: '5.x'
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
-        uses: gittools/actions/gitversion/execute@v0.9.15
+        uses: gittools/actions/gitversion/execute@v0.10.2
       - run: |
           echo "MajorMinorPatch: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
           echo "NuGetVersionV2: ${{ steps.gitversion.outputs.NuGetVersionV2 }}"
