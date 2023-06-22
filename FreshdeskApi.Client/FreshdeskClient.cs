@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using FreshdeskApi.Client.Agents;
+using FreshdeskApi.Client.Attachments;
 using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
@@ -44,6 +45,8 @@ namespace FreshdeskApi.Client
 
         public IFreshdeskChannelApiClient ChannelApi { get; }
 
+        public IFreshdeskAttachmentsClient Attachments { get; }
+
         /// <summary>
         /// Default constructor for DependencyInjection
         /// </summary>
@@ -59,7 +62,8 @@ namespace FreshdeskApi.Client
             IFreshdeskSolutionClient freshdeskSolutionClient,
             IFreshdeskTicketFieldsClient freshdeskTicketFieldsClient,
             IFreshdeskConversationsClient freshdeskConversationsClient,
-            IFreshdeskChannelApiClient freshdeskChannelApiClient
+            IFreshdeskChannelApiClient freshdeskChannelApiClient,
+            IFreshdeskAttachmentsClient freshdeskAttachmentsClient
         )
         {
             Tickets = freshdeskTicketClient;
@@ -74,6 +78,7 @@ namespace FreshdeskApi.Client
             TicketFields = freshdeskTicketFieldsClient;
             Conversations = freshdeskConversationsClient;
             ChannelApi = freshdeskChannelApiClient;
+            Attachments = freshdeskAttachmentsClient;
         }
 
         /// <summary>
@@ -100,7 +105,8 @@ namespace FreshdeskApi.Client
             new FreshdeskSolutionClient(httpClient),
             new FreshdeskTicketFieldsClient(httpClient),
             new FreshdeskConversationsClient(httpClient),
-            new FreshdeskChannelApiClient(httpClient)
+            new FreshdeskChannelApiClient(httpClient),
+            new FreshdeskAttachmentsClient(httpClient)
         );
 
         /// <summary>
