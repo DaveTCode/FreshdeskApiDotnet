@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using FreshdeskApi.Client.Agents;
+using FreshdeskApi.Client.Attachments;
 using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
@@ -42,22 +43,21 @@ namespace FreshdeskApi.Client.Extensions
             var httpClientBuilder = serviceCollection.AddHttpClient<IFreshdeskHttpClient, FreshdeskHttpClient>(ConfigureFreshdeskHttpClient);
             configureHttpClientBuilder?.Invoke(httpClientBuilder);
 
-            serviceCollection.AddScoped<IFreshdeskTicketClient, FreshdeskTicketClient>();
-            serviceCollection.AddScoped<IFreshdeskContactClient, FreshdeskContactClient>();
-            serviceCollection.AddScoped<IFreshdeskGroupClient, FreshdeskGroupClient>();
-            serviceCollection.AddScoped<IFreshdeskRoleClient, FreshdeskRoleClient>();
-            serviceCollection.AddScoped<IFreshdeskProductClient, FreshdeskProductClient>();
-            serviceCollection.AddScoped<IFreshdeskMeClient, FreshdeskMeClient>();
-            serviceCollection.AddScoped<IFreshdeskAgentClient, FreshdeskAgentClient>();
-            serviceCollection.AddScoped<IFreshdeskCompaniesClient, FreshdeskCompaniesClient>();
-            serviceCollection.AddScoped<IFreshdeskSolutionClient, FreshdeskSolutionClient>();
-            serviceCollection.AddScoped<IFreshdeskTicketFieldsClient, FreshdeskTicketFieldsClient>();
-            serviceCollection.AddScoped<IFreshdeskConversationsClient, FreshdeskConversationsClient>();
-            serviceCollection.AddScoped<IFreshdeskChannelApiClient, FreshdeskChannelApiClient>();
-
-            serviceCollection.AddScoped<IFreshdeskClient, FreshdeskClient>();
-
-            return serviceCollection;
+            return serviceCollection
+                .AddScoped<IFreshdeskAgentClient, FreshdeskAgentClient>()
+                .AddScoped<IFreshdeskAttachmentsClient, FreshdeskAttachmentsClient>()
+                .AddScoped<IFreshdeskChannelApiClient, FreshdeskChannelApiClient>()
+                .AddScoped<IFreshdeskCompaniesClient, FreshdeskCompaniesClient>()
+                .AddScoped<IFreshdeskContactClient, FreshdeskContactClient>()
+                .AddScoped<IFreshdeskConversationsClient, FreshdeskConversationsClient>()
+                .AddScoped<IFreshdeskGroupClient, FreshdeskGroupClient>()
+                .AddScoped<IFreshdeskMeClient, FreshdeskMeClient>()
+                .AddScoped<IFreshdeskProductClient, FreshdeskProductClient>()
+                .AddScoped<IFreshdeskRoleClient, FreshdeskRoleClient>()
+                .AddScoped<IFreshdeskSolutionClient, FreshdeskSolutionClient>()
+                .AddScoped<IFreshdeskTicketClient, FreshdeskTicketClient>()
+                .AddScoped<IFreshdeskTicketFieldsClient, FreshdeskTicketFieldsClient>()
+                .AddScoped<IFreshdeskClient, FreshdeskClient>();
         }
 
         public static void ConfigureFreshdeskHttpClient(IServiceProvider serviceProvider, HttpClient httpClient)
