@@ -1,4 +1,5 @@
 using FreshdeskApi.Client.Agents;
+using FreshdeskApi.Client.Attachments;
 using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
@@ -38,5 +39,7 @@ namespace FreshdeskApi.Client
         IFreshdeskConversationsClient Conversations { get; }
 
         IFreshdeskChannelApiClient ChannelApi { get; }
+
+        IFreshdeskAttachmentsClient Attachments { get; }
     }
 }
