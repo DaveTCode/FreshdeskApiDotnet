@@ -77,7 +77,7 @@ Skills|:x:
 Roles|:heavy_check_mark:
 Groups|:heavy_check_mark:
 Companies|:heavy_check_mark:
-Canned Response Folders|:x:
+Canned Responses|:heavy_check_mark: (read only)
 Discussions|:x:
 Solutions|:heavy_check_mark:
 Surveys|:x:

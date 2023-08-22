@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using FreshdeskApi.Client.Agents;
 using FreshdeskApi.Client.Attachments;
+using FreshdeskApi.Client.CannedResponses;
 using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
@@ -46,6 +47,7 @@ namespace FreshdeskApi.Client.Extensions
             return serviceCollection
                 .AddScoped<IFreshdeskAgentClient, FreshdeskAgentClient>()
                 .AddScoped<IFreshdeskAttachmentsClient, FreshdeskAttachmentsClient>()
+                .AddScoped<IFreshdeskCannedResponseClient, FreshdeskCannedResponseClient>()
                 .AddScoped<IFreshdeskChannelApiClient, FreshdeskChannelApiClient>()
                 .AddScoped<IFreshdeskCompaniesClient, FreshdeskCompaniesClient>()
                 .AddScoped<IFreshdeskContactClient, FreshdeskContactClient>()
