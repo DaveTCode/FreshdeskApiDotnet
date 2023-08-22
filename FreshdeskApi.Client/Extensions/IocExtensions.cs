@@ -59,7 +59,7 @@ namespace FreshdeskApi.Client.Extensions
                 .AddScoped<IFreshdeskSolutionClient, FreshdeskSolutionClient>()
                 .AddScoped<IFreshdeskTicketClient, FreshdeskTicketClient>()
                 .AddScoped<IFreshdeskTicketFieldsClient, FreshdeskTicketFieldsClient>()
-                .AddScoped<IFreshdeskClient, FreshdeskClient>();            
+                .AddScoped<IFreshdeskClient, FreshdeskClient>();
         }
 
         public static void ConfigureFreshdeskHttpClient(IServiceProvider serviceProvider, HttpClient httpClient)

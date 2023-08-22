@@ -75,13 +75,12 @@ namespace FreshdeskApi.Client.CannedResponses.Models
         /// </summary>
         [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
-
-
     }
+
     public enum CannedResponseVisibility
     {
-        AllAgents = 0,     
-        Personal = 1,     
+        AllAgents = 0,
+        Personal = 1,
         SelectedGroups = 2,
     }
 }
