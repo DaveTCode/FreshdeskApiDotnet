@@ -24,25 +24,25 @@ namespace FreshdeskApi.Client.CannedResponses.Models
         /// Title of the canned response
         /// </summary>
         [JsonProperty("title")]
-        public string? Title { get; set; }
+        public string Title { get; set; } = null!;
 
         /// <summary>
         /// HTML version of the canned response content
         /// </summary>
         [JsonProperty("content_html")]
-        public string? ContentHtml { get; set; }
+        public string ContentHtml { get; set; } = null!;
 
         /// <summary>
         /// Plaintext version of the canned response content
         /// </summary>
         [JsonProperty("content")]
-        public string? Content { get; set; }
+        public string Content { get; set; } = null!;
 
         /// <summary>
         /// Folder where the canned response is located 
         /// </summary>
         [JsonProperty("folder_id")]
-        public long? FolderId { get; set; }
+        public long FolderId { get; set; }
 
         /// <summary>
         /// Denotes the visibility of the canned response.
@@ -50,7 +50,7 @@ namespace FreshdeskApi.Client.CannedResponses.Models
         /// <seealso cref="CannedResponseVisibility"/>
         /// </summary>
         [JsonProperty("visibility")]
-        public CannedResponseVisibility? Visibility { get; set; }
+        public CannedResponseVisibility Visibility { get; set; }
 
         /// <summary>
         /// Groups for which the canned response is visible. Use only if visibility is set to 2. 
@@ -68,13 +68,13 @@ namespace FreshdeskApi.Client.CannedResponses.Models
         /// canned response creation timestamp
         /// </summary>
         [JsonProperty("created_at")]
-        public DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// canned response updated timestamp
         /// </summary>
         [JsonProperty("updated_at")]
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 
     public enum CannedResponseVisibility

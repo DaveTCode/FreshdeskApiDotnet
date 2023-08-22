@@ -23,7 +23,7 @@ namespace FreshdeskApi.Client.CannedResponses.Models
         /// Name of the canned response folder
         /// </summary>
         [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Set true if the folder can be accessed only by you.
