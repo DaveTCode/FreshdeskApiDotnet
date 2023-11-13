@@ -40,7 +40,7 @@ using FreshdeskApi.Client.Extensions;
 
 serviceCollection.AddFreshdeskApiClient(options => {
   options.FreshdeskDomain = "https://<mydomain>.freshdesk.com";
-  options.FreshdeskDomain = "APIKEY"; 
+  options.ApiKey = "APIKEY"; 
 })
 
 ...
