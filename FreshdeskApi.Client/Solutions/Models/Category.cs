@@ -52,6 +52,6 @@ public class Category
 
     public override string ToString()
     {
-            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(VisibleInPortals)}: {VisibleInPortals}";
-        }
+        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(VisibleInPortals)}: {VisibleInPortals}";
+    }
 }

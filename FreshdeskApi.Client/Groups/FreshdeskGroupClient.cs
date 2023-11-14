@@ -17,8 +17,8 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
 
     public FreshdeskGroupClient(IFreshdeskHttpClient freshdeskClient)
     {
-            _freshdeskClient = freshdeskClient;
-        }
+        _freshdeskClient = freshdeskClient;
+    }
 
     /// <summary>
     /// Retrieve all details about a single group by its id.
@@ -36,10 +36,10 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
         long groupId,
         CancellationToken cancellationToken = default)
     {
-            return await _freshdeskClient
-                .ApiOperationAsync<Group>(HttpMethod.Get, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Group>(HttpMethod.Get, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// List all available groups
@@ -58,13 +58,13 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-            await foreach (var group in _freshdeskClient
-                .GetPagedResults<Group>("/api/v2/groups", pagingConfiguration, false, cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return group;
-            }
+        await foreach (var group in _freshdeskClient
+            .GetPagedResults<Group>("/api/v2/groups", pagingConfiguration, false, cancellationToken)
+            .ConfigureAwait(false))
+        {
+            yield return group;
         }
+    }
 
     /// <summary>
     /// Delete a group from the Freshdesk instance.
@@ -85,10 +85,10 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
         long groupId,
         CancellationToken cancellationToken = default)
     {
-            await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        await _freshdeskClient
+            .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/groups/{groupId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Create a new group of agents
@@ -107,10 +107,10 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
         CreateGroupRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<Group, CreateGroupRequest>(HttpMethod.Post, "/api/v2/groups", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Group, CreateGroupRequest>(HttpMethod.Post, "/api/v2/groups", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 }

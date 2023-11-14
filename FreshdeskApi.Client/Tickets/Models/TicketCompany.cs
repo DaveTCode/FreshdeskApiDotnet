@@ -17,6 +17,6 @@ public class TicketCompany
 
     public override string ToString()
     {
-            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}";
-        }
+        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}";
+    }
 }

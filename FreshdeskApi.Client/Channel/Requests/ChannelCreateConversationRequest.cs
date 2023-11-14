@@ -18,8 +18,8 @@ public class ChannelCreateReplyRequest : CreateReplyRequest
     public ChannelCreateReplyRequest(long importId, string bodyHtml, string? fromEmail = null, long? userId = null, string[]? ccEmails = null, string[]? bccEmails = null, DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
         : base(bodyHtml, fromEmail, userId, ccEmails, bccEmails)
     {
-            ImportId = importId;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
-        }
+        ImportId = importId;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+    }
 }

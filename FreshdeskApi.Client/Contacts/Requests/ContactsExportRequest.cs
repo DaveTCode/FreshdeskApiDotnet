@@ -34,23 +34,23 @@ public class ContactsExportRequest
 
         public Fields(List<string> defaultFields, List<string> customFields)
         {
-                DefaultFields = defaultFields;
-                CustomFields = customFields;
-            }
+            DefaultFields = defaultFields;
+            CustomFields = customFields;
+        }
 
         public override string ToString()
         {
-                return $"{nameof(DefaultFields)}: {DefaultFields}, {nameof(CustomFields)}: {CustomFields}";
-            }
+            return $"{nameof(DefaultFields)}: {DefaultFields}, {nameof(CustomFields)}: {CustomFields}";
+        }
     }
 
     public ContactsExportRequest(List<string> defaultFields, List<string> customFields)
     {
-            AllFields = new Fields(defaultFields, customFields);
-        }
+        AllFields = new Fields(defaultFields, customFields);
+    }
 
     public override string ToString()
     {
-            return $"{nameof(AllFields)}: {AllFields}";
-        }
+        return $"{nameof(AllFields)}: {AllFields}";
+    }
 }

@@ -13,15 +13,15 @@ public class FreshdeskMeClient : IFreshdeskMeClient
 
     public FreshdeskMeClient(IFreshdeskHttpClient freshdeskClient)
     {
-            _freshdeskClient = freshdeskClient;
-        }
+        _freshdeskClient = freshdeskClient;
+    }
 
     /// <inheritdoc />
     public async Task<Models.Me> ViewMeAsync(
         CancellationToken cancellationToken = default)
     {
-            return await _freshdeskClient
-                .ApiOperationAsync<Models.Me>(HttpMethod.Get, $"/api/v2/agents/me", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Models.Me>(HttpMethod.Get, $"/api/v2/agents/me", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 }

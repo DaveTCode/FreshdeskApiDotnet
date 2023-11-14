@@ -19,8 +19,8 @@ public class FreshdeskContactClient : IFreshdeskContactClient
 
     public FreshdeskContactClient(IFreshdeskHttpClient freshdeskClient)
     {
-            _freshdeskClient = freshdeskClient;
-        }
+        _freshdeskClient = freshdeskClient;
+    }
 
     /// <summary>
     /// Retrieve all details about a single contact by their id.
@@ -38,10 +38,10 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         long contactId,
         CancellationToken cancellationToken = default)
     {
-            return await _freshdeskClient
-                .ApiOperationAsync<Contact>(HttpMethod.Get, $"/api/v2/contacts/{contactId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Contact>(HttpMethod.Get, $"/api/v2/contacts/{contactId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Create a new contact with the specified information
@@ -58,12 +58,12 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         ContactCreateRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<Contact, ContactCreateRequest>(HttpMethod.Post, "/api/v2/contacts", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Contact, ContactCreateRequest>(HttpMethod.Post, "/api/v2/contacts", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Filter the list of contacts according to a set of predefined filters.
@@ -90,15 +90,15 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            await foreach (var contact in _freshdeskClient
-                .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return contact;
-            }
+        await foreach (var contact in _freshdeskClient
+            .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken)
+            .ConfigureAwait(false))
+        {
+            yield return contact;
         }
+    }
 
     /// <summary>
     /// Update a contact with new details.
@@ -122,12 +122,12 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         UpdateContactRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<Contact, UpdateContactRequest>(HttpMethod.Put, $"/api/v2/contacts/{contactId}", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Contact, UpdateContactRequest>(HttpMethod.Put, $"/api/v2/contacts/{contactId}", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Convert a contact into an agent
@@ -164,12 +164,12 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         MakeAgentRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<Contact, MakeAgentRequest>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/make_agent", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Contact, MakeAgentRequest>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/make_agent", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Export contacts with the specified information
@@ -186,12 +186,12 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         ContactsExportRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<ExportCsv, ContactsExportRequest>(HttpMethod.Post, "/api/v2/contacts/export", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<ExportCsv, ContactsExportRequest>(HttpMethod.Post, "/api/v2/contacts/export", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Check if an export has completed
@@ -208,13 +208,13 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         ExportCsv export,
         CancellationToken cancellationToken = default)
     {
-            if (export == null) throw new ArgumentNullException(nameof(export), "Export must not be null");
-            if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Export Id must not be null");
+        if (export == null) throw new ArgumentNullException(nameof(export), "Export must not be null");
+        if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Export Id must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<ExportCsv, ExportCsv>(HttpMethod.Get, $"/api/v2/contacts/export/{export.Id}", export, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<ExportCsv, ExportCsv>(HttpMethod.Get, $"/api/v2/contacts/export/{export.Id}", export, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Merge a primary contact with secondary contacts
@@ -231,14 +231,14 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         MergeContactsRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-            if (request.SecondaryContactIds == null || !request.SecondaryContactIds.Any())
-                throw new ArgumentNullException(nameof(request.SecondaryContactIds), "Secondary Ids must not be null or empty");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request.SecondaryContactIds == null || !request.SecondaryContactIds.Any())
+            throw new ArgumentNullException(nameof(request.SecondaryContactIds), "Secondary Ids must not be null or empty");
 
-            await _freshdeskClient
-                .ApiOperationAsync<object, MergeContactsRequest>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        await _freshdeskClient
+            .ApiOperationAsync<object, MergeContactsRequest>(HttpMethod.Post, "/api/v2/contacts/merge", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
 
     /// <inheritdoc />
@@ -246,10 +246,10 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         long contactId,
         CancellationToken cancellationToken = default)
     {
-            await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        await _freshdeskClient
+            .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <inheritdoc />
     public async Task PermanentlyDeleteContactAsync(
@@ -257,18 +257,18 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         bool force,
         CancellationToken cancellationToken = default)
     {
-            await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}/hard_delete{(force ? "?force=true" : "")}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        await _freshdeskClient
+            .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/contacts/{contactId}/hard_delete{(force ? "?force=true" : "")}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <inheritdoc />
     public async Task SendInviteAsync(
         long contactId,
         CancellationToken cancellationToken = default)
     {
-            await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/send_invite", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        await _freshdeskClient
+            .ApiOperationAsync<object>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/send_invite", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 }

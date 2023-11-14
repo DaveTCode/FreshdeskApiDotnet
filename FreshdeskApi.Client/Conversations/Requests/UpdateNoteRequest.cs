@@ -24,14 +24,14 @@ public class UpdateNoteRequest : IRequestWithAttachment
 
     public UpdateNoteRequest(string bodyHtml, IEnumerable<FileAttachment>? files = null)
     {
-            BodyHtml = bodyHtml;
-            Files = files;
-        }
+        BodyHtml = bodyHtml;
+        Files = files;
+    }
 
     public bool IsMultipartFormDataRequired() => Files != null && Files.Any();
 
     public override string ToString()
     {
-            return $"{nameof(BodyHtml)}: {BodyHtml}";
-        }
+        return $"{nameof(BodyHtml)}: {BodyHtml}";
+    }
 }

@@ -143,6 +143,6 @@ public class TicketField
 
     public override string ToString()
     {
-            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Label)}: {Label}, {nameof(Description)}: {Description}, {nameof(Position)}: {Position}, {nameof(RequiredForClosure)}: {RequiredForClosure}, {nameof(RequiredForAgents)}: {RequiredForAgents}, {nameof(Type)}: {Type}, {nameof(Default)}: {Default}, {nameof(CustomersCanEdit)}: {CustomersCanEdit}, {nameof(LabelForCustomers)}: {LabelForCustomers}, {nameof(RequiredForCustomers)}: {RequiredForCustomers}, {nameof(DisplayedToCustomers)}: {DisplayedToCustomers}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(PortalCc)}: {PortalCc}, {nameof(PortalCcTo)}: {PortalCcTo}, {nameof(IsFsm)}: {IsFsm}, {nameof(FieldUpdateInProgress)}: {FieldUpdateInProgress}";
-        }
+        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Label)}: {Label}, {nameof(Description)}: {Description}, {nameof(Position)}: {Position}, {nameof(RequiredForClosure)}: {RequiredForClosure}, {nameof(RequiredForAgents)}: {RequiredForAgents}, {nameof(Type)}: {Type}, {nameof(Default)}: {Default}, {nameof(CustomersCanEdit)}: {CustomersCanEdit}, {nameof(LabelForCustomers)}: {LabelForCustomers}, {nameof(RequiredForCustomers)}: {RequiredForCustomers}, {nameof(DisplayedToCustomers)}: {DisplayedToCustomers}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(PortalCc)}: {PortalCc}, {nameof(PortalCcTo)}: {PortalCcTo}, {nameof(IsFsm)}: {IsFsm}, {nameof(FieldUpdateInProgress)}: {FieldUpdateInProgress}";
+    }
 }

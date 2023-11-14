@@ -25,8 +25,8 @@ public class ChannelCreateTicketRequest : CreateTicketRequest
         long? companyId = null, string? subject = null, string? ticketType = null, long? parentTicketId = null, DateTimeOffset? createdAt = null,
         DateTimeOffset? updatedAt = null) : base(status, priority, source, description, requesterName, requesterId, email, facebookId, phoneNumber, twitterId, uniqueExternalId, responderId, ccEmails, customFields, dueBy, emailConfigId, firstResponseDueBy, groupId, productId, tags, companyId, subject, ticketType, parentTicketId)
     {
-            ImportId = importId;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
-        }
+        ImportId = importId;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+    }
 }

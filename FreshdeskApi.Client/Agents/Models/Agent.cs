@@ -98,6 +98,6 @@ public class Agent
 
     public override string ToString()
     {
-            return $"{nameof(Available)}: {Available}, {nameof(Occasional)}: {Occasional}, {nameof(Id)}: {Id}, {nameof(TicketScope)}: {TicketScope}, {nameof(Signature)}: {Signature}, {nameof(GroupIds)}: {GroupIds}, {nameof(RoleIds)}: {RoleIds}, {nameof(SkillIds)}: {SkillIds}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(LastActiveAt)}: {LastActiveAt}, {nameof(AvailableSince)}: {AvailableSince}, {nameof(Type)}: {Type}, {nameof(Contact)}: {Contact}";
-        }
+        return $"{nameof(Available)}: {Available}, {nameof(Occasional)}: {Occasional}, {nameof(Id)}: {Id}, {nameof(TicketScope)}: {TicketScope}, {nameof(Signature)}: {Signature}, {nameof(GroupIds)}: {GroupIds}, {nameof(RoleIds)}: {RoleIds}, {nameof(SkillIds)}: {SkillIds}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(LastActiveAt)}: {LastActiveAt}, {nameof(AvailableSince)}: {AvailableSince}, {nameof(Type)}: {Type}, {nameof(Contact)}: {Contact}";
+    }
 }

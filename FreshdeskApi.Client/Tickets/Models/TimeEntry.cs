@@ -47,6 +47,6 @@ public class TimeEntry
 
     public override string ToString()
     {
-            return $"{nameof(Billable)}: {Billable}, {nameof(Note)}: {Note}, {nameof(TimerRunning)}: {TimerRunning}, {nameof(Id)}: {Id}, {nameof(AgentId)}: {AgentId}, {nameof(TicketId)}: {TicketId}, {nameof(TimeSpent)}: {TimeSpent}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(ExecutedAt)}: {ExecutedAt}, {nameof(StartTime)}: {StartTime}";
-        }
+        return $"{nameof(Billable)}: {Billable}, {nameof(Note)}: {Note}, {nameof(TimerRunning)}: {TimerRunning}, {nameof(Id)}: {Id}, {nameof(AgentId)}: {AgentId}, {nameof(TicketId)}: {TicketId}, {nameof(TimeSpent)}: {TimeSpent}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(ExecutedAt)}: {ExecutedAt}, {nameof(StartTime)}: {StartTime}";
+    }
 }

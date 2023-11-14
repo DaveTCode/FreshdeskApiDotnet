@@ -23,12 +23,12 @@ public class CreateSectionRequest
 
     public CreateSectionRequest(string label, long[] choiceIds)
     {
-            Label = label;
-            ChoiceIds = choiceIds;
-        }
+        Label = label;
+        ChoiceIds = choiceIds;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(Label)}: {Label}, {nameof(ChoiceIds)}: {ChoiceIds}";
-        }
+        return $"{nameof(Label)}: {Label}, {nameof(ChoiceIds)}: {ChoiceIds}";
+    }
 }

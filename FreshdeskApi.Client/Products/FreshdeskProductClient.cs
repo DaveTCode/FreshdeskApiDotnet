@@ -15,8 +15,8 @@ public class FreshdeskProductClient : IFreshdeskProductClient
 
     public FreshdeskProductClient(IFreshdeskHttpClient freshdeskClient)
     {
-            _freshdeskClient = freshdeskClient;
-        }
+        _freshdeskClient = freshdeskClient;
+    }
 
     /// <summary>
     /// Retrieve all details about a single product by its id.
@@ -34,10 +34,10 @@ public class FreshdeskProductClient : IFreshdeskProductClient
         long productId,
         CancellationToken cancellationToken = default)
     {
-            return await _freshdeskClient
-                .ApiOperationAsync<Product>(HttpMethod.Get, $"/api/v2/products/{productId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Product>(HttpMethod.Get, $"/api/v2/products/{productId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// List all available products
@@ -56,11 +56,11 @@ public class FreshdeskProductClient : IFreshdeskProductClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-            await foreach (var product in _freshdeskClient
-                .GetPagedResults<Product>("/api/v2/products", pagingConfiguration, false, cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return product;
-            }
+        await foreach (var product in _freshdeskClient
+            .GetPagedResults<Product>("/api/v2/products", pagingConfiguration, false, cancellationToken)
+            .ConfigureAwait(false))
+        {
+            yield return product;
         }
+    }
 }

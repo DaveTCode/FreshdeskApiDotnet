@@ -51,16 +51,16 @@ public class MakeAgentRequest
 
     public MakeAgentRequest(bool? occasional = null, string? signatureHtml = null, TicketScope? ticketScope = null, long[]? skillIds = null, long[]? groupIds = null, long[]? roleIds = null)
     {
-            Occasional = occasional;
-            SignatureHtml = signatureHtml;
-            TicketScope = ticketScope;
-            SkillIds = skillIds;
-            GroupIds = groupIds;
-            RoleIds = roleIds;
-        }
+        Occasional = occasional;
+        SignatureHtml = signatureHtml;
+        TicketScope = ticketScope;
+        SkillIds = skillIds;
+        GroupIds = groupIds;
+        RoleIds = roleIds;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(Occasional)}: {Occasional}, {nameof(SignatureHtml)}: {SignatureHtml}, {nameof(TicketScope)}: {TicketScope}, {nameof(SkillIds)}: {SkillIds}, {nameof(GroupIds)}: {GroupIds}, {nameof(RoleIds)}: {RoleIds}";
-        }
+        return $"{nameof(Occasional)}: {Occasional}, {nameof(SignatureHtml)}: {SignatureHtml}, {nameof(TicketScope)}: {TicketScope}, {nameof(SkillIds)}: {SkillIds}, {nameof(GroupIds)}: {GroupIds}, {nameof(RoleIds)}: {RoleIds}";
+    }
 }

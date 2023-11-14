@@ -6,5 +6,5 @@ public class ResourceConflictException : FreshdeskApiException
 {
     public ResourceConflictException(HttpResponseMessage response) : base(response)
     {
-        }
+    }
 }

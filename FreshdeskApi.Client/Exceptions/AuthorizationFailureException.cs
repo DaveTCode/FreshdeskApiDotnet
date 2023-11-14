@@ -12,5 +12,5 @@ public class AuthorizationFailureException : FreshdeskApiException
 {
     public AuthorizationFailureException(HttpResponseMessage response) : base(response)
     {
-        }
+    }
 }

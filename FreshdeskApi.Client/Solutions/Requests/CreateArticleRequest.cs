@@ -44,15 +44,15 @@ public class CreateArticleRequest
 
     public CreateArticleRequest(string title, string description, ArticleStatus status, SeoData? seoData = null, string[]? tags = null)
     {
-            Title = title;
-            Description = description;
-            Status = status;
-            SeoData = seoData;
-            Tags = tags;
-        }
+        Title = title;
+        Description = description;
+        Status = status;
+        SeoData = seoData;
+        Tags = tags;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(Title)}: {Title}, {nameof(Status)}: {Status}, {nameof(SeoData)}: {SeoData}, {nameof(Tags)}: {Tags}";
-        }
+        return $"{nameof(Title)}: {Title}, {nameof(Status)}: {Status}, {nameof(SeoData)}: {SeoData}, {nameof(Tags)}: {Tags}";
+    }
 }

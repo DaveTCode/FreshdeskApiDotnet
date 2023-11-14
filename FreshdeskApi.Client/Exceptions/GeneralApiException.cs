@@ -6,5 +6,5 @@ public class GeneralApiException : FreshdeskApiException
 {
     public GeneralApiException(HttpResponseMessage response) : base(response)
     {
-        }
+    }
 }

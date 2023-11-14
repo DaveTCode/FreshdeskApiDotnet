@@ -69,19 +69,19 @@ public abstract class BaseCompanyRequest
     public BaseCompanyRequest(string? name = null, string[]? domains = null, string? description = null, string? note = null, string? healthScore = null,
         string? accountTier = null, DateTime? renewalDate = null, string? industry = null, Dictionary<string, object?>? customFields = null)
     {
-            Name = name;
-            Domains = domains;
-            Description = description;
-            Note = note;
-            HealthScore = healthScore;
-            AccountTier = accountTier;
-            RenewalDate = renewalDate;
-            Industry = industry;
-            CustomFields = customFields;
-        }
+        Name = name;
+        Domains = domains;
+        Description = description;
+        Note = note;
+        HealthScore = healthScore;
+        AccountTier = accountTier;
+        RenewalDate = renewalDate;
+        Industry = industry;
+        CustomFields = customFields;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(Name)}: {Name}, {nameof(Domains)}: {Domains}, {nameof(Description)}: {Description}, {nameof(Note)}: {Note}, {nameof(HealthScore)}: {HealthScore}, {nameof(AccountTier)}: {AccountTier}, {nameof(RenewalDate)}: {RenewalDate}, {nameof(Industry)}: {Industry}, {nameof(CustomFields)}: {CustomFields}";
-        }
+        return $"{nameof(Name)}: {Name}, {nameof(Domains)}: {Domains}, {nameof(Description)}: {Description}, {nameof(Note)}: {Note}, {nameof(HealthScore)}: {HealthScore}, {nameof(AccountTier)}: {AccountTier}, {nameof(RenewalDate)}: {RenewalDate}, {nameof(Industry)}: {Industry}, {nameof(CustomFields)}: {CustomFields}";
+    }
 }

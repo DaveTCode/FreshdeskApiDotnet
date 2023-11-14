@@ -53,16 +53,16 @@ public class CreateNoteRequest
     public CreateNoteRequest(string bodyHtml, bool? incoming = null, string[]? notifyEmails = null, bool? isPrivate = null, long? userId = null,
         IEnumerable<FileAttachment>? files = null)
     {
-            BodyHtml = bodyHtml;
-            Incoming = incoming;
-            NotifyEmails = notifyEmails;
-            IsPrivate = isPrivate;
-            UserId = userId;
-            Files = files;
-        }
+        BodyHtml = bodyHtml;
+        Incoming = incoming;
+        NotifyEmails = notifyEmails;
+        IsPrivate = isPrivate;
+        UserId = userId;
+        Files = files;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(BodyHtml)}: {BodyHtml}, {nameof(Incoming)}: {Incoming}, {nameof(NotifyEmails)}: {NotifyEmails}, {nameof(IsPrivate)}: {IsPrivate}, {nameof(UserId)}: {UserId}";
-        }
+        return $"{nameof(BodyHtml)}: {BodyHtml}, {nameof(Incoming)}: {Incoming}, {nameof(NotifyEmails)}: {NotifyEmails}, {nameof(IsPrivate)}: {IsPrivate}, {nameof(UserId)}: {UserId}";
+    }
 }

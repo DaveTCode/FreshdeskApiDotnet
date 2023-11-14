@@ -13,11 +13,11 @@ public sealed class PaginationConfiguration : IPaginationConfiguration
         IPaginationConfiguration.ProcessPageDelegate? processedPageAsync = null
     )
     {
-            StartingPage = startingPage;
-            PageSize = pageSize;
-            BeforeProcessingPageAsync = beforeProcessingPageAsync;
-            ProcessedPageAsync = processedPageAsync;
-        }
+        StartingPage = startingPage;
+        PageSize = pageSize;
+        BeforeProcessingPageAsync = beforeProcessingPageAsync;
+        ProcessedPageAsync = processedPageAsync;
+    }
 
     public int StartingPage { get; }
 

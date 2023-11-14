@@ -32,6 +32,6 @@ public class Avatar
 
     public override string ToString()
     {
-            return $"{nameof(Url)}: {Url}, {nameof(ContentType)}: {ContentType}, {nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Size)}: {Size}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}";
-        }
+        return $"{nameof(Url)}: {Url}, {nameof(ContentType)}: {ContentType}, {nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Size)}: {Size}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}";
+    }
 }

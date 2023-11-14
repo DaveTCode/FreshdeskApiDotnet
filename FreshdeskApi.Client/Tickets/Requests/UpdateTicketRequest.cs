@@ -23,30 +23,30 @@ public class UpdateTicketRequest : IRequestWithAttachment
         DateTimeOffset? firstResponseDueBy = null, long? groupId = null, long? productId = null, string[]? tags = null,
         long? companyId = null, string? subject = null, string? ticketType = null, IEnumerable<FileAttachment>? files = null)
     {
-            Status = status;
-            Priority = priority;
-            Source = source;
-            RequesterName = requesterName;
-            Email = email;
-            FacebookId = facebookId;
-            PhoneNumber = phoneNumber;
-            TwitterId = twitterId;
-            UniqueExternalId = uniqueExternalId;
-            Description = description;
-            RequesterId = requesterId;
-            ResponderId = responderId;
-            CustomFields = customFields;
-            DueBy = dueBy;
-            EmailConfigId = emailConfigId;
-            FirstResponseDueBy = firstResponseDueBy;
-            GroupId = groupId;
-            ProductId = productId;
-            Tags = tags;
-            CompanyId = companyId;
-            Subject = subject;
-            TicketType = ticketType;
-            Files = files;
-        }
+        Status = status;
+        Priority = priority;
+        Source = source;
+        RequesterName = requesterName;
+        Email = email;
+        FacebookId = facebookId;
+        PhoneNumber = phoneNumber;
+        TwitterId = twitterId;
+        UniqueExternalId = uniqueExternalId;
+        Description = description;
+        RequesterId = requesterId;
+        ResponderId = responderId;
+        CustomFields = customFields;
+        DueBy = dueBy;
+        EmailConfigId = emailConfigId;
+        FirstResponseDueBy = firstResponseDueBy;
+        GroupId = groupId;
+        ProductId = productId;
+        Tags = tags;
+        CompanyId = companyId;
+        Subject = subject;
+        TicketType = ticketType;
+        Files = files;
+    }
 
     /// Name of the requester
     [JsonProperty("name")]
@@ -145,6 +145,6 @@ public class UpdateTicketRequest : IRequestWithAttachment
 
     public override string ToString()
     {
-            return $"{nameof(RequesterName)}: {RequesterName}, {nameof(RequesterId)}: {RequesterId}, {nameof(Email)}: {Email}, {nameof(FacebookId)}: {FacebookId}, {nameof(PhoneNumber)}: {PhoneNumber}, {nameof(TwitterId)}: {TwitterId}, {nameof(UniqueExternalId)}: {UniqueExternalId}, {nameof(Subject)}: {Subject}, {nameof(TicketType)}: {TicketType}, {nameof(Status)}: {Status}, {nameof(Priority)}: {Priority}, {nameof(Description)}: {Description}, {nameof(ResponderId)}: {ResponderId}, {nameof(CustomFields)}: {CustomFields}, {nameof(DueBy)}: {DueBy}, {nameof(EmailConfigId)}: {EmailConfigId}, {nameof(FirstResponseDueBy)}: {FirstResponseDueBy}, {nameof(GroupId)}: {GroupId}, {nameof(ProductId)}: {ProductId}, {nameof(Source)}: {Source}, {nameof(Tags)}: {Tags}, {nameof(CompanyId)}: {CompanyId}";
-        }
+        return $"{nameof(RequesterName)}: {RequesterName}, {nameof(RequesterId)}: {RequesterId}, {nameof(Email)}: {Email}, {nameof(FacebookId)}: {FacebookId}, {nameof(PhoneNumber)}: {PhoneNumber}, {nameof(TwitterId)}: {TwitterId}, {nameof(UniqueExternalId)}: {UniqueExternalId}, {nameof(Subject)}: {Subject}, {nameof(TicketType)}: {TicketType}, {nameof(Status)}: {Status}, {nameof(Priority)}: {Priority}, {nameof(Description)}: {Description}, {nameof(ResponderId)}: {ResponderId}, {nameof(CustomFields)}: {CustomFields}, {nameof(DueBy)}: {DueBy}, {nameof(EmailConfigId)}: {EmailConfigId}, {nameof(FirstResponseDueBy)}: {FirstResponseDueBy}, {nameof(GroupId)}: {GroupId}, {nameof(ProductId)}: {ProductId}, {nameof(Source)}: {Source}, {nameof(Tags)}: {Tags}, {nameof(CompanyId)}: {CompanyId}";
+    }
 }

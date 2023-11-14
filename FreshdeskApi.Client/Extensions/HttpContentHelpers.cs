@@ -9,11 +9,11 @@ public static class HttpContentHelpers
     /// <returns>Boolean indicating if the body should be serialized as JSON.</returns>
     internal static bool IsMultipartFormDataRequired<TRequest>(this TRequest body)
     {
-            if (body is IRequestWithAttachment requestWithAttachment)
-            {
-                return requestWithAttachment.IsMultipartFormDataRequired();
-            }
-
-            return false;
+        if (body is IRequestWithAttachment requestWithAttachment)
+        {
+            return requestWithAttachment.IsMultipartFormDataRequired();
         }
+
+        return false;
+    }
 }

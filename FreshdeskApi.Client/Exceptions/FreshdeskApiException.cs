@@ -20,11 +20,11 @@ public abstract class FreshdeskApiException : Exception, IDisposable
 
     internal FreshdeskApiException(HttpResponseMessage response)
     {
-            Response = response;
-        }
+        Response = response;
+    }
 
     public void Dispose()
     {
-            Response.Dispose();
-        }
+        Response.Dispose();
+    }
 }

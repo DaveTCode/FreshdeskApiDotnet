@@ -23,6 +23,6 @@ public class Requester
 
     public override string ToString()
     {
-            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Email)}: {Email}, {nameof(Mobile)}: {Mobile}, {nameof(Phone)}: {Phone}";
-        }
+        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Email)}: {Email}, {nameof(Mobile)}: {Mobile}, {nameof(Phone)}: {Phone}";
+    }
 }

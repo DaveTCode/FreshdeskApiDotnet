@@ -16,6 +16,6 @@ public class ContactCompany
 
     public override string ToString()
     {
-            return $"{nameof(Id)}: {Id}, {nameof(ViewAllTickets)}: {ViewAllTickets}";
-        }
+        return $"{nameof(Id)}: {Id}, {nameof(ViewAllTickets)}: {ViewAllTickets}";
+    }
 }

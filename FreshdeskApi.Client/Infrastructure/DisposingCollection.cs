@@ -10,24 +10,24 @@ internal sealed class DisposingCollection : IDisposable
 
     public void Add(IDisposable disposable)
     {
-            lock (_disposables)
-            {
-                _disposables.Add(disposable);
-            }
+        lock (_disposables)
+        {
+            _disposables.Add(disposable);
         }
+    }
 
     public void Dispose()
     {
-            ICollection<IDisposable> disposables;
-            lock (_disposables)
-            {
-                disposables = _disposables.ToList();
-                _disposables.Clear();
-            }
-
-            foreach (var disposable in disposables)
-            {
-                disposable.Dispose();
-            }
+        ICollection<IDisposable> disposables;
+        lock (_disposables)
+        {
+            disposables = _disposables.ToList();
+            _disposables.Clear();
         }
+
+        foreach (var disposable in disposables)
+        {
+            disposable.Dispose();
+        }
+    }
 }

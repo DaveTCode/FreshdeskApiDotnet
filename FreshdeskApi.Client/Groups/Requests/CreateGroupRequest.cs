@@ -54,16 +54,16 @@ public class CreateGroupRequest
 
     public CreateGroupRequest(string name, string? description = null, string? unassignedFor = null, long? escalateTo = null, bool? autoTicketAssign = null, long[]? agentIds = null)
     {
-            Name = name;
-            Description = description;
-            UnassignedFor = unassignedFor;
-            EscalateTo = escalateTo;
-            AutoTicketAssign = autoTicketAssign;
-            AgentIds = agentIds;
-        }
+        Name = name;
+        Description = description;
+        UnassignedFor = unassignedFor;
+        EscalateTo = escalateTo;
+        AutoTicketAssign = autoTicketAssign;
+        AgentIds = agentIds;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(UnassignedFor)}: {UnassignedFor}, {nameof(EscalateTo)}: {EscalateTo}, {nameof(AutoTicketAssign)}: {AutoTicketAssign}, {nameof(AgentIds)}: {AgentIds}";
-        }
+        return $"{nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(UnassignedFor)}: {UnassignedFor}, {nameof(EscalateTo)}: {EscalateTo}, {nameof(AutoTicketAssign)}: {AutoTicketAssign}, {nameof(AgentIds)}: {AgentIds}";
+    }
 }

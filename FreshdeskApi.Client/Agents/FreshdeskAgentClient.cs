@@ -22,8 +22,8 @@ public class FreshdeskAgentClient : IFreshdeskAgentClient
 
     public FreshdeskAgentClient(IFreshdeskHttpClient freshdeskClient)
     {
-            _freshdeskClient = freshdeskClient;
-        }
+        _freshdeskClient = freshdeskClient;
+    }
 
     /// <summary>
     /// Retrieve all details about a single agent by their id.
@@ -41,10 +41,10 @@ public class FreshdeskAgentClient : IFreshdeskAgentClient
         long agentId,
         CancellationToken cancellationToken = default)
     {
-            return await _freshdeskClient
-                .ApiOperationAsync<Agent>(HttpMethod.Get, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Agent>(HttpMethod.Get, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Filter the list of agents according to a set of predefined filters.
@@ -71,13 +71,13 @@ public class FreshdeskAgentClient : IFreshdeskAgentClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-            await foreach (var agent in _freshdeskClient
-                .GetPagedResults<Agent>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return agent;
-            }
+        await foreach (var agent in _freshdeskClient
+            .GetPagedResults<Agent>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken)
+            .ConfigureAwait(false))
+        {
+            yield return agent;
         }
+    }
 
     /// <summary>
     /// Downgrade an agent to a contact by their id.
@@ -94,10 +94,10 @@ public class FreshdeskAgentClient : IFreshdeskAgentClient
         long agentId,
         CancellationToken cancellationToken = default)
     {
-            await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        await _freshdeskClient
+            .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/agents/{agentId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// Create an agent and the underlying contact.
@@ -116,10 +116,10 @@ public class FreshdeskAgentClient : IFreshdeskAgentClient
         CreateAgentRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<Agent, CreateAgentRequest>(HttpMethod.Post, $"/api/v2/agents", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Agent, CreateAgentRequest>(HttpMethod.Post, $"/api/v2/agents", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 }

@@ -22,6 +22,6 @@ public class SeoData
 
     public override string ToString()
     {
-            return $"{nameof(MetaTitle)}: {MetaTitle}, {nameof(MetaDescription)}: {MetaDescription}, {nameof(MetaKeywords)}: {MetaKeywords}";
-        }
+        return $"{nameof(MetaTitle)}: {MetaTitle}, {nameof(MetaDescription)}: {MetaDescription}, {nameof(MetaKeywords)}: {MetaKeywords}";
+    }
 }

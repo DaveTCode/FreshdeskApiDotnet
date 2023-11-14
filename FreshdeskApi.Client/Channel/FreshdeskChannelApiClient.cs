@@ -21,41 +21,41 @@ public class FreshdeskChannelApiClient : IFreshdeskChannelApiClient
 
     public FreshdeskChannelApiClient(IFreshdeskHttpClient client)
     {
-            _client = client;
-        }
+        _client = client;
+    }
 
     public async Task<Ticket> CreateTicketAsync(
         ChannelCreateTicketRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _client
-                .ApiOperationAsync<Ticket, ChannelCreateTicketRequest>(HttpMethod.Post, "/api/channel/v2/tickets", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _client
+            .ApiOperationAsync<Ticket, ChannelCreateTicketRequest>(HttpMethod.Post, "/api/channel/v2/tickets", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     public async Task<ConversationEntry> CreateConversationAsync(
         long ticketId,
         ChannelCreateReplyRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _client
-                .ApiOperationAsync<ConversationEntry, ChannelCreateReplyRequest>(HttpMethod.Post, $"/api/channel/v2/tickets/{ticketId}/reply", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _client
+            .ApiOperationAsync<ConversationEntry, ChannelCreateReplyRequest>(HttpMethod.Post, $"/api/channel/v2/tickets/{ticketId}/reply", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     public async Task<ConversationEntry> CreateNoteAsync(
         long ticketId,
         ChannelCreateNoteRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _client
-                .ApiOperationAsync<ConversationEntry, ChannelCreateNoteRequest>(HttpMethod.Post, $"/api/channel/v2/tickets/{ticketId}/notes", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _client
+            .ApiOperationAsync<ConversationEntry, ChannelCreateNoteRequest>(HttpMethod.Post, $"/api/channel/v2/tickets/{ticketId}/notes", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 }

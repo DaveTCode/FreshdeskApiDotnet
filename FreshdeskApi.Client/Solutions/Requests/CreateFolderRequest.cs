@@ -41,14 +41,14 @@ public class CreateFolderRequest
 
     public CreateFolderRequest(string name, string? description = null, FolderVisibility? visibility = null, long[]? companyIds = null)
     {
-            Name = name;
-            Description = description;
-            Visibility = visibility;
-            CompanyIds = companyIds;
-        }
+        Name = name;
+        Description = description;
+        Visibility = visibility;
+        CompanyIds = companyIds;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(Visibility)}: {Visibility}, {nameof(CompanyIds)}: {CompanyIds}";
-        }
+        return $"{nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(Visibility)}: {Visibility}, {nameof(CompanyIds)}: {CompanyIds}";
+    }
 }

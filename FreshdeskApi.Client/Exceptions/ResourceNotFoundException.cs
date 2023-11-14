@@ -12,5 +12,5 @@ public class ResourceNotFoundException : FreshdeskApiException
 {
     public ResourceNotFoundException(HttpResponseMessage response) : base(response)
     {
-        }
+    }
 }

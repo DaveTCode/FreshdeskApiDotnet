@@ -28,7 +28,7 @@ public class ListAllTicketsRequest
         TicketOrderBy? orderBy = default,
         TicketOrderDirection? orderDir = default)
     {
-            var urlParams = new Dictionary<string, string?>
+        var urlParams = new Dictionary<string, string?>
             {
                 { "filter", filter?.QueryParameterValue() },
                 { "requester_id", requesterId?.ToString() },
@@ -39,17 +39,17 @@ public class ListAllTicketsRequest
                 { "order_by", orderBy?.QueryParameterValue() },
                 { "order_type", orderDir?.QueryParameterValue() }
             }.Where(x => x.Value != null)
-                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value!)}")
-                .ToList();
+            .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value!)}")
+            .ToList();
 
-            UrlWithQueryString = ListAllTicketsUrl +
-                   (urlParams.Any() ? "?" + string.Join("&", urlParams) : "");
-        }
+        UrlWithQueryString = ListAllTicketsUrl +
+               (urlParams.Any() ? "?" + string.Join("&", urlParams) : "");
+    }
 
     public override string ToString()
     {
-            return $"{nameof(UrlWithQueryString)}: {UrlWithQueryString}";
-        }
+        return $"{nameof(UrlWithQueryString)}: {UrlWithQueryString}";
+    }
 }
 
 public enum ListAllTicketsFilter

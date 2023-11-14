@@ -66,20 +66,20 @@ public class FreshdeskClient : IFreshdeskClient
         IFreshdeskAttachmentsClient freshdeskAttachmentsClient
     )
     {
-            Tickets = freshdeskTicketClient;
-            Contacts = freshdeskContactClient;
-            Groups = freshdeskGroupClient;
-            Roles = freshdeskRoleClient;
-            Products = freshdeskProductClient;
-            Me = freshdeskMeClient;
-            Agents = freshdeskAgentClient;
-            Companies = freshdeskCompaniesClient;
-            Solutions = freshdeskSolutionClient;
-            TicketFields = freshdeskTicketFieldsClient;
-            Conversations = freshdeskConversationsClient;
-            ChannelApi = freshdeskChannelApiClient;
-            Attachments = freshdeskAttachmentsClient;
-        }
+        Tickets = freshdeskTicketClient;
+        Contacts = freshdeskContactClient;
+        Groups = freshdeskGroupClient;
+        Roles = freshdeskRoleClient;
+        Products = freshdeskProductClient;
+        Me = freshdeskMeClient;
+        Agents = freshdeskAgentClient;
+        Companies = freshdeskCompaniesClient;
+        Solutions = freshdeskSolutionClient;
+        TicketFields = freshdeskTicketFieldsClient;
+        Conversations = freshdeskConversationsClient;
+        ChannelApi = freshdeskChannelApiClient;
+        Attachments = freshdeskAttachmentsClient;
+    }
 
     /// <summary>
     /// Construct a freshdesk client object when you already have access

@@ -139,30 +139,30 @@ public class ContactCreateRequest : IRequestWithAttachment
         string? description = null, string? jobTitle = null, string? language = null, string[]? tags = null, string? timeZone = null,
         FileAttachment? avatar = null)
     {
-            Name = name;
-            Email = email;
-            Phone = phone;
-            Mobile = mobile;
-            TwitterId = twitterId;
-            UniqueExternalId = uniqueExternalId;
-            OtherEmails = otherEmails;
-            CompanyId = companyId;
-            ViewAllTickets = viewAllTickets;
-            OtherCompanies = otherCompanies;
-            Address = address;
-            CustomFields = customFields;
-            Description = description;
-            JobTitle = jobTitle;
-            Language = language;
-            Tags = tags;
-            TimeZone = timeZone;
-            Avatar = avatar;
-        }
+        Name = name;
+        Email = email;
+        Phone = phone;
+        Mobile = mobile;
+        TwitterId = twitterId;
+        UniqueExternalId = uniqueExternalId;
+        OtherEmails = otherEmails;
+        CompanyId = companyId;
+        ViewAllTickets = viewAllTickets;
+        OtherCompanies = otherCompanies;
+        Address = address;
+        CustomFields = customFields;
+        Description = description;
+        JobTitle = jobTitle;
+        Language = language;
+        Tags = tags;
+        TimeZone = timeZone;
+        Avatar = avatar;
+    }
 
     public bool IsMultipartFormDataRequired() => Avatar != null;
 
     public override string ToString()
     {
-            return $"{nameof(Name)}: {Name}, {nameof(Email)}: {Email}, {nameof(Phone)}: {Phone}, {nameof(Mobile)}: {Mobile}, {nameof(TwitterId)}: {TwitterId}, {nameof(UniqueExternalId)}: {UniqueExternalId}, {nameof(OtherEmails)}: {OtherEmails}, {nameof(CompanyId)}: {CompanyId}, {nameof(ViewAllTickets)}: {ViewAllTickets}, {nameof(OtherCompanies)}: {OtherCompanies}, {nameof(Address)}: {Address}, {nameof(CustomFields)}: {CustomFields}, {nameof(Description)}: {Description}, {nameof(JobTitle)}: {JobTitle}, {nameof(Language)}: {Language}, {nameof(Tags)}: {Tags}, {nameof(TimeZone)}: {TimeZone}";
-        }
+        return $"{nameof(Name)}: {Name}, {nameof(Email)}: {Email}, {nameof(Phone)}: {Phone}, {nameof(Mobile)}: {Mobile}, {nameof(TwitterId)}: {TwitterId}, {nameof(UniqueExternalId)}: {UniqueExternalId}, {nameof(OtherEmails)}: {OtherEmails}, {nameof(CompanyId)}: {CompanyId}, {nameof(ViewAllTickets)}: {ViewAllTickets}, {nameof(OtherCompanies)}: {OtherCompanies}, {nameof(Address)}: {Address}, {nameof(CustomFields)}: {CustomFields}, {nameof(Description)}: {Description}, {nameof(JobTitle)}: {JobTitle}, {nameof(Language)}: {Language}, {nameof(Tags)}: {Tags}, {nameof(TimeZone)}: {TimeZone}";
+    }
 }

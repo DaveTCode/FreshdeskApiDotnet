@@ -17,5 +17,5 @@ public class CreateCompanyRequest : BaseCompanyRequest
         name, domains, description, note, healthScore, accountTier, renewalDate, industry, customFields
     )
     {
-        }
+    }
 }

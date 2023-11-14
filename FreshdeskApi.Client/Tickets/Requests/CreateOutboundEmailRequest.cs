@@ -19,22 +19,22 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment
         string? ticketType = null,
         IEnumerable<FileAttachment>? files = null)
     {
-            Status = status;
-            Priority = priority;
-            RequesterName = requesterName;
-            Email = email;
-            Description = description;
-            CcEmails = ccEmails;
-            CustomFields = customFields;
-            DueBy = dueBy;
-            EmailConfigId = emailConfigId;
-            FirstResponseDueBy = firstResponseDueBy;
-            GroupId = groupId;
-            Tags = tags;
-            Subject = subject;
-            TicketType = ticketType;
-            Files = files;
-        }
+        Status = status;
+        Priority = priority;
+        RequesterName = requesterName;
+        Email = email;
+        Description = description;
+        CcEmails = ccEmails;
+        CustomFields = customFields;
+        DueBy = dueBy;
+        EmailConfigId = emailConfigId;
+        FirstResponseDueBy = firstResponseDueBy;
+        GroupId = groupId;
+        Tags = tags;
+        Subject = subject;
+        TicketType = ticketType;
+        Files = files;
+    }
 
     /// <summary>
     /// Name of the requester.
@@ -133,6 +133,6 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment
 
     public override string ToString()
     {
-            return $"{nameof(RequesterName)}: {RequesterName}, {nameof(Email)}: {Email}, {nameof(Subject)}: {Subject}, {nameof(TicketType)}: {TicketType}, {nameof(Status)}: {Status}, {nameof(Priority)}: {Priority}, {nameof(Description)}: {Description}, {nameof(CcEmails)}: {CcEmails}, {nameof(CustomFields)}: {CustomFields}, {nameof(DueBy)}: {DueBy}, {nameof(EmailConfigId)}: {EmailConfigId}, {nameof(FirstResponseDueBy)}: {FirstResponseDueBy}, {nameof(GroupId)}: {GroupId}, {nameof(Tags)}: {Tags}";
-        }
+        return $"{nameof(RequesterName)}: {RequesterName}, {nameof(Email)}: {Email}, {nameof(Subject)}: {Subject}, {nameof(TicketType)}: {TicketType}, {nameof(Status)}: {Status}, {nameof(Priority)}: {Priority}, {nameof(Description)}: {Description}, {nameof(CcEmails)}: {CcEmails}, {nameof(CustomFields)}: {CustomFields}, {nameof(DueBy)}: {DueBy}, {nameof(EmailConfigId)}: {EmailConfigId}, {nameof(FirstResponseDueBy)}: {FirstResponseDueBy}, {nameof(GroupId)}: {GroupId}, {nameof(Tags)}: {Tags}";
+    }
 }

@@ -87,6 +87,6 @@ public class Group
 
     public override string ToString()
     {
-            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(EscalateTo)}: {EscalateTo}, {nameof(UnassignedFor)}: {UnassignedFor}, {nameof(BusinessHourId)}: {BusinessHourId}, {nameof(AgentIds)}: {AgentIds}, {nameof(GroupType)}: {GroupType}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(AutoTicketAssign)}: {AutoTicketAssign}";
-        }
+        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(EscalateTo)}: {EscalateTo}, {nameof(UnassignedFor)}: {UnassignedFor}, {nameof(BusinessHourId)}: {BusinessHourId}, {nameof(AgentIds)}: {AgentIds}, {nameof(GroupType)}: {GroupType}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(AutoTicketAssign)}: {AutoTicketAssign}";
+    }
 }

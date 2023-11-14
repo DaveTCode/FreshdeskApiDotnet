@@ -35,6 +35,6 @@ public class Attachment
 
     public override string ToString()
     {
-            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(ContentType)}: {ContentType}, {nameof(Size)}: {Size}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(AttachmentUrl)}: {AttachmentUrl}";
-        }
+        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(ContentType)}: {ContentType}, {nameof(Size)}: {Size}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(AttachmentUrl)}: {AttachmentUrl}";
+    }
 }

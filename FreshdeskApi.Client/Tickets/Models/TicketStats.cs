@@ -37,6 +37,6 @@ public class TicketStats
 
     public override string ToString()
     {
-            return $"{nameof(AgentRespondedAt)}: {AgentRespondedAt}, {nameof(RequesterRespondedAt)}: {RequesterRespondedAt}, {nameof(FirstRespondedAt)}: {FirstRespondedAt}, {nameof(StatusUpdatedAt)}: {StatusUpdatedAt}, {nameof(ReopenedAt)}: {ReopenedAt}, {nameof(ResolvedAt)}: {ResolvedAt}, {nameof(ClosedAt)}: {ClosedAt}, {nameof(PendingSince)}: {PendingSince}";
-        }
+        return $"{nameof(AgentRespondedAt)}: {AgentRespondedAt}, {nameof(RequesterRespondedAt)}: {RequesterRespondedAt}, {nameof(FirstRespondedAt)}: {FirstRespondedAt}, {nameof(StatusUpdatedAt)}: {StatusUpdatedAt}, {nameof(ReopenedAt)}: {ReopenedAt}, {nameof(ResolvedAt)}: {ResolvedAt}, {nameof(ClosedAt)}: {ClosedAt}, {nameof(PendingSince)}: {PendingSince}";
+    }
 }

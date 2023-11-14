@@ -16,29 +16,29 @@ public class FreshdeskRoleClient : IFreshdeskRoleClient
 
     public FreshdeskRoleClient(IFreshdeskHttpClient freshdeskClient)
     {
-            _freshdeskClient = freshdeskClient;
-        }
+        _freshdeskClient = freshdeskClient;
+    }
 
     /// <inheritdoc />
     public async Task<Role> ViewRoleAsync(
         long roleId,
         CancellationToken cancellationToken = default)
     {
-            return await _freshdeskClient
-                .ApiOperationAsync<Role>(HttpMethod.Get, $"/api/v2/roles/{roleId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Role>(HttpMethod.Get, $"/api/v2/roles/{roleId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <inheritdoc />
     public async IAsyncEnumerable<Role> ListAllRolesAsync(
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-            await foreach (var role in _freshdeskClient
-                .GetPagedResults<Role>("/api/v2/roles", pagingConfiguration, false, cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return role;
-            }
+        await foreach (var role in _freshdeskClient
+            .GetPagedResults<Role>("/api/v2/roles", pagingConfiguration, false, cancellationToken)
+            .ConfigureAwait(false))
+        {
+            yield return role;
         }
+    }
 }

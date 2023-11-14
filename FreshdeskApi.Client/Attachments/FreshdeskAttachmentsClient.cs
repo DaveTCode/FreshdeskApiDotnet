@@ -17,8 +17,8 @@ public class FreshdeskAttachmentsClient : IFreshdeskAttachmentsClient
 
     public FreshdeskAttachmentsClient(IFreshdeskHttpClient freshdeskClient)
     {
-            _freshdeskClient = freshdeskClient;
-        }
+        _freshdeskClient = freshdeskClient;
+    }
 
     /// <summary>
     /// Delete an attachment by their id.
@@ -35,8 +35,8 @@ public class FreshdeskAttachmentsClient : IFreshdeskAttachmentsClient
         long attachmentId,
         CancellationToken cancellationToken = default)
     {
-            await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/attachments/{attachmentId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        await _freshdeskClient
+            .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/attachments/{attachmentId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 }

@@ -53,18 +53,18 @@ public class CreateReplyRequest : IRequestWithAttachment
     public CreateReplyRequest(string bodyHtml, string? fromEmail = null, long? userId = null, string[]? ccEmails = null, string[]? bccEmails = null,
         IEnumerable<FileAttachment>? files = null)
     {
-            BodyHtml = bodyHtml;
-            FromEmail = fromEmail;
-            UserId = userId;
-            CcEmails = ccEmails;
-            BccEmails = bccEmails;
-            Files = files;
-        }
+        BodyHtml = bodyHtml;
+        FromEmail = fromEmail;
+        UserId = userId;
+        CcEmails = ccEmails;
+        BccEmails = bccEmails;
+        Files = files;
+    }
 
     public bool IsMultipartFormDataRequired() => Files != null && Files.Any();
 
     public override string ToString()
     {
-            return $"{nameof(BodyHtml)}: {BodyHtml}, {nameof(FromEmail)}: {FromEmail}, {nameof(UserId)}: {UserId}, {nameof(CcEmails)}: {CcEmails}, {nameof(BccEmails)}: {BccEmails}";
-        }
+        return $"{nameof(BodyHtml)}: {BodyHtml}, {nameof(FromEmail)}: {FromEmail}, {nameof(UserId)}: {UserId}, {nameof(CcEmails)}: {CcEmails}, {nameof(BccEmails)}: {BccEmails}";
+    }
 }

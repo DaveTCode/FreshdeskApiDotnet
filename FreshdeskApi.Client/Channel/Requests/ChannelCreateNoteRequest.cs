@@ -19,8 +19,8 @@ public class ChannelCreateNoteRequest : CreateNoteRequest
         bool? isPrivate = null, long? userId = null, DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
         : base(bodyHtml, incoming, notifyEmails, isPrivate, userId)
     {
-            ImportId = importId;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
-        }
+        ImportId = importId;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+    }
 }

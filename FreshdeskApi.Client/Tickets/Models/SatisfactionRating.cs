@@ -46,6 +46,6 @@ public class SatisfactionRating
 
     public override string ToString()
     {
-            return $"{nameof(Id)}: {Id}, {nameof(SurveyId)}: {SurveyId}, {nameof(UserId)}: {UserId}, {nameof(AgentId)}: {AgentId}, {nameof(Feedback)}: {Feedback}, {nameof(GroupId)}: {GroupId}, {nameof(TicketId)}: {TicketId}, {nameof(Ratings)}: {Ratings}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}";
-        }
+        return $"{nameof(Id)}: {Id}, {nameof(SurveyId)}: {SurveyId}, {nameof(UserId)}: {UserId}, {nameof(AgentId)}: {AgentId}, {nameof(Feedback)}: {Feedback}, {nameof(GroupId)}: {GroupId}, {nameof(TicketId)}: {TicketId}, {nameof(Ratings)}: {Ratings}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}";
+    }
 }

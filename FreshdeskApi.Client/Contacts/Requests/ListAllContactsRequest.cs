@@ -25,7 +25,7 @@ public class ListAllContactsRequest
         DateTimeOffset? updatedSince = null
     )
     {
-            var urlParams = new Dictionary<string, string?>
+        var urlParams = new Dictionary<string, string?>
             {
                 { "email", email },
                 { "mobile", mobile },
@@ -34,15 +34,15 @@ public class ListAllContactsRequest
                 { "state", contactState?.GetQueryStringValue() },
                 { "_updated_since", updatedSince?.ToString("yyyy-MM-ddTHH:mm:ssZ") }
             }.Where(x => x.Value != null)
-                .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value!)}")
-                .ToList();
+            .Select(queryParam => $"{queryParam.Key}={Uri.EscapeDataString(queryParam.Value!)}")
+            .ToList();
 
-            UrlWithQueryString = ListAllContactsUrl +
-                   (urlParams.Any() ? "?" + string.Join("&", urlParams) : "");
-        }
+        UrlWithQueryString = ListAllContactsUrl +
+               (urlParams.Any() ? "?" + string.Join("&", urlParams) : "");
+    }
 
     public override string ToString()
     {
-            return $"{nameof(UrlWithQueryString)}: {UrlWithQueryString}";
-        }
+        return $"{nameof(UrlWithQueryString)}: {UrlWithQueryString}";
+    }
 }

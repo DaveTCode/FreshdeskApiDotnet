@@ -34,6 +34,6 @@ public class AttachmentResponse
 
     public override string ToString()
     {
-            return $"{nameof(AttachmentUrl)}: {AttachmentUrl}, {nameof(ContentType)}: {ContentType}, {nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(FileSize)}: {FileSize}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}";
-        }
+        return $"{nameof(AttachmentUrl)}: {AttachmentUrl}, {nameof(ContentType)}: {ContentType}, {nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(FileSize)}: {FileSize}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}";
+    }
 }

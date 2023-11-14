@@ -31,13 +31,13 @@ public class CreateCategoryRequest
 
     public CreateCategoryRequest(string name, string? description = null, long[]? visibleInPortals = null)
     {
-            Name = name;
-            Description = description;
-            VisibleInPortals = visibleInPortals;
-        }
+        Name = name;
+        Description = description;
+        VisibleInPortals = visibleInPortals;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(VisibleInPortals)}: {VisibleInPortals}";
-        }
+        return $"{nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(VisibleInPortals)}: {VisibleInPortals}";
+    }
 }

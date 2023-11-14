@@ -18,8 +18,8 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
 
     public FreshdeskCannedResponseClient(IFreshdeskHttpClient freshdeskClient)
     {
-            _freshdeskClient = freshdeskClient;
-        }
+        _freshdeskClient = freshdeskClient;
+    }
 
     /// <summary>
     /// Retrieve all details about a single canned response by id.
@@ -37,10 +37,10 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
         long cannedResponseId,
         CancellationToken cancellationToken = default)
     {
-            return await _freshdeskClient
-                .ApiOperationAsync<CannedResponse>(HttpMethod.Get, $"/api/v2/canned_responses/{cannedResponseId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<CannedResponse>(HttpMethod.Get, $"/api/v2/canned_responses/{cannedResponseId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// To view all canned responses in a folder. 
@@ -62,10 +62,10 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
         long folderId,
         CancellationToken cancellationToken = default)
     {
-            return await _freshdeskClient
-               .ApiOperationAsync<CannedResponseFolder>(HttpMethod.Get, $"/api/v2/canned_response_folders/{folderId}", cancellationToken: cancellationToken)
-               .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+           .ApiOperationAsync<CannedResponseFolder>(HttpMethod.Get, $"/api/v2/canned_response_folders/{folderId}", cancellationToken: cancellationToken)
+           .ConfigureAwait(false);
+    }
 
     /// <summary>
     /// To view all the details of canned responses in a folder.  
@@ -89,12 +89,12 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
 
-            await foreach (var response in _freshdeskClient
-                .GetPagedResults<CannedResponse>($"/api/v2/canned_response_folders/{folderId}/responses", pagingConfiguration, false, cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return response;
-            }
+        await foreach (var response in _freshdeskClient
+            .GetPagedResults<CannedResponse>($"/api/v2/canned_response_folders/{folderId}/responses", pagingConfiguration, false, cancellationToken)
+            .ConfigureAwait(false))
+        {
+            yield return response;
         }
+    }
 
 }

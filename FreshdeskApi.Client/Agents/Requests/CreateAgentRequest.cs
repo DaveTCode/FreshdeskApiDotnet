@@ -97,23 +97,23 @@ public class CreateAgentRequest
 
     public CreateAgentRequest(string email, TicketScope ticketScope, bool? occasional = null, string? signatureHtml = null, long[]? skillIds = null, long[]? groupIds = null, long[]? roleIds = null, string? name = null, string? phone = null, string? mobile = null, string? jobTitle = null, string? language = null, string? timeZone = null)
     {
-            Email = email;
-            TicketScope = ticketScope;
-            Occasional = occasional;
-            SignatureHtml = signatureHtml;
-            SkillIds = skillIds;
-            GroupIds = groupIds;
-            RoleIds = roleIds;
-            Name = name;
-            Phone = phone;
-            Mobile = mobile;
-            JobTitle = jobTitle;
-            Language = language;
-            TimeZone = timeZone;
-        }
+        Email = email;
+        TicketScope = ticketScope;
+        Occasional = occasional;
+        SignatureHtml = signatureHtml;
+        SkillIds = skillIds;
+        GroupIds = groupIds;
+        RoleIds = roleIds;
+        Name = name;
+        Phone = phone;
+        Mobile = mobile;
+        JobTitle = jobTitle;
+        Language = language;
+        TimeZone = timeZone;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(Email)}: {Email}, {nameof(TicketScope)}: {TicketScope}, {nameof(Occasional)}: {Occasional}, {nameof(SkillIds)}: {SkillIds}, {nameof(GroupIds)}: {GroupIds}, {nameof(RoleIds)}: {RoleIds}, {nameof(Name)}: {Name}, {nameof(Phone)}: {Phone}, {nameof(Mobile)}: {Mobile}, {nameof(JobTitle)}: {JobTitle}, {nameof(Language)}: {Language}, {nameof(TimeZone)}: {TimeZone}";
-        }
+        return $"{nameof(Email)}: {Email}, {nameof(TicketScope)}: {TicketScope}, {nameof(Occasional)}: {Occasional}, {nameof(SkillIds)}: {SkillIds}, {nameof(GroupIds)}: {GroupIds}, {nameof(RoleIds)}: {RoleIds}, {nameof(Name)}: {Name}, {nameof(Phone)}: {Phone}, {nameof(Mobile)}: {Mobile}, {nameof(JobTitle)}: {JobTitle}, {nameof(Language)}: {Language}, {nameof(TimeZone)}: {TimeZone}";
+    }
 }

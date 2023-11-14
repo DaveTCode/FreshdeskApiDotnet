@@ -50,16 +50,16 @@ public class UpdateArticleRequest
 
     public UpdateArticleRequest(long? agentId = null, string? title = null, string? description = null, ArticleStatus? status = null, SeoData? seoData = null, string[]? tags = null)
     {
-            AgentId = agentId;
-            Title = title;
-            Description = description;
-            Status = status;
-            SeoData = seoData;
-            Tags = tags;
-        }
+        AgentId = agentId;
+        Title = title;
+        Description = description;
+        Status = status;
+        SeoData = seoData;
+        Tags = tags;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(AgentId)}: {AgentId}, {nameof(Title)}: {Title}, {nameof(Status)}: {Status}, {nameof(SeoData)}: {SeoData}, {nameof(Tags)}: {Tags}";
-        }
+        return $"{nameof(AgentId)}: {AgentId}, {nameof(Title)}: {Title}, {nameof(Status)}: {Status}, {nameof(SeoData)}: {SeoData}, {nameof(Tags)}: {Tags}";
+    }
 }

@@ -90,6 +90,6 @@ public class Company
 
     public override string ToString()
     {
-            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(Note)}: {Note}, {nameof(Domains)}: {Domains}, {nameof(CustomFields)}: {CustomFields}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(HealthScore)}: {HealthScore}, {nameof(AccountTier)}: {AccountTier}, {nameof(RenewalDate)}: {RenewalDate}, {nameof(Industry)}: {Industry}";
-        }
+        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(Note)}: {Note}, {nameof(Domains)}: {Domains}, {nameof(CustomFields)}: {CustomFields}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(HealthScore)}: {HealthScore}, {nameof(AccountTier)}: {AccountTier}, {nameof(RenewalDate)}: {RenewalDate}, {nameof(Industry)}: {Industry}";
+    }
 }

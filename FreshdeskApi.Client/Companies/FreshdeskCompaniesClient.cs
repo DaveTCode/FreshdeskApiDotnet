@@ -19,31 +19,31 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
 
     public FreshdeskCompaniesClient(IFreshdeskHttpClient freshdeskClient)
     {
-            _freshdeskClient = freshdeskClient;
-        }
+        _freshdeskClient = freshdeskClient;
+    }
 
     /// <inheritdoc />
     public async Task<Company> ViewCompanyAsync(
         long companyId,
         CancellationToken cancellationToken = default)
     {
-            return await _freshdeskClient
-                .ApiOperationAsync<Company>(HttpMethod.Get, $"/api/v2/companies/{companyId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Company>(HttpMethod.Get, $"/api/v2/companies/{companyId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <inheritdoc />
     public async IAsyncEnumerable<Company> ListAllCompaniesAsync(
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-            await foreach (var company in _freshdeskClient
-                .GetPagedResults<Company>("/api/v2/companies", pagingConfiguration, false, cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return company;
-            }
+        await foreach (var company in _freshdeskClient
+            .GetPagedResults<Company>("/api/v2/companies", pagingConfiguration, false, cancellationToken)
+            .ConfigureAwait(false))
+        {
+            yield return company;
         }
+    }
 
     /// <inheritdoc />
     public async IAsyncEnumerable<Company> FilterCompaniesAsync(
@@ -51,38 +51,38 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-            await foreach (var company in _freshdeskClient
-                .GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", pagingConfiguration, true, cancellationToken)
-                .ConfigureAwait(false))
-            {
-                yield return company;
-            }
+        await foreach (var company in _freshdeskClient
+            .GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", pagingConfiguration, true, cancellationToken)
+            .ConfigureAwait(false))
+        {
+            yield return company;
         }
+    }
 
     /// <inheritdoc />
     public async Task<ExportCsv> StartExportCompaniesAsync(
         CompaniesExportRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<ExportCsv, CompaniesExportRequest>(HttpMethod.Post, "/api/v2/companies/export", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<ExportCsv, CompaniesExportRequest>(HttpMethod.Post, "/api/v2/companies/export", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <inheritdoc />
     public async Task<ExportCsv> GetExportStatusAsync(
         ExportCsv export,
         CancellationToken cancellationToken = default)
     {
-            if (export == null) throw new ArgumentNullException(nameof(export), "Export must not be null");
-            if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Export Id must not be null");
+        if (export == null) throw new ArgumentNullException(nameof(export), "Export must not be null");
+        if (export.Id == null) throw new ArgumentNullException(nameof(export.Id), "Export Id must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<ExportCsv, ExportCsv>(HttpMethod.Get, $"/api/v2/companies/export/{export.Id}", export, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<ExportCsv, ExportCsv>(HttpMethod.Get, $"/api/v2/companies/export/{export.Id}", export, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <inheritdoc />
     public async Task<Company> UpdateCompanyAsync(
@@ -90,32 +90,32 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
         UpdateCompanyRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<Company, UpdateCompanyRequest>(HttpMethod.Put, $"/api/v2/companies/{companyId}", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Company, UpdateCompanyRequest>(HttpMethod.Put, $"/api/v2/companies/{companyId}", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <inheritdoc />
     public async Task<Company> CreateCompanyAsync(
         CreateCompanyRequest request,
         CancellationToken cancellationToken = default)
     {
-            if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
-            return await _freshdeskClient
-                .ApiOperationAsync<Company, CreateCompanyRequest>(HttpMethod.Post, $"/api/v2/companies", request, cancellationToken)
-                .ConfigureAwait(false);
-        }
+        return await _freshdeskClient
+            .ApiOperationAsync<Company, CreateCompanyRequest>(HttpMethod.Post, $"/api/v2/companies", request, cancellationToken)
+            .ConfigureAwait(false);
+    }
 
     /// <inheritdoc />
     public async Task DeleteCompanyAsync(
         long companyId,
         CancellationToken cancellationToken = default)
     {
-            await _freshdeskClient
-                .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/companies/{companyId}", cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
+        await _freshdeskClient
+            .ApiOperationAsync<object>(HttpMethod.Delete, $"/api/v2/companies/{companyId}", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
 }

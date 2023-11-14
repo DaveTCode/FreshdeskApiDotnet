@@ -76,15 +76,15 @@ public class UpdateTicketFieldRequest
         string? label = null, string? type = null, long? position = null, bool? requiredForClosure = null, bool? requiredForAgents = null,
         bool? requiredForCustomers = null, object? choices = null)
     {
-            CustomersCanEdit = customersCanEdit;
-            LabelForCustomers = labelForCustomers;
-            DisplayedToCustomers = displayedToCustomers;
-            Label = label;
-            Type = type;
-            Position = position;
-            RequiredForClosure = requiredForClosure;
-            RequiredForAgents = requiredForAgents;
-            RequiredForCustomers = requiredForCustomers;
-            Choices = choices;
-        }
+        CustomersCanEdit = customersCanEdit;
+        LabelForCustomers = labelForCustomers;
+        DisplayedToCustomers = displayedToCustomers;
+        Label = label;
+        Type = type;
+        Position = position;
+        RequiredForClosure = requiredForClosure;
+        RequiredForAgents = requiredForAgents;
+        RequiredForCustomers = requiredForCustomers;
+        Choices = choices;
+    }
 }

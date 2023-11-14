@@ -13,5 +13,5 @@ public class InvalidFreshdeskRequest : FreshdeskApiException
 {
     internal InvalidFreshdeskRequest(HttpResponseMessage response) : base(response)
     {
-        }
+    }
 }

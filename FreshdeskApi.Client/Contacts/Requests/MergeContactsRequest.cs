@@ -27,8 +27,8 @@ public class MergeContactsRequest
 
     public MergeContactsRequest(long primaryContactId, List<long> secondaryContactIds, MergeContactFields? contact = null)
     {
-            PrimaryContactId = primaryContactId;
-            SecondaryContactIds = secondaryContactIds;
-            Contact = contact;
-        }
+        PrimaryContactId = primaryContactId;
+        SecondaryContactIds = secondaryContactIds;
+        Contact = contact;
+    }
 }

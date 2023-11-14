@@ -52,11 +52,11 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     /// </param>
     public FreshdeskHttpClient(HttpClient httpClient)
     {
-            if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
-            if (string.IsNullOrWhiteSpace(httpClient.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
+        if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
+        if (string.IsNullOrWhiteSpace(httpClient.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
 
-            _httpClient = httpClient;
-        }
+        _httpClient = httpClient;
+    }
 
     /// <summary>
     /// Construct a freshdesk client object from just domain and api key.
@@ -87,44 +87,44 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
     private void SetRateLimitValues(HttpResponseMessage response)
     {
-            if (response.Headers.TryGetValues("X-RateLimit-Total", out var rateLimitTotalValues))
+        if (response.Headers.TryGetValues("X-RateLimit-Total", out var rateLimitTotalValues))
+        {
+            var rateLimitTotalValuesArray = rateLimitTotalValues.ToArray();
+            if (rateLimitTotalValuesArray.Length == 1)
             {
-                var rateLimitTotalValuesArray = rateLimitTotalValues.ToArray();
-                if (rateLimitTotalValuesArray.Length == 1)
+                if (long.TryParse(rateLimitTotalValuesArray[0], out var rateLimitTotal))
                 {
-                    if (long.TryParse(rateLimitTotalValuesArray[0], out var rateLimitTotal))
-                    {
-                        RateLimitTotal = rateLimitTotal;
-                    }
-                }
-            }
-
-            if (response.Headers.TryGetValues("X-RateLimit-Remaining", out var rateLimitRemainingValues))
-            {
-                var rateLimitRemainingValuesArray = rateLimitRemainingValues.ToArray();
-                if (rateLimitRemainingValuesArray.Length == 1)
-                {
-                    if (long.TryParse(rateLimitRemainingValuesArray[0], out var rateLimitRemaining))
-                    {
-                        RateLimitRemaining = rateLimitRemaining;
-                    }
+                    RateLimitTotal = rateLimitTotal;
                 }
             }
         }
+
+        if (response.Headers.TryGetValues("X-RateLimit-Remaining", out var rateLimitRemainingValues))
+        {
+            var rateLimitRemainingValuesArray = rateLimitRemainingValues.ToArray();
+            if (rateLimitRemainingValuesArray.Length == 1)
+            {
+                if (long.TryParse(rateLimitRemainingValuesArray[0], out var rateLimitRemaining))
+                {
+                    RateLimitRemaining = rateLimitRemaining;
+                }
+            }
+        }
+    }
 
     private static FreshdeskApiException CreateApiException(HttpResponseMessage response)
     {
-            // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
-            return response.StatusCode switch
-            {
-                HttpStatusCode.BadRequest => new InvalidFreshdeskRequest(response), // 400
-                HttpStatusCode.Unauthorized => new AuthenticationFailureException(response), // 400
-                HttpStatusCode.Forbidden => new AuthorizationFailureException(response), // 400
-                HttpStatusCode.NotFound => new ResourceNotFoundException(response), // 400
-                HttpStatusCode.Conflict => new ResourceConflictException(response), // 400
-                _ => throw new GeneralApiException(response),
-            };
-        }
+        // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
+        return response.StatusCode switch
+        {
+            HttpStatusCode.BadRequest => new InvalidFreshdeskRequest(response), // 400
+            HttpStatusCode.Unauthorized => new AuthenticationFailureException(response), // 400
+            HttpStatusCode.Forbidden => new AuthorizationFailureException(response), // 400
+            HttpStatusCode.NotFound => new ResourceNotFoundException(response), // 400
+            HttpStatusCode.Conflict => new ResourceConflictException(response), // 400
+            _ => throw new GeneralApiException(response),
+        };
+    }
 
     public async IAsyncEnumerable<T> GetPagedResults<T>(
         string url,
@@ -132,85 +132,85 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         bool newStylePages,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-            pagingConfiguration ??= new PaginationConfiguration();
+        pagingConfiguration ??= new PaginationConfiguration();
 
-            var page = pagingConfiguration.StartingPage;
-            if (url.Contains("?")) url += $"&page={page}";
-            else url += $"?page={page}";
+        var page = pagingConfiguration.StartingPage;
+        if (url.Contains("?")) url += $"&page={page}";
+        else url += $"?page={page}";
 
-            if (pagingConfiguration.PageSize.HasValue)
+        if (pagingConfiguration.PageSize.HasValue)
+        {
+            url += $"&per_page={pagingConfiguration.PageSize}";
+        }
+
+        using var disposingCollection = new DisposingCollection();
+
+        var morePages = true;
+
+        while (morePages)
+        {
+            var (newData, linkHeaderValues) = await ExecuteAndParseAsync<T>(
+                // url is relative for first request, but absolute for following paginated request(s)
+                new Uri(url, UriKind.RelativeOrAbsolute),
+                newStylePages,
+                disposingCollection,
+                cancellationToken
+            );
+
+            if (pagingConfiguration.BeforeProcessingPageAsync != null)
             {
-                url += $"&per_page={pagingConfiguration.PageSize}";
+                await pagingConfiguration.BeforeProcessingPageAsync(page, cancellationToken).ConfigureAwait(false);
             }
 
-            using var disposingCollection = new DisposingCollection();
-
-            var morePages = true;
-
-            while (morePages)
+            foreach (var data in newData)
             {
-                var (newData, linkHeaderValues) = await ExecuteAndParseAsync<T>(
-                    // url is relative for first request, but absolute for following paginated request(s)
-                    new Uri(url, UriKind.RelativeOrAbsolute),
-                    newStylePages,
-                    disposingCollection,
-                    cancellationToken
-                );
+                yield return data;
+            }
 
-                if (pagingConfiguration.BeforeProcessingPageAsync != null)
-                {
-                    await pagingConfiguration.BeforeProcessingPageAsync(page, cancellationToken).ConfigureAwait(false);
-                }
+            if (pagingConfiguration.ProcessedPageAsync != null)
+            {
+                await pagingConfiguration.ProcessedPageAsync(page, cancellationToken).ConfigureAwait(false);
+            }
 
-                foreach (var data in newData)
+            // Handle a link header reflecting that there's another page of data
+            if (linkHeaderValues != null)
+            {
+                var linkHeaderValue = linkHeaderValues.FirstOrDefault();
+                if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
                 {
-                    yield return data;
+                    morePages = false;
                 }
-
-                if (pagingConfiguration.ProcessedPageAsync != null)
+                else
                 {
-                    await pagingConfiguration.ProcessedPageAsync(page, cancellationToken).ConfigureAwait(false);
+                    var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
+                    url = nextLinkMatch.Groups["url"].Value;
+                    page++;
                 }
-
-                // Handle a link header reflecting that there's another page of data
-                if (linkHeaderValues != null)
+            }
+            else if (newStylePages)
+            {
+                // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
+                // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.
+                // as can be seen here: https://developers.freshdesk.com/api/#filter_tickets
+                if (newData.Any() && page < 10 && url.Contains("page"))
                 {
-                    var linkHeaderValue = linkHeaderValues.FirstOrDefault();
-                    if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
-                    {
-                        morePages = false;
-                    }
-                    else
-                    {
-                        var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
-                        url = nextLinkMatch.Groups["url"].Value;
-                        page++;
-                    }
-                }
-                else if (newStylePages)
-                {
-                    // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
-                    // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.
-                    // as can be seen here: https://developers.freshdesk.com/api/#filter_tickets
-                    if (newData.Any() && page < 10 && url.Contains("page"))
-                    {
-                        url = url.Replace($"page={page}", $"page={page + 1}");
-                        page++;
-                    }
-                    else
-                    {
-                        morePages = false;
-                    }
+                    url = url.Replace($"page={page}", $"page={page + 1}");
+                    page++;
                 }
                 else
                 {
                     morePages = false;
                 }
-
-                // it is safe to call it repeatably
-                disposingCollection.Dispose();
             }
+            else
+            {
+                morePages = false;
+            }
+
+            // it is safe to call it repeatably
+            disposingCollection.Dispose();
         }
+    }
 
     private async Task<(ICollection<T> newData, ICollection<string>? linkHeaderValues)> ExecuteAndParseAsync<T>(
         Uri url,
@@ -287,35 +287,35 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)
         where TBody : class
     {
-            var httpMessage = new HttpRequestMessage(method, url);
+        var httpMessage = new HttpRequestMessage(method, url);
 
-            if (body != null)
-            {
-                httpMessage.Content = body.IsMultipartFormDataRequired()
-                    ? FormDataSerializer.Serialize(body)
-                    : new StringContent(
-                        JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                        Encoding.UTF8,
-                        "application/json"
-                    );
-            }
-
-            return httpMessage;
+        if (body != null)
+        {
+            httpMessage.Content = body.IsMultipartFormDataRequired()
+                ? FormDataSerializer.Serialize(body)
+                : new StringContent(
+                    JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                    Encoding.UTF8,
+                    "application/json"
+                );
         }
+
+        return httpMessage;
+    }
 
     private async Task<HttpResponseMessage> ExecuteRequestAsync<TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken)
         where TBody : class
     {
-            using var httpMessage = CreateHttpRequestMessage(method, url, body);
+        using var httpMessage = CreateHttpRequestMessage(method, url, body);
 
-            var response = await _httpClient
-                .SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-                .ConfigureAwait(false);
+        var response = await _httpClient
+            .SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+            .ConfigureAwait(false);
 
-            SetRateLimitValues(response);
+        SetRateLimitValues(response);
 
-            return response;
-        }
+        return response;
+    }
 
     public Task<T> ApiOperationAsync<T>(HttpMethod method, string url, CancellationToken cancellationToken)
         where T : new() => ApiOperationAsync<T, object>(method, url, null, cancellationToken);
@@ -378,6 +378,6 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
     public void Dispose()
     {
-            _httpClient.Dispose();
-        }
+        _httpClient.Dispose();
+    }
 }

@@ -37,20 +37,20 @@ public class CreateTicketFieldRequest
     public CreateTicketFieldRequest(bool? customersCanEdit = null, string? labelForCustomers = null, bool? displayedToCustomers = null, string? label = null, string? fieldType = null,
         long? position = null, bool? requiredForClosure = null, bool? requiredForAgents = null, bool? requiredForCustomers = null, object? choices = null)
     {
-            CustomersCanEdit = customersCanEdit;
-            LabelForCustomers = labelForCustomers;
-            DisplayedToCustomers = displayedToCustomers;
-            Label = label;
-            FieldType = fieldType;
-            Position = position;
-            RequiredForClosure = requiredForClosure;
-            RequiredForAgents = requiredForAgents;
-            RequiredForCustomers = requiredForCustomers;
-            Choices = choices;
-        }
+        CustomersCanEdit = customersCanEdit;
+        LabelForCustomers = labelForCustomers;
+        DisplayedToCustomers = displayedToCustomers;
+        Label = label;
+        FieldType = fieldType;
+        Position = position;
+        RequiredForClosure = requiredForClosure;
+        RequiredForAgents = requiredForAgents;
+        RequiredForCustomers = requiredForCustomers;
+        Choices = choices;
+    }
 
     public override string ToString()
     {
-            return $"{nameof(CustomersCanEdit)}: {CustomersCanEdit}, {nameof(LabelForCustomers)}: {LabelForCustomers}, {nameof(DisplayedToCustomers)}: {DisplayedToCustomers}, {nameof(Label)}: {Label}, {nameof(FieldType)}: {FieldType}, {nameof(Position)}: {Position}, {nameof(RequiredForClosure)}: {RequiredForClosure}, {nameof(RequiredForAgents)}: {RequiredForAgents}, {nameof(RequiredForCustomers)}: {RequiredForCustomers}, {nameof(Choices)}: {Choices}";
-        }
+        return $"{nameof(CustomersCanEdit)}: {CustomersCanEdit}, {nameof(LabelForCustomers)}: {LabelForCustomers}, {nameof(DisplayedToCustomers)}: {DisplayedToCustomers}, {nameof(Label)}: {Label}, {nameof(FieldType)}: {FieldType}, {nameof(Position)}: {Position}, {nameof(RequiredForClosure)}: {RequiredForClosure}, {nameof(RequiredForAgents)}: {RequiredForAgents}, {nameof(RequiredForCustomers)}: {RequiredForCustomers}, {nameof(Choices)}: {Choices}";
+    }
 }

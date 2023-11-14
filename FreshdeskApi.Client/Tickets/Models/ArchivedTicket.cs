@@ -14,6 +14,6 @@ public class ArchivedTicket : Ticket
 
     public override string ToString()
     {
-            return $"{base.ToString()}, {nameof(Archived)}: {Archived}";
-        }
+        return $"{base.ToString()}, {nameof(Archived)}: {Archived}";
+    }
 }

@@ -41,14 +41,14 @@ public struct TicketIncludes
 
     public override string ToString()
     {
-            var sb = new StringBuilder();
+        var sb = new StringBuilder();
 
-            if (Company) sb.Append(",company");
-            if (Conversations) sb.Append(",conversations");
-            if (Requester) sb.Append(",requester");
-            if (Stats) sb.Append(",stats");
-            if (Description) sb.Append(",description");
+        if (Company) sb.Append(",company");
+        if (Conversations) sb.Append(",conversations");
+        if (Requester) sb.Append(",requester");
+        if (Stats) sb.Append(",stats");
+        if (Description) sb.Append(",description");
 
-            return sb.ToString().TrimStart(',');
-        }
+        return sb.ToString().TrimStart(',');
+    }
 }

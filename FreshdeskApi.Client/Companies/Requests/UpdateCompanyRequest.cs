@@ -17,5 +17,5 @@ public class UpdateCompanyRequest : BaseCompanyRequest
         name, domains, description, note, healthScore, accountTier, renewalDate, industry, customFields
     )
     {
-        }
+    }
 }

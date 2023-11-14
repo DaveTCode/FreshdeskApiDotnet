@@ -71,6 +71,6 @@ public class ConversationEntry
 
     public override string ToString()
     {
-            return $"{nameof(BodyText)}: {BodyText}, {nameof(Id)}: {Id}, {nameof(Incoming)}: {Incoming}, {nameof(Private)}: {Private}, {nameof(UserId)}: {UserId}, {nameof(SupportEmail)}: {SupportEmail}, {nameof(Source)}: {Source}, {nameof(Category)}: {Category}, {nameof(TicketId)}: {TicketId}, {nameof(ToEmails)}: {ToEmails}, {nameof(FromEmail)}: {FromEmail}, {nameof(CcEmails)}: {CcEmails}, {nameof(BccEmails)}: {BccEmails}, {nameof(EmailFailureCount)}: {EmailFailureCount}, {nameof(OutgoingFailures)}: {OutgoingFailures}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(SourceAdditionalInfo)}: {SourceAdditionalInfo}";
-        }
+        return $"{nameof(BodyText)}: {BodyText}, {nameof(Id)}: {Id}, {nameof(Incoming)}: {Incoming}, {nameof(Private)}: {Private}, {nameof(UserId)}: {UserId}, {nameof(SupportEmail)}: {SupportEmail}, {nameof(Source)}: {Source}, {nameof(Category)}: {Category}, {nameof(TicketId)}: {TicketId}, {nameof(ToEmails)}: {ToEmails}, {nameof(FromEmail)}: {FromEmail}, {nameof(CcEmails)}: {CcEmails}, {nameof(BccEmails)}: {BccEmails}, {nameof(EmailFailureCount)}: {EmailFailureCount}, {nameof(OutgoingFailures)}: {OutgoingFailures}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(SourceAdditionalInfo)}: {SourceAdditionalInfo}";
+    }
 }

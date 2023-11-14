@@ -57,6 +57,6 @@ public class MergeContactFields
 
     public override string ToString()
     {
-            return $"{nameof(Email)}: {Email}, {nameof(Phone)}: {Phone}, {nameof(Mobile)}: {Mobile}, {nameof(TwitterId)}: {TwitterId}, {nameof(UniqueExternalId)}: {UniqueExternalId}, {nameof(OtherEmails)}: {OtherEmails}, {nameof(CompanyIds)}: {CompanyIds}";
-        }
+        return $"{nameof(Email)}: {Email}, {nameof(Phone)}: {Phone}, {nameof(Mobile)}: {Mobile}, {nameof(TwitterId)}: {TwitterId}, {nameof(UniqueExternalId)}: {UniqueExternalId}, {nameof(OtherEmails)}: {OtherEmails}, {nameof(CompanyIds)}: {CompanyIds}";
+    }
 }
