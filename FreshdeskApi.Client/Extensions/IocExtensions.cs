@@ -36,6 +36,17 @@ public static class IocExtensions
 
     public static IServiceCollection AddFreshdeskApiClient(
         this IServiceCollection serviceCollection,
+        Action<OptionsBuilder<FreshdeskConfiguration>> optionsBuilder,
+        Action<IHttpClientBuilder>? configureHttpClientBuilder = null
+    )
+    {
+        optionsBuilder(serviceCollection.AddOptions<FreshdeskConfiguration>());
+
+        return serviceCollection.AddFreshdeskApiClient(configureHttpClientBuilder);
+    }
+
+    public static IServiceCollection AddFreshdeskApiClient(
+        this IServiceCollection serviceCollection,
         Action<IHttpClientBuilder>? configureHttpClientBuilder = null
     )
     {
