@@ -94,6 +94,6 @@ Settings|:x:
 
 ## Development
 
-The library utilises C#9 features and therefore VS2019 or a suitable text editor are required for making changes.
+The library utilises C#11 features and therefore VS2022 or a suitable text editor are required for making changes.
 
 Please feel free to send pull requests or raise Github issues.

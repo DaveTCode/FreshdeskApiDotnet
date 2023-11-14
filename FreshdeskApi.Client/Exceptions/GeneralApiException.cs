@@ -1,11 +1,10 @@
 using System.Net.Http;
 
-namespace FreshdeskApi.Client.Exceptions
+namespace FreshdeskApi.Client.Exceptions;
+
+public class GeneralApiException : FreshdeskApiException
 {
-    public class GeneralApiException : FreshdeskApiException
+    public GeneralApiException(HttpResponseMessage response) : base(response)
     {
-        public GeneralApiException(HttpResponseMessage response) : base(response)
-        {
-        }
     }
 }
