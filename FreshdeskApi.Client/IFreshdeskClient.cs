@@ -12,34 +12,33 @@ using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
 
-namespace FreshdeskApi.Client
+namespace FreshdeskApi.Client;
+
+public interface IFreshdeskClient
 {
-    public interface IFreshdeskClient
-    {
-        IFreshdeskTicketClient Tickets { get; }
+    IFreshdeskTicketClient Tickets { get; }
 
-        IFreshdeskContactClient Contacts { get; }
+    IFreshdeskContactClient Contacts { get; }
 
-        IFreshdeskGroupClient Groups { get; }
+    IFreshdeskGroupClient Groups { get; }
 
-        IFreshdeskRoleClient Roles { get; }
+    IFreshdeskRoleClient Roles { get; }
 
-        IFreshdeskProductClient Products { get; }
+    IFreshdeskProductClient Products { get; }
 
-        IFreshdeskMeClient Me { get; }
+    IFreshdeskMeClient Me { get; }
 
-        IFreshdeskAgentClient Agents { get; }
+    IFreshdeskAgentClient Agents { get; }
 
-        IFreshdeskCompaniesClient Companies { get; }
+    IFreshdeskCompaniesClient Companies { get; }
 
-        IFreshdeskSolutionClient Solutions { get; }
+    IFreshdeskSolutionClient Solutions { get; }
 
-        IFreshdeskTicketFieldsClient TicketFields { get; }
+    IFreshdeskTicketFieldsClient TicketFields { get; }
 
-        IFreshdeskConversationsClient Conversations { get; }
+    IFreshdeskConversationsClient Conversations { get; }
 
-        IFreshdeskChannelApiClient ChannelApi { get; }
+    IFreshdeskChannelApiClient ChannelApi { get; }
 
-        IFreshdeskAttachmentsClient Attachments { get; }
-    }
+    IFreshdeskAttachmentsClient Attachments { get; }
 }
