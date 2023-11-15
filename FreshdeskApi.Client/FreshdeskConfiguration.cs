@@ -1,4 +1,4 @@
-﻿namespace FreshdeskApi.Client;
+namespace FreshdeskApi.Client;
 
 public sealed class FreshdeskConfiguration
 {
