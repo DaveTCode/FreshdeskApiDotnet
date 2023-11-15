@@ -21,31 +21,18 @@ using Microsoft.Extensions.Options;
 
 namespace FreshdeskApi.Client.Extensions;
 
-public static class IocExtensions
+public static class DependencyExtensions
 {
     public static IServiceCollection AddFreshdeskApiClient(
         this IServiceCollection serviceCollection,
         Action<FreshdeskConfiguration> options,
         Action<IHttpClientBuilder>? configureHttpClientBuilder = null
-    )
-    {
-        serviceCollection.Configure(options);
+    ) => serviceCollection
+        .AddFreshdeskApiClient(configureHttpClientBuilder)
+        .Configure(options)
+        .Services;
 
-        return serviceCollection.AddFreshdeskApiClient(configureHttpClientBuilder);
-    }
-
-    public static IServiceCollection AddFreshdeskApiClient(
-        this IServiceCollection serviceCollection,
-        Action<OptionsBuilder<FreshdeskConfiguration>> optionsBuilder,
-        Action<IHttpClientBuilder>? configureHttpClientBuilder = null
-    )
-    {
-        optionsBuilder(serviceCollection.AddOptions<FreshdeskConfiguration>());
-
-        return serviceCollection.AddFreshdeskApiClient(configureHttpClientBuilder);
-    }
-
-    public static IServiceCollection AddFreshdeskApiClient(
+    public static FreshdeskApiBuilder AddFreshdeskApiClient(
         this IServiceCollection serviceCollection,
         Action<IHttpClientBuilder>? configureHttpClientBuilder = null
     )
@@ -55,7 +42,7 @@ public static class IocExtensions
         var httpClientBuilder = serviceCollection.AddHttpClient<IFreshdeskHttpClient, FreshdeskHttpClient>(ConfigureFreshdeskHttpClient);
         configureHttpClientBuilder?.Invoke(httpClientBuilder);
 
-        return serviceCollection
+        return new FreshdeskApiBuilder(serviceCollection
             .AddScoped<IFreshdeskAgentClient, FreshdeskAgentClient>()
             .AddScoped<IFreshdeskAttachmentsClient, FreshdeskAttachmentsClient>()
             .AddScoped<IFreshdeskCannedResponseClient, FreshdeskCannedResponseClient>()
@@ -70,7 +57,8 @@ public static class IocExtensions
             .AddScoped<IFreshdeskSolutionClient, FreshdeskSolutionClient>()
             .AddScoped<IFreshdeskTicketClient, FreshdeskTicketClient>()
             .AddScoped<IFreshdeskTicketFieldsClient, FreshdeskTicketFieldsClient>()
-            .AddScoped<IFreshdeskClient, FreshdeskClient>();
+            .AddScoped<IFreshdeskClient, FreshdeskClient>()
+        );
     }
 
     public static void ConfigureFreshdeskHttpClient(IServiceProvider serviceProvider, HttpClient httpClient)
@@ -98,12 +86,5 @@ public static class IocExtensions
         );
 
         return httpClient;
-    }
-
-    public class FreshdeskConfiguration
-    {
-        public string FreshdeskDomain { get; set; } = null!;
-
-        public string ApiKey { get; set; } = null!;
     }
 }

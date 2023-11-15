@@ -13,11 +13,13 @@ var host = Host.CreateDefaultBuilder(args)
         .AddJsonFile("appsettings.json5", optional: false)
         .AddJsonFile("user.appsettings.json5", optional: false)
     )
-    .ConfigureServices(static services => services.AddFreshdeskApiClient(
-        optionsBuilder => optionsBuilder
+    .ConfigureServices(static services => services
+        .AddFreshdeskApiClient()
+        .OptionsBuilder(optionsBuilder => optionsBuilder
             .BindConfiguration(configSectionPath: "Freshdesk")
             .ValidateOnStart()
-    ))
+        )
+    )
     .Build();
 
 using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));

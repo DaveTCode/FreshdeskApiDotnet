@@ -65,7 +65,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     /// object and is therefore disposable. All of the normal issues with
     /// HttpClient are carried over.
     /// </summary>
-    /// 
+    ///
     /// <param name="freshdeskDomain">
     /// The full domain on which your Freshdesk account is hosted. e.g.
     /// https://yourdomain.freshdesk.com. This must include the
@@ -79,7 +79,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     // ReSharper disable once UnusedMember.Global
     public static FreshdeskHttpClient Create(
         string freshdeskDomain, string apiKey
-    ) => new(new HttpClient().ConfigureHttpClient(new IocExtensions.FreshdeskConfiguration
+    ) => new(new HttpClient().ConfigureHttpClient(new FreshdeskConfiguration
     {
         FreshdeskDomain = freshdeskDomain,
         ApiKey = apiKey,
@@ -207,7 +207,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
                 morePages = false;
             }
 
-            // it is safe to call it repeatably
+            // ReSharper disable once DisposeOnUsingVariable it is safe to call it repeatably
             disposingCollection.Dispose();
         }
     }
