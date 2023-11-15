@@ -38,10 +38,12 @@ NOTE: Typically you don't want to dispose the freshdesk client in this case.
 ```csharp
 using FreshdeskApi.Client.Extensions;
 
-serviceCollection.AddFreshdeskApiClient(options => {
-  options.FreshdeskDomain = "https://<mydomain>.freshdesk.com";
-  options.ApiKey = "APIKEY"; 
-})
+serviceCollection
+    .AddFreshdeskApiClient()
+    .Configure(options => {
+      options.FreshdeskDomain = "https://<mydomain>.freshdesk.com";
+      options.ApiKey = "APIKEY"; 
+    });
 
 ...
 
