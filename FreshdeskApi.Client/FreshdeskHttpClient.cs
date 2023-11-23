@@ -13,6 +13,7 @@ using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Infrastructure;
+using FreshdeskApi.Client.Tickets.Requests;
 using Newtonsoft.Json;
 using TiberHealth.Serializer;
 
@@ -291,13 +292,14 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
         if (body != null)
         {
-            httpMessage.Content = body.IsMultipartFormDataRequired()
-                ? FormDataSerializer.Serialize(body)
-                : new StringContent(
-                    JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                    Encoding.UTF8,
-                    "application/json"
-                );
+            if (body.IsMultipartFormDataRequired())
+            {
+                httpMessage.Content = (body as CreateTicketRequest).CreateMultipartContent();
+            }
+            else
+            {
+                httpMessage.Content = body.CreateJsonContent();
+            }
         }
 
         return httpMessage;
