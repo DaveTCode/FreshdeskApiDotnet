@@ -66,14 +66,11 @@ public static class HttpRequestMessageExtensions
         }
     }
 
-    public static StringContent CreateJsonContent<TBody>(this TBody body)
-        where TBody : class
-    {
-        return new StringContent(
-            JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            Encoding.UTF8,
-            "application/json"
-        );
-    }
-
+    public static StringContent CreateJsonContent<TBody>(
+        this TBody body
+    ) where TBody : class => new(
+        JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+        Encoding.UTF8,
+        "application/json"
+    );
 }
