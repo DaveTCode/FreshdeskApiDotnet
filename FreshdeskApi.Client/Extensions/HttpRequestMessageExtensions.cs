@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using FreshdeskApi.Client.Tickets.Requests;
 using Newtonsoft.Json;
 using TiberHealth.Serializer;
 
@@ -10,12 +7,23 @@ namespace FreshdeskApi.Client.Extensions;
 
 public static class HttpRequestMessageExtensions
 {
-    public static HttpContent CreateMultipartContent(this CreateTicketRequest originalRequest)
+    public static HttpContent CreateMultipartContent<TBody>(
+        this TBody originalRequest
+    ) where TBody : class
     {
-        var newRequest = originalRequest.MapToWithoutCustomFields();
-        var content = FormDataSerializer.Serialize(newRequest);
+        var content = FormDataSerializer.Serialize(originalRequest);
 
-        content.AddCustomFields(originalRequest.CustomFields);
+        if (
+            content is MultipartFormDataContent multipartContent
+            && originalRequest is IRequestWithAdditionalMultipartFormDataContent requestWithAdditionalMultipartFormDataContent
+        )
+        {
+            foreach (var additionalHttpContent in requestWithAdditionalMultipartFormDataContent.GetAdditionalMultipartFormDataContent())
+            {
+                multipartContent.Add(additionalHttpContent.HttpContent, additionalHttpContent.Name);
+            }
+        }
+
         return content;
     }
 
