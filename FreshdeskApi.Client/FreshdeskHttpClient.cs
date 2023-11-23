@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,9 +12,7 @@ using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Infrastructure;
-using FreshdeskApi.Client.Tickets.Requests;
 using Newtonsoft.Json;
-using TiberHealth.Serializer;
 
 namespace FreshdeskApi.Client;
 
@@ -292,14 +289,9 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
         if (body != null)
         {
-            if (body.IsMultipartFormDataRequired())
-            {
-                httpMessage.Content = (body as CreateTicketRequest).CreateMultipartContent();
-            }
-            else
-            {
-                httpMessage.Content = body.CreateJsonContent();
-            }
+            httpMessage.Content = body.IsMultipartFormDataRequired()
+                ? body.CreateMultipartContent()
+                : body.CreateJsonContent();
         }
 
         return httpMessage;
