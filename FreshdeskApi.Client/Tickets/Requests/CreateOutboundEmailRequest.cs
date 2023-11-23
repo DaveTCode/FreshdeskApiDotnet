@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net.Http;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Tickets.Models;
 using Newtonsoft.Json;
@@ -10,8 +11,10 @@ using TiberHealth.Serializer.Attributes;
 namespace FreshdeskApi.Client.Tickets.Requests;
 
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
-public class CreateOutboundEmailRequest : IRequestWithAttachment
+public class CreateOutboundEmailRequest : IRequestWithAttachment, IRequestWithAdditionalMultipartFormDataContent
 {
+    private const string CustomFieldsName = "custom_fields";
+
     public CreateOutboundEmailRequest(TicketStatus status, TicketPriority priority, string subject, string description,
         string email, long emailConfigId, string? requesterName = null, string[]? ccEmails = null,
         Dictionary<string, object>? customFields = null, DateTimeOffset? dueBy = null,
@@ -50,9 +53,9 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment
 
     /// <summary>
     /// Subject of the ticket. The default Value is <see langword="null"/>.
-    /// 
+    ///
     /// Note:
-    /// Call fails with <see langword="null"/> value. 
+    /// Call fails with <see langword="null"/> value.
     /// </summary>
     [JsonProperty("subject")]
     public string Subject { get; }
@@ -90,7 +93,8 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment
     /// <summary>
     /// Key value pairs containing the names and values of custom fields.
     /// </summary>
-    [JsonProperty("custom_fields")]
+    [JsonProperty(CustomFieldsName)]
+    [MultipartIgnore]
     public Dictionary<string, object>? CustomFields { get; }
 
     /// <summary>
@@ -130,6 +134,17 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment
     public IEnumerable<FileAttachment>? Files { get; }
 
     public bool IsMultipartFormDataRequired() => Files != null && Files.Any();
+
+    public IEnumerable<(HttpContent HttpContent, string Name)> GetAdditionalMultipartFormDataContent()
+    {
+        foreach (var customField in CustomFields ?? [])
+        {
+            var key = $"{CustomFieldsName}[{customField.Key}]";
+            var value = customField.Value?.ToString() ?? string.Empty;
+
+            yield return (new StringContent(value), key);
+        }
+    }
 
     public override string ToString()
     {

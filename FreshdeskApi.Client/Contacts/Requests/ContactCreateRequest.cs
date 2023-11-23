@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Http;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Contacts.Models;
 using Newtonsoft.Json;
@@ -10,11 +11,13 @@ namespace FreshdeskApi.Client.Contacts.Requests;
 /// A class containing the fields passed to create a contact.
 ///
 /// Any field set to null will be unset in Freshdesk
-/// 
+///
 /// c.f. https://developers.freshdesk.com/api/#create_contact
 /// </summary>
-public class ContactCreateRequest : IRequestWithAttachment
+public class ContactCreateRequest : IRequestWithAttachment, IRequestWithAdditionalMultipartFormDataContent
 {
+    private const string CustomFieldsName = "custom_fields";
+
     /// <summary>
     /// Name of the contact
     /// </summary>
@@ -93,7 +96,8 @@ public class ContactCreateRequest : IRequestWithAttachment
     ///
     /// c.f. https://support.freshdesk.com/support/solutions/articles/216553
     /// </summary>
-    [JsonProperty("custom_fields")]
+    [JsonProperty(CustomFieldsName)]
+    [MultipartIgnore]
     public Dictionary<string, object>? CustomFields { get; }
 
     /// <summary>
@@ -160,6 +164,17 @@ public class ContactCreateRequest : IRequestWithAttachment
     }
 
     public bool IsMultipartFormDataRequired() => Avatar != null;
+
+    public IEnumerable<(HttpContent HttpContent, string Name)> GetAdditionalMultipartFormDataContent()
+    {
+        foreach (var customField in CustomFields ?? [])
+        {
+            var key = $"{CustomFieldsName}[{customField.Key}]";
+            var value = customField.Value?.ToString() ?? string.Empty;
+
+            yield return (new StringContent(value), key);
+        }
+    }
 
     public override string ToString()
     {

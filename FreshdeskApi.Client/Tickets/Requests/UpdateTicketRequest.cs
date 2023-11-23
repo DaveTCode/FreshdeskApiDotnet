@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net.Http;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Tickets.Models;
 using Newtonsoft.Json;
@@ -14,8 +15,10 @@ namespace FreshdeskApi.Client.Tickets.Requests;
 /// required for a ticket. Any object set to null will be left unchanged.
 /// </summary>
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
-public class UpdateTicketRequest : IRequestWithAttachment
+public class UpdateTicketRequest : IRequestWithAttachment, IRequestWithAdditionalMultipartFormDataContent
 {
+    private const string CustomFieldsName = "custom_fields";
+
     public UpdateTicketRequest(TicketStatus? status = null, TicketPriority? priority = null, TicketSource? source = null,
         string? description = null, string? requesterName = null, long? requesterId = null, string? email = null, string? facebookId = null,
         string? phoneNumber = null, string? twitterId = null, string? uniqueExternalId = null, long? responderId = null,
@@ -101,7 +104,8 @@ public class UpdateTicketRequest : IRequestWithAttachment
     public long? ResponderId { get; }
 
     /// Key value pairs containing the names and values of custom fields.
-    [JsonProperty("custom_fields")]
+    [JsonProperty(CustomFieldsName)]
+    [MultipartIgnore]
     public Dictionary<string, string?>? CustomFields { get; }
 
     /// Timestamp that denotes when the ticket is due to be resolved
@@ -142,6 +146,17 @@ public class UpdateTicketRequest : IRequestWithAttachment
     public IEnumerable<FileAttachment>? Files { get; }
 
     public bool IsMultipartFormDataRequired() => Files != null && Files.Any();
+
+    public IEnumerable<(HttpContent HttpContent, string Name)> GetAdditionalMultipartFormDataContent()
+    {
+        foreach (var customField in CustomFields ?? [])
+        {
+            var key = $"{CustomFieldsName}[{customField.Key}]";
+            var value = customField.Value?.ToString() ?? string.Empty;
+
+            yield return (new StringContent(value), key);
+        }
+    }
 
     public override string ToString()
     {

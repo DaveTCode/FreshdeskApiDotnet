@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Newtonsoft.Json;
+using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.Companies.Requests;
 
 /// <summary>
 /// Base classe for the Create and Update company requests
 /// </summary>
-public abstract class BaseCompanyRequest
+public abstract class BaseCompanyRequest : IRequestWithAdditionalMultipartFormDataContent
 {
+    private const string CustomFieldsName = "custom_fields";
+
     /// <summary>
     /// Name of the company - this has to be unique
     /// </summary>
@@ -16,7 +20,7 @@ public abstract class BaseCompanyRequest
     public string? Name { get; }
 
     /// <summary>
-    /// Domains of the company. Email addresses of contacts that contain this 
+    /// Domains of the company. Email addresses of contacts that contain this
     /// domain will be associated with that company automatically.
     /// </summary>
     [JsonProperty("domains")]
@@ -63,10 +67,11 @@ public abstract class BaseCompanyRequest
     /// Only dates in the format YYYY-MM-DD are accepted as input for
     /// custom date fields.
     /// </summary>
-    [JsonProperty("custom_fields")]
+    [JsonProperty(CustomFieldsName)]
+    [MultipartIgnore]
     public Dictionary<string, object?>? CustomFields { get; }
 
-    public BaseCompanyRequest(string? name = null, string[]? domains = null, string? description = null, string? note = null, string? healthScore = null,
+    protected BaseCompanyRequest(string? name = null, string[]? domains = null, string? description = null, string? note = null, string? healthScore = null,
         string? accountTier = null, DateTime? renewalDate = null, string? industry = null, Dictionary<string, object?>? customFields = null)
     {
         Name = name;
@@ -78,6 +83,17 @@ public abstract class BaseCompanyRequest
         RenewalDate = renewalDate;
         Industry = industry;
         CustomFields = customFields;
+    }
+
+    public IEnumerable<(HttpContent HttpContent, string Name)> GetAdditionalMultipartFormDataContent()
+    {
+        foreach (var customField in CustomFields ?? [])
+        {
+            var key = $"{CustomFieldsName}[{customField.Key}]";
+            var value = customField.Value?.ToString() ?? string.Empty;
+
+            yield return (new StringContent(value), key);
+        }
     }
 
     public override string ToString()
