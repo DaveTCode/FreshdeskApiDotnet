@@ -146,6 +146,7 @@ public class CreateTicketRequest : IRequestWithAttachment
     /// Key value pairs containing the names and values of custom fields.
     /// </summary>
     [JsonProperty("custom_fields")]
+    [MultipartIgnore]
     public Dictionary<string, object>? CustomFields { get; }
 
     /// <summary>
