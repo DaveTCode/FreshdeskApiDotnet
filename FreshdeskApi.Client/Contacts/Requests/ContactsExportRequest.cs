@@ -7,7 +7,7 @@ namespace FreshdeskApi.Client.Contacts.Requests;
 /// A class containing the fields passed back for the exported contacts.
 ///
 /// Only enter the fields wanted from the exported contacts.
-/// 
+///
 /// c.f. https://developers.freshdesk.com/api/#export_contact
 /// </summary>
 public class ContactsExportRequest

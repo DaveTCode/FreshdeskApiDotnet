@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +13,6 @@ using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Infrastructure;
 using Newtonsoft.Json;
-using TiberHealth.Serializer;
 
 namespace FreshdeskApi.Client;
 
@@ -292,12 +290,8 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         if (body != null)
         {
             httpMessage.Content = body.IsMultipartFormDataRequired()
-                ? FormDataSerializer.Serialize(body)
-                : new StringContent(
-                    JsonConvert.SerializeObject(body, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                    Encoding.UTF8,
-                    "application/json"
-                );
+                ? body.CreateMultipartContent()
+                : body.CreateJsonContent();
         }
 
         return httpMessage;

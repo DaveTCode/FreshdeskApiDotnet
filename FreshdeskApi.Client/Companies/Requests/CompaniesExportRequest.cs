@@ -7,7 +7,7 @@ namespace FreshdeskApi.Client.Companies.Requests;
 /// A class containing the fields passed back for the exported companies.
 ///
 /// Only enter the fields wanted from the exported companies.
-/// 
+///
 /// c.f. https://developers.freshdesk.com/api/#export_company
 /// </summary>
 public class CompaniesExportRequest

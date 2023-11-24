@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Http;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Contacts.Models;
 using Newtonsoft.Json;
@@ -11,8 +12,10 @@ namespace FreshdeskApi.Client.Contacts.Requests;
 ///
 /// c.f. https://developers.freshdesk.com/api/#update_contact
 /// </summary>
-public class UpdateContactRequest : IRequestWithAttachment
+public class UpdateContactRequest : IRequestWithAttachment, IRequestWithAdditionalMultipartFormDataContent
 {
+    private const string CustomFieldsName = "custom_fields";
+
     /// <summary>
     /// Name of the contact
     /// </summary>
@@ -89,7 +92,8 @@ public class UpdateContactRequest : IRequestWithAttachment
     /// Only dates in the format YYYY-MM-DD are accepted as input for
     /// custom date fields.
     /// </summary>
-    [JsonProperty("custom_fields")]
+    [JsonProperty(CustomFieldsName)]
+    [MultipartIgnore]
     public Dictionary<string, object?>? CustomFields { get; }
 
     /// <summary>
@@ -155,6 +159,17 @@ public class UpdateContactRequest : IRequestWithAttachment
     }
 
     public bool IsMultipartFormDataRequired() => Avatar != null;
+
+    public IEnumerable<(HttpContent HttpContent, string Name)> GetAdditionalMultipartFormDataContent()
+    {
+        foreach (var customField in CustomFields ?? [])
+        {
+            var key = $"{CustomFieldsName}[{customField.Key}]";
+            var value = customField.Value?.ToString() ?? string.Empty;
+
+            yield return (new StringContent(value), key);
+        }
+    }
 
     public override string ToString()
     {
