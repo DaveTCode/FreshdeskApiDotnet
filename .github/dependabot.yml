@@ -9,6 +9,15 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      microsoft:
+        patterns:
+          - Microsoft.*
+          - System.*
+      xunit:
+        patterns:
+          - xunit
+          - xunit.*
 
   - package-ecosystem: "github-actions"
     directory: "/"
