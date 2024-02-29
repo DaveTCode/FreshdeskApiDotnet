@@ -21,12 +21,12 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.11.0
+        uses: gittools/actions/gitversion/setup@v0.12.0
         with:
           versionSpec: '5.x'
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
-        uses: gittools/actions/gitversion/execute@v0.11.0
+        uses: gittools/actions/gitversion/execute@v0.12.0
       - run: |
           echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
           echo "NuGetPreReleaseTagV2 (not used): ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
