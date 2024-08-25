@@ -9,6 +9,7 @@ using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
+using FreshdeskApi.Client.CustomObjects;
 using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Me;
 using FreshdeskApi.Client.Products;
@@ -43,6 +44,7 @@ public static class DependencyExtensions
         configureHttpClientBuilder?.Invoke(httpClientBuilder);
 
         return new FreshdeskApiBuilder(serviceCollection
+            .AddScoped<IFreshdeskCustomObjectClient, FreshdeskCustomObjectClient>()
             .AddScoped<IFreshdeskAgentClient, FreshdeskAgentClient>()
             .AddScoped<IFreshdeskAttachmentsClient, FreshdeskAttachmentsClient>()
             .AddScoped<IFreshdeskCannedResponseClient, FreshdeskCannedResponseClient>()
