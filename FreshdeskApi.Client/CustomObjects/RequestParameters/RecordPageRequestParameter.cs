@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 
-namespace FreshdeskApi.Client.CustomObjects.Requests;
+namespace FreshdeskApi.Client.CustomObjects.RequestParameters;
 
-public class RecordPageRequest
+public class RecordPageRequestParameter
 {
     /// <summary>
     /// The number of record to retrive in the request
@@ -16,10 +15,10 @@ public class RecordPageRequest
     /// A list of filter to apply to the request.
     /// Will be combined with an 'AND' operator
     /// </summary>
-    public List<RecordPageRequestFilter>? Filters { get; set; } = new List<RecordPageRequestFilter>();
-    
+    public List<RecordPageRequestParameterFilter>? Filters { get; set; } = new List<RecordPageRequestParameterFilter>();
+
     /// <summary>
     /// The sorting property and direction.
     /// </summary>
-    public RecordPageRequestSort? Sort { get; set; }
+    public RecordPageRequestParameterSort? Sort { get; set; }
 }

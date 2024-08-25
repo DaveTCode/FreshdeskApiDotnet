@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CustomObjects.Models;
+using FreshdeskApi.Client.CustomObjects.RequestParameters;
 using FreshdeskApi.Client.CustomObjects.Requests;
 
 namespace FreshdeskApi.Client.CustomObjects;
@@ -17,7 +18,7 @@ public interface IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <returns>The response lists all the existing Custom Object schemas along with the field names and their attributes such as field type, marked required or optional etc.</returns>
     Task<ListCustomObjectsResponse> ListCustomObjects(CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Retrieve all details about a single custom object by their id
     ///
@@ -29,7 +30,7 @@ public interface IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <returns>All details about the custom object</returns>
     Task<CustomObject> GetCustomObject(string schemaId, CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Create a new record for a specific schema.
     /// 
@@ -48,7 +49,7 @@ public interface IFreshdeskCustomObjectClient
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>The details of the created record</returns>
     Task<Record<T>> CreateRecord<T>(string schemaId, T recordData, CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Retrieve all the details and data of a single record by their id
     ///
@@ -61,7 +62,7 @@ public interface IFreshdeskCustomObjectClient
     /// <returns></returns>
     /// <returns>The details of the record</returns>
     Task<Record<T>> GetRecord<T>(string schemaId, string recordId, CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Update a record with new data
     /// 
@@ -73,7 +74,7 @@ public interface IFreshdeskCustomObjectClient
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>The details of the updated record</returns>
     Task<Record<T>> UpdateRecord<T>(string schemaId, Record<T> recordData, CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Delete a record based on a record instance
     ///
@@ -84,7 +85,7 @@ public interface IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     Task DeleteRecord<T>(string schemaId, Record<T> record, CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Delete a record based on a record id
     ///
@@ -94,7 +95,7 @@ public interface IFreshdeskCustomObjectClient
     /// <param name="recordId">The id of the record to delete</param>
     /// <param name="cancellationToken"></param>
     Task DeleteRecord(string schemaId, string recordId, CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Retrieve multitple records based on a filter.
     /// Multiple filters can be combined 
@@ -107,13 +108,13 @@ public interface IFreshdeskCustomObjectClient
     ///     5. For retrieving the total number of records , use the <see cref="GetCount"/> method, using the result of this method as parameter of the other.
     /// </summary>
     /// <param name="schemaId">The schema in which the record must be updated</param>
-    /// <param name="request">The request to limit, filter and sort the list of record to retrieve</param>
+    /// <param name="requestParameter">The request to limit, filter and sort the list of record to retrieve</param>
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>A page of record, which can be used to retrieve the next/previous page, as well as the count for the current request</returns>
 
-    Task<RecordPage<T>> ListRecords<T>(string schemaId, RecordPageRequest request, CancellationToken cancellationToken = default);
-    
+    Task<RecordPage<T>> ListRecords<T>(string schemaId, RecordPageRequestParameter requestParameter, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// Use the next link from the <see cref="currentPage"/> to retrieve the next page.
     /// The same PageSize, filter and sort will be used
@@ -123,7 +124,7 @@ public interface IFreshdeskCustomObjectClient
     /// <typeparam name="T">The type of the data</typeparam>
     /// <returns>The next record page</returns>
     Task<RecordPage<T>?> GetNextRecordPage<T>(RecordPage<T>? currentPage, CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Use the next link from the <see cref="currentPage"/> to retrieve the previous page.
     /// The same PageSize, filter and sort will be used
@@ -133,7 +134,7 @@ public interface IFreshdeskCustomObjectClient
     /// <typeparam name="T">The type of the data</typeparam>
     /// <returns>The previous record page</returns>
     Task<RecordPage<T>?> GetPreviousRecordPage<T>(RecordPage<T>? currentPage, CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// Use the count link from the <see cref="currentPage"/> to retrieve the count of record which can be retrieved for the current filter.
     /// </summary>

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CustomObjects.Models;
+using FreshdeskApi.Client.CustomObjects.RequestParameters;
 using FreshdeskApi.Client.CustomObjects.Requests;
 
 namespace FreshdeskApi.Client.CustomObjects;
@@ -31,7 +32,7 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
             .ApiOperationAsync<ListCustomObjectsResponse>(HttpMethod.Get, $"/api/v2/custom_objects/schemas", cancellationToken: cancellationToken)
             .ConfigureAwait(false);
     }
-    
+
     /// <summary>
     /// Retrieve all details about a single custom object by their id
     ///
@@ -48,7 +49,7 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
             .ApiOperationAsync<CustomObject>(HttpMethod.Get, $"/api/v2/custom_objects/schemas/{schemaId}", cancellationToken: cancellationToken)
             .ConfigureAwait(false);
     }
-    
+
     /// <summary>
     /// Create a new record for a specific schema.
     /// 
@@ -69,12 +70,12 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
     public async Task<Record<T>> CreateRecord<T>(string schemaId, T recordData, CancellationToken cancellationToken = default)
     {
         var request = new CreateRecordRequest<T>(recordData);
-        
+
         return await _freshdeskClient
             .ApiOperationAsync<Record<T>, CreateRecordRequest<T>>(HttpMethod.Post, $"/api/v2/custom_objects/schemas/{schemaId}/records/", request, cancellationToken: cancellationToken)
             .ConfigureAwait(false);
     }
-    
+
     /// <summary>
     /// Retrieve all the details and data of a single record by their id
     ///
@@ -92,7 +93,7 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
             .ApiOperationAsync<Record<T>>(HttpMethod.Get, $"/api/v2/custom_objects/schemas/{schemaId}/records/{recordId}", cancellationToken: cancellationToken)
             .ConfigureAwait(false);
     }
-    
+
     /// <summary>
     /// Update a record with new data
     /// 
@@ -126,7 +127,7 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
 
         if (record.DisplayId is null)
             throw new ArgumentNullException(nameof(record.DisplayId));
-        
+
         return DeleteRecord(schemaId, record.DisplayId, cancellationToken);
     }
 
@@ -158,27 +159,27 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
     ///     5. For retrieving the total number of records , use the <see cref="GetCount"/> method, using the result of this method as parameter of the other.
     /// </summary>
     /// <param name="schemaId">The schema in which the record must be updated</param>
-    /// <param name="request">The request to limit, filter and sort the list of record to retrieve</param>
+    /// <param name="requestParameter">The request to limit, filter and sort the list of record to retrieve</param>
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>A page of record, which can be used to retrieve the next/previous page, as well as the count for the current request</returns>
-    public async Task<RecordPage<T>> ListRecords<T>(string schemaId, RecordPageRequest request, CancellationToken cancellationToken = default)
+    public async Task<RecordPage<T>> ListRecords<T>(string schemaId, RecordPageRequestParameter requestParameter, CancellationToken cancellationToken = default)
     {
         var queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
-        if (request.PageSize is { } pageSize)
+        if (requestParameter.PageSize is { } pageSize)
         {
             queryString.Add("page_size", pageSize.ToString());
         }
 
-        foreach (var filter in request.Filters ?? [])
+        foreach (var filter in requestParameter.Filters ?? [])
         {
             queryString.Add(filter.QueryStringParameterName, filter.Value);
         }
 
-        if (request.Sort is not null)
+        if (requestParameter.Sort is not null)
         {
-            queryString.Add(request.Sort.QueryStringParameterName, request.Sort.QueryStringParameterValue);
+            queryString.Add(requestParameter.Sort.QueryStringParameterName, requestParameter.Sort.QueryStringParameterValue);
         }
 
         return (await FetchRecordPage<T>($"schemas/{schemaId}/records?{queryString.ToString()}", cancellationToken))!;
@@ -192,9 +193,9 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data</typeparam>
     /// <returns>The next record page</returns>
-    public Task<RecordPage<T>?> GetNextRecordPage<T>(RecordPage<T>? currentPage,CancellationToken cancellationToken = default)
+    public Task<RecordPage<T>?> GetNextRecordPage<T>(RecordPage<T>? currentPage, CancellationToken cancellationToken = default)
         => FetchRecordPage<T>(currentPage?.Links?.Next?.Href, cancellationToken);
-    
+
     /// <summary>
     /// Use the next link from the <see cref="currentPage"/> to retrieve the previous page.
     /// The same PageSize, filter and sort will be used
@@ -203,7 +204,7 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data</typeparam>
     /// <returns>The previous record page</returns>
-    public Task<RecordPage<T>?> GetPreviousRecordPage<T>(RecordPage<T>? currentPage,CancellationToken cancellationToken = default)
+    public Task<RecordPage<T>?> GetPreviousRecordPage<T>(RecordPage<T>? currentPage, CancellationToken cancellationToken = default)
         => FetchRecordPage<T>(currentPage?.Links?.Prev?.Href, cancellationToken);
 
     /// <summary>
@@ -220,7 +221,7 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
 
         if (currentPage?.Links?.Count?.Href is not { } href)
             throw new ArgumentNullException(nameof(currentPage.Links.Count.Href));
-        
+
         var recordCount = await _freshdeskClient
             .ApiOperationAsync<RecordCount>(HttpMethod.Get, $"/api/v2/custom_objects/{href}", cancellationToken)
             .ConfigureAwait(false);
@@ -232,7 +233,7 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
     {
         if (string.IsNullOrEmpty(queryUrl))
             return null;
-        
+
         return await _freshdeskClient
             .ApiOperationAsync<RecordPage<T>>(HttpMethod.Get, $"/api/v2/custom_objects/{queryUrl}", cancellationToken)
             .ConfigureAwait(false);

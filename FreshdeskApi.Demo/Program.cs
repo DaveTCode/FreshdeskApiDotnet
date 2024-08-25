@@ -1,6 +1,7 @@
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Contacts.Requests;
 using FreshdeskApi.Client.CustomObjects;
+using FreshdeskApi.Client.CustomObjects.RequestParameters;
 using FreshdeskApi.Client.CustomObjects.Requests;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;

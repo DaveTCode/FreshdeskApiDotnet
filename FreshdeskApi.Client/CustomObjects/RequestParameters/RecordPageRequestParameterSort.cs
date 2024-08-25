@@ -1,6 +1,6 @@
-namespace FreshdeskApi.Client.CustomObjects.Requests;
+namespace FreshdeskApi.Client.CustomObjects.RequestParameters;
 
-public class RecordPageRequestSort
+public class RecordPageRequestParameterSort
 {
     /// <summary>
     /// The sorting property
@@ -9,7 +9,7 @@ public class RecordPageRequestSort
     /// </summary>
     public string? SortBy { get; set; }
     public RecordPageRequestSortOrder Order { get; set; }
-    
+
     public string QueryStringParameterName => $"sort_by";
     public string QueryStringParameterValue => $"{SortBy};{Order}";
 

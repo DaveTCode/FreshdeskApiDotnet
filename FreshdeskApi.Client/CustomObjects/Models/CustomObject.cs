@@ -16,19 +16,19 @@ public class CustomObject
     /// </summary>
     [JsonProperty("name")]
     public string? Name { get; set; }
-    
+
     /// <summary>
     /// Auto-generated unique identifier for the Schema
     /// </summary>
     [JsonProperty("id")]
     public string? Id { get; set; }
-    
+
     /// <summary>
     /// Fields in the Schema
     /// </summary>
     [JsonProperty("fields")]
     public CustomObjectField[]? Fields { get; set; }
-    
+
     /// <summary>
     /// A short description of the Schema
     /// </summary>

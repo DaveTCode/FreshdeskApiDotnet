@@ -1,12 +1,11 @@
 using System;
-using System.Web;
 
-namespace FreshdeskApi.Client.CustomObjects.Requests;
+namespace FreshdeskApi.Client.CustomObjects.RequestParameters;
 
 /// <summary>
 /// See: https://developers.freshdesk.com/api/#filter_records_of_custom_objects
 /// </summary>
-public class RecordPageRequestFilter(string fieldName, RecordPageRequestFilterOperator @operator, string value)
+public class RecordPageRequestParameterFilter(string fieldName, RecordPageRequestFilterOperator @operator, string value)
 {
     /// <summary>
     /// The filtered property
