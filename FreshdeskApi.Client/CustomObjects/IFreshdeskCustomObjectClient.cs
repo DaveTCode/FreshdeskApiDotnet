@@ -101,7 +101,7 @@ public interface IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>A page of record, which can be used to retrieve the next/previous page, as well as the count for the current request</returns>
-    public IAsyncEnumerable<T> ListAllRecordsAsync<T>(
+    public IAsyncEnumerable<Record<T>> ListAllRecordsAsync<T>(
         ListAllRecordsRequest request,
         string schemaId,
         IPaginationConfiguration? pagingConfiguration = null,

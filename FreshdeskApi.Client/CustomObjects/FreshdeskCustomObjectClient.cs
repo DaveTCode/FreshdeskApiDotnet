@@ -82,7 +82,7 @@ public class FreshdeskCustomObjectClient(
     }
 
     /// <inheritdoc />
-    public async IAsyncEnumerable<T> ListAllRecordsAsync<T>(
+    public async IAsyncEnumerable<Record<T>> ListAllRecordsAsync<T>(
         ListAllRecordsRequest request,
         string schemaId,
         IPaginationConfiguration? pagingConfiguration = null,
@@ -91,7 +91,7 @@ public class FreshdeskCustomObjectClient(
         var query = request.GetQuery();
         await foreach (
             var product
-            in freshdeskClient.GetPagedResults<T>(
+            in freshdeskClient.GetPagedResults<Record<T>>(
                 $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records{query}",
                 pagingConfiguration, EPagingMode.RecordContract, cancellationToken
             ).ConfigureAwait(false)
