@@ -1,7 +1,9 @@
+using FreshdeskApi.Client.Attributes;
 using TiberHealth.Serializer.Attributes;
 
 namespace FreshdeskApi.Client.CommonModels;
 
+[IgnoreJsonValidation]
 [MultipartFile(ContentType = "MimeType", FileName = "Name", Value = "FileBytes")]
 public class FileAttachment
 {

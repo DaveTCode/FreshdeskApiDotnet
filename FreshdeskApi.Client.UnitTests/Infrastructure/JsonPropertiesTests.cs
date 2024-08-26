@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FreshdeskApi.Client.Attributes;
 using FreshdeskApi.Client.CommonModels;
+using FreshdeskApi.Client.CustomObjects.Requests;
+using FreshdeskApi.Client.Models;
 using Newtonsoft.Json;
 using Xunit;
 using Xunit.Sdk;
@@ -18,23 +21,22 @@ public class JsonPropertiesTests
 
         var missingJsonProperty = new List<(Type classType, string propertyName)>();
 
-        var ignoredTypes = new[]
+        foreach (
+            var type
+            in freshdeskClientType.Assembly.GetTypes()
+                .Where(x => x.IsClass)
+                .Where(x => x.Namespace?.StartsWith(freshdeskClientType.Namespace!) == true)
+                .Where(x => x.GetCustomAttribute<IgnoreJsonValidationAttribute>() is null)
+                .Where(x => new[] { ".CommonModels", ".Models", ".Requests", }.Any(n => x.Namespace!.EndsWith(n)))
+                .OrderBy(x => x.Namespace).ThenBy(x => x.Name)
+        )
         {
-            typeof(FileAttachment),
-        };
-
-        foreach (var type in freshdeskClientType.Assembly.GetTypes()
-                     .Where(x => !ignoredTypes.Contains(x))
-                     .Where(x => x.IsClass)
-                     .Where(x => x.Namespace?.StartsWith(freshdeskClientType.Namespace!) == true)
-                     .Where(x => new[] { ".CommonModels", ".Models", ".Requests", }.Any(n => x.Namespace!.EndsWith(n)))
-                     .OrderBy(x => x.Namespace).ThenBy(x => x.Name)
-                )
-        {
-            foreach (var propertyInfo in type.GetProperties()
-                         .Where(x => x.CanRead)
-                         .OrderBy(x => x.Name)
-                    )
+            foreach (
+                var propertyInfo
+                in type.GetProperties()
+                    .Where(x => x.CanRead)
+                    .OrderBy(x => x.Name)
+            )
             {
                 var jsonIgnoreAttribute = propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>();
 
@@ -54,9 +56,14 @@ public class JsonPropertiesTests
 
         if (missingJsonProperty.Any())
         {
-            var notDefinedPropertiesMessage = string.Join("\n", missingJsonProperty.Select(x => $"{x.classType.Namespace}.{x.classType.Name}:{x.propertyName}"));
+            var notDefinedPropertiesMessage = string.Join(
+                "\n",
+                missingJsonProperty.Select(x => $"{x.classType.Namespace}.{x.classType.Name}:{x.propertyName}")
+            );
 
-            throw new XunitException($"Properties without configured {typeof(JsonPropertyAttribute)}:\n{notDefinedPropertiesMessage}");
+            throw new XunitException(
+                $"Properties without configured {typeof(JsonPropertyAttribute)}:\n{notDefinedPropertiesMessage}"
+            );
         }
     }
 }

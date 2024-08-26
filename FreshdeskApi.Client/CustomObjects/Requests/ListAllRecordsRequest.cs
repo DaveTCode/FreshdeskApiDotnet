@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using FreshdeskApi.Client.Attributes;
 using FreshdeskApi.Client.CustomObjects.Requests.Parameters;
 
 namespace FreshdeskApi.Client.CustomObjects.Requests;
 
+[IgnoreJsonValidation]
 public record ListAllRecordsRequest
 {
     /// <summary>
