@@ -6,5 +6,5 @@ namespace FreshdeskApi.Client.Models;
 [IgnoreJsonValidation]
 public record PagedResponse<T>(
     IReadOnlyCollection<T> Items,
-    IReadOnlyCollection<string>? LinkHeaderValues
+    string? LinkHeaderValues
 );

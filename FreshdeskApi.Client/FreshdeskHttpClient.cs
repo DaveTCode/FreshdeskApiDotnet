@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -27,7 +28,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     /// headers. I don't currently believe one is needed for the Freshdesk
     /// API.
     /// </summary>
-    private static readonly Regex LinkHeaderRegex = new Regex(@"\<(?<url>.+)?\>");
+    private static readonly Regex LinkHeaderRegex = new(@"\<(?<url>.+)?\>");
 
     /// <summary>
     /// The rate limit remaining after the last request was completed.
@@ -159,7 +160,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
         while (morePages)
         {
-            var (newData, linkHeaderValues) = await ExecuteAndParseAsync<T>(
+            var (newData, link) = await ExecuteAndParseAsync<T>(
                 // url is relative for first request, but absolute for following paginated request(s)
                 new Uri(url, UriKind.RelativeOrAbsolute),
                 pagingMode,
@@ -182,29 +183,20 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
                 await pagingConfiguration.ProcessedPageAsync(page, cancellationToken).ConfigureAwait(false);
             }
 
-            // Handle a link header reflecting that there's another page of data
-            if (linkHeaderValues != null)
+            // Handle a link url reflecting that there's another page of data
+            if (link != null)
             {
-                var linkHeaderValue = linkHeaderValues.FirstOrDefault();
-                if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
-                {
-                    morePages = false;
-                }
-                else
-                {
-                    var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
-                    url = nextLinkMatch.Groups["url"].Value;
-                    page++;
-                }
+                url = link;
+                page++;
             }
             else if (pagingMode is EPagingMode.PageContract)
             {
                 // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
                 // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.
                 // as can be seen here: https://developers.freshdesk.com/api/#filter_tickets
-                if (newData.Any() && page < 10 && url.Contains("page"))
+                if (newData.Any() && page < 10 && url.Contains(pageKey))
                 {
-                    url = url.Replace($"page={page}", $"page={page + 1}");
+                    url = url.Replace($"{pageKey}={page}", $"{pageKey}={page + 1}");
                     page++;
                 }
                 else
@@ -279,6 +271,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     private async Task<PagedResponse<T>> DeserializeResponse<T>(
         HttpResponseMessage response,
         EPagingMode pagingMode,
+        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         CancellationToken cancellationToken
     )
     {
@@ -304,13 +297,20 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         };
     }
 
-    private IReadOnlyCollection<string>? GetLinkHeaderValues(
+    private string? GetLinkValue(
         HttpResponseHeaders httpResponseHeaders
     )
     {
         if (httpResponseHeaders.TryGetValues("link", out var linkHeaderValues))
         {
-            return [.. linkHeaderValues];
+            var linkHeaderValue = linkHeaderValues.FirstOrDefault();
+            if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
+            {
+                return null;
+            }
+
+            var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
+            return nextLinkMatch.Groups["url"].Value;
         }
 
         return null;
@@ -325,7 +325,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
         var response = serializer.Deserialize<List<T>>(reader);
 
-        return new PagedResponse<T>(response ?? [], GetLinkHeaderValues(httpResponseHeaders));
+        return new PagedResponse<T>(response ?? [], GetLinkValue(httpResponseHeaders));
     }
 
     private PagedResponse<T> DeserializePagedResponse<T>(
@@ -337,7 +337,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
         var response = serializer.Deserialize<PagedResult<T>>(reader)?.Results;
 
-        return new PagedResponse<T>(response ?? [], GetLinkHeaderValues(httpResponseHeaders));
+        return new PagedResponse<T>(response ?? [], GetLinkValue(httpResponseHeaders));
     }
 
     private PagedResponse<T> DeserializeRecordResponse<T>(
@@ -349,17 +349,17 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
         var recordPage = serializer.Deserialize<RecordPage<T>>(reader);
 
-        IReadOnlyCollection<string>? links;
+        string? link;
         if (recordPage?.Links?.Next?.Href is { } nextHref)
         {
-            links = [$"{IFreshdeskCustomObjectClient.UrlPrefix}{nextHref}"];
+            link = $"{IFreshdeskCustomObjectClient.UrlPrefix}{nextHref}";
         }
         else
         {
-            links = GetLinkHeaderValues(httpResponseHeaders);
+            link = GetLinkValue(httpResponseHeaders);
         }
 
-        return new PagedResponse<T>(recordPage?.Records ?? [], links);
+        return new PagedResponse<T>(recordPage?.Records ?? [], link);
     }
 
     private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)
