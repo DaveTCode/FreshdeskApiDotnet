@@ -225,7 +225,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         SetRateLimitValues(response);
 
         // Handle rate limiting by waiting the specified amount of time
-        while (response.StatusCode == (HttpStatusCode)429)
+        while (response.StatusCode is HttpStatusCode.TooManyRequests)
         {
             var retryAfterDelta = response.Headers.RetryAfter?.Delta;
             if (retryAfterDelta.HasValue)
