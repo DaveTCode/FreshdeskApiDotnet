@@ -1,12 +1,12 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.CustomObjects.Models;
 
-public class ListCustomObjectsResponse
+public record ListCustomObjectsResponse
 {
     /// <summary>
     /// </summary>
     [JsonProperty("schemas")]
-    public CustomObject[]? Schemas { get; set; }
-
+    public IReadOnlyCollection<CustomObject>? Schemas { get; set; }
 }

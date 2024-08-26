@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace FreshdeskApi.Client.CustomObjects.Models;
+namespace FreshdeskApi.Client.CommonModels;
 
-public class RecordPageLinks
+public record PageLinks
 {
     [JsonProperty("next")]
     public Link? Next { get; set; }

@@ -1,4 +1,6 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
+using FreshdeskApi.Client.JsonConverters;
 using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.CustomObjects.Models;
@@ -9,7 +11,7 @@ namespace FreshdeskApi.Client.CustomObjects.Models;
 /// c.f. https://developers.freshdesk.com/api/#custom-objects
 /// </summary>
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
-public class CustomObject
+public record CustomObject
 {
     /// <summary>
     /// Name of the Schema
@@ -35,8 +37,29 @@ public class CustomObject
     [JsonProperty("description")]
     public string? Description { get; set; }
 
-    public override string ToString()
-    {
-        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Description)}: {Description}";
-    }
+    /// <summary>
+    /// Prefix of the Schema
+    /// </summary>
+    [JsonProperty("prefix")]
+    public string? Prefix { get; set; }
+
+    /// <summary>
+    /// Version of the Schema
+    /// </summary>
+    [JsonProperty("version")]
+    public int? Version { get; set; }
+
+    /// <summary>
+    /// Deleted state of the Schema
+    /// </summary>
+    [JsonProperty("deleted")]
+    public bool Deleted { get; set; }
+
+    [JsonProperty("created_time")]
+    [JsonConverter(typeof(MillisecondEpochConverter))]
+    public DateTime CreatedTime { get; set; }
+
+    [JsonProperty("updated_time")]
+    [JsonConverter(typeof(MillisecondEpochConverter))]
+    public DateTime UpdatedTime { get; set; }
 }

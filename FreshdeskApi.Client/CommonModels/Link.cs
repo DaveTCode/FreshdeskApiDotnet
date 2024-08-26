@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace FreshdeskApi.Client.CustomObjects.Models;
+namespace FreshdeskApi.Client.CommonModels;
 
-public class Link
+public record Link
 {
     [JsonProperty("href")]
     public string? Href { get; set; }

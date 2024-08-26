@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CustomObjects.Models;
-using FreshdeskApi.Client.CustomObjects.RequestParameters;
 using FreshdeskApi.Client.CustomObjects.Requests;
 
 namespace FreshdeskApi.Client.CustomObjects;
@@ -71,22 +71,11 @@ public interface IFreshdeskCustomObjectClient
     /// See: https://developers.freshdesk.com/api/#update_a_custom_object_record
     /// </summary>
     /// <param name="schemaId">The schema in which the record must be updated</param>
-    /// <param name="record">The record to update, with the new data</param>
+    /// <param name="recordData">The record to update, with the new data</param>
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>The details of the updated record</returns>
     Task<Record<T>> UpdateRecord<T>(string schemaId, Record<T> recordData, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Delete a record based on a record instance
-    ///
-    /// See: https://developers.freshdesk.com/api/#delete_a_custom_object_record
-    /// </summary>
-    /// <param name="schemaId">The schema in which the record must be updated</param>
-    /// <param name="record">The record to delete</param>
-    /// <param name="cancellationToken"></param>
-    /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
-    Task DeleteRecord<T>(string schemaId, Record<T> record, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Delete a record based on a record id
@@ -99,50 +88,31 @@ public interface IFreshdeskCustomObjectClient
     Task DeleteRecord(string schemaId, string recordId, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Retrieve multitple records based on a filter.
+    /// Retrieve all records based on a filter.
     /// Multiple filters can be combined
     ///
     /// Note:
     ///     1. By default, 20 records will be returned in a single query per page
     ///     2. A maximum of 100 records can be returned in a single query per page and the pages can only be fetched sequentially
-    ///     3. For navigating to the next page, use the <see cref="GetNextRecordPage"/> method, using the result of this method as parameter of the other.
-    ///     4. Similarly, for navigating to the previous page, use the <see cref="GetPreviousRecordPage"/> method, using the result of this method as parameter of the other.
-    ///     5. For retrieving the total number of records , use the <see cref="GetCount"/> method, using the result of this method as parameter of the other.
     /// </summary>
+    /// <param name="request">The request to filter and sort the list of record to retrieve</param>
     /// <param name="schemaId">The schema in which the record must be updated</param>
-    /// <param name="requestParameter">The request to limit, filter and sort the list of record to retrieve</param>
+    /// <param name="pagingConfiguration">The pagination configuration</param>
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>A page of record, which can be used to retrieve the next/previous page, as well as the count for the current request</returns>
-
-    Task<RecordPage<T>> ListRecords<T>(string schemaId, RecordPageRequestParameter requestParameter, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Use the next link from the <see cref="currentPage"/> to retrieve the next page.
-    /// The same PageSize, filter and sort will be used
-    /// </summary>
-    /// <param name="currentPage">The current record page</param>
-    /// <param name="cancellationToken"></param>
-    /// <typeparam name="T">The type of the data</typeparam>
-    /// <returns>The next record page</returns>
-    Task<RecordPage<T>?> GetNextRecordPage<T>(RecordPage<T>? currentPage, CancellationToken cancellationToken = default);
+    public IAsyncEnumerable<T> ListAllRecordsAsync<T>(
+        ListAllRecordsRequest request,
+        string schemaId,
+        IPaginationConfiguration? pagingConfiguration = null,
+        CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Use the next link from the <see cref="currentPage"/> to retrieve the previous page.
-    /// The same PageSize, filter and sort will be used
+    /// Retrieve count of record in the schema
     /// </summary>
-    /// <param name="currentPage">The current record page</param>
-    /// <param name="cancellationToken"></param>
-    /// <typeparam name="T">The type of the data</typeparam>
-    /// <returns>The previous record page</returns>
-    Task<RecordPage<T>?> GetPreviousRecordPage<T>(RecordPage<T>? currentPage, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Use the count link from the <see cref="currentPage"/> to retrieve the count of record which can be retrieved for the current filter.
-    /// </summary>
-    /// <param name="currentPage">The current record page</param>
+    /// <param name="schemaId">The schema in which the record must be updated</param>
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data</typeparam>
     /// <returns>The record count</returns>
-    Task<int> GetCount<T>(RecordPage<T> currentPage, CancellationToken cancellationToken = default);
+    Task<int> GetCount<T>(string schemaId, CancellationToken cancellationToken = default);
 }

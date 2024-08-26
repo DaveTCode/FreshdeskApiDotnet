@@ -2,7 +2,7 @@
 
 namespace FreshdeskApi.Client.CustomObjects.Models;
 
-public class RecordCount
+public record RecordCount
 {
     [JsonProperty("count")]
     public int Count { get; set; }
