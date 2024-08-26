@@ -4,11 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
+using FreshdeskApi.Client.CustomObjects;
+using FreshdeskApi.Client.CustomObjects.Models;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Infrastructure;
@@ -186,7 +189,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
                     page++;
                 }
             }
-            else if (newStylePages)
+            else if (pagingMode is EPagingMode.PageContract)
             {
                 // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
                 // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.
@@ -211,7 +214,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         }
     }
 
-    private async Task<(ICollection<T> newData, ICollection<string>? linkHeaderValues)> ExecuteAndParseAsync<T>(
+    private async Task<PagedResponse<T>> ExecuteAndParseAsync<T>(
         Uri url,
         EPagingMode pagingMode,
         DisposingCollection disposingCollection,
@@ -262,25 +265,93 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         // response will not be used outside of this method (i.e. in Exception)
         disposingCollection.Add(response);
 
+        return await DeserializeResponse<T>(response, pagingMode, cancellationToken);
+    }
+
+    private async Task<PagedResponse<T>> DeserializeResponse<T>(
+        HttpResponseMessage response,
+        EPagingMode pagingMode,
+        CancellationToken cancellationToken
+    )
+    {
         await using var contentStream = await response.Content.ReadAsStreamAsync(
 #if NET
-                    cancellationToken
+            cancellationToken
 #endif
         );
+
         using var sr = new StreamReader(contentStream);
-        using var reader = new JsonTextReader(sr);
-        var serializer = new JsonSerializer();
+#if NET6_0_OR_GREATER
+        await
+#endif
+            using var reader = new JsonTextReader(sr);
 
-        var newData = newStylePages
-            ? serializer.Deserialize<PagedResult<T>>(reader)?.Results
-            : serializer.Deserialize<List<T>>(reader);
-
-        if (!response.Headers.TryGetValues("link", out var linkHeaderValues))
+        return pagingMode switch
         {
-            linkHeaderValues = null;
+            EPagingMode.ListStyle => DeserializeListResponse<T>(reader, response.Headers),
+            EPagingMode.PageContract => DeserializePagedResponse<T>(reader, response.Headers),
+            EPagingMode.RecordContract => DeserializeRecordResponse<T>(reader, response.Headers),
+            _ => throw new ArgumentOutOfRangeException(nameof(pagingMode), pagingMode,
+                $"Unknown {nameof(pagingMode)}, please define deserialization method"),
+        };
+    }
+
+    private IReadOnlyCollection<string>? GetLinkHeaderValues(
+        HttpResponseHeaders httpResponseHeaders
+    )
+    {
+        if (httpResponseHeaders.TryGetValues("link", out var linkHeaderValues))
+        {
+            return [.. linkHeaderValues];
         }
 
-        return (newData ?? new List<T>(), linkHeaderValues?.ToList());
+        return null;
+    }
+
+    private PagedResponse<T> DeserializeListResponse<T>(
+        JsonTextReader reader,
+        HttpResponseHeaders httpResponseHeaders
+    )
+    {
+        var serializer = new JsonSerializer();
+
+        var response = serializer.Deserialize<List<T>>(reader);
+
+        return new PagedResponse<T>(response ?? [], GetLinkHeaderValues(httpResponseHeaders));
+    }
+
+    private PagedResponse<T> DeserializePagedResponse<T>(
+        JsonTextReader reader,
+        HttpResponseHeaders httpResponseHeaders
+    )
+    {
+        var serializer = new JsonSerializer();
+
+        var response = serializer.Deserialize<PagedResult<T>>(reader)?.Results;
+
+        return new PagedResponse<T>(response ?? [], GetLinkHeaderValues(httpResponseHeaders));
+    }
+
+    private PagedResponse<T> DeserializeRecordResponse<T>(
+        JsonTextReader reader,
+        HttpResponseHeaders httpResponseHeaders
+    )
+    {
+        var serializer = new JsonSerializer();
+
+        var recordPage = serializer.Deserialize<RecordPage<T>>(reader);
+
+        IReadOnlyCollection<string>? links;
+        if (recordPage?.Links?.Next?.Href is { } nextHref)
+        {
+            links = [$"{IFreshdeskCustomObjectClient.UrlPrefix}{nextHref}"];
+        }
+        else
+        {
+            links = GetLinkHeaderValues(httpResponseHeaders);
+        }
+
+        return new PagedResponse<T>(recordPage?.Records ?? [], links);
     }
 
     private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)
@@ -360,6 +431,9 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 #endif
             );
             using var sr = new StreamReader(contentStream);
+#if NET6_0_OR_GREATER
+            await
+#endif
             using var reader = new JsonTextReader(sr);
             var serializer = new JsonSerializer();
 

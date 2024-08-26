@@ -10,6 +10,8 @@ namespace FreshdeskApi.Client.CustomObjects;
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 public interface IFreshdeskCustomObjectClient
 {
+    public const string UrlPrefix = "/api/v2/custom_objects";
+
     /// <summary>
     /// List all known custom objects type
     ///
@@ -33,14 +35,14 @@ public interface IFreshdeskCustomObjectClient
 
     /// <summary>
     /// Create a new record for a specific schema.
-    /// 
+    ///
     /// 1. The field names and their attributes to construct the request body can be obtained using the Retrieve Custom Object API.
     /// 2. While creating a record with a Lookup field value, the ID of the Object should be specified as the Lookup field value.
     ///     - For Tickets, display_id should be used as the Lookup field value
     ///     - For Contacts, org_contact_id should be used as the Lookup field value.
     ///     - For Companies, org_company_id should be used as the Lookup field value
     ///     - For Custom Objects, id of the record should be used as the Lookup field value
-    /// 
+    ///
     /// See: https://developers.freshdesk.com/api/#create_a_new_custom_object_record
     /// </summary>
     /// <param name="schemaId">The schema in which the record must be created</param>
@@ -65,7 +67,7 @@ public interface IFreshdeskCustomObjectClient
 
     /// <summary>
     /// Update a record with new data
-    /// 
+    ///
     /// See: https://developers.freshdesk.com/api/#update_a_custom_object_record
     /// </summary>
     /// <param name="schemaId">The schema in which the record must be updated</param>
@@ -98,7 +100,7 @@ public interface IFreshdeskCustomObjectClient
 
     /// <summary>
     /// Retrieve multitple records based on a filter.
-    /// Multiple filters can be combined 
+    /// Multiple filters can be combined
     ///
     /// Note:
     ///     1. By default, 20 records will be returned in a single query per page
