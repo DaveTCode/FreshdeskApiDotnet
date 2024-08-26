@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FreshdeskApi.Client.JsonConverters;
 using Newtonsoft.Json;
 
@@ -23,8 +24,11 @@ public class Record<T>
     [JsonProperty("data")]
     public T? Data { get; set; }
 
+    [JsonProperty("metadata")]
+    public IReadOnlyDictionary<string, string>? Metadata { get; set; }
+
     public override string ToString()
     {
-        return $"{nameof(DisplayId)}: {DisplayId}, {nameof(CreatedTime)}: {CreatedTime}, {nameof(UpdatedTime)}: {UpdatedTime}, {nameof(Version)}: {Version}, {nameof(Data)}: {Data}";
+        return $"{nameof(DisplayId)}: {DisplayId}, {nameof(CreatedTime)}: {CreatedTime}, {nameof(UpdatedTime)}: {UpdatedTime}, {nameof(Version)}: {Version}, {nameof(Data)}: {Data}, {nameof(Metadata)}: {Metadata}";
     }
 }
