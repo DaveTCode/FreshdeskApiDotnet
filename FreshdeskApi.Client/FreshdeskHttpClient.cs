@@ -172,7 +172,8 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
         if (pagingConfiguration.PageSize.HasValue)
         {
-            url += $"&{perPageKey}={pagingConfiguration.PageSize}";
+            if (url.Contains("?")) url += $"&{perPageKey}={pagingConfiguration.PageSize}";
+            else url += $"?{perPageKey}={pagingConfiguration.PageSize}";
         }
 
         using var disposingCollection = new DisposingCollection();
@@ -192,9 +193,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
             string? currentToken = null;
             if (link is not null)
             {
-                var linkUri = new Uri(link, UriKind.RelativeOrAbsolute);
-
-                var queryString = HttpUtility.ParseQueryString(linkUri.Query);
+                var queryString = HttpUtility.ParseQueryString(link);
                 currentToken = queryString[pageKey];
             }
 

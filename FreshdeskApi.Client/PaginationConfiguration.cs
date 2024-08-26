@@ -7,7 +7,7 @@ public sealed class PaginationConfiguration : IPaginationConfiguration
     /// <param name="beforeProcessingPageAsync">Hook before page is processed, optional</param>
     /// <param name="processedPageAsync">Hook after page is processed, optional</param>
     public PaginationConfiguration(
-        int startingPage = 1,
+        int? startingPage = 1,
         int? pageSize = null,
         IPaginationConfiguration.ProcessPageDelegate? beforeProcessingPageAsync = null,
         IPaginationConfiguration.ProcessPageDelegate? processedPageAsync = null
