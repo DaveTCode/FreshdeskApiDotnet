@@ -284,7 +284,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 #if NET6_0_OR_GREATER
         await
 #endif
-            using var reader = new JsonTextReader(sr);
+        using var reader = new JsonTextReader(sr);
 
         return pagingMode switch
         {

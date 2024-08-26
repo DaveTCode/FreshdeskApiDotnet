@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FreshdeskApi.Client.CustomObjects.Requests.Parameters;
 
 namespace FreshdeskApi.Client.CustomObjects.Requests;

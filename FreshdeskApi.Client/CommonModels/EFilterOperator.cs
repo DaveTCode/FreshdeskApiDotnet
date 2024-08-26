@@ -1,4 +1,4 @@
-﻿namespace FreshdeskApi.Client.CommonModels;
+namespace FreshdeskApi.Client.CommonModels;
 
 public enum EFilterOperator
 {

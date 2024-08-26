@@ -1,4 +1,4 @@
-﻿using FreshdeskApi.Client.CommonModels;
+using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.CustomObjects.Requests;
 using FreshdeskApi.Client.CustomObjects.Requests.Parameters;
 using Xunit;

@@ -1,4 +1,4 @@
-﻿namespace FreshdeskApi.Client.Models;
+namespace FreshdeskApi.Client.Models;
 
 public enum EPagingMode
 {
