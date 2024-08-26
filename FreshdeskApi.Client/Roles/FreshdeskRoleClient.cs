@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Roles.Models;
 
 namespace FreshdeskApi.Client.Roles;
@@ -35,7 +36,7 @@ public class FreshdeskRoleClient : IFreshdeskRoleClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (var role in _freshdeskClient
-            .GetPagedResults<Role>("/api/v2/roles", pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<Role>("/api/v2/roles", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return role;

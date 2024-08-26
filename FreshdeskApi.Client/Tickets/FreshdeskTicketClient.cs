@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Conversations.Models;
+using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Tickets.Models;
 using FreshdeskApi.Client.Tickets.Requests;
 
@@ -25,7 +26,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#view_a_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// The unique identifier of the ticket.
     /// </param>
@@ -60,10 +61,10 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// Note that this is a terrible API with a limit of 300 pages (and
     /// further pages take exponentially longer to return!
-    /// 
+    ///
     /// c.f. https://developers.freshdesk.com/api/#list_all_tickets
     /// </summary>
-    /// 
+    ///
     /// <param name="listAllTicketsRequest">
     /// A request object with required filters filled in.
     /// </param>
@@ -82,7 +83,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (var ticket in _freshdeskClient
-            .GetPagedResults<Ticket>(listAllTicketsRequest.UrlWithQueryString, pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<Ticket>(listAllTicketsRequest.UrlWithQueryString, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return ticket;
@@ -95,7 +96,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#filter_tickets
     /// </summary>
-    /// 
+    ///
     /// <param name="encodedQuery">
     /// An encoded query string of the form
     /// (ticket_field:integer or ticket_field:'string') AND ticket_field:boolean
@@ -115,7 +116,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (var ticket in _freshdeskClient
-            .GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", pagingConfiguration, true, cancellationToken)
+            .GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", pagingConfiguration, EPagingMode.PageContract, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return ticket;
@@ -127,11 +128,11 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#create_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="createTicketRequest">
     /// Describes the values of all the fields in the new ticket.
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>
@@ -151,11 +152,11 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#create_outbound_email
     /// </summary>
-    /// 
+    ///
     /// <param name="createOutboundEmailRequest">
     /// Describes the values of all the fields in the new outbound email.
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>
@@ -172,20 +173,20 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
 
     /// <summary>
     /// Create a new ticket in Freshdesk.
-    /// 
+    ///
     /// c.f. https://developers.freshdesk.com/api/#create_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// The unique identifier for the ticket to be updated.
     /// </param>
-    /// 
+    ///
     /// <param name="updateTicketRequest">
     /// Describes the values of all the fields in the new ticket.
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
-    /// 
+    ///
     /// <returns>
     /// The updated ticket with all the new values as seen by the API.
     /// </returns>
@@ -204,7 +205,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#delete_a_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -224,7 +225,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#restore_a_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -252,7 +253,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#list_all_ticket_notes
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -271,7 +272,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (var conversationEntry in _freshdeskClient
-            .GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return conversationEntry;
@@ -291,7 +292,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#list_all_ticket_timeentries
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -310,7 +311,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (var timeEntry in _freshdeskClient
-            .GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return timeEntry;
@@ -330,7 +331,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#view_ticket_satisfaction_ratings
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -349,7 +350,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (var satisfactionRating in _freshdeskClient
-            .GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return satisfactionRating;
@@ -362,7 +363,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#archive_tickets
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// The unique identifier of the archive ticket.
     /// </param>
@@ -394,7 +395,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#archive_tickets
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing archive ticket in the Freshdesk instance.
     /// </param>
@@ -413,7 +414,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (var conversationEntry in _freshdeskClient
-            .GetPagedResults<ConversationEntry>($"/api/v2/tickets/archived/{ticketId}/conversations", pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<ConversationEntry>($"/api/v2/tickets/archived/{ticketId}/conversations", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return conversationEntry;

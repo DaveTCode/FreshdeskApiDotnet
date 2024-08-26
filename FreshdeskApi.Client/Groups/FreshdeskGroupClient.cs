@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Groups.Models;
 using FreshdeskApi.Client.Groups.Requests;
+using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client.Groups;
 
@@ -59,7 +60,7 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await foreach (var group in _freshdeskClient
-            .GetPagedResults<Group>("/api/v2/groups", pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<Group>("/api/v2/groups", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return group;
@@ -75,7 +76,7 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#delete_group
     /// </summary>
-    /// 
+    ///
     /// <param name="groupId">
     /// The unique group identifier.
     /// </param>
@@ -95,11 +96,11 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#create_group
     /// </summary>
-    /// 
+    ///
     /// <param name="request">
     /// The properties to set on the new group.
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>The newly created group</returns>

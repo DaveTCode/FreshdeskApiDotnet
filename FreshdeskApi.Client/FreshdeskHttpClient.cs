@@ -12,6 +12,7 @@ using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Infrastructure;
+using FreshdeskApi.Client.Models;
 using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client;
@@ -127,7 +128,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     public async IAsyncEnumerable<T> GetPagedResults<T>(
         string url,
         IPaginationConfiguration? pagingConfiguration,
-        bool newStylePages,
+        EPagingMode pagingMode,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         pagingConfiguration ??= new PaginationConfiguration();
@@ -150,7 +151,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
             var (newData, linkHeaderValues) = await ExecuteAndParseAsync<T>(
                 // url is relative for first request, but absolute for following paginated request(s)
                 new Uri(url, UriKind.RelativeOrAbsolute),
-                newStylePages,
+                pagingMode,
                 disposingCollection,
                 cancellationToken
             );
@@ -212,7 +213,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
     private async Task<(ICollection<T> newData, ICollection<string>? linkHeaderValues)> ExecuteAndParseAsync<T>(
         Uri url,
-        bool newStylePages,
+        EPagingMode pagingMode,
         DisposingCollection disposingCollection,
         CancellationToken cancellationToken
     )

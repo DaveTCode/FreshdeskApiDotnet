@@ -1,11 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CustomObjects.Models;
 using FreshdeskApi.Client.CustomObjects.RequestParameters;
 using FreshdeskApi.Client.CustomObjects.Requests;
+using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client.CustomObjects;
 
@@ -52,14 +55,14 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
 
     /// <summary>
     /// Create a new record for a specific schema.
-    /// 
+    ///
     /// 1. The field names and their attributes to construct the request body can be obtained using the Retrieve Custom Object API.
     /// 2. While creating a record with a Lookup field value, the ID of the Object should be specified as the Lookup field value.
     ///     - For Tickets, display_id should be used as the Lookup field value
     ///     - For Contacts, org_contact_id should be used as the Lookup field value.
     ///     - For Companies, org_company_id should be used as the Lookup field value
     ///     - For Custom Objects, id of the record should be used as the Lookup field value
-    /// 
+    ///
     /// See: https://developers.freshdesk.com/api/#create_a_new_custom_object_record
     /// </summary>
     /// <param name="schemaId">The schema in which the record must be created</param>
@@ -96,7 +99,7 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
 
     /// <summary>
     /// Update a record with new data
-    /// 
+    ///
     /// See: https://developers.freshdesk.com/api/#update_a_custom_object_record
     /// </summary>
     /// <param name="schemaId">The schema in which the record must be updated</param>
@@ -149,7 +152,7 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
 
     /// <summary>
     /// Retrieve multitple records based on a filter.
-    /// Multiple filters can be combined 
+    /// Multiple filters can be combined
     ///
     /// Note:
     ///     1. By default, 20 records will be returned in a single query per page
@@ -163,6 +166,18 @@ public class FreshdeskCustomObjectClient : IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>A page of record, which can be used to retrieve the next/previous page, as well as the count for the current request</returns>
+    public async IAsyncEnumerable<T> ListAllRecordsAsync<T>(
+        string schemaId,
+        IPaginationConfiguration? pagingConfiguration = null,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        await foreach (var product in _freshdeskClient
+                           .GetPagedResults<T>($"/api/v2/custom_objects/schemas/{schemaId}/records", pagingConfiguration, EPagingMode.RecordContract, cancellationToken)
+                           .ConfigureAwait(false))
+        {
+            yield return product;
+        }
+    }
     public async Task<RecordPage<T>> ListRecords<T>(string schemaId, RecordPageRequestParameter requestParameter, CancellationToken cancellationToken = default)
     {
         var queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);

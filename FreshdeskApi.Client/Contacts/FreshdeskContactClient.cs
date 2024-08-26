@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Contacts.Models;
 using FreshdeskApi.Client.Contacts.Requests;
+using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client.Contacts;
 
@@ -70,7 +71,7 @@ public class FreshdeskContactClient : IFreshdeskContactClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#list_all_contacts
     /// </summary>
-    /// 
+    ///
     /// <param name="request">
     /// A <seealso cref="ListAllContactsRequest"/> object which contains
     /// the filters that we want to apply. By default will include all
@@ -93,7 +94,7 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
 
         await foreach (var contact in _freshdeskClient
-            .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return contact;
@@ -105,7 +106,7 @@ public class FreshdeskContactClient : IFreshdeskContactClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#update_contact
     /// </summary>
-    /// 
+    ///
     /// <param name="contactId">
     /// The unique identifier for the contact.
     /// </param>
@@ -145,11 +146,11 @@ public class FreshdeskContactClient : IFreshdeskContactClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#make_agent
     /// </summary>
-    /// 
+    ///
     /// <param name="contactId">
     /// The unique contact identifier.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// Specify what agent specific information to set.
     ///
