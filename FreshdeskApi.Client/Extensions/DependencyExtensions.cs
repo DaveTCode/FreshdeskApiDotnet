@@ -44,7 +44,6 @@ public static class DependencyExtensions
         configureHttpClientBuilder?.Invoke(httpClientBuilder);
 
         return new FreshdeskApiBuilder(serviceCollection
-            .AddScoped<IFreshdeskCustomObjectClient, FreshdeskCustomObjectClient>()
             .AddScoped<IFreshdeskAgentClient, FreshdeskAgentClient>()
             .AddScoped<IFreshdeskAttachmentsClient, FreshdeskAttachmentsClient>()
             .AddScoped<IFreshdeskCannedResponseClient, FreshdeskCannedResponseClient>()
@@ -52,6 +51,7 @@ public static class DependencyExtensions
             .AddScoped<IFreshdeskCompaniesClient, FreshdeskCompaniesClient>()
             .AddScoped<IFreshdeskContactClient, FreshdeskContactClient>()
             .AddScoped<IFreshdeskConversationsClient, FreshdeskConversationsClient>()
+            .AddScoped<IFreshdeskCustomObjectClient, FreshdeskCustomObjectClient>()
             .AddScoped<IFreshdeskGroupClient, FreshdeskGroupClient>()
             .AddScoped<IFreshdeskMeClient, FreshdeskMeClient>()
             .AddScoped<IFreshdeskProductClient, FreshdeskProductClient>()
