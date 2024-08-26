@@ -143,6 +143,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         var page = pagingConfiguration.StartingPage;
         if (pagingMode is EPagingMode.RecordContract)
         {
+            pageKey = "next_token";
             perPageKey = "page_size";
         }
 
