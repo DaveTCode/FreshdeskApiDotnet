@@ -19,7 +19,26 @@ public sealed class PaginationConfiguration : IPaginationConfiguration
         ProcessedPageAsync = processedPageAsync;
     }
 
-    public int StartingPage { get; }
+    /// <param name="startingToken">Token to start from</param>
+    /// <param name="pageSize">Page size, default unspecified</param>
+    /// <param name="beforeProcessingPageAsync">Hook before page is processed, optional</param>
+    /// <param name="processedPageAsync">Hook after page is processed, optional</param>
+    public PaginationConfiguration(
+        string? startingToken,
+        int? pageSize = null,
+        IPaginationConfiguration.ProcessPageDelegate? beforeProcessingPageAsync = null,
+        IPaginationConfiguration.ProcessPageDelegate? processedPageAsync = null
+    )
+    {
+        StartingToken = startingToken;
+        PageSize = pageSize;
+        BeforeProcessingPageAsync = beforeProcessingPageAsync;
+        ProcessedPageAsync = processedPageAsync;
+    }
+
+    public int? StartingPage { get; }
+
+    public string? StartingToken { get; }
 
     public int? PageSize { get; }
 
