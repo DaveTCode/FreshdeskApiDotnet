@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.CustomObjects;
 using FreshdeskApi.Client.CustomObjects.Models;
@@ -193,7 +194,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
             {
                 var linkUri = new Uri(link, UriKind.RelativeOrAbsolute);
 
-                var queryString = System.Web.HttpUtility.ParseQueryString(linkUri.Query);
+                var queryString = HttpUtility.ParseQueryString(linkUri.Query);
                 currentToken = queryString[pageKey];
             }
 

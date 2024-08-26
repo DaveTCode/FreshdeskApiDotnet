@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Web;
 using FreshdeskApi.Client.Attributes;
 using FreshdeskApi.Client.CustomObjects.Requests.Parameters;
 
@@ -20,7 +21,7 @@ public record ListAllRecordsRequest
 
     public string? GetQuery()
     {
-        var queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
+        var queryString = HttpUtility.ParseQueryString(string.Empty);
 
         foreach (var filter in Filters ?? [])
         {
