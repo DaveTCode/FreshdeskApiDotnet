@@ -19,7 +19,7 @@ public interface IFreshdeskCustomObjectClient
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns>The response lists all the existing Custom Object schemas along with the field names and their attributes such as field type, marked required or optional etc.</returns>
-    Task<ListCustomObjectsResponse> ListCustomObjects(CancellationToken cancellationToken = default);
+    Task<ListCustomObjectsResponse> ListCustomObjectsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve all details about a single custom object by their id
@@ -31,7 +31,7 @@ public interface IFreshdeskCustomObjectClient
     /// </param>
     /// <param name="cancellationToken"></param>
     /// <returns>All details about the custom object</returns>
-    Task<CustomObject> GetCustomObject(string schemaId, CancellationToken cancellationToken = default);
+    Task<CustomObject> GetCustomObjectAsync(string schemaId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Create a new record for a specific schema.
@@ -50,7 +50,7 @@ public interface IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>The details of the created record</returns>
-    Task<Record<T>> CreateRecord<T>(string schemaId, T recordData, CancellationToken cancellationToken = default);
+    Task<Record<T>> CreateRecordAsync<T>(string schemaId, T recordData, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve all the details and data of a single record by their id
@@ -63,7 +63,7 @@ public interface IFreshdeskCustomObjectClient
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns></returns>
     /// <returns>The details of the record</returns>
-    Task<Record<T>> GetRecord<T>(string schemaId, string recordId, CancellationToken cancellationToken = default);
+    Task<Record<T>> GetRecordAsync<T>(string schemaId, string recordId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Update a record with new data
@@ -75,7 +75,7 @@ public interface IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data. Must match the definition of the specified schemaId</typeparam>
     /// <returns>The details of the updated record</returns>
-    Task<Record<T>> UpdateRecord<T>(string schemaId, Record<T> recordData, CancellationToken cancellationToken = default);
+    Task<Record<T>> UpdateRecordAsync<T>(string schemaId, Record<T> recordData, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Delete a record based on a record id
@@ -85,7 +85,7 @@ public interface IFreshdeskCustomObjectClient
     /// <param name="schemaId">The schema in which the record must be updated</param>
     /// <param name="recordId">The id of the record to delete</param>
     /// <param name="cancellationToken"></param>
-    Task DeleteRecord(string schemaId, string recordId, CancellationToken cancellationToken = default);
+    Task DeleteRecordAsync(string schemaId, string recordId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve all records based on a filter.
@@ -114,5 +114,5 @@ public interface IFreshdeskCustomObjectClient
     /// <param name="cancellationToken"></param>
     /// <typeparam name="T">The type of the data</typeparam>
     /// <returns>The record count</returns>
-    Task<int> GetCount<T>(string schemaId, CancellationToken cancellationToken = default);
+    Task<int> GetCountAsync<T>(string schemaId, CancellationToken cancellationToken = default);
 }

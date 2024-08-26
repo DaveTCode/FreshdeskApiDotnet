@@ -16,7 +16,7 @@ public class FreshdeskCustomObjectClient(
 ) : IFreshdeskCustomObjectClient
 {
     /// <inheritdoc />
-    public async Task<ListCustomObjectsResponse> ListCustomObjects(CancellationToken cancellationToken = default)
+    public async Task<ListCustomObjectsResponse> ListCustomObjectsAsync(CancellationToken cancellationToken = default)
     {
         return await freshdeskClient
             .ApiOperationAsync<ListCustomObjectsResponse>(HttpMethod.Get,
@@ -25,7 +25,7 @@ public class FreshdeskCustomObjectClient(
     }
 
     /// <inheritdoc />
-    public async Task<CustomObject> GetCustomObject(string schemaId, CancellationToken cancellationToken = default)
+    public async Task<CustomObject> GetCustomObjectAsync(string schemaId, CancellationToken cancellationToken = default)
     {
         return await freshdeskClient
             .ApiOperationAsync<CustomObject>(HttpMethod.Get,
@@ -34,7 +34,7 @@ public class FreshdeskCustomObjectClient(
     }
 
     /// <inheritdoc />
-    public async Task<Record<T>> CreateRecord<T>(
+    public async Task<Record<T>> CreateRecordAsync<T>(
         string schemaId, T recordData, CancellationToken cancellationToken = default
     )
     {
@@ -48,7 +48,7 @@ public class FreshdeskCustomObjectClient(
     }
 
     /// <inheritdoc />
-    public async Task<Record<T>> GetRecord<T>(
+    public async Task<Record<T>> GetRecordAsync<T>(
         string schemaId, string recordId, CancellationToken cancellationToken = default
     )
     {
@@ -60,7 +60,7 @@ public class FreshdeskCustomObjectClient(
     }
 
     /// <inheritdoc />
-    public async Task<Record<T>> UpdateRecord<T>(
+    public async Task<Record<T>> UpdateRecordAsync<T>(
         string schemaId, Record<T> record, CancellationToken cancellationToken = default
     )
     {
@@ -72,7 +72,7 @@ public class FreshdeskCustomObjectClient(
     }
 
     /// <inheritdoc />
-    public async Task DeleteRecord(string schemaId, string recordId, CancellationToken cancellationToken = default)
+    public async Task DeleteRecordAsync(string schemaId, string recordId, CancellationToken cancellationToken = default)
     {
         await freshdeskClient
             .ApiOperationAsync<object>(HttpMethod.Delete,
@@ -102,10 +102,10 @@ public class FreshdeskCustomObjectClient(
     }
 
     /// <inheritdoc />
-    public async Task<int> GetCount<T>(string schemaId, CancellationToken cancellationToken = default)
+    public async Task<int> GetCountAsync<T>(string schemaId, CancellationToken cancellationToken = default)
     {
         var recordCount = await freshdeskClient
-            .ApiOperationAsync<RecordCount>(HttpMethod.Get, $"/api/v2/custom_objects/{schemaId}/records/count",
+            .ApiOperationAsync<RecordCount>(HttpMethod.Get, $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records/count",
                 cancellationToken)
             .ConfigureAwait(false);
 
