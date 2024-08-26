@@ -136,13 +136,21 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     {
         pagingConfiguration ??= new PaginationConfiguration();
 
+        var pageKey = "page";
+        var perPageKey = "per_page";
+
         var page = pagingConfiguration.StartingPage;
-        if (url.Contains("?")) url += $"&page={page}";
-        else url += $"?page={page}";
+        if (pagingMode is EPagingMode.RecordContract)
+        {
+            perPageKey = "page_size";
+        }
+
+        if (url.Contains("?")) url += $"&{pageKey}={page}";
+        else url += $"?{pageKey}={page}";
 
         if (pagingConfiguration.PageSize.HasValue)
         {
-            url += $"&per_page={pagingConfiguration.PageSize}";
+            url += $"&{perPageKey}={pagingConfiguration.PageSize}";
         }
 
         using var disposingCollection = new DisposingCollection();
