@@ -36,6 +36,30 @@ public sealed class PaginationConfiguration : IPaginationConfiguration
         ProcessedPageAsync = processedPageAsync;
     }
 
+    public static PaginationConfiguration CreatePagination(
+        int startingPage = 1,
+        int? pageSize = null,
+        IPaginationConfiguration.ProcessPageDelegate? beforeProcessingPageAsync = null,
+        IPaginationConfiguration.ProcessPageDelegate? processedPageAsync = null
+    ) => new(
+        startingPage: startingPage,
+        pageSize,
+        beforeProcessingPageAsync,
+        processedPageAsync
+    );
+
+    public static PaginationConfiguration CreateTokenPagination(
+        string? startingToken = null,
+        int? pageSize = null,
+        IPaginationConfiguration.ProcessPageDelegate? beforeProcessingPageAsync = null,
+        IPaginationConfiguration.ProcessPageDelegate? processedPageAsync = null
+    ) => new(
+        startingToken: startingToken,
+        pageSize,
+        beforeProcessingPageAsync,
+        processedPageAsync
+    );
+
     public int? StartingPage { get; }
 
     public string? StartingToken { get; }
