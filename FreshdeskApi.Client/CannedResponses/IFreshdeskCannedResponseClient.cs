@@ -1,12 +1,7 @@
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CannedResponses.Models;
-using FreshdeskApi.Client.CommonModels;
-using FreshdeskApi.Client.Contacts.Models;
-using FreshdeskApi.Client.Contacts.Requests;
 
 namespace FreshdeskApi.Client.CannedResponses;
 
@@ -30,11 +25,11 @@ public interface IFreshdeskCannedResponseClient
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// To view all canned responses in a folder. 
+    /// To view all canned responses in a folder.
     ///
     /// c.f. https://developers.freshdesk.com/api/#view_canned_response_folders
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder.
     /// </param>
@@ -45,16 +40,16 @@ public interface IFreshdeskCannedResponseClient
     /// Folder with id and title of the canned responses within it
     /// </returns>
 
-    Task<CannedResponseFolder> ListCannedRepsonsesInFolderAsync(
+    Task<CannedResponseFolder> ListCannedResponsesInFolderAsync(
         long folderId,
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// To view all the details of canned responses in a folder.  
+    /// To view all the details of canned responses in a folder.
     ///
     /// c.f. https://developers.freshdesk.com/api/#get_details_of_canned_responses_in_folders
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder.
     /// </param>
@@ -65,7 +60,7 @@ public interface IFreshdeskCannedResponseClient
     /// <returns>
     /// The detail of the canned responses contained in the folder.
     /// </returns>
-    IAsyncEnumerable<CannedResponse> GetDetailedCannedRepsonsesInFolderAsync(
+    IAsyncEnumerable<CannedResponse> GetDetailedCannedResponsesInFolderAsync(
         long folderId,
         IPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);

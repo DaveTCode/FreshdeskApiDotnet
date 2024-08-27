@@ -57,7 +57,7 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
     /// Folder with id and title of the canned responses within it
     /// </returns>
 
-    public async Task<CannedResponseFolder> ListCannedRepsonsesInFolderAsync(
+    public async Task<CannedResponseFolder> ListCannedResponsesInFolderAsync(
         long folderId,
         CancellationToken cancellationToken = default)
     {
@@ -82,7 +82,7 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
     /// <returns>
     /// The detail of the canned responses contained in the folder.
     /// </returns>
-    public async IAsyncEnumerable<CannedResponse> GetDetailedCannedRepsonsesInFolderAsync(
+    public async IAsyncEnumerable<CannedResponse> GetDetailedCannedResponsesInFolderAsync(
         long folderId,
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
