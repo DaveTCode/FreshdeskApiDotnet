@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CannedResponses.Models;
-using FreshdeskApi.Client.CommonModels;
+using FreshdeskApi.Client.Extensions;
+using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client.CannedResponses;
 
@@ -43,11 +42,11 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
     }
 
     /// <summary>
-    /// To view all canned responses in a folder. 
+    /// To view all canned responses in a folder.
     ///
     /// c.f. https://developers.freshdesk.com/api/#view_canned_response_folders
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder.
     /// </param>
@@ -58,7 +57,7 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
     /// Folder with id and title of the canned responses within it
     /// </returns>
 
-    public async Task<CannedResponseFolder> ListCannedRepsonsesInFolderAsync(
+    public async Task<CannedResponseFolder> ListCannedResponsesInFolderAsync(
         long folderId,
         CancellationToken cancellationToken = default)
     {
@@ -68,11 +67,11 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
     }
 
     /// <summary>
-    /// To view all the details of canned responses in a folder.  
+    /// To view all the details of canned responses in a folder.
     ///
     /// c.f. https://developers.freshdesk.com/api/#get_details_of_canned_responses_in_folders
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder.
     /// </param>
@@ -83,14 +82,15 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
     /// <returns>
     /// The detail of the canned responses contained in the folder.
     /// </returns>
-    public async IAsyncEnumerable<CannedResponse> GetDetailedCannedRepsonsesInFolderAsync(
+    public async IAsyncEnumerable<CannedResponse> GetDetailedCannedResponsesInFolderAsync(
         long folderId,
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
 
         await foreach (var response in _freshdeskClient
-            .GetPagedResults<CannedResponse>($"/api/v2/canned_response_folders/{folderId}/responses", pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<CannedResponse>($"/api/v2/canned_response_folders/{folderId}/responses", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return response;

@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Extensions;
+using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Solutions.Models;
 using FreshdeskApi.Client.Solutions.Requests;
 
@@ -33,11 +35,11 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_category_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The unique identifier for the category.
     /// </param>
-    /// 
+    ///
     /// <param name="languageCode">
     /// The language code of the language to translate the category into.
     /// Defaults to null which means don't translate.
@@ -71,7 +73,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// Defaults to null which means don't translate.
     /// </param>
-    /// 
+    ///
     /// <param name="pagingConfiguration"></param>
     /// <param name="cancellationToken"></param>
     ///
@@ -84,12 +86,14 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? "/api/v2/solutions/categories"
             : $"/api/v2/solutions/categories/{languageCode}";
 
         await foreach (var category in _freshdeskClient
-            .GetPagedResults<Category>(url, pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<Category>(url, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return category;
@@ -104,7 +108,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_category_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The unique group identifier.
     /// </param>
@@ -120,7 +124,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     }
 
     /// <summary>
-    /// Update a category, changing the description, portals it's visible on or the name 
+    /// Update a category, changing the description, portals it's visible on or the name
     /// </summary>
     ///
     /// <param name="categoryId">
@@ -133,7 +137,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// Defaults to null which means update the default language version
     /// of the category.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// The object defining what updates we want to make.
     /// </param>
@@ -162,7 +166,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// Create a new category setting the name, description and portals
     /// it's visible in.
     /// </summary>
-    /// 
+    ///
     /// <param name="request">
     /// The object defining what updates we want to make.
     /// </param>
@@ -185,7 +189,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// Given a category, this creates a translation of that category into the
     /// requested language code.
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The unique identifier for the category
     /// </param>
@@ -193,7 +197,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// <param name="languageCode">
     /// The language code (e.g. es) which the translation corresponds to.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// The object defining what updates we want to make.
     /// </param>
@@ -225,7 +229,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder
     /// </param>
@@ -259,7 +263,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The unique identifier for the category.
     /// </param>
@@ -282,12 +286,14 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? $"/api/v2/solutions/categories/{categoryId}/folders"
             : $"/api/v2/solutions/categories/{categoryId}/folders/{languageCode}";
 
         await foreach (var folder in _freshdeskClient.
-            GetPagedResults<Folder>(url, pagingConfiguration, false, cancellationToken)
+            GetPagedResults<Folder>(url, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return folder;
@@ -302,7 +308,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique folder identifier
     /// </param>
@@ -322,7 +328,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The category within which the folder will be placed
     /// </param>
@@ -352,7 +358,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder
     /// </param>
@@ -360,7 +366,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// <param name="languageCode">
     /// The language code (e.g. es) which the translation corresponds to.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// Encapsulates the new translation information.
     /// </param>
@@ -387,7 +393,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder.
     /// </param>
@@ -436,7 +442,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier of the folder which the article will reside within.
     /// </param>
@@ -466,7 +472,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="articleId">
     /// The unique identifier for the article.
     /// </param>
@@ -501,15 +507,15 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="articleId">
     /// The unique identifier for the article.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// Defines the properties to be updated.
     /// </param>
-    /// 
+    ///
     /// <param name="languageCode">
     /// Optional. If set then the languageCode version of the article will
     /// be updated instead of the default article.
@@ -542,7 +548,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="articleId">
     /// The unique identifier for the article
     /// </param>
@@ -574,11 +580,11 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder.
     /// </param>
-    /// 
+    ///
     /// <param name="languageCode">
     /// The language to list the articles in. By default this is null which
     /// means getting the default language version.
@@ -597,12 +603,14 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? $"/api/v2/solutions/folders/{folderId}/articles"
             : $"/api/v2/solutions/folders/{folderId}/articles/{languageCode}";
 
         await foreach (var article in _freshdeskClient
-            .GetPagedResults<Article>(url, pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<Article>(url, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return article;
@@ -614,11 +622,11 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="articleId">
     /// The unique identifier of the article to delete.
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
     public async Task DeleteArticleAsync(
         long articleId,
@@ -634,7 +642,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="termUnencoded">
     /// The terms to search for, not yet URL encoded.
     /// </param>
@@ -651,10 +659,12 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         var url = $"/api/v2/search/solutions?term={Uri.EscapeDataString(termUnencoded)}";
 
         await foreach (var article in _freshdeskClient
-            .GetPagedResults<Article>(url, pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<Article>(url, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return article;

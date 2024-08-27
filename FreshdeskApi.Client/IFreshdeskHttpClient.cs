@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client;
 
@@ -21,6 +22,6 @@ public interface IFreshdeskHttpClient
     IAsyncEnumerable<T> GetPagedResults<T>(
         string url,
         IPaginationConfiguration? pagingConfiguration,
-        bool newStylePages,
+        EPagingMode pagingMode,
         CancellationToken cancellationToken = default);
 }

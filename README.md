@@ -93,6 +93,7 @@ Business Hours|:x:
 Scenario Automations|:x:
 SLA Policies|:x:
 Settings|:x:
+Custom Objects|:heavy_check_mark:
 
 ## Development
 

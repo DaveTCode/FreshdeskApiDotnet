@@ -9,6 +9,7 @@ using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
+using FreshdeskApi.Client.CustomObjects;
 using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Me;
 using FreshdeskApi.Client.Products;
@@ -50,6 +51,7 @@ public static class DependencyExtensions
             .AddScoped<IFreshdeskCompaniesClient, FreshdeskCompaniesClient>()
             .AddScoped<IFreshdeskContactClient, FreshdeskContactClient>()
             .AddScoped<IFreshdeskConversationsClient, FreshdeskConversationsClient>()
+            .AddScoped<IFreshdeskCustomObjectClient, FreshdeskCustomObjectClient>()
             .AddScoped<IFreshdeskGroupClient, FreshdeskGroupClient>()
             .AddScoped<IFreshdeskMeClient, FreshdeskMeClient>()
             .AddScoped<IFreshdeskProductClient, FreshdeskProductClient>()

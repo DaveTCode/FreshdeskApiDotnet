@@ -1,17 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using FreshdeskApi.Client.CommonModels;
+using FreshdeskApi.Client.CustomObjects;
+using FreshdeskApi.Client.CustomObjects.Models;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Infrastructure;
+using FreshdeskApi.Client.Models;
 using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client;
@@ -23,7 +29,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     /// headers. I don't currently believe one is needed for the Freshdesk
     /// API.
     /// </summary>
-    private static readonly Regex LinkHeaderRegex = new Regex(@"\<(?<url>.+)?\>");
+    private static readonly Regex LinkHeaderRegex = new(@"\<(?<url>.+)?\>");
 
     /// <summary>
     /// The rate limit remaining after the last request was completed.
@@ -51,7 +57,13 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     public FreshdeskHttpClient(HttpClient httpClient)
     {
         if (httpClient == null) throw new ArgumentNullException(nameof(httpClient));
-        if (string.IsNullOrWhiteSpace(httpClient.BaseAddress?.AbsoluteUri)) throw new ArgumentOutOfRangeException(nameof(httpClient), httpClient, "The http client must have a base uri set");
+        if (string.IsNullOrWhiteSpace(httpClient.BaseAddress?.AbsoluteUri))
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(httpClient), httpClient,
+                "The http client must have a base uri set"
+            );
+        }
 
         _httpClient = httpClient;
     }
@@ -127,18 +139,41 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     public async IAsyncEnumerable<T> GetPagedResults<T>(
         string url,
         IPaginationConfiguration? pagingConfiguration,
-        bool newStylePages,
+        EPagingMode pagingMode,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         pagingConfiguration ??= new PaginationConfiguration();
 
-        var page = pagingConfiguration.StartingPage;
-        if (url.Contains("?")) url += $"&page={page}";
-        else url += $"?page={page}";
+        var pageKey = "page";
+        var perPageKey = "per_page";
+
+        if (pagingMode is EPagingMode.RecordContract)
+        {
+            pageKey = "next_token";
+            perPageKey = "page_size";
+        }
+
+        if (pagingConfiguration.StartingPage is { } page)
+        {
+            if (url.Contains("?")) url += $"&{pageKey}={page}";
+            else url += $"?{pageKey}={page}";
+        }
+        else if (pagingConfiguration.StartingToken is { } startingToken)
+        {
+            if (url.Contains("?")) url += $"&{pageKey}={startingToken}";
+            else url += $"?{pageKey}={startingToken}";
+
+            page = 1;
+        }
+        else
+        {
+            page = 1;
+        }
 
         if (pagingConfiguration.PageSize.HasValue)
         {
-            url += $"&per_page={pagingConfiguration.PageSize}";
+            if (url.Contains("?")) url += $"&{perPageKey}={pagingConfiguration.PageSize}";
+            else url += $"?{perPageKey}={pagingConfiguration.PageSize}";
         }
 
         using var disposingCollection = new DisposingCollection();
@@ -147,17 +182,25 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
         while (morePages)
         {
-            var (newData, linkHeaderValues) = await ExecuteAndParseAsync<T>(
+            var (newData, link) = await ExecuteAndParseAsync<T>(
                 // url is relative for first request, but absolute for following paginated request(s)
                 new Uri(url, UriKind.RelativeOrAbsolute),
-                newStylePages,
+                pagingMode,
                 disposingCollection,
                 cancellationToken
             );
 
+            string? currentToken = null;
+            if (link is not null)
+            {
+                var queryString = HttpUtility.ParseQueryString(link);
+                currentToken = queryString[pageKey];
+            }
+
             if (pagingConfiguration.BeforeProcessingPageAsync != null)
             {
-                await pagingConfiguration.BeforeProcessingPageAsync(page, cancellationToken).ConfigureAwait(false);
+                await pagingConfiguration.BeforeProcessingPageAsync(page, currentToken, cancellationToken)
+                    .ConfigureAwait(false);
             }
 
             foreach (var data in newData)
@@ -167,32 +210,24 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
             if (pagingConfiguration.ProcessedPageAsync != null)
             {
-                await pagingConfiguration.ProcessedPageAsync(page, cancellationToken).ConfigureAwait(false);
+                await pagingConfiguration.ProcessedPageAsync(page, currentToken, cancellationToken)
+                    .ConfigureAwait(false);
             }
 
-            // Handle a link header reflecting that there's another page of data
-            if (linkHeaderValues != null)
+            // Handle a link url reflecting that there's another page of data
+            if (link != null)
             {
-                var linkHeaderValue = linkHeaderValues.FirstOrDefault();
-                if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
-                {
-                    morePages = false;
-                }
-                else
-                {
-                    var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
-                    url = nextLinkMatch.Groups["url"].Value;
-                    page++;
-                }
+                url = link;
+                page++;
             }
-            else if (newStylePages)
+            else if (pagingMode is EPagingMode.PageContract)
             {
                 // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
                 // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.
                 // as can be seen here: https://developers.freshdesk.com/api/#filter_tickets
-                if (newData.Any() && page < 10 && url.Contains("page"))
+                if (newData.Any() && page < 10 && url.Contains(pageKey))
                 {
-                    url = url.Replace($"page={page}", $"page={page + 1}");
+                    url = url.Replace($"{pageKey}={page}", $"{pageKey}={page + 1}");
                     page++;
                 }
                 else
@@ -210,9 +245,9 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         }
     }
 
-    private async Task<(ICollection<T> newData, ICollection<string>? linkHeaderValues)> ExecuteAndParseAsync<T>(
+    private async Task<PagedResponse<T>> ExecuteAndParseAsync<T>(
         Uri url,
-        bool newStylePages,
+        EPagingMode pagingMode,
         DisposingCollection disposingCollection,
         CancellationToken cancellationToken
     )
@@ -224,7 +259,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         SetRateLimitValues(response);
 
         // Handle rate limiting by waiting the specified amount of time
-        while (response.StatusCode == (HttpStatusCode)429)
+        while (response.StatusCode is HttpStatusCode.TooManyRequests)
         {
             var retryAfterDelta = response.Headers.RetryAfter?.Delta;
             if (retryAfterDelta.HasValue)
@@ -261,25 +296,101 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         // response will not be used outside of this method (i.e. in Exception)
         disposingCollection.Add(response);
 
+        return await DeserializeResponse<T>(response, pagingMode, cancellationToken);
+    }
+
+    private async Task<PagedResponse<T>> DeserializeResponse<T>(
+        HttpResponseMessage response,
+        EPagingMode pagingMode,
+        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
+        CancellationToken cancellationToken
+    )
+    {
         await using var contentStream = await response.Content.ReadAsStreamAsync(
 #if NET
-                    cancellationToken
+            cancellationToken
 #endif
         );
+
         using var sr = new StreamReader(contentStream);
+#if NET6_0_OR_GREATER
+        await
+#endif
         using var reader = new JsonTextReader(sr);
-        var serializer = new JsonSerializer();
 
-        var newData = newStylePages
-            ? serializer.Deserialize<PagedResult<T>>(reader)?.Results
-            : serializer.Deserialize<List<T>>(reader);
-
-        if (!response.Headers.TryGetValues("link", out var linkHeaderValues))
+        return pagingMode switch
         {
-            linkHeaderValues = null;
+            EPagingMode.ListStyle => DeserializeListResponse<T>(reader, response.Headers),
+            EPagingMode.PageContract => DeserializePagedResponse<T>(reader, response.Headers),
+            EPagingMode.RecordContract => DeserializeRecordResponse<T>(reader, response.Headers),
+            _ => throw new ArgumentOutOfRangeException(nameof(pagingMode), pagingMode,
+                $"Unknown {nameof(pagingMode)}, please define deserialization method"),
+        };
+    }
+
+    private string? GetLinkValue(
+        HttpResponseHeaders httpResponseHeaders
+    )
+    {
+        if (httpResponseHeaders.TryGetValues("link", out var linkHeaderValues))
+        {
+            var linkHeaderValue = linkHeaderValues.FirstOrDefault();
+            if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
+            {
+                return null;
+            }
+
+            var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
+            return nextLinkMatch.Groups["url"].Value;
         }
 
-        return (newData ?? new List<T>(), linkHeaderValues?.ToList());
+        return null;
+    }
+
+    private PagedResponse<T> DeserializeListResponse<T>(
+        JsonTextReader reader,
+        HttpResponseHeaders httpResponseHeaders
+    )
+    {
+        var serializer = new JsonSerializer();
+
+        var response = serializer.Deserialize<List<T>>(reader);
+
+        return new PagedResponse<T>(response ?? [], GetLinkValue(httpResponseHeaders));
+    }
+
+    private PagedResponse<T> DeserializePagedResponse<T>(
+        JsonTextReader reader,
+        HttpResponseHeaders httpResponseHeaders
+    )
+    {
+        var serializer = new JsonSerializer();
+
+        var response = serializer.Deserialize<PagedResult<T>>(reader)?.Results;
+
+        return new PagedResponse<T>(response ?? [], GetLinkValue(httpResponseHeaders));
+    }
+
+    private PagedResponse<T> DeserializeRecordResponse<T>(
+        JsonTextReader reader,
+        HttpResponseHeaders httpResponseHeaders
+    )
+    {
+        var serializer = new JsonSerializer();
+
+        var recordPage = serializer.Deserialize<RecordPage<T>>(reader);
+
+        string? link;
+        if (recordPage?.Links?.Next?.Href is { } nextHref)
+        {
+            link = $"{IFreshdeskCustomObjectClient.UrlPrefix}{nextHref}";
+        }
+        else
+        {
+            link = GetLinkValue(httpResponseHeaders);
+        }
+
+        return new PagedResponse<T>(recordPage?.Records ?? [], link);
     }
 
     private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)
@@ -297,7 +408,9 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         return httpMessage;
     }
 
-    private async Task<HttpResponseMessage> ExecuteRequestAsync<TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken)
+    private async Task<HttpResponseMessage> ExecuteRequestAsync<TBody>(
+        HttpMethod method, string url, TBody? body, CancellationToken cancellationToken
+    )
         where TBody : class
     {
         using var httpMessage = CreateHttpRequestMessage(method, url, body);
@@ -314,7 +427,9 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     public Task<T> ApiOperationAsync<T>(HttpMethod method, string url, CancellationToken cancellationToken)
         where T : new() => ApiOperationAsync<T, object>(method, url, null, cancellationToken);
 
-    public async Task<T> ApiOperationAsync<T, TBody>(HttpMethod method, string url, TBody? body, CancellationToken cancellationToken)
+    public async Task<T> ApiOperationAsync<T, TBody>(
+        HttpMethod method, string url, TBody? body, CancellationToken cancellationToken
+    )
         where T : new()
         where TBody : class
     {
@@ -355,14 +470,20 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
             await using var contentStream = await response.Content.ReadAsStreamAsync(
 #if NET
-                    cancellationToken
+                cancellationToken
 #endif
             );
             using var sr = new StreamReader(contentStream);
+#if NET6_0_OR_GREATER
+            await
+#endif
             using var reader = new JsonTextReader(sr);
             var serializer = new JsonSerializer();
 
-            return serializer.Deserialize<T>(reader) ?? throw new ArgumentNullException(nameof(serializer.Deserialize), "Deserialized response must not be null");
+            return serializer.Deserialize<T>(reader) ?? throw new ArgumentNullException(
+                nameof(serializer.Deserialize),
+                "Deserialized response must not be null"
+            );
         }
 
 #pragma warning disable CA2000 // Receiver of the FreshdeskApiException is responsible for disposing

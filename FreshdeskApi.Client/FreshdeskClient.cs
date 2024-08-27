@@ -6,6 +6,7 @@ using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
+using FreshdeskApi.Client.CustomObjects;
 using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Me;
 using FreshdeskApi.Client.Products;
@@ -47,6 +48,8 @@ public class FreshdeskClient : IFreshdeskClient
 
     public IFreshdeskAttachmentsClient Attachments { get; }
 
+    public IFreshdeskCustomObjectClient CustomObjects { get; }
+
     /// <summary>
     /// Default constructor for DependencyInjection
     /// </summary>
@@ -63,7 +66,8 @@ public class FreshdeskClient : IFreshdeskClient
         IFreshdeskTicketFieldsClient freshdeskTicketFieldsClient,
         IFreshdeskConversationsClient freshdeskConversationsClient,
         IFreshdeskChannelApiClient freshdeskChannelApiClient,
-        IFreshdeskAttachmentsClient freshdeskAttachmentsClient
+        IFreshdeskAttachmentsClient freshdeskAttachmentsClient,
+        IFreshdeskCustomObjectClient freshdeskCustomObjectClient
     )
     {
         Tickets = freshdeskTicketClient;
@@ -79,6 +83,7 @@ public class FreshdeskClient : IFreshdeskClient
         Conversations = freshdeskConversationsClient;
         ChannelApi = freshdeskChannelApiClient;
         Attachments = freshdeskAttachmentsClient;
+        CustomObjects = freshdeskCustomObjectClient;
     }
 
     /// <summary>
@@ -106,7 +111,8 @@ public class FreshdeskClient : IFreshdeskClient
         new FreshdeskTicketFieldsClient(httpClient),
         new FreshdeskConversationsClient(httpClient),
         new FreshdeskChannelApiClient(httpClient),
-        new FreshdeskAttachmentsClient(httpClient)
+        new FreshdeskAttachmentsClient(httpClient),
+        new FreshdeskCustomObjectClient(httpClient)
     );
 
     /// <summary>

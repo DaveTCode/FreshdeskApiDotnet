@@ -27,6 +27,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="TiberHealth.Serializer" Version="1.0.48" />
+    <PackageReference Include="PolySharp" Version="1.14.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
@@ -51,4 +52,9 @@
   <ItemGroup>
     <None Include="..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="FreshdeskApi.Client.UnitTests" />
+  </ItemGroup>
+
 </Project>

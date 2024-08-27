@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Extensions;
+using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Products.Models;
 
 namespace FreshdeskApi.Client.Products;
@@ -56,8 +58,10 @@ public class FreshdeskProductClient : IFreshdeskProductClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         await foreach (var product in _freshdeskClient
-            .GetPagedResults<Product>("/api/v2/products", pagingConfiguration, false, cancellationToken)
+            .GetPagedResults<Product>("/api/v2/products", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return product;
