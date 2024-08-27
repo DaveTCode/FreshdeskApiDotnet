@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Agents.Models;
 using FreshdeskApi.Client.Agents.Requests;
+using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client.Agents;
@@ -72,6 +73,8 @@ public class FreshdeskAgentClient : IFreshdeskAgentClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         await foreach (var agent in _freshdeskClient
             .GetPagedResults<Agent>(request.UrlWithQueryString, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))

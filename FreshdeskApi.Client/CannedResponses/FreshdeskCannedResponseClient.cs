@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CannedResponses.Models;
-using FreshdeskApi.Client.CommonModels;
+using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client.CannedResponses;
@@ -89,6 +87,7 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
 
         await foreach (var response in _freshdeskClient
             .GetPagedResults<CannedResponse>($"/api/v2/canned_response_folders/{folderId}/responses", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)

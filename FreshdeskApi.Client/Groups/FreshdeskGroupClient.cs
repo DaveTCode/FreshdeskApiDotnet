@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Groups.Models;
 using FreshdeskApi.Client.Groups.Requests;
 using FreshdeskApi.Client.Models;
@@ -59,6 +60,8 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         await foreach (var group in _freshdeskClient
             .GetPagedResults<Group>("/api/v2/groups", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))

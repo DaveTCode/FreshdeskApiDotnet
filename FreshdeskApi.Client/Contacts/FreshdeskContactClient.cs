@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Contacts.Models;
 using FreshdeskApi.Client.Contacts.Requests;
+using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client.Contacts;
@@ -92,6 +93,7 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
+        pagingConfiguration.GuardPageBasedPagination();
 
         await foreach (var contact in _freshdeskClient
             .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)

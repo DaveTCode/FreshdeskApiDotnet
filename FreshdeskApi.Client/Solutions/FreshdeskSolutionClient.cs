@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Solutions.Models;
 using FreshdeskApi.Client.Solutions.Requests;
@@ -85,6 +86,8 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? "/api/v2/solutions/categories"
             : $"/api/v2/solutions/categories/{languageCode}";
@@ -283,6 +286,8 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? $"/api/v2/solutions/categories/{categoryId}/folders"
             : $"/api/v2/solutions/categories/{categoryId}/folders/{languageCode}";
@@ -598,6 +603,8 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? $"/api/v2/solutions/folders/{folderId}/articles"
             : $"/api/v2/solutions/folders/{folderId}/articles/{languageCode}";
@@ -652,6 +659,8 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         var url = $"/api/v2/search/solutions?term={Uri.EscapeDataString(termUnencoded)}";
 
         await foreach (var article in _freshdeskClient

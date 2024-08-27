@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Companies.Models;
 using FreshdeskApi.Client.Companies.Requests;
+using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client.Companies;
@@ -38,6 +39,8 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         await foreach (var company in _freshdeskClient
             .GetPagedResults<Company>("/api/v2/companies", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))
@@ -52,6 +55,8 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
+        pagingConfiguration.GuardPageBasedPagination();
+
         await foreach (var company in _freshdeskClient
             .GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", pagingConfiguration, EPagingMode.PageContract, cancellationToken)
             .ConfigureAwait(false))

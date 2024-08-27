@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
@@ -6,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CustomObjects.Models;
 using FreshdeskApi.Client.CustomObjects.Requests;
+using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
 
 namespace FreshdeskApi.Client.CustomObjects;
@@ -19,18 +21,22 @@ public class FreshdeskCustomObjectClient(
     public async Task<ListCustomObjectsResponse> ListCustomObjectsAsync(CancellationToken cancellationToken = default)
     {
         return await freshdeskClient
-            .ApiOperationAsync<ListCustomObjectsResponse>(HttpMethod.Get,
-                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas", cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+            .ApiOperationAsync<ListCustomObjectsResponse>(
+                HttpMethod.Get,
+                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas",
+                cancellationToken
+            ).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task<CustomObject> GetCustomObjectAsync(string schemaId, CancellationToken cancellationToken = default)
     {
         return await freshdeskClient
-            .ApiOperationAsync<CustomObject>(HttpMethod.Get,
-                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}", cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+            .ApiOperationAsync<CustomObject>(
+                HttpMethod.Get,
+                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}",
+                cancellationToken
+            ).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -41,10 +47,12 @@ public class FreshdeskCustomObjectClient(
         var request = new CreateRecordRequest<T>(recordData);
 
         return await freshdeskClient
-            .ApiOperationAsync<Record<T>, CreateRecordRequest<T>>(HttpMethod.Post,
-                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records/", request,
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+            .ApiOperationAsync<Record<T>, CreateRecordRequest<T>>(
+                HttpMethod.Post,
+                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records/",
+                request,
+                cancellationToken
+            ).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -53,10 +61,11 @@ public class FreshdeskCustomObjectClient(
     )
     {
         return await freshdeskClient
-            .ApiOperationAsync<Record<T>>(HttpMethod.Get,
+            .ApiOperationAsync<Record<T>>(
+                HttpMethod.Get,
                 $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records/{recordId}",
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+                cancellationToken
+            ).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -65,20 +74,23 @@ public class FreshdeskCustomObjectClient(
     )
     {
         return await freshdeskClient
-            .ApiOperationAsync<Record<T>, Record<T>>(HttpMethod.Put,
-                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records/{record.DisplayId}", record,
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+            .ApiOperationAsync<Record<T>, Record<T>>(
+                HttpMethod.Put,
+                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records/{record.DisplayId}",
+                record,
+                cancellationToken: cancellationToken
+            ).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task DeleteRecordAsync(string schemaId, string recordId, CancellationToken cancellationToken = default)
     {
         await freshdeskClient
-            .ApiOperationAsync<object>(HttpMethod.Delete,
+            .ApiOperationAsync<object>(
+                HttpMethod.Delete,
                 $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records/{recordId}",
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+                cancellationToken
+            ).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -88,11 +100,12 @@ public class FreshdeskCustomObjectClient(
         IPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var query = request.GetQuery();
+        pagingConfiguration.GuardTokenBasedPagination();
+
         await foreach (
             var product
             in freshdeskClient.GetPagedResults<Record<T>>(
-                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records{query}",
+                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records{request.GetQuery()}",
                 pagingConfiguration, EPagingMode.RecordContract, cancellationToken
             ).ConfigureAwait(false)
         )
@@ -105,9 +118,11 @@ public class FreshdeskCustomObjectClient(
     public async Task<int> GetCountAsync<T>(string schemaId, CancellationToken cancellationToken = default)
     {
         var recordCount = await freshdeskClient
-            .ApiOperationAsync<RecordCount>(HttpMethod.Get, $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records/count",
-                cancellationToken)
-            .ConfigureAwait(false);
+            .ApiOperationAsync<RecordCount>(
+                HttpMethod.Get,
+                $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records/count",
+                cancellationToken
+            ).ConfigureAwait(false);
 
         return recordCount.Count;
     }
