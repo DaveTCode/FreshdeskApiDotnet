@@ -47,7 +47,7 @@ public abstract class ContactBase
     /// </summary>
     [JsonProperty("deleted")]
     public bool Deleted { get; set; }
-    
+
     /// <summary>
     /// A short description of the contact
     /// </summary>
