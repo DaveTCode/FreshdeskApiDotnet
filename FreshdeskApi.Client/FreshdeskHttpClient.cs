@@ -185,13 +185,22 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
             // Rebuild the url based on current information
             url = initialUrl;
-            foreach (var parameter in pagingConfiguration.BuildNextPageParameters(page, newData, link))
+            var nextPageParameters = pagingConfiguration.BuildNextPageParameters(page, newData, link);
+            if (nextPageParameters is not null)
             {
-                if (url.Contains("?")) url += $"&{parameter.Key}={parameter.Value}";
-                else url += $"?{parameter.Key}={parameter.Value}";   
+                foreach (var parameter in nextPageParameters)
+                {
+                    if (url.Contains("?")) url += $"&{parameter.Key}={parameter.Value}";
+                    else url += $"?{parameter.Key}={parameter.Value}";
+                }
+                
+                page++;
+            }
+            else
+            {
+                morePages = false;
             }
 
-            page++;
 
             // ReSharper disable once DisposeOnUsingVariable it is safe to call it repeatably
             disposingCollection.Dispose();

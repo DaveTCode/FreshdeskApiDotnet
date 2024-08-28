@@ -93,12 +93,12 @@ public sealed class TokenBasedPaginationConfiguration : IPaginationConfiguration
 
     public int? PageSize { get; }
 
-    public Dictionary<string, string> BuildInitialPageParameters()
+    private Dictionary<string, string> BuildParameter(string? token)
     {
         var result = new Dictionary<string, string>();
 
-        if (StartingToken is not null)
-            result["next_token"] = StartingToken;
+        if (token is not null)
+            result["next_token"] = token;
 
         if (PageSize is not null)
             result["page_size"] = PageSize.Value.ToString();
@@ -106,6 +106,8 @@ public sealed class TokenBasedPaginationConfiguration : IPaginationConfiguration
         return result;
     }
 
+    public Dictionary<string, string> BuildInitialPageParameters()
+        => BuildParameter(StartingToken);
 
     public Dictionary<string, string>? BuildNextPageParameters<T>(int page, IReadOnlyCollection<T> newData, string link)
     {
@@ -113,10 +115,12 @@ public sealed class TokenBasedPaginationConfiguration : IPaginationConfiguration
         if (link is not null)
         {
             var queryString = HttpUtility.ParseQueryString(link);
-            currentToken = queryString["next_token"];
+            var nextToken = queryString["next_token"];
+            if(nextToken is not null)
+                return BuildParameter(nextToken);
         }
 
-        throw new NotImplementedException();
+        return null;
     }
 
     public IPaginationConfiguration.ProcessPageDelegate? BeforeProcessingPageAsync { get; }

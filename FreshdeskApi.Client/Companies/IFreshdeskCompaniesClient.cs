@@ -57,7 +57,7 @@ public interface IFreshdeskCompaniesClient
     /// Will be appended with ?query="encodedQuery" so don't enclose in quotes.
     /// </param>
     ///
-    /// <param name="pagingConfiguration"></param>
+    /// <param name="pagingConfiguration">NOTE: The PageSize can't be configured for this api</param>
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>
