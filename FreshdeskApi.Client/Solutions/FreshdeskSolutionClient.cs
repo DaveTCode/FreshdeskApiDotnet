@@ -83,10 +83,10 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// </returns>
     public async IAsyncEnumerable<Category> ListAllCategoriesAsync(
         string? languageCode = null,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? "/api/v2/solutions/categories"
@@ -283,10 +283,10 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     public async IAsyncEnumerable<Folder> GetAllFoldersInCategoryAsync(
         long categoryId,
         string? languageCode = null,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? $"/api/v2/solutions/categories/{categoryId}/folders"
@@ -600,10 +600,10 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     public async IAsyncEnumerable<Article> ListArticlesInFolderAsync(
         long folderId,
         string? languageCode = null,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? $"/api/v2/solutions/folders/{folderId}/articles"
@@ -656,10 +656,10 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// </returns>
     public async IAsyncEnumerable<Article> SearchSolutionsAsync(
         string termUnencoded,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         var url = $"/api/v2/search/solutions?term={Uri.EscapeDataString(termUnencoded)}";
 

@@ -46,7 +46,7 @@ public interface IFreshdeskAgentClient
     /// </returns>
     IAsyncEnumerable<Agent> ListAllAgentsAsync(
         ListAllAgentsRequest request,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>

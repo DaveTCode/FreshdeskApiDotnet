@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,22 +10,12 @@ namespace FreshdeskApi.Client;
 /// </summary>
 public interface IPaginationConfiguration
 {
-    /// <summary>
-    /// Page to start from
-    /// </summary>
-    int? StartingPage { get; }
+    public Dictionary<string, string> BuildInitialPageParameters();
 
-    /// <summary>
-    /// A token to start from
-    /// </summary>
-    string? StartingToken { get; }
-
-    /// <summary>
-    /// Page size (see Freshdesk API documentation, there are different allowed page sizes)
-    /// </summary>
-    int? PageSize { get; }
-
-    public delegate Task ProcessPageDelegate(int page, string? currentToken, CancellationToken? cancellationToken = default);
+    public Dictionary<string, string>? BuildNextPageParameters<T>(int page, IReadOnlyCollection<T> newData, string link);
+    
+    
+    public delegate Task ProcessPageDelegate(int page, string url, CancellationToken? cancellationToken = default);
 
     /// <summary>
     /// This event is invoked right after deserialization of the page

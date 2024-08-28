@@ -97,11 +97,11 @@ public class FreshdeskCustomObjectClient(
     public async IAsyncEnumerable<Record<T>> ListAllRecordsAsync<T>(
         ListAllRecordsRequest request,
         string schemaId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        TokenBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardTokenBasedPagination();
-
+        pagingConfiguration ??= new TokenBasedPaginationConfiguration();
+        
         await foreach (
             var product
             in freshdeskClient.GetPagedResults<Record<T>>(

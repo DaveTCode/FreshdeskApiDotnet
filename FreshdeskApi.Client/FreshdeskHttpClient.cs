@@ -137,47 +137,22 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     }
 
     public async IAsyncEnumerable<T> GetPagedResults<T>(
-        string url,
-        IPaginationConfiguration? pagingConfiguration,
+        string initialUrl,
+        IPaginationConfiguration pagingConfiguration,
         EPagingMode pagingMode,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        pagingConfiguration ??= new PaginationConfiguration();
-
-        var pageKey = "page";
-        var perPageKey = "per_page";
-
-        if (pagingMode is EPagingMode.RecordContract)
+        var url = initialUrl;
+        
+        foreach (var parameter in pagingConfiguration.BuildInitialPageParameters())
         {
-            pageKey = "next_token";
-            perPageKey = "page_size";
+            if (url.Contains("?")) url += $"&{parameter.Key}={parameter.Value}";
+            else url += $"?{parameter.Key}={parameter.Value}";   
         }
-
-        if (pagingConfiguration.StartingPage is { } page)
-        {
-            if (url.Contains("?")) url += $"&{pageKey}={page}";
-            else url += $"?{pageKey}={page}";
-        }
-        else if (pagingConfiguration.StartingToken is { } startingToken)
-        {
-            if (url.Contains("?")) url += $"&{pageKey}={startingToken}";
-            else url += $"?{pageKey}={startingToken}";
-
-            page = 1;
-        }
-        else
-        {
-            page = 1;
-        }
-
-        if (pagingConfiguration.PageSize.HasValue)
-        {
-            if (url.Contains("?")) url += $"&{perPageKey}={pagingConfiguration.PageSize}";
-            else url += $"?{perPageKey}={pagingConfiguration.PageSize}";
-        }
-
+        
         using var disposingCollection = new DisposingCollection();
 
+        var page = 1;
         var morePages = true;
 
         while (morePages)
@@ -190,16 +165,10 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
                 cancellationToken
             );
 
-            string? currentToken = null;
-            if (link is not null)
-            {
-                var queryString = HttpUtility.ParseQueryString(link);
-                currentToken = queryString[pageKey];
-            }
-
+            
             if (pagingConfiguration.BeforeProcessingPageAsync != null)
             {
-                await pagingConfiguration.BeforeProcessingPageAsync(page, currentToken, cancellationToken)
+                await pagingConfiguration.BeforeProcessingPageAsync(page, url, cancellationToken)
                     .ConfigureAwait(false);
             }
 
@@ -210,35 +179,19 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
             if (pagingConfiguration.ProcessedPageAsync != null)
             {
-                await pagingConfiguration.ProcessedPageAsync(page, currentToken, cancellationToken)
+                await pagingConfiguration.ProcessedPageAsync(page, url, cancellationToken)
                     .ConfigureAwait(false);
             }
 
-            // Handle a link url reflecting that there's another page of data
-            if (link != null)
+            // Rebuild the url based on current information
+            url = initialUrl;
+            foreach (var parameter in pagingConfiguration.BuildNextPageParameters(page, newData, link))
             {
-                url = link;
-                page++;
+                if (url.Contains("?")) url += $"&{parameter.Key}={parameter.Value}";
+                else url += $"?{parameter.Key}={parameter.Value}";   
             }
-            else if (pagingMode is EPagingMode.PageContract)
-            {
-                // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
-                // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.
-                // as can be seen here: https://developers.freshdesk.com/api/#filter_tickets
-                if (newData.Any() && page < 10 && url.Contains(pageKey))
-                {
-                    url = url.Replace($"{pageKey}={page}", $"{pageKey}={page + 1}");
-                    page++;
-                }
-                else
-                {
-                    morePages = false;
-                }
-            }
-            else
-            {
-                morePages = false;
-            }
+
+            page++;
 
             // ReSharper disable once DisposeOnUsingVariable it is safe to call it repeatably
             disposingCollection.Dispose();

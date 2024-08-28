@@ -53,7 +53,7 @@ public interface IFreshdeskSolutionClient
     /// </returns>
     IAsyncEnumerable<Category> ListAllCategoriesAsync(
         string? languageCode = null,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -245,7 +245,7 @@ public interface IFreshdeskSolutionClient
     IAsyncEnumerable<Folder> GetAllFoldersInCategoryAsync(
         long categoryId,
         string? languageCode = null,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -509,7 +509,7 @@ public interface IFreshdeskSolutionClient
     IAsyncEnumerable<Article> ListArticlesInFolderAsync(
         long folderId,
         string? languageCode = null,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -546,6 +546,6 @@ public interface IFreshdeskSolutionClient
     /// </returns>
     IAsyncEnumerable<Article> SearchSolutionsAsync(
         string termUnencoded,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }

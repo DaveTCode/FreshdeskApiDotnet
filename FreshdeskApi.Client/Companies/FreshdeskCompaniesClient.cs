@@ -36,10 +36,10 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
 
     /// <inheritdoc />
     public async IAsyncEnumerable<Company> ListAllCompaniesAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var company in _freshdeskClient
             .GetPagedResults<Company>("/api/v2/companies", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
@@ -52,10 +52,10 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
     /// <inheritdoc />
     public async IAsyncEnumerable<Company> FilterCompaniesAsync(
         string encodedQuery,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var company in _freshdeskClient
             .GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", pagingConfiguration, EPagingMode.PageContract, cancellationToken)

@@ -84,10 +84,10 @@ public class FreshdeskCannedResponseClient : IFreshdeskCannedResponseClient
     /// </returns>
     public async IAsyncEnumerable<CannedResponse> GetDetailedCannedResponsesInFolderAsync(
         long folderId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var response in _freshdeskClient
             .GetPagedResults<CannedResponse>($"/api/v2/canned_response_folders/{folderId}/responses", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)

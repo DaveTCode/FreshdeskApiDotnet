@@ -33,11 +33,11 @@ public class FreshdeskRoleClient : IFreshdeskRoleClient
 
     /// <inheritdoc />
     public async IAsyncEnumerable<Role> ListAllRolesAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
-
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
+        
         await foreach (var role in _freshdeskClient
             .GetPagedResults<Role>("/api/v2/roles", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
             .ConfigureAwait(false))

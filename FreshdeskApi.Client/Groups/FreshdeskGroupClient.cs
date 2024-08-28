@@ -57,10 +57,10 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     public async IAsyncEnumerable<Group> ListAllGroupsAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var group in _freshdeskClient
             .GetPagedResults<Group>("/api/v2/groups", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)

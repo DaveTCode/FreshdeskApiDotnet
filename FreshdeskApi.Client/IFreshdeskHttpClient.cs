@@ -20,8 +20,8 @@ public interface IFreshdeskHttpClient
         where TBody : class;
 
     IAsyncEnumerable<T> GetPagedResults<T>(
-        string url,
-        IPaginationConfiguration? pagingConfiguration,
+        string initialUrl,
+        IPaginationConfiguration pagingConfiguration,
         EPagingMode pagingMode,
         CancellationToken cancellationToken = default);
 }

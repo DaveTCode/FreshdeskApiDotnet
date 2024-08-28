@@ -80,10 +80,10 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<Ticket> ListAllTicketsAsync(
         ListAllTicketsRequest listAllTicketsRequest,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var ticket in _freshdeskClient
             .GetPagedResults<Ticket>(listAllTicketsRequest.UrlWithQueryString, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
@@ -115,10 +115,10 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<Ticket> FilterTicketsAsync(
         string encodedQuery,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var ticket in _freshdeskClient
             .GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", pagingConfiguration, EPagingMode.PageContract, cancellationToken)
@@ -273,10 +273,10 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
         long ticketId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var conversationEntry in _freshdeskClient
             .GetPagedResults<ConversationEntry>($"/api/v2/tickets/{ticketId}/conversations", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
@@ -314,10 +314,10 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
         long ticketId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var timeEntry in _freshdeskClient
             .GetPagedResults<TimeEntry>($"/api/v2/tickets/{ticketId}/time_entries", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
@@ -355,10 +355,10 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
         long ticketId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var satisfactionRating in _freshdeskClient
             .GetPagedResults<SatisfactionRating>($"/api/v2/tickets/{ticketId}/satisfaction_ratings", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
@@ -421,10 +421,10 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<ConversationEntry> GetArchiveTicketConversationsAsync(
         long ticketId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var conversationEntry in _freshdeskClient
             .GetPagedResults<ConversationEntry>($"/api/v2/tickets/archived/{ticketId}/conversations", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)

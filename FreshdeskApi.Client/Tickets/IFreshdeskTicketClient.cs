@@ -55,7 +55,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<Ticket> ListAllTicketsAsync(
         ListAllTicketsRequest listAllTicketsRequest,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -80,7 +80,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<Ticket> FilterTicketsAsync(
         string encodedQuery,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -203,7 +203,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
         long ticketId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -234,7 +234,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
         long ticketId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -265,7 +265,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
         long ticketId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
 
@@ -314,6 +314,6 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<ConversationEntry> GetArchiveTicketConversationsAsync(
         long ticketId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }

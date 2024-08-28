@@ -40,7 +40,7 @@ public interface IFreshdeskCompaniesClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Company> ListAllCompaniesAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -66,7 +66,7 @@ public interface IFreshdeskCompaniesClient
     /// </returns>
     IAsyncEnumerable<Company> FilterCompaniesAsync(
         string encodedQuery,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>

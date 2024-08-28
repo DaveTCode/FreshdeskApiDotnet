@@ -62,7 +62,7 @@ public interface IFreshdeskContactClient
     /// </returns>
     IAsyncEnumerable<ListContact> ListAllContactsAsync(
         ListAllContactsRequest request,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
