@@ -38,7 +38,7 @@ public class FreshdeskRoleClient : IFreshdeskRoleClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();
-        
+
         await foreach (var role in _freshdeskClient
             .GetPagedResults<Role>("/api/v2/roles", pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))

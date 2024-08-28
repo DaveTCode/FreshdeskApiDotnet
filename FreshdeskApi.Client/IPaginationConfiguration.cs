@@ -18,7 +18,7 @@ public interface IPaginationConfiguration
     public Dictionary<string, string>? BuildNextPageParameters<T>(int page, PagedResponse<T> response);
 
     public PagedResponse<T> DeserializeResponse<T>(JsonTextReader reader, HttpResponseHeaders httpResponseHeaders);
-    
+
     public delegate Task ProcessPageDelegate(int page, string url, CancellationToken? cancellationToken = default);
 
     /// <summary>

@@ -135,13 +135,13 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         var url = initialUrl;
-        
+
         foreach (var parameter in pagingConfiguration.BuildInitialPageParameters())
         {
             if (url.Contains("?")) url += $"&{parameter.Key}={parameter.Value}";
-            else url += $"?{parameter.Key}={parameter.Value}";   
+            else url += $"?{parameter.Key}={parameter.Value}";
         }
-        
+
         using var disposingCollection = new DisposingCollection();
 
         var page = 1;
@@ -156,10 +156,10 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
                 disposingCollection,
                 cancellationToken
             );
-            
+
             var (newData, link) = pagedResponse;
 
-            
+
             if (pagingConfiguration.BeforeProcessingPageAsync != null)
             {
                 await pagingConfiguration.BeforeProcessingPageAsync(page, url, cancellationToken)
@@ -187,7 +187,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
                     if (url.Contains("?")) url += $"&{parameter.Key}={parameter.Value}";
                     else url += $"?{parameter.Key}={parameter.Value}";
                 }
-                
+
                 page++;
             }
             else

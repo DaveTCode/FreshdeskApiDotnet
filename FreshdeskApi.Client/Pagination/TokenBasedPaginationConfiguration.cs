@@ -38,7 +38,7 @@ public sealed class TokenBasedPaginationConfiguration : BasePaginationConfigurat
 
         if (PageSize is not null)
             result["page_size"] = PageSize.Value.ToString();
-        
+
         return result;
     }
 
@@ -52,7 +52,7 @@ public sealed class TokenBasedPaginationConfiguration : BasePaginationConfigurat
         {
             var queryString = HttpUtility.ParseQueryString(response.LinkHeaderValues);
             var nextToken = queryString["next_token"];
-            if(nextToken is not null)
+            if (nextToken is not null)
                 return BuildParameter(nextToken);
         }
 

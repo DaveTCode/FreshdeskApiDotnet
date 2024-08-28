@@ -102,7 +102,7 @@ public class FreshdeskCustomObjectClient(
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new TokenBasedPaginationConfiguration();
-        
+
         await foreach (
             var product
             in freshdeskClient.GetPagedResults<Record<T>>(
