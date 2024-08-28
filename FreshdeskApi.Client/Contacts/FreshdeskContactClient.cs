@@ -89,14 +89,14 @@ public class FreshdeskContactClient : IFreshdeskContactClient
     /// </returns>
     public async IAsyncEnumerable<ListContact> ListAllContactsAsync(
         ListAllContactsRequest request,
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        ListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
-        pagingConfiguration ??= new PageBasedPaginationConfiguration();
+        pagingConfiguration ??= new ListPaginationConfiguration();
 
         await foreach (var contact in _freshdeskClient
-            .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
+            .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return contact;

@@ -106,7 +106,7 @@ public class FreshdeskCustomObjectClient(
             var product
             in freshdeskClient.GetPagedResults<Record<T>>(
                 $"{IFreshdeskCustomObjectClient.UrlPrefix}/schemas/{schemaId}/records{request.GetQuery()}",
-                pagingConfiguration, EPagingMode.RecordContract, cancellationToken
+                pagingConfiguration, cancellationToken
             ).ConfigureAwait(false)
         )
         {

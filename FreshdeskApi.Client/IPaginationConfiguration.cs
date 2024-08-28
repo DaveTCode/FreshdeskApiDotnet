@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Models;
+using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client;
 
@@ -12,8 +15,9 @@ public interface IPaginationConfiguration
 {
     public Dictionary<string, string> BuildInitialPageParameters();
 
-    public Dictionary<string, string>? BuildNextPageParameters<T>(int page, IReadOnlyCollection<T> newData, string link);
-    
+    public Dictionary<string, string>? BuildNextPageParameters<T>(int page, PagedResponse<T> response);
+
+    public PagedResponse<T> DeserializeResponse<T>(JsonTextReader reader, HttpResponseHeaders httpResponseHeaders);
     
     public delegate Task ProcessPageDelegate(int page, string url, CancellationToken? cancellationToken = default);
 

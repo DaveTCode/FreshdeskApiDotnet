@@ -55,13 +55,13 @@ public class FreshdeskProductClient : IFreshdeskProductClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     public async IAsyncEnumerable<Product> ListAllProductsAsync(
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        ListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration ??= new PageBasedPaginationConfiguration();
+        pagingConfiguration ??= new ListPaginationConfiguration();
 
         await foreach (var product in _freshdeskClient
-            .GetPagedResults<Product>("/api/v2/products", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
+            .GetPagedResults<Product>("/api/v2/products", pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return product;

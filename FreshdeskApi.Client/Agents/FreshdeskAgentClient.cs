@@ -70,13 +70,13 @@ public class FreshdeskAgentClient : IFreshdeskAgentClient
     /// </returns>
     public async IAsyncEnumerable<Agent> ListAllAgentsAsync(
         ListAllAgentsRequest request,
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        ListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration ??= new PageBasedPaginationConfiguration();
+        pagingConfiguration ??= new ListPaginationConfiguration();
 
         await foreach (var agent in _freshdeskClient
-            .GetPagedResults<Agent>(request.UrlWithQueryString, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
+            .GetPagedResults<Agent>(request.UrlWithQueryString, pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return agent;

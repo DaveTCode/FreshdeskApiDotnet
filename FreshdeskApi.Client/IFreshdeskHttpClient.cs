@@ -22,6 +22,5 @@ public interface IFreshdeskHttpClient
     IAsyncEnumerable<T> GetPagedResults<T>(
         string initialUrl,
         IPaginationConfiguration pagingConfiguration,
-        EPagingMode pagingMode,
         CancellationToken cancellationToken = default);
 }

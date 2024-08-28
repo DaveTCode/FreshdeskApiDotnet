@@ -55,7 +55,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<Ticket> ListAllTicketsAsync(
         ListAllTicketsRequest listAllTicketsRequest,
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        ListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -203,7 +203,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
         long ticketId,
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        ListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -234,7 +234,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
         long ticketId,
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        ListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -265,7 +265,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
         long ticketId,
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        ListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
 
@@ -314,6 +314,6 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<ConversationEntry> GetArchiveTicketConversationsAsync(
         long ticketId,
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        ListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }

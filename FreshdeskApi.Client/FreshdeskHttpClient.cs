@@ -25,13 +25,6 @@ namespace FreshdeskApi.Client;
 public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 {
     /// <summary>
-    /// Note this is obviously not a full method for parsing RFC5988 link
-    /// headers. I don't currently believe one is needed for the Freshdesk
-    /// API.
-    /// </summary>
-    private static readonly Regex LinkHeaderRegex = new(@"\<(?<url>.+)?\>");
-
-    /// <summary>
     /// The rate limit remaining after the last request was completed.
     ///
     /// Will be -1 until a request has been made.
@@ -139,7 +132,6 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     public async IAsyncEnumerable<T> GetPagedResults<T>(
         string initialUrl,
         IPaginationConfiguration pagingConfiguration,
-        EPagingMode pagingMode,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         var url = initialUrl;
@@ -157,13 +149,15 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
         while (morePages)
         {
-            var (newData, link) = await ExecuteAndParseAsync<T>(
+            var pagedResponse = await ExecuteAndParseAsync<T>(
                 // url is relative for first request, but absolute for following paginated request(s)
                 new Uri(url, UriKind.RelativeOrAbsolute),
-                pagingMode,
+                pagingConfiguration,
                 disposingCollection,
                 cancellationToken
             );
+            
+            var (newData, link) = pagedResponse;
 
             
             if (pagingConfiguration.BeforeProcessingPageAsync != null)
@@ -185,7 +179,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
             // Rebuild the url based on current information
             url = initialUrl;
-            var nextPageParameters = pagingConfiguration.BuildNextPageParameters(page, newData, link);
+            var nextPageParameters = pagingConfiguration.BuildNextPageParameters(page, pagedResponse);
             if (nextPageParameters is not null)
             {
                 foreach (var parameter in nextPageParameters)
@@ -209,7 +203,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
     private async Task<PagedResponse<T>> ExecuteAndParseAsync<T>(
         Uri url,
-        EPagingMode pagingMode,
+        IPaginationConfiguration paginationConfiguration,
         DisposingCollection disposingCollection,
         CancellationToken cancellationToken
     )
@@ -258,12 +252,12 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         // response will not be used outside of this method (i.e. in Exception)
         disposingCollection.Add(response);
 
-        return await DeserializeResponse<T>(response, pagingMode, cancellationToken);
+        return await DeserializeResponse<T>(response, paginationConfiguration, cancellationToken);
     }
 
     private async Task<PagedResponse<T>> DeserializeResponse<T>(
         HttpResponseMessage response,
-        EPagingMode pagingMode,
+        IPaginationConfiguration paginationConfiguration,
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         CancellationToken cancellationToken
     )
@@ -280,79 +274,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 #endif
         using var reader = new JsonTextReader(sr);
 
-        return pagingMode switch
-        {
-            EPagingMode.ListStyle => DeserializeListResponse<T>(reader, response.Headers),
-            EPagingMode.PageContract => DeserializePagedResponse<T>(reader, response.Headers),
-            EPagingMode.RecordContract => DeserializeRecordResponse<T>(reader, response.Headers),
-            _ => throw new ArgumentOutOfRangeException(nameof(pagingMode), pagingMode,
-                $"Unknown {nameof(pagingMode)}, please define deserialization method"),
-        };
-    }
-
-    private string? GetLinkValue(
-        HttpResponseHeaders httpResponseHeaders
-    )
-    {
-        if (httpResponseHeaders.TryGetValues("link", out var linkHeaderValues))
-        {
-            var linkHeaderValue = linkHeaderValues.FirstOrDefault();
-            if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
-            {
-                return null;
-            }
-
-            var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
-            return nextLinkMatch.Groups["url"].Value;
-        }
-
-        return null;
-    }
-
-    private PagedResponse<T> DeserializeListResponse<T>(
-        JsonTextReader reader,
-        HttpResponseHeaders httpResponseHeaders
-    )
-    {
-        var serializer = new JsonSerializer();
-
-        var response = serializer.Deserialize<List<T>>(reader);
-
-        return new PagedResponse<T>(response ?? [], GetLinkValue(httpResponseHeaders));
-    }
-
-    private PagedResponse<T> DeserializePagedResponse<T>(
-        JsonTextReader reader,
-        HttpResponseHeaders httpResponseHeaders
-    )
-    {
-        var serializer = new JsonSerializer();
-
-        var response = serializer.Deserialize<PagedResult<T>>(reader)?.Results;
-
-        return new PagedResponse<T>(response ?? [], GetLinkValue(httpResponseHeaders));
-    }
-
-    private PagedResponse<T> DeserializeRecordResponse<T>(
-        JsonTextReader reader,
-        HttpResponseHeaders httpResponseHeaders
-    )
-    {
-        var serializer = new JsonSerializer();
-
-        var recordPage = serializer.Deserialize<RecordPage<T>>(reader);
-
-        string? link;
-        if (recordPage?.Links?.Next?.Href is { } nextHref)
-        {
-            link = $"{IFreshdeskCustomObjectClient.UrlPrefix}{nextHref}";
-        }
-        else
-        {
-            link = GetLinkValue(httpResponseHeaders);
-        }
-
-        return new PagedResponse<T>(recordPage?.Records ?? [], link);
+        return paginationConfiguration.DeserializeResponse<T>(reader, response.Headers);
     }
 
     private HttpRequestMessage CreateHttpRequestMessage<TBody>(HttpMethod method, string url, TBody? body)

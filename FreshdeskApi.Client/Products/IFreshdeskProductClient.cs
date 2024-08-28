@@ -37,6 +37,6 @@ public interface IFreshdeskProductClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Product> ListAllProductsAsync(
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        ListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }
