@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CustomObjects.Models;
 using FreshdeskApi.Client.CustomObjects.Requests;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.CustomObjects;
 

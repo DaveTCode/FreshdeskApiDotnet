@@ -9,6 +9,7 @@ using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Groups.Models;
 using FreshdeskApi.Client.Groups.Requests;
 using FreshdeskApi.Client.Models;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Groups;
 

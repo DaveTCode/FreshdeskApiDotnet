@@ -11,6 +11,7 @@ using FreshdeskApi.Client.Contacts.Models;
 using FreshdeskApi.Client.Contacts.Requests;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Contacts;
 

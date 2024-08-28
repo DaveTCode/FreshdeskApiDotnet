@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Agents.Models;
 using FreshdeskApi.Client.Agents.Requests;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Agents;
 

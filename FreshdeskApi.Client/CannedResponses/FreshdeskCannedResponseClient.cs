@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CannedResponses.Models;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.CannedResponses;
 

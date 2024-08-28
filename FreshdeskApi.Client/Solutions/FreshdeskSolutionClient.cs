@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
+using FreshdeskApi.Client.Pagination;
 using FreshdeskApi.Client.Solutions.Models;
 using FreshdeskApi.Client.Solutions.Requests;
 

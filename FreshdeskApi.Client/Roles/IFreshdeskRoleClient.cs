@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Pagination;
 using FreshdeskApi.Client.Roles.Models;
 
 namespace FreshdeskApi.Client.Roles;

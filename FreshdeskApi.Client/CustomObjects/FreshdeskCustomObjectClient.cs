@@ -9,6 +9,7 @@ using FreshdeskApi.Client.CustomObjects.Models;
 using FreshdeskApi.Client.CustomObjects.Requests;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Models;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.CustomObjects;
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Contacts.Models;
 using FreshdeskApi.Client.Contacts.Requests;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Contacts;
 
