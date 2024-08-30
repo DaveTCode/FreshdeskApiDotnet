@@ -43,6 +43,12 @@ public abstract class ContactBase
     public bool? ViewAllTickets { get; set; }
 
     /// <summary>
+    /// True if the contact has been soft-deleted
+    /// </summary>
+    [JsonProperty("deleted")]
+    public bool Deleted { get; set; }
+
+    /// <summary>
     /// A short description of the contact
     /// </summary>
     [JsonProperty("description")]
