@@ -255,6 +255,16 @@ public class FreshdeskContactClient : IFreshdeskContactClient
     }
 
     /// <inheritdoc />
+    public async Task RestoreContactAsync(
+        long contactId,
+        CancellationToken cancellationToken = default)
+    {
+        await _freshdeskClient
+            .ApiOperationAsync<object>(HttpMethod.Put, $"/api/v2/contacts/{contactId}/restore", cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
     public async Task PermanentlyDeleteContactAsync(
         long contactId,
         bool force,

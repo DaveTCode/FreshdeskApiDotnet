@@ -184,6 +184,22 @@ public interface IFreshdeskContactClient
         CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Restore a soft deleted a Contact.
+    ///
+    /// c.f. https://developers.freshdesk.com/api/#restore_contact
+    /// </summary>
+    ///
+    /// <param name="contactId">
+    /// The deleted contact to restore.
+    /// </param>
+    ///
+    ///
+    /// <param name="cancellationToken"></param>
+    Task RestoreContactAsync(
+        long contactId,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Permanently Delete a Contact<br />
     /// Hard delete a contact to completely remove it from the portal. Can be used for GDPR compliance.
     ///
