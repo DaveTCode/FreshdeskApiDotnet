@@ -4,6 +4,7 @@ using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
+using FreshdeskApi.Client.CustomObjects;
 using FreshdeskApi.Client.Groups;
 using FreshdeskApi.Client.Me;
 using FreshdeskApi.Client.Products;
@@ -41,4 +42,6 @@ public interface IFreshdeskClient
     IFreshdeskChannelApiClient ChannelApi { get; }
 
     IFreshdeskAttachmentsClient Attachments { get; }
+    
+    IFreshdeskCustomObjectClient CustomObjects { get; }
 }
