@@ -42,6 +42,6 @@ public interface IFreshdeskClient
     IFreshdeskChannelApiClient ChannelApi { get; }
 
     IFreshdeskAttachmentsClient Attachments { get; }
-    
+
     IFreshdeskCustomObjectClient CustomObjects { get; }
 }
