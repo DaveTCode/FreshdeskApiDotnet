@@ -1,3 +1,3 @@
-﻿namespace FreshdeskApi.Client.Pagination;
+namespace FreshdeskApi.Client.Pagination;
 
 public interface IListPaginationConfiguration : IPaginationConfiguration;
