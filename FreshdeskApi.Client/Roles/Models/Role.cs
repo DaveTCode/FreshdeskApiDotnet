@@ -37,6 +37,7 @@ public class Role
     [JsonProperty("default")]
     public bool Default { get; set; }
 
+    /// <summary>
     /// Role creation timestamp
     /// </summary>
     [JsonProperty("created_at")]

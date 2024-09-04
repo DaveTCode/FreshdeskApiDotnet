@@ -10,8 +10,8 @@ public interface IFreshdeskAttachmentsClient
     ///
     /// c.f. https://developer.freshdesk.com/api/#delete_an_attachment
     /// </summary>
-    /// 
-    /// <param name="attachmentId">
+    ///
+    /// <param name="agentId">
     /// The unique identifier for the attachment.
     /// </param>
     ///

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +24,7 @@ public interface IFreshdeskTicketFieldsClient
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Return a single ticket field by it's id
+    /// Return a single ticket field by its id
     ///
     /// c.f. https://developers.freshdesk.com/api/#view_ticket_field
     /// </summary>
