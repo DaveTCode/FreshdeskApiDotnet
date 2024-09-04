@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Models;
@@ -28,30 +27,30 @@ public sealed class PageBasedPaginationConfiguration : BasePaginationConfigurati
 
     public int? PageSize { get; }
 
-    private Dictionary<string, string> BuildParameter(int? page)
+    private IEnumerable<KeyValuePair<string, string>> BuildParameter(int? page)
     {
-        var result = new Dictionary<string, string>();
-
         if (page is not null)
-            result["page"] = page.Value.ToString();
+        {
+            yield return new KeyValuePair<string, string>("page", page.Value.ToString());
+        }
 
         if (PageSize is not null)
-            result["per_page"] = PageSize.Value.ToString();
-
-        return result;
+        {
+            yield return new KeyValuePair<string, string>("per_page", PageSize.Value.ToString());
+        }
     }
 
-    public override Dictionary<string, string> BuildInitialPageParameters()
+    public override IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters()
         => BuildParameter(StartingPage);
 
-    public override Dictionary<string, string>? BuildNextPageParameters<T>(int currentPage, PagedResponse<T> response)
+    public override IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response)
     {
         // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
         // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.
         // as can be seen here: https://developers.freshdesk.com/api/#filter_tickets
-        if (response.Items.Any() && currentPage < 10)
+        if (response.Items.Count != 0 && page < 10)
         {
-            return BuildParameter(currentPage + 1);
+            return BuildParameter(page + 1);
         }
 
         return null;
@@ -64,6 +63,5 @@ public sealed class PageBasedPaginationConfiguration : BasePaginationConfigurati
         var response = serializer.Deserialize<PagedResult<T>>(reader)?.Results;
 
         return new PagedResponse<T>(response ?? [], GetLinkValue(httpResponseHeaders));
-
     }
 }

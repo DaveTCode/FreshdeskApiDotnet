@@ -10,6 +10,8 @@ namespace FreshdeskApi.Client.Pagination;
 
 public sealed class TokenBasedPaginationConfiguration : BasePaginationConfiguration, ITokenBasedPaginationConfiguration
 {
+    private const string NextToken = "next_token";
+
     /// <param name="startingToken">Token to start from</param>
     /// <param name="pageSize">Page size, default unspecified</param>
     /// <param name="beforeProcessingPageAsync">Hook before page is processed, optional</param>
@@ -29,31 +31,32 @@ public sealed class TokenBasedPaginationConfiguration : BasePaginationConfigurat
 
     public int? PageSize { get; }
 
-    private Dictionary<string, string> BuildParameter(string? token)
+    private IEnumerable<KeyValuePair<string, string>> BuildParameter(string? token)
     {
-        var result = new Dictionary<string, string>();
-
         if (token is not null)
-            result["next_token"] = token;
+        {
+            yield return new KeyValuePair<string, string>(NextToken, token);
+        }
 
         if (PageSize is not null)
-            result["page_size"] = PageSize.Value.ToString();
-
-        return result;
+        {
+            yield return new KeyValuePair<string, string>("page_size", PageSize.Value.ToString());
+        }
     }
 
-    public override Dictionary<string, string> BuildInitialPageParameters()
+    public override IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters()
         => BuildParameter(StartingToken);
 
-    public override Dictionary<string, string>? BuildNextPageParameters<T>(int page, PagedResponse<T> response)
+    public override IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response)
     {
-        string? currentToken = null;
         if (response.LinkHeaderValues is not null)
         {
             var queryString = HttpUtility.ParseQueryString(response.LinkHeaderValues);
-            var nextToken = queryString["next_token"];
-            if (nextToken is not null)
+
+            if (queryString[NextToken] is { } nextToken)
+            {
                 return BuildParameter(nextToken);
+            }
         }
 
         return null;

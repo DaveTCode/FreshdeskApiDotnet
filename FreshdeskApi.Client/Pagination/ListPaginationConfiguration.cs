@@ -16,9 +16,9 @@ public sealed class ListPaginationConfiguration : BasePaginationConfiguration, I
     {
     }
 
-    public override Dictionary<string, string> BuildInitialPageParameters() => new();
+    public override IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters() => [];
 
-    public override Dictionary<string, string>? BuildNextPageParameters<T>(int currentPage, PagedResponse<T> response)
+    public override IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response)
     {
         return null;
     }

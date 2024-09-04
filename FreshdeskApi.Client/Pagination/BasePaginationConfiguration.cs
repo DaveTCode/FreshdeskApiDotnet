@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
@@ -7,7 +8,8 @@ using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Pagination;
 
-public abstract class BasePaginationConfiguration(
+[SuppressMessage("ReSharper", "PartialTypeWithSinglePart")]
+public abstract partial class BasePaginationConfiguration(
     IPaginationConfiguration.ProcessPageDelegate? beforeProcessingPageAsync = null,
     IPaginationConfiguration.ProcessPageDelegate? processedPageAsync = null
 ) : IPaginationConfiguration
@@ -20,7 +22,14 @@ public abstract class BasePaginationConfiguration(
     /// headers. I don't currently believe one is needed for the Freshdesk
     /// API.
     /// </summary>
-    private static readonly Regex LinkHeaderRegex = new(@"\<(?<url>.+)?\>");
+#if NET
+    [GeneratedRegex(@"\<(?<url>.+)?\>")]
+    private static partial Regex LinkHeaderRegex();
+#else
+    private static readonly Regex LinkHeaderRegexInstance = new(@"\<(?<url>.+)?\>");
+
+    private static Regex LinkHeaderRegex() => LinkHeaderRegexInstance;
+#endif
 
     protected string? GetLinkValue(
         HttpResponseHeaders httpResponseHeaders
@@ -28,20 +37,23 @@ public abstract class BasePaginationConfiguration(
     {
         if (httpResponseHeaders.TryGetValues("link", out var linkHeaderValues))
         {
+            var linkHeaderRegex = LinkHeaderRegex();
             var linkHeaderValue = linkHeaderValues.FirstOrDefault();
-            if (linkHeaderValue == null || !LinkHeaderRegex.IsMatch(linkHeaderValue))
+            if (linkHeaderValue == null || !linkHeaderRegex.IsMatch(linkHeaderValue))
             {
                 return null;
             }
 
-            var nextLinkMatch = LinkHeaderRegex.Match(linkHeaderValue);
+            var nextLinkMatch = linkHeaderRegex.Match(linkHeaderValue);
             return nextLinkMatch.Groups["url"].Value;
         }
 
         return null;
     }
 
-    public abstract Dictionary<string, string> BuildInitialPageParameters();
-    public abstract Dictionary<string, string>? BuildNextPageParameters<T>(int page, PagedResponse<T> response);
+    public abstract IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters();
+
+    public abstract IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response);
+
     public abstract PagedResponse<T> DeserializeResponse<T>(JsonTextReader reader, HttpResponseHeaders httpResponseHeaders);
 }
