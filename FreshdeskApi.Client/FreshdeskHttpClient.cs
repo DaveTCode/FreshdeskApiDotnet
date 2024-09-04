@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Infrastructure;
@@ -129,13 +131,22 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         IPaginationConfiguration pagingConfiguration,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var url = initialUrl;
+        var questionMarkIndex = initialUrl.IndexOf('?');
+
+        var originalQueryString = questionMarkIndex > 0
+            ? initialUrl[questionMarkIndex..]
+            : string.Empty;
+
+        initialUrl = initialUrl[..questionMarkIndex];
+
+        var queryString = HttpUtility.ParseQueryString(originalQueryString);
 
         foreach (var parameter in pagingConfiguration.BuildInitialPageParameters())
         {
-            if (url.Contains("?")) url += $"&{parameter.Key}={parameter.Value}";
-            else url += $"?{parameter.Key}={parameter.Value}";
+            queryString.Add(parameter.Key, parameter.Value);
         }
+
+        var uri = CreateUri(initialUrl, queryString);
 
         using var disposingCollection = new DisposingCollection();
 
@@ -145,43 +156,41 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
         while (morePages)
         {
             var pagedResponse = await ExecuteAndParseAsync<T>(
-                // url is relative for first request, but absolute for following paginated request(s)
-                new Uri(url, UriKind.RelativeOrAbsolute),
+                uri,
                 pagingConfiguration,
                 disposingCollection,
                 cancellationToken
             );
 
-            var (newData, link) = pagedResponse;
-
-
             if (pagingConfiguration.BeforeProcessingPageAsync != null)
             {
-                await pagingConfiguration.BeforeProcessingPageAsync(page, url, cancellationToken)
+                await pagingConfiguration.BeforeProcessingPageAsync(page, uri, cancellationToken)
                     .ConfigureAwait(false);
             }
 
-            foreach (var data in newData)
+            foreach (var data in pagedResponse.Items)
             {
                 yield return data;
             }
 
             if (pagingConfiguration.ProcessedPageAsync != null)
             {
-                await pagingConfiguration.ProcessedPageAsync(page, url, cancellationToken)
+                await pagingConfiguration.ProcessedPageAsync(page, uri, cancellationToken)
                     .ConfigureAwait(false);
             }
 
             // Rebuild the url based on current information
-            url = initialUrl;
             var nextPageParameters = pagingConfiguration.BuildNextPageParameters(page, pagedResponse);
             if (nextPageParameters is not null)
             {
+                var nextQueryString = HttpUtility.ParseQueryString(originalQueryString);
+
                 foreach (var parameter in nextPageParameters)
                 {
-                    if (url.Contains("?")) url += $"&{parameter.Key}={parameter.Value}";
-                    else url += $"?{parameter.Key}={parameter.Value}";
+                    nextQueryString.Add(parameter.Key, parameter.Value);
                 }
+
+                uri = CreateUri(initialUrl, nextQueryString);
 
                 page++;
             }
@@ -190,11 +199,14 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
                 morePages = false;
             }
 
-
             // ReSharper disable once DisposeOnUsingVariable it is safe to call it repeatably
             disposingCollection.Dispose();
         }
     }
+
+    private Uri CreateUri(
+        string initialUrl, NameValueCollection queryString
+    ) => new(initialUrl + (queryString.Count > 0 ? $"?{queryString}" : null), UriKind.Relative);
 
     private async Task<PagedResponse<T>> ExecuteAndParseAsync<T>(
         Uri url,
@@ -267,7 +279,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 #if NET6_0_OR_GREATER
         await
 #endif
-        using var reader = new JsonTextReader(sr);
+            using var reader = new JsonTextReader(sr);
 
         return paginationConfiguration.DeserializeResponse<T>(reader, response.Headers);
     }
@@ -356,7 +368,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 #if NET6_0_OR_GREATER
             await
 #endif
-            using var reader = new JsonTextReader(sr);
+                using var reader = new JsonTextReader(sr);
             var serializer = new JsonSerializer();
 
             return serializer.Deserialize<T>(reader) ?? throw new ArgumentNullException(
