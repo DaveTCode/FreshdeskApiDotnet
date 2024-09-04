@@ -180,8 +180,13 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
             }
 
             // Rebuild the url based on current information
-            var nextPageParameters = pagingConfiguration.BuildNextPageParameters(page, pagedResponse);
-            if (nextPageParameters is not null)
+            if (pagedResponse.LinkHeaderValues is { } nextLinkHeaderValues)
+            {
+                uri = new Uri(nextLinkHeaderValues, UriKind.Absolute);
+
+                page++;
+            }
+            else if (pagingConfiguration.BuildNextPageParameters(page, pagedResponse) is {} nextPageParameters)
             {
                 var nextQueryString = HttpUtility.ParseQueryString(originalQueryString);
 
