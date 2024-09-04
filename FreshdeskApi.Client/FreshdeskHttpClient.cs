@@ -186,7 +186,7 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
 
                 page++;
             }
-            else if (pagingConfiguration.BuildNextPageParameters(page, pagedResponse) is {} nextPageParameters)
+            else if (pagingConfiguration.BuildNextPageParameters(page, pagedResponse) is { } nextPageParameters)
             {
                 var nextQueryString = HttpUtility.ParseQueryString(originalQueryString);
 
