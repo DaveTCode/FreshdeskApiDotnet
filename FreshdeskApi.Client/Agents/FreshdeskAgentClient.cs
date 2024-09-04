@@ -7,8 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Agents.Models;
 using FreshdeskApi.Client.Agents.Requests;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Agents;
@@ -71,7 +69,7 @@ public class FreshdeskAgentClient : IFreshdeskAgentClient
     /// </returns>
     public async IAsyncEnumerable<Agent> ListAllAgentsAsync(
         ListAllAgentsRequest request,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();

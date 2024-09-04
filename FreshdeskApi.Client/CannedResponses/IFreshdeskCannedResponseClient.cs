@@ -63,6 +63,6 @@ public interface IFreshdeskCannedResponseClient
     /// </returns>
     IAsyncEnumerable<CannedResponse> GetDetailedCannedResponsesInFolderAsync(
         long folderId,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }

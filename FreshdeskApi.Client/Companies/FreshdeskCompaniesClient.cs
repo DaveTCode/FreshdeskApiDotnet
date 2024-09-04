@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Companies.Models;
 using FreshdeskApi.Client.Companies.Requests;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Companies;
@@ -37,7 +35,7 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
 
     /// <inheritdoc />
     public async IAsyncEnumerable<Company> ListAllCompaniesAsync(
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();

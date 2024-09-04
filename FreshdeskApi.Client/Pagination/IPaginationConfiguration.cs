@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.Models;
 using Newtonsoft.Json;
 
-namespace FreshdeskApi.Client;
+namespace FreshdeskApi.Client.Pagination;
 
 /// <summary>
 /// This object allows configuring of Freshdesk pagination

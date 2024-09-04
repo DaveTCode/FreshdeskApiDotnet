@@ -5,8 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Conversations.Models;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Pagination;
 using FreshdeskApi.Client.Tickets.Models;
 using FreshdeskApi.Client.Tickets.Requests;
@@ -81,7 +79,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<Ticket> ListAllTicketsAsync(
         ListAllTicketsRequest listAllTicketsRequest,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();
@@ -116,7 +114,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<Ticket> FilterTicketsAsync(
         string encodedQuery,
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        IPageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new PageBasedPaginationConfiguration();
@@ -274,7 +272,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
         long ticketId,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();
@@ -315,7 +313,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
         long ticketId,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();
@@ -356,7 +354,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
         long ticketId,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();
@@ -422,7 +420,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// </returns>
     public async IAsyncEnumerable<ConversationEntry> GetArchiveTicketConversationsAsync(
         long ticketId,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();

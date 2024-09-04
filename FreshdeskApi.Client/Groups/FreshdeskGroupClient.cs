@@ -5,10 +5,8 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FreshdeskApi.Client.Extensions;
 using FreshdeskApi.Client.Groups.Models;
 using FreshdeskApi.Client.Groups.Requests;
-using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Groups;
@@ -58,7 +56,7 @@ public class FreshdeskGroupClient : IFreshdeskGroupClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     public async IAsyncEnumerable<Group> ListAllGroupsAsync(
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();

@@ -4,8 +4,6 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Pagination;
 using FreshdeskApi.Client.Products.Models;
 
@@ -56,7 +54,7 @@ public class FreshdeskProductClient : IFreshdeskProductClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     public async IAsyncEnumerable<Product> ListAllProductsAsync(
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();

@@ -30,7 +30,7 @@ public interface IFreshdeskAgentClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#list_all_agents
     /// </summary>
-    /// 
+    ///
     /// <param name="request">
     /// A <seealso cref="ListAllAgentsRequest"/> object which contains
     /// the filters that we want to apply. By default will include all
@@ -47,7 +47,7 @@ public interface IFreshdeskAgentClient
     /// </returns>
     IAsyncEnumerable<Agent> ListAllAgentsAsync(
         ListAllAgentsRequest request,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -55,7 +55,7 @@ public interface IFreshdeskAgentClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#delete_agent
     /// </summary>
-    /// 
+    ///
     /// <param name="agentId">
     /// The unique identifier for the agent.
     /// </param>
@@ -70,7 +70,7 @@ public interface IFreshdeskAgentClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#create_agent
     /// </summary>
-    /// 
+    ///
     /// <param name="request">
     /// The request object containing the information to set on the agent
     /// </param>

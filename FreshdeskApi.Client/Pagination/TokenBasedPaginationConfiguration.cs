@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Pagination;
 
-public sealed class TokenBasedPaginationConfiguration : BasePaginationConfiguration
+public sealed class TokenBasedPaginationConfiguration : BasePaginationConfiguration, ITokenBasedPaginationConfiguration
 {
     /// <param name="startingToken">Token to start from</param>
     /// <param name="pageSize">Page size, default unspecified</param>

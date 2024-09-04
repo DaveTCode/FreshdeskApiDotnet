@@ -39,7 +39,7 @@ public interface IFreshdeskGroupClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Group> ListAllGroupsAsync(
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>

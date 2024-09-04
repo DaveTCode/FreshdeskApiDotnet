@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
@@ -7,8 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CustomObjects.Models;
 using FreshdeskApi.Client.CustomObjects.Requests;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.CustomObjects;
@@ -98,7 +95,7 @@ public class FreshdeskCustomObjectClient(
     public async IAsyncEnumerable<Record<T>> ListAllRecordsAsync<T>(
         ListAllRecordsRequest request,
         string schemaId,
-        TokenBasedPaginationConfiguration? pagingConfiguration = null,
+        ITokenBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new TokenBasedPaginationConfiguration();

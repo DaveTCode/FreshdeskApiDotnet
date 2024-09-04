@@ -41,7 +41,7 @@ public interface IFreshdeskCompaniesClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Company> ListAllCompaniesAsync(
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -51,7 +51,7 @@ public interface IFreshdeskCompaniesClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#filter_companies
     /// </summary>
-    /// 
+    ///
     /// <param name="encodedQuery">
     /// The full query string with params encoded properly.
     ///
@@ -62,7 +62,7 @@ public interface IFreshdeskCompaniesClient
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>
-    /// The filtered set of companies, this request is paged and iterating 
+    /// The filtered set of companies, this request is paged and iterating
     /// to the next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Company> FilterCompaniesAsync(
@@ -106,7 +106,7 @@ public interface IFreshdeskCompaniesClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#update_company
     /// </summary>
-    /// 
+    ///
     /// <param name="companyId">
     /// The unique identifier for the company.
     /// </param>

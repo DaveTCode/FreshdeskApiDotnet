@@ -15,11 +15,11 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_category_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The unique identifier for the category.
     /// </param>
-    /// 
+    ///
     /// <param name="languageCode">
     /// The language code of the language to translate the category into.
     /// Defaults to null which means don't translate.
@@ -44,7 +44,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// Defaults to null which means don't translate.
     /// </param>
-    /// 
+    ///
     /// <param name="pagingConfiguration"></param>
     /// <param name="cancellationToken"></param>
     ///
@@ -54,7 +54,7 @@ public interface IFreshdeskSolutionClient
     /// </returns>
     IAsyncEnumerable<Category> ListAllCategoriesAsync(
         string? languageCode = null,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -65,7 +65,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_category_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The unique group identifier.
     /// </param>
@@ -76,13 +76,13 @@ public interface IFreshdeskSolutionClient
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Update a category, changing the description, portals it's visible on or the name 
+    /// Update a category, changing the description, portals it's visible on or the name
     /// </summary>
     ///
     /// <param name="categoryId">
     /// The unique identifier of the category to update.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// The object defining what updates we want to make.
     /// </param>
@@ -97,7 +97,7 @@ public interface IFreshdeskSolutionClient
         CancellationToken cancellationToken = default) => UpdateCategoryAsync(categoryId, languageCode: null, request, cancellationToken);
 
     /// <summary>
-    /// Update a category, changing the description, portals it's visible on or the name 
+    /// Update a category, changing the description, portals it's visible on or the name
     /// </summary>
     ///
     /// <param name="categoryId">
@@ -110,7 +110,7 @@ public interface IFreshdeskSolutionClient
     /// Defaults to null which means update the default language version
     /// of the category.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// The object defining what updates we want to make.
     /// </param>
@@ -126,7 +126,7 @@ public interface IFreshdeskSolutionClient
         CancellationToken cancellationToken = default) => UpdateCategoryAsync(categoryId, languageCode, request, cancellationToken);
 
     /// <summary>
-    /// Update a category, changing the description, portals it's visible on or the name 
+    /// Update a category, changing the description, portals it's visible on or the name
     /// </summary>
     ///
     /// <param name="categoryId">
@@ -139,7 +139,7 @@ public interface IFreshdeskSolutionClient
     /// Defaults to null which means update the default language version
     /// of the category.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// The object defining what updates we want to make.
     /// </param>
@@ -157,7 +157,7 @@ public interface IFreshdeskSolutionClient
     /// Create a new category setting the name, description and portals
     /// it's visible in.
     /// </summary>
-    /// 
+    ///
     /// <param name="request">
     /// The object defining what updates we want to make.
     /// </param>
@@ -173,7 +173,7 @@ public interface IFreshdeskSolutionClient
     /// Given a category, this creates a translation of that category into the
     /// requested language code.
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The unique identifier for the category
     /// </param>
@@ -181,7 +181,7 @@ public interface IFreshdeskSolutionClient
     /// <param name="languageCode">
     /// The language code (e.g. es) which the translation corresponds to.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// The object defining what updates we want to make.
     /// </param>
@@ -201,7 +201,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder
     /// </param>
@@ -226,7 +226,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The unique identifier for the category.
     /// </param>
@@ -246,7 +246,7 @@ public interface IFreshdeskSolutionClient
     IAsyncEnumerable<Folder> GetAllFoldersInCategoryAsync(
         long categoryId,
         string? languageCode = null,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -257,7 +257,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique folder identifier
     /// </param>
@@ -272,7 +272,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="categoryId">
     /// The category within which the folder will be placed
     /// </param>
@@ -295,7 +295,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder
     /// </param>
@@ -303,7 +303,7 @@ public interface IFreshdeskSolutionClient
     /// <param name="languageCode">
     /// The language code (e.g. es) which the translation corresponds to.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// Encapsulates the new translation information.
     /// </param>
@@ -322,7 +322,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_folder_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder.
     /// </param>
@@ -356,7 +356,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier of the folder which the article will reside within.
     /// </param>
@@ -379,7 +379,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="articleId">
     /// The unique identifier for the article.
     /// </param>
@@ -406,15 +406,15 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="articleId">
     /// The unique identifier for the article.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// Defines the properties to be updated.
     /// </param>
-    /// 
+    ///
     /// <param name="languageCode">
     /// Optional. If set then the languageCode version of the article will
     /// be updated instead of the default article.
@@ -437,15 +437,15 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="articleId">
     /// The unique identifier for the article.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// Defines the properties to be updated.
     /// </param>
-    /// 
+    ///
     /// <param name="languageCode">
     /// Optional. If set then the languageCode version of the article will
     /// be updated instead of the default article.
@@ -467,7 +467,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="articleId">
     /// The unique identifier for the article
     /// </param>
@@ -490,11 +490,11 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="folderId">
     /// The unique identifier for the folder.
     /// </param>
-    /// 
+    ///
     /// <param name="languageCode">
     /// The language to list the articles in. By default this is null which
     /// means getting the default language version.
@@ -510,7 +510,7 @@ public interface IFreshdeskSolutionClient
     IAsyncEnumerable<Article> ListArticlesInFolderAsync(
         long folderId,
         string? languageCode = null,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -518,11 +518,11 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="articleId">
     /// The unique identifier of the article to delete.
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
     Task DeleteArticleAsync(
         long articleId,
@@ -533,7 +533,7 @@ public interface IFreshdeskSolutionClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#solution_article_attributes
     /// </summary>
-    /// 
+    ///
     /// <param name="termUnencoded">
     /// The terms to search for, not yet URL encoded.
     /// </param>
@@ -547,6 +547,6 @@ public interface IFreshdeskSolutionClient
     /// </returns>
     IAsyncEnumerable<Article> SearchSolutionsAsync(
         string termUnencoded,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }

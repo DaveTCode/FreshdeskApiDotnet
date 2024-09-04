@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Pagination;
 
-public sealed class PageBasedPaginationConfiguration : BasePaginationConfiguration
+public sealed class PageBasedPaginationConfiguration : BasePaginationConfiguration, IPageBasedPaginationConfiguration
 {
     /// <param name="startingPage">Page to start from. Default 1</param>
     /// <param name="pageSize">Page size, default unspecified</param>
@@ -24,7 +24,7 @@ public sealed class PageBasedPaginationConfiguration : BasePaginationConfigurati
         PageSize = pageSize;
     }
 
-    public int? StartingPage { get; }
+    public int StartingPage { get; }
 
     public int? PageSize { get; }
 

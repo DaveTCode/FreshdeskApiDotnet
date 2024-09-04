@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace FreshdeskApi.Client.Pagination;
 
-public sealed class ListPaginationConfiguration : BasePaginationConfiguration
+public sealed class ListPaginationConfiguration : BasePaginationConfiguration, IListPaginationConfiguration
 {
     /// <param name="beforeProcessingPageAsync">Hook before page is processed, optional</param>
     /// <param name="processedPageAsync">Hook after page is processed, optional</param>

@@ -15,7 +15,7 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#view_a_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// The unique identifier of the ticket.
     /// </param>
@@ -38,10 +38,10 @@ public interface IFreshdeskTicketClient
     ///
     /// Note that this is a terrible API with a limit of 300 pages (and
     /// further pages take exponentially longer to return!
-    /// 
+    ///
     /// c.f. https://developers.freshdesk.com/api/#list_all_tickets
     /// </summary>
-    /// 
+    ///
     /// <param name="listAllTicketsRequest">
     /// A request object with required filters filled in.
     /// </param>
@@ -56,7 +56,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<Ticket> ListAllTicketsAsync(
         ListAllTicketsRequest listAllTicketsRequest,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -65,7 +65,7 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#filter_tickets
     /// </summary>
-    /// 
+    ///
     /// <param name="encodedQuery">
     /// An encoded query string of the form
     /// (ticket_field:integer or ticket_field:'string') AND ticket_field:boolean
@@ -81,7 +81,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<Ticket> FilterTicketsAsync(
         string encodedQuery,
-        PageBasedPaginationConfiguration? pagingConfiguration = null,
+        IPageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -89,11 +89,11 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#create_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="createTicketRequest">
     /// Describes the values of all the fields in the new ticket.
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>
@@ -108,11 +108,11 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#create_outbound_email
     /// </summary>
-    /// 
+    ///
     /// <param name="createOutboundEmailRequest">
     /// Describes the values of all the fields in the new outbound email.
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>
@@ -124,20 +124,20 @@ public interface IFreshdeskTicketClient
 
     /// <summary>
     /// Create a new ticket in Freshdesk.
-    /// 
+    ///
     /// c.f. https://developers.freshdesk.com/api/#create_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// The unique identifier for the ticket to be updated.
     /// </param>
-    /// 
+    ///
     /// <param name="updateTicketRequest">
     /// Describes the values of all the fields in the new ticket.
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
-    /// 
+    ///
     /// <returns>
     /// The updated ticket with all the new values as seen by the API.
     /// </returns>
@@ -151,7 +151,7 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#delete_a_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -166,7 +166,7 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#restore_a_ticket
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -189,7 +189,7 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#list_all_ticket_notes
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -204,7 +204,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<ConversationEntry> GetTicketConversationsAsync(
         long ticketId,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -220,7 +220,7 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#list_all_ticket_timeentries
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -235,7 +235,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<TimeEntry> GetTicketTimeEntriesAsync(
         long ticketId,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -251,7 +251,7 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#view_ticket_satisfaction_ratings
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing ticket in the Freshdesk instance.
     /// </param>
@@ -266,7 +266,7 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<SatisfactionRating> GetTicketSatisfactionRatingsAsync(
         long ticketId,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
 
@@ -275,7 +275,7 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#archive_tickets
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// The unique identifier of the archive ticket.
     /// </param>
@@ -300,7 +300,7 @@ public interface IFreshdeskTicketClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#archive_tickets
     /// </summary>
-    /// 
+    ///
     /// <param name="ticketId">
     /// An existing archive ticket in the Freshdesk instance.
     /// </param>
@@ -315,6 +315,6 @@ public interface IFreshdeskTicketClient
     /// </returns>
     IAsyncEnumerable<ConversationEntry> GetArchiveTicketConversationsAsync(
         long ticketId,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }

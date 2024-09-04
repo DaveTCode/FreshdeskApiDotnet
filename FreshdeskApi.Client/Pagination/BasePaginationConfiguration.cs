@@ -9,8 +9,8 @@ namespace FreshdeskApi.Client.Pagination;
 
 public abstract class BasePaginationConfiguration(
     IPaginationConfiguration.ProcessPageDelegate? beforeProcessingPageAsync = null,
-    IPaginationConfiguration.ProcessPageDelegate? processedPageAsync = null)
-    : IPaginationConfiguration
+    IPaginationConfiguration.ProcessPageDelegate? processedPageAsync = null
+) : IPaginationConfiguration
 {
     public IPaginationConfiguration.ProcessPageDelegate? BeforeProcessingPageAsync { get; } = beforeProcessingPageAsync;
     public IPaginationConfiguration.ProcessPageDelegate? ProcessedPageAsync { get; } = processedPageAsync;

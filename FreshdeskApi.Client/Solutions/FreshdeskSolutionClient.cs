@@ -5,8 +5,6 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Pagination;
 using FreshdeskApi.Client.Solutions.Models;
 using FreshdeskApi.Client.Solutions.Requests;
@@ -84,7 +82,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// </returns>
     public async IAsyncEnumerable<Category> ListAllCategoriesAsync(
         string? languageCode = null,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();
@@ -284,7 +282,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     public async IAsyncEnumerable<Folder> GetAllFoldersInCategoryAsync(
         long categoryId,
         string? languageCode = null,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();
@@ -601,7 +599,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     public async IAsyncEnumerable<Article> ListArticlesInFolderAsync(
         long folderId,
         string? languageCode = null,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();
@@ -657,7 +655,7 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// </returns>
     public async IAsyncEnumerable<Article> SearchSolutionsAsync(
         string termUnencoded,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         pagingConfiguration ??= new ListPaginationConfiguration();

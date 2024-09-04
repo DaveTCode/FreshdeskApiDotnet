@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Contacts.Models;
 using FreshdeskApi.Client.Contacts.Requests;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Contacts;
@@ -90,7 +88,7 @@ public class FreshdeskContactClient : IFreshdeskContactClient
     /// </returns>
     public async IAsyncEnumerable<ListContact> ListAllContactsAsync(
         ListAllContactsRequest request,
-        ListPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");

@@ -105,7 +105,7 @@ public interface IFreshdeskCustomObjectClient
     public IAsyncEnumerable<Record<T>> ListAllRecordsAsync<T>(
         ListAllRecordsRequest request,
         string schemaId,
-        TokenBasedPaginationConfiguration? pagingConfiguration = null,
+        ITokenBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
