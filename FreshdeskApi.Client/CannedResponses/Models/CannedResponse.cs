@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FreshdeskApi.Client.CommonModels;
 using Newtonsoft.Json;
@@ -39,7 +38,7 @@ public class CannedResponse
     public string Content { get; set; } = null!;
 
     /// <summary>
-    /// Folder where the canned response is located 
+    /// Folder where the canned response is located
     /// </summary>
     [JsonProperty("folder_id")]
     public long FolderId { get; set; }
@@ -53,7 +52,7 @@ public class CannedResponse
     public CannedResponseVisibility Visibility { get; set; }
 
     /// <summary>
-    /// Groups for which the canned response is visible. Use only if visibility is set to 2. 
+    /// Groups for which the canned response is visible. Use only if visibility is set to 2.
     /// </summary>
     [JsonProperty("group_ids")]
     public long[]? GroupIds { get; set; }

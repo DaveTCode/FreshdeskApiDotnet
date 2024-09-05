@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Contacts.Models;
 using FreshdeskApi.Client.Contacts.Requests;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Contacts;
 
@@ -45,7 +46,7 @@ public interface IFreshdeskContactClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#list_all_contacts
     /// </summary>
-    /// 
+    ///
     /// <param name="request">
     /// A <seealso cref="ListAllContactsRequest"/> object which contains
     /// the filters that we want to apply. By default will include all
@@ -62,7 +63,7 @@ public interface IFreshdeskContactClient
     /// </returns>
     IAsyncEnumerable<ListContact> ListAllContactsAsync(
         ListAllContactsRequest request,
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -70,7 +71,7 @@ public interface IFreshdeskContactClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#update_contact
     /// </summary>
-    /// 
+    ///
     /// <param name="contactId">
     /// The unique identifier for the contact.
     /// </param>
@@ -103,11 +104,11 @@ public interface IFreshdeskContactClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#make_agent
     /// </summary>
-    /// 
+    ///
     /// <param name="contactId">
     /// The unique contact identifier.
     /// </param>
-    /// 
+    ///
     /// <param name="request">
     /// Specify what agent specific information to set.
     ///
@@ -141,7 +142,7 @@ public interface IFreshdeskContactClient
     /// Check if an export has completed
     /// </summary>
     ///
-    /// <param name="request">
+    /// <param name="export">
     /// The Id of the export being checked.
     /// </param>
     ///
@@ -209,7 +210,7 @@ public interface IFreshdeskContactClient
     /// <param name="contactId">
     /// The contact to delete.
     /// </param>
-    /// 
+    ///
     /// <param name="force">
     /// Send as true to force hard delete of a contact that is not already soft deleted
     /// </param>
@@ -228,7 +229,7 @@ public interface IFreshdeskContactClient
     /// <param name="contactId">
     /// The contact to invite
     /// </param>
-    /// 
+    ///
     /// <param name="cancellationToken"></param>
     Task SendInviteAsync(
         long contactId,

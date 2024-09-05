@@ -152,7 +152,7 @@ public class UpdateTicketRequest : IRequestWithAttachment, IRequestWithAdditiona
         foreach (var customField in CustomFields ?? [])
         {
             var key = $"{CustomFieldsName}[{customField.Key}]";
-            var value = customField.Value?.ToString() ?? string.Empty;
+            var value = customField.Value ?? string.Empty;
 
             yield return (new StringContent(value), key);
         }

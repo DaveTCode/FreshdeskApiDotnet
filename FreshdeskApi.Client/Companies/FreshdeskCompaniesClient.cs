@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Companies.Models;
 using FreshdeskApi.Client.Companies.Requests;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Companies;
 
@@ -36,13 +35,13 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
 
     /// <inheritdoc />
     public async IAsyncEnumerable<Company> ListAllCompaniesAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new ListPaginationConfiguration();
 
         await foreach (var company in _freshdeskClient
-            .GetPagedResults<Company>("/api/v2/companies", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
+            .GetPagedResults<Company>("/api/v2/companies", pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return company;
@@ -52,13 +51,13 @@ public class FreshdeskCompaniesClient : IFreshdeskCompaniesClient
     /// <inheritdoc />
     public async IAsyncEnumerable<Company> FilterCompaniesAsync(
         string encodedQuery,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var company in _freshdeskClient
-            .GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", pagingConfiguration, EPagingMode.PageContract, cancellationToken)
+            .GetPagedResults<Company>($"/api/v2/search/companies?query=\"{encodedQuery}\"", pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return company;

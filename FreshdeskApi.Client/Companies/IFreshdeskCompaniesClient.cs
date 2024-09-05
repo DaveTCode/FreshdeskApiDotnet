@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
 using FreshdeskApi.Client.Companies.Models;
 using FreshdeskApi.Client.Companies.Requests;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Companies;
 
@@ -40,7 +41,7 @@ public interface IFreshdeskCompaniesClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Company> ListAllCompaniesAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -50,23 +51,23 @@ public interface IFreshdeskCompaniesClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#filter_companies
     /// </summary>
-    /// 
+    ///
     /// <param name="encodedQuery">
     /// The full query string with params encoded properly.
     ///
     /// Will be appended with ?query="encodedQuery" so don't enclose in quotes.
     /// </param>
     ///
-    /// <param name="pagingConfiguration"></param>
+    /// <param name="pagingConfiguration">NOTE: The PageSize can't be configured for this api</param>
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>
-    /// The filtered set of companies, this request is paged and iterating 
+    /// The filtered set of companies, this request is paged and iterating
     /// to the next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Company> FilterCompaniesAsync(
         string encodedQuery,
-        IPaginationConfiguration? pagingConfiguration = null,
+        PageBasedPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -105,7 +106,7 @@ public interface IFreshdeskCompaniesClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#update_company
     /// </summary>
-    /// 
+    ///
     /// <param name="companyId">
     /// The unique identifier for the company.
     /// </param>

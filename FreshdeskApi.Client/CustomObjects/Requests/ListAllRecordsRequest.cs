@@ -33,6 +33,11 @@ public record ListAllRecordsRequest
             queryString.Add(Sort.QueryStringParameterName, Sort.QueryStringParameterValue);
         }
 
-        return queryString.ToString();
+        if (queryString.Count is 0)
+        {
+            return null;
+        }
+
+        return $"?{queryString}";
     }
 }

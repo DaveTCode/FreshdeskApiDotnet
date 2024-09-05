@@ -20,7 +20,7 @@ public class ListAllRecordsRequestTests
             }
         };
 
-        Assert.Equal("sort_by=created_time%3bASC", record.GetQuery());
+        Assert.Equal("?sort_by=created_time%3bASC", record.GetQuery());
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public class ListAllRecordsRequestTests
         };
 
         Assert.Equal(
-            "created_time=2024-08-26T18%3a00%3a00.000Z&age%5Bgt%5D=35&updated_time%5Bgt%5D=2020-09-23T22%3a35%3a45.000Z",
+            "?created_time=2024-08-26T18%3a00%3a00.000Z&age%5Bgt%5D=35&updated_time%5Bgt%5D=2020-09-23T22%3a35%3a45.000Z",
             record.GetQuery()
         );
     }

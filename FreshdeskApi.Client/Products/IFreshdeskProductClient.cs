@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Pagination;
 using FreshdeskApi.Client.Products.Models;
 
 namespace FreshdeskApi.Client.Products;
@@ -37,6 +38,6 @@ public interface IFreshdeskProductClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Product> ListAllProductsAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }

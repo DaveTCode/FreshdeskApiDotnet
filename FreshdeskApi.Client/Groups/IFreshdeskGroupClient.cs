@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.Groups.Models;
 using FreshdeskApi.Client.Groups.Requests;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.Groups;
 
@@ -38,7 +39,7 @@ public interface IFreshdeskGroupClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Group> ListAllGroupsAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>

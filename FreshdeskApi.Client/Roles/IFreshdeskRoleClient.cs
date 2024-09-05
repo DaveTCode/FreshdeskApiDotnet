@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FreshdeskApi.Client.Pagination;
 using FreshdeskApi.Client.Roles.Models;
 
 namespace FreshdeskApi.Client.Roles;
@@ -37,6 +38,6 @@ public interface IFreshdeskRoleClient
     /// next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Role> ListAllRolesAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }

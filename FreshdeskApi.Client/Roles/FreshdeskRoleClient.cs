@@ -4,8 +4,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
+using FreshdeskApi.Client.Pagination;
 using FreshdeskApi.Client.Roles.Models;
 
 namespace FreshdeskApi.Client.Roles;
@@ -33,13 +32,13 @@ public class FreshdeskRoleClient : IFreshdeskRoleClient
 
     /// <inheritdoc />
     public async IAsyncEnumerable<Role> ListAllRolesAsync(
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new ListPaginationConfiguration();
 
         await foreach (var role in _freshdeskClient
-            .GetPagedResults<Role>("/api/v2/roles", pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
+            .GetPagedResults<Role>("/api/v2/roles", pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return role;

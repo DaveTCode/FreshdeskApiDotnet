@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CannedResponses.Models;
+using FreshdeskApi.Client.Pagination;
 
 namespace FreshdeskApi.Client.CannedResponses;
 
@@ -62,6 +63,6 @@ public interface IFreshdeskCannedResponseClient
     /// </returns>
     IAsyncEnumerable<CannedResponse> GetDetailedCannedResponsesInFolderAsync(
         long folderId,
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         CancellationToken cancellationToken = default);
 }

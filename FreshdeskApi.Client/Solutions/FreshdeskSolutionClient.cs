@@ -5,8 +5,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using FreshdeskApi.Client.Extensions;
-using FreshdeskApi.Client.Models;
+using FreshdeskApi.Client.Pagination;
 using FreshdeskApi.Client.Solutions.Models;
 using FreshdeskApi.Client.Solutions.Requests;
 
@@ -83,17 +82,17 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// </returns>
     public async IAsyncEnumerable<Category> ListAllCategoriesAsync(
         string? languageCode = null,
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new ListPaginationConfiguration();
 
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? "/api/v2/solutions/categories"
             : $"/api/v2/solutions/categories/{languageCode}";
 
         await foreach (var category in _freshdeskClient
-            .GetPagedResults<Category>(url, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
+            .GetPagedResults<Category>(url, pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return category;
@@ -283,17 +282,17 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     public async IAsyncEnumerable<Folder> GetAllFoldersInCategoryAsync(
         long categoryId,
         string? languageCode = null,
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new ListPaginationConfiguration();
 
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? $"/api/v2/solutions/categories/{categoryId}/folders"
             : $"/api/v2/solutions/categories/{categoryId}/folders/{languageCode}";
 
         await foreach (var folder in _freshdeskClient.
-            GetPagedResults<Folder>(url, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
+            GetPagedResults<Folder>(url, pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return folder;
@@ -600,17 +599,17 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     public async IAsyncEnumerable<Article> ListArticlesInFolderAsync(
         long folderId,
         string? languageCode = null,
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new ListPaginationConfiguration();
 
         var url = string.IsNullOrWhiteSpace(languageCode)
             ? $"/api/v2/solutions/folders/{folderId}/articles"
             : $"/api/v2/solutions/folders/{folderId}/articles/{languageCode}";
 
         await foreach (var article in _freshdeskClient
-            .GetPagedResults<Article>(url, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
+            .GetPagedResults<Article>(url, pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return article;
@@ -656,15 +655,15 @@ public class FreshdeskSolutionClient : IFreshdeskSolutionClient
     /// </returns>
     public async IAsyncEnumerable<Article> SearchSolutionsAsync(
         string termUnencoded,
-        IPaginationConfiguration? pagingConfiguration = null,
+        IListPaginationConfiguration? pagingConfiguration = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        pagingConfiguration.GuardPageBasedPagination();
+        pagingConfiguration ??= new ListPaginationConfiguration();
 
         var url = $"/api/v2/search/solutions?term={Uri.EscapeDataString(termUnencoded)}";
 
         await foreach (var article in _freshdeskClient
-            .GetPagedResults<Article>(url, pagingConfiguration, EPagingMode.ListStyle, cancellationToken)
+            .GetPagedResults<Article>(url, pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return article;
