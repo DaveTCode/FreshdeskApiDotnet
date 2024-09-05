@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using FreshdeskApi.Client.Exceptions;
 using FreshdeskApi.Client.Extensions;
+using FreshdeskApi.Client.Helpers;
 using FreshdeskApi.Client.Infrastructure;
 using FreshdeskApi.Client.Models;
 using FreshdeskApi.Client.Pagination;
@@ -133,11 +134,13 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
     {
         var questionMarkIndex = initialUrl.IndexOf('?');
 
-        var originalQueryString = questionMarkIndex > 0
-            ? initialUrl[questionMarkIndex..]
-            : string.Empty;
+        var originalQueryString = string.Empty;
 
-        initialUrl = initialUrl[..questionMarkIndex];
+        if (questionMarkIndex >= 0)
+        {
+            originalQueryString = initialUrl[questionMarkIndex..];
+            initialUrl = initialUrl[..questionMarkIndex];
+        }
 
         var queryString = HttpUtility.ParseQueryString(originalQueryString);
 
@@ -146,14 +149,13 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
             queryString.Add(parameter.Key, parameter.Value);
         }
 
-        var uri = CreateUri(initialUrl, queryString);
+        var uri = UriHelper.CreateUri(initialUrl, queryString);
 
         using var disposingCollection = new DisposingCollection();
 
         var page = 1;
-        var morePages = true;
 
-        while (morePages)
+        while (uri is not null)
         {
             var pagedResponse = await ExecuteAndParseAsync<T>(
                 uri,
@@ -180,38 +182,13 @@ public class FreshdeskHttpClient : IFreshdeskHttpClient, IDisposable
             }
 
             // Rebuild the url based on current information
-            if (pagedResponse.LinkHeaderValues is { } nextLinkHeaderValues)
-            {
-                uri = new Uri(nextLinkHeaderValues, UriKind.Absolute);
-
-                page++;
-            }
-            else if (pagingConfiguration.BuildNextPageParameters(page, pagedResponse) is { } nextPageParameters)
-            {
-                var nextQueryString = HttpUtility.ParseQueryString(originalQueryString);
-
-                foreach (var parameter in nextPageParameters)
-                {
-                    nextQueryString.Add(parameter.Key, parameter.Value);
-                }
-
-                uri = CreateUri(initialUrl, nextQueryString);
-
-                page++;
-            }
-            else
-            {
-                morePages = false;
-            }
+            uri = pagingConfiguration.BuildNextPageUri(page, pagedResponse, initialUrl, originalQueryString);
+            page++;
 
             // ReSharper disable once DisposeOnUsingVariable it is safe to call it repeatably
             disposingCollection.Dispose();
         }
     }
-
-    private Uri CreateUri(
-        string initialUrl, NameValueCollection queryString
-    ) => new(initialUrl + (queryString.Count > 0 ? $"?{queryString}" : null), UriKind.Relative);
 
     private async Task<PagedResponse<T>> ExecuteAndParseAsync<T>(
         Uri url,

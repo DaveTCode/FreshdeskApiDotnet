@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Web;
 using FreshdeskApi.Client.CustomObjects;
 using FreshdeskApi.Client.CustomObjects.Models;
+using FreshdeskApi.Client.Helpers;
 using FreshdeskApi.Client.Models;
 using Newtonsoft.Json;
 
@@ -47,7 +49,24 @@ public sealed class TokenBasedPaginationConfiguration : BasePaginationConfigurat
     public override IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters()
         => BuildParameter(StartingToken);
 
-    public override IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response)
+    public override Uri? BuildNextPageUri<T>(int page, PagedResponse<T> response, string initialUrl, string originalQueryString)
+    {
+        if (BuildNextPageParameters(response) is { } nextPageParameters)
+        {
+            var nextQueryString = HttpUtility.ParseQueryString(originalQueryString);
+
+            foreach (var parameter in nextPageParameters)
+            {
+                nextQueryString.Add(parameter.Key, parameter.Value);
+            }
+
+            return UriHelper.CreateUri(initialUrl, nextQueryString);
+        }
+
+        return null;
+    }
+
+    private IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(PagedResponse<T> response)
     {
         if (response.LinkHeaderValues is not null)
         {

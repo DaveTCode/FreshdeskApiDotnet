@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
+using System.Web;
 using FreshdeskApi.Client.Models;
 using Newtonsoft.Json;
 
@@ -53,7 +55,8 @@ public abstract partial class BasePaginationConfiguration(
 
     public abstract IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters();
 
-    public abstract IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response);
+    public abstract Uri? BuildNextPageUri<T>(int page, PagedResponse<T> response, string initialUrl, string originalQueryString);
+
 
     public abstract PagedResponse<T> DeserializeResponse<T>(JsonTextReader reader, HttpResponseHeaders httpResponseHeaders);
 }

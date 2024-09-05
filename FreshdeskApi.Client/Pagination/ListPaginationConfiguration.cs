@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using FreshdeskApi.Client.Models;
@@ -17,9 +18,14 @@ public sealed class ListPaginationConfiguration : BasePaginationConfiguration, I
     }
 
     public override IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters() => [];
-
-    public override IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response)
+    public override Uri? BuildNextPageUri<T>(int page, PagedResponse<T> response, string initialUrl, string originalQueryString)
     {
+        // For a list pagination, the link header value contains the next page as absolute URI
+        if (response.LinkHeaderValues is { } nextLinkHeaderValues)
+        {
+            return new Uri(nextLinkHeaderValues, UriKind.Absolute);
+        }
+
         return null;
     }
 

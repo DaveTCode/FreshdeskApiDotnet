@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Web;
 using FreshdeskApi.Client.CommonModels;
+using FreshdeskApi.Client.Helpers;
 using FreshdeskApi.Client.Models;
 using Newtonsoft.Json;
 
@@ -43,7 +46,24 @@ public sealed class PageBasedPaginationConfiguration : BasePaginationConfigurati
     public override IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters()
         => BuildParameter(StartingPage);
 
-    public override IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response)
+    public override Uri? BuildNextPageUri<T>(int page, PagedResponse<T> response, string initialUrl, string originalQueryString)
+    {
+        if (BuildNextPageParameters(page, response) is { } nextPageParameters)
+        {
+            var nextQueryString = HttpUtility.ParseQueryString(originalQueryString);
+
+            foreach (var parameter in nextPageParameters)
+            {
+                nextQueryString.Add(parameter.Key, parameter.Value);
+            }
+
+            return UriHelper.CreateUri(initialUrl, nextQueryString);
+        }
+
+        return null;
+    }
+
+    private IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response)
     {
         // only returns 10 pages of data maximum because for some api calls, e.g. for getting filtered tickets,
         // To scroll through the pages you add page parameter to the url. The page number starts with 1 and should not exceed 10.

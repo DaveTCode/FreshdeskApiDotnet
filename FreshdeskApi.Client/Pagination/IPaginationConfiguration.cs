@@ -16,7 +16,7 @@ public interface IPaginationConfiguration
 {
     public IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters();
 
-    public IEnumerable<KeyValuePair<string, string>>? BuildNextPageParameters<T>(int page, PagedResponse<T> response);
+    public Uri? BuildNextPageUri<T>(int page, PagedResponse<T> response, string initialUrl, string originalQueryString);
 
     public PagedResponse<T> DeserializeResponse<T>(JsonTextReader reader, HttpResponseHeaders httpResponseHeaders);
 
