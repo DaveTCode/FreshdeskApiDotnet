@@ -102,6 +102,19 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         }
     }
 
+    /// <inheritdoc />
+    public async IAsyncEnumerable<Contact> FilterContactsAsync(string encodedQuery, IPageBasedPaginationConfiguration? pagingConfiguration = null, CancellationToken cancellationToken = default)
+    {
+        pagingConfiguration ??= new PageBasedPaginationConfiguration();
+
+        await foreach (var contact in _freshdeskClient
+                           .GetPagedResults<Contact>($"/api/v2/search/contacts?query=\"{encodedQuery}\"", pagingConfiguration, cancellationToken)
+                           .ConfigureAwait(false))
+        {
+            yield return contact;
+        }
+    }
+
     /// <summary>
     /// Update a contact with new details.
     ///
