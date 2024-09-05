@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using FreshdeskApi.Client.CommonModels;
@@ -72,18 +71,18 @@ public interface IFreshdeskContactClient
     ///
     /// c.f. https://developers.freshdesk.com/api/#filter_contacts
     /// </summary>
-    /// 
+    ///
     /// <param name="encodedQuery">
     /// The full query string with params encoded properly.
     ///
     /// Will be appended with ?query="encodedQuery" so don't enclose in quotes.
     /// </param>
-    /// 
+    ///
     /// <param name="pagingConfiguration">NOTE: The PageSize can't be configured for this api</param>
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>
-    /// The filtered set of contact, this request is paged and iterating 
+    /// The filtered set of contact, this request is paged and iterating
     /// to the next entry may cause a new API call to get the next page.
     /// </returns>
     IAsyncEnumerable<Contact> FilterContactsAsync(
