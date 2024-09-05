@@ -94,22 +94,28 @@ public class FreshdeskContactClient : IFreshdeskContactClient
         if (request == null) throw new ArgumentNullException(nameof(request), "Request must not be null");
         pagingConfiguration ??= new ListPaginationConfiguration();
 
-        await foreach (var contact in _freshdeskClient
-            .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, cancellationToken)
-            .ConfigureAwait(false))
+        await foreach (
+            var contact in _freshdeskClient
+                .GetPagedResults<ListContact>(request.UrlWithQueryString, pagingConfiguration, cancellationToken)
+                .ConfigureAwait(false))
         {
             yield return contact;
         }
     }
 
     /// <inheritdoc />
-    public async IAsyncEnumerable<Contact> FilterContactsAsync(string encodedQuery, IPageBasedPaginationConfiguration? pagingConfiguration = null, CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<Contact> FilterContactsAsync(
+        string encodedQuery,
+        IPageBasedPaginationConfiguration? pagingConfiguration = null,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
     {
         pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
-        await foreach (var contact in _freshdeskClient
-                           .GetPagedResults<Contact>($"/api/v2/search/contacts?query=\"{encodedQuery}\"", pagingConfiguration, cancellationToken)
-                           .ConfigureAwait(false))
+        await foreach (
+            var contact in _freshdeskClient
+                .GetPagedResults<Contact>($"/api/v2/search/contacts?query=\"{encodedQuery}\"", pagingConfiguration, cancellationToken)
+                .ConfigureAwait(false))
         {
             yield return contact;
         }
