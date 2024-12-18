@@ -49,9 +49,16 @@ public class ListAllRecordsRequestTests
             Sort = null
         };
 
+#if NET9_0_OR_GREATER
+        Assert.Equal(
+            "?created_time=2024-08-26T18%3a00%3a00.000Z&age%5bgt%5d=35&updated_time%5bgt%5d=2020-09-23T22%3a35%3a45.000Z",
+            record.GetQuery()
+        );
+#else
         Assert.Equal(
             "?created_time=2024-08-26T18%3a00%3a00.000Z&age%5Bgt%5D=35&updated_time%5Bgt%5D=2020-09-23T22%3a35%3a45.000Z",
             record.GetQuery()
         );
+#endif
     }
 }

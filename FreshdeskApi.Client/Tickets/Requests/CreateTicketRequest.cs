@@ -215,6 +215,7 @@ public class CreateTicketRequest : IRequestWithAttachment, IRequestWithAdditiona
         foreach (var customField in CustomFields ?? [])
         {
             var key = $"{CustomFieldsName}[{customField.Key}]";
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             var value = customField.Value?.ToString() ?? string.Empty;
 
             yield return (new StringContent(value), key);

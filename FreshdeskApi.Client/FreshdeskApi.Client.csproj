@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
-    <LangVersion>12.0</LangVersion>
+    <TargetFrameworks>netstandard2.1;net8.0;net9.0</TargetFrameworks>
+    <LangVersion>13.0</LangVersion>
 
     <AssemblyName>FreshdeskApi</AssemblyName>
     <Authors>David Tyler</Authors>
@@ -42,6 +42,11 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net9.0' ">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
+  </ItemGroup>
+
   <ItemGroup>
     <Content Include="..\README.md" Link="README.md">
       <Pack>true</Pack>
@@ -52,7 +57,7 @@
   <ItemGroup>
     <None Include="..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <InternalsVisibleTo Include="FreshdeskApi.Client.UnitTests" />
   </ItemGroup>
