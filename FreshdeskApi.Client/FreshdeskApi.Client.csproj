@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net8.0;net9.0</TargetFrameworks>
     <LangVersion>12.0</LangVersion>
 
     <AssemblyName>FreshdeskApi</AssemblyName>
@@ -52,7 +52,7 @@
   <ItemGroup>
     <None Include="..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <InternalsVisibleTo Include="FreshdeskApi.Client.UnitTests" />
   </ItemGroup>
