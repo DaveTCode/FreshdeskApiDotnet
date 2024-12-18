@@ -22,23 +22,23 @@ jobs:
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v3.1.1
         with:
-          versionSpec: '5.x'
+          versionSpec: '6.0.5'
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
         uses: gittools/actions/gitversion/execute@v3.1.1
       - run: |
           echo "MajorMinorPatch: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
-          echo "NuGetVersionV2: ${{ steps.gitversion.outputs.NuGetVersionV2 }}"
-          echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
+          echo "FullSemVer: ${{ steps.gitversion.outputs.FullSemVer }}"
+          echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
       - name: Restore with .Net
         run: dotnet restore --nologo
       - name: build with .Net
-        run: dotnet build --configuration Release --no-restore --nologo "-p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }}"
+        run: dotnet build --configuration Release --no-restore --nologo "-p:Version=${{ steps.gitversion.outputs.FullSemVer }}"
       - name: Pack with .Net
-        run: dotnet pack --nologo --no-build --configuration Release --output nuget-packages -p:PackageVersion=${{ steps.gitversion.outputs.NuGetVersionV2 }} FreshdeskApi.Client/FreshdeskApi.Client.csproj
+        run: dotnet pack --nologo --no-build --configuration Release --output nuget-packages -p:PackageVersion=${{ steps.gitversion.outputs.FullSemVer }} FreshdeskApi.Client/FreshdeskApi.Client.csproj
       - uses: actions/upload-artifact@v4
         with:
-          name: Nuget-packages-${{ steps.gitversion.outputs.NuGetVersionV2 }}
+          name: Nuget-packages-${{ steps.gitversion.outputs.FullSemVer }}
           path: nuget-packages
       - name: Push package to nuget
         run: dotnet nuget push 'nuget-packages/*.nupkg' --api-key ${{ secrets.MYGET_API_KEY }} --source https://www.myget.org/F/freshdesk-api-dotnet/api/v3/index.json

@@ -1,5 +1,9 @@
-mode: ContinuousDeployment
-continuous-delivery-fallback-tag: nightly
+mode: ContinuousDelivery
+branches:
+  main:
+    increment: Patch
+    label: nightly
+    source-branches: [master]
 ignore:
   sha: []
 merge-message-formats: {}
