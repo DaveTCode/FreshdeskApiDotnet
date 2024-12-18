@@ -3,7 +3,7 @@ branches:
   main:
     increment: Patch
     label: nightly
-    source-branches: [master]
+    source-branches: [main]
 ignore:
   sha: []
 merge-message-formats: {}
