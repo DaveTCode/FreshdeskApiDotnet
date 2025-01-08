@@ -79,10 +79,10 @@ public class Ticket
     public string? Type { get; set; }
 
     [JsonProperty("due_by")]
-    public DateTimeOffset DueBy { get; set; }
+    public DateTimeOffset? DueBy { get; set; }
 
     [JsonProperty("fr_due_by")]
-    public DateTimeOffset FirstResponseDueBy { get; set; }
+    public DateTimeOffset? FirstResponseDueBy { get; set; }
 
     [JsonProperty("is_escalated")]
     public bool IsEscalated { get; set; }
