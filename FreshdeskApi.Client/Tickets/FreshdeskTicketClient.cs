@@ -120,7 +120,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
         pagingConfiguration ??= new PageBasedPaginationConfiguration();
 
         await foreach (var ticket in _freshdeskClient
-            .GetPagedResults<Ticket>($"/api/v2/search/tickets?query={encodedQuery}", pagingConfiguration, cancellationToken)
+            .GetPagedResults<Ticket>($"/api/v2/search/tickets?query=\"{encodedQuery}\"", pagingConfiguration, cancellationToken)
             .ConfigureAwait(false))
         {
             yield return ticket;
