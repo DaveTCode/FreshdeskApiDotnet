@@ -41,7 +41,7 @@ public class FreshdeskTicketClient : IFreshdeskTicketClient
     /// <returns>The full ticket information</returns>
     public async Task<Ticket> ViewTicketAsync(
         long ticketId,
-        TicketIncludes? includes = default,
+        ViewTicketIncludes? includes = default,
         CancellationToken cancellationToken = default)
     {
         var url = $"/api/v2/tickets/{ticketId}";

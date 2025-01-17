@@ -30,7 +30,7 @@ public interface IFreshdeskTicketClient
     /// <returns>The full ticket information</returns>
     Task<Ticket> ViewTicketAsync(
         long ticketId,
-        TicketIncludes? includes = default,
+        ViewTicketIncludes? includes = default,
         CancellationToken cancellationToken = default);
 
     /// <summary>

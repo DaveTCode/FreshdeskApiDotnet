@@ -24,7 +24,7 @@ public class ListAllTicketsRequest
         string? requesterEmail = null,
         long? companyId = null,
         DateTimeOffset? updatedSince = null,
-        TicketIncludes? includes = default,
+        ListTicketIncludes? includes = default,
         TicketOrderBy? orderBy = default,
         TicketOrderDirection? orderDir = default)
     {

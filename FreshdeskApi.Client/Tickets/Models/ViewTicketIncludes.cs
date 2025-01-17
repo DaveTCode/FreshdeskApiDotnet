@@ -1,4 +1,4 @@
-using System.Text;
+using System.Collections.Generic;
 
 namespace FreshdeskApi.Client.Tickets.Models;
 
@@ -9,7 +9,7 @@ namespace FreshdeskApi.Client.Tickets.Models;
 /// single ticket and 2 extra API credits on a call which returns a list
 /// of tickets.
 /// </summary>
-public struct TicketIncludes
+public struct ViewTicketIncludes
 {
     /// <summary>
     /// Causes the company information (id, name) to be retrieved for a
@@ -34,21 +34,15 @@ public struct TicketIncludes
     /// </summary>
     public bool Stats;
 
-    /// <summary>
-    /// Causes description and descriptiontext fields to be included when listing tickets.
-    /// </summary>
-    public bool Description;
-
     public override string ToString()
     {
-        var sb = new StringBuilder();
+        var includes = new List<string>();
 
-        if (Company) sb.Append(",company");
-        if (Conversations) sb.Append(",conversations");
-        if (Requester) sb.Append(",requester");
-        if (Stats) sb.Append(",stats");
-        if (Description) sb.Append(",description");
+        if (Company) includes.Add("company");
+        if (Conversations) includes.Add("conversations");
+        if (Requester) includes.Add("requester");
+        if (Stats) includes.Add("stats");
 
-        return sb.ToString().TrimStart(',');
+        return string.Join(',', includes);
     }
 }
