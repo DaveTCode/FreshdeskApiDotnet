@@ -7,56 +7,55 @@ using FreshdeskApi.Client.Tickets.Models;
 using FreshdeskApi.Client.Tickets.Requests;
 using Xunit;
 
-namespace FreshdeskApi.Client.UnitTests.Infrastructure
+namespace FreshdeskApi.Client.UnitTests.Infrastructure;
+
+public class RequestWithAttachmentTest
 {
-    public class RequestWithAttachmentTest
+    [Theory]
+    [ClassData(typeof(MultipartDataData))]
+    public void MultipartFormDataRequiredWorks(IRequestWithAttachment request)
     {
-        [Theory]
-        [ClassData(typeof(MultipartDataData))]
-        public void MultipartFormDataRequiredWorks(IRequestWithAttachment request)
+        Assert.True(request.IsMultipartFormDataRequired());
+    }
+
+    [Theory]
+    [ClassData(typeof(NoMultipartDataData))]
+    public void MultipartFormDataNotRequiredWorks(IRequestWithAttachment request)
+    {
+        Assert.False(request.IsMultipartFormDataRequired());
+    }
+
+    public class MultipartDataData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
         {
-            Assert.True(request.IsMultipartFormDataRequired());
+            yield return new object[] { new ContactCreateRequest("name", avatar: new FileAttachment()) };
+            yield return new object[] { new UpdateContactRequest(avatar: new FileAttachment()) };
+            yield return new object[] { new CreateReplyRequest("bodyHtml", files: new[] { new FileAttachment() }) };
+            yield return new object[] { new UpdateNoteRequest("bodyHtml", files: new[] { new FileAttachment() }) };
+            yield return new object[] { new CreateTicketRequest(new TicketStatus(), new TicketPriority(), new TicketSource(), "description", email: "email", files: new[] { new FileAttachment() }) };
+            yield return new object[] { new UpdateTicketRequest(files: new[] { new FileAttachment() }) };
         }
 
-        [Theory]
-        [ClassData(typeof(NoMultipartDataData))]
-        public void MultipartFormDataNotRequiredWorks(IRequestWithAttachment request)
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+    public class NoMultipartDataData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
         {
-            Assert.False(request.IsMultipartFormDataRequired());
+            yield return new object[] { new ContactCreateRequest("name", avatar: null) };
+            yield return new object[] { new UpdateContactRequest(avatar: null) };
+            yield return new object[] { new CreateReplyRequest("bodyHtml", files: new FileAttachment[] { }) };
+            yield return new object[] { new CreateReplyRequest("bodyHtml", files: null) };
+            yield return new object[] { new UpdateNoteRequest("bodyHtml", files: new FileAttachment[] { }) };
+            yield return new object[] { new UpdateNoteRequest("bodyHtml", files: null) };
+            yield return new object[] { new CreateTicketRequest(new TicketStatus(), new TicketPriority(), new TicketSource(), "description", email: "email", files: new FileAttachment[] { }) };
+            yield return new object[] { new CreateTicketRequest(new TicketStatus(), new TicketPriority(), new TicketSource(), "description", email: "email", files: null) };
+            yield return new object[] { new UpdateTicketRequest(files: new FileAttachment[] { }) };
+            yield return new object[] { new UpdateTicketRequest(files: null) };
         }
 
-        public class MultipartDataData : IEnumerable<object[]>
-        {
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                yield return new object[] { new ContactCreateRequest("name", avatar: new FileAttachment()) };
-                yield return new object[] { new UpdateContactRequest(avatar: new FileAttachment()) };
-                yield return new object[] { new CreateReplyRequest("bodyHtml", files: new[] { new FileAttachment() }) };
-                yield return new object[] { new UpdateNoteRequest("bodyHtml", files: new[] { new FileAttachment() }) };
-                yield return new object[] { new CreateTicketRequest(new TicketStatus(), new TicketPriority(), new TicketSource(), "description", email: "email", files: new[] { new FileAttachment() }) };
-                yield return new object[] { new UpdateTicketRequest(files: new[] { new FileAttachment() }) };
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
-
-        public class NoMultipartDataData : IEnumerable<object[]>
-        {
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                yield return new object[] { new ContactCreateRequest("name", avatar: null) };
-                yield return new object[] { new UpdateContactRequest(avatar: null) };
-                yield return new object[] { new CreateReplyRequest("bodyHtml", files: new FileAttachment[] { }) };
-                yield return new object[] { new CreateReplyRequest("bodyHtml", files: null) };
-                yield return new object[] { new UpdateNoteRequest("bodyHtml", files: new FileAttachment[] { }) };
-                yield return new object[] { new UpdateNoteRequest("bodyHtml", files: null) };
-                yield return new object[] { new CreateTicketRequest(new TicketStatus(), new TicketPriority(), new TicketSource(), "description", email: "email", files: new FileAttachment[] { }) };
-                yield return new object[] { new CreateTicketRequest(new TicketStatus(), new TicketPriority(), new TicketSource(), "description", email: "email", files: null) };
-                yield return new object[] { new UpdateTicketRequest(files: new FileAttachment[] { }) };
-                yield return new object[] { new UpdateTicketRequest(files: null) };
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

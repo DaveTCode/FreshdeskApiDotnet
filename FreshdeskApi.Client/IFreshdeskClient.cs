@@ -1,33 +1,47 @@
 using FreshdeskApi.Client.Agents;
+using FreshdeskApi.Client.Attachments;
 using FreshdeskApi.Client.Channel;
 using FreshdeskApi.Client.Companies;
 using FreshdeskApi.Client.Contacts;
 using FreshdeskApi.Client.Conversations;
+using FreshdeskApi.Client.CustomObjects;
 using FreshdeskApi.Client.Groups;
+using FreshdeskApi.Client.Me;
+using FreshdeskApi.Client.Products;
+using FreshdeskApi.Client.Roles;
 using FreshdeskApi.Client.Solutions;
 using FreshdeskApi.Client.TicketFields;
 using FreshdeskApi.Client.Tickets;
 
-namespace FreshdeskApi.Client
+namespace FreshdeskApi.Client;
+
+public interface IFreshdeskClient
 {
-    public interface IFreshdeskClient
-    {
-        IFreshdeskTicketClient Tickets { get; }
+    IFreshdeskTicketClient Tickets { get; }
 
-        IFreshdeskContactClient Contacts { get; }
+    IFreshdeskContactClient Contacts { get; }
 
-        IFreshdeskGroupClient Groups { get; }
+    IFreshdeskGroupClient Groups { get; }
 
-        IFreshdeskAgentClient Agents { get; }
+    IFreshdeskRoleClient Roles { get; }
 
-        IFreshdeskCompaniesClient Companies { get; }
+    IFreshdeskProductClient Products { get; }
 
-        IFreshdeskSolutionClient Solutions { get; }
+    IFreshdeskMeClient Me { get; }
 
-        IFreshdeskTicketFieldsClient TicketFields { get; }
+    IFreshdeskAgentClient Agents { get; }
 
-        IFreshdeskConversationsClient Conversations { get; }
+    IFreshdeskCompaniesClient Companies { get; }
 
-        IFreshdeskChannelApiClient ChannelApi { get; }
-    }
+    IFreshdeskSolutionClient Solutions { get; }
+
+    IFreshdeskTicketFieldsClient TicketFields { get; }
+
+    IFreshdeskConversationsClient Conversations { get; }
+
+    IFreshdeskChannelApiClient ChannelApi { get; }
+
+    IFreshdeskAttachmentsClient Attachments { get; }
+
+    IFreshdeskCustomObjectClient CustomObjects { get; }
 }
