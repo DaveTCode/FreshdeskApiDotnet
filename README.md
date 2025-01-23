@@ -1,5 +1,4 @@
 [![Build Status](https://github.com/DaveTCode/FreshdeskApiDotnet/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/DaveTCode/FreshdeskApiDotnet/actions/workflows/build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DaveTCode_FreshdeskApiDotnet&metric=alert_status)](https://sonarcloud.io/dashboard?id=DaveTCode_FreshdeskApiDotnet)
 [![NuGet](https://img.shields.io/nuget/v/Freshdesk.Api.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Freshdesk.Api/)
 [![MyGet](https://img.shields.io/myget/freshdesk-api-dotnet/vpre/Freshdesk.Api?label=MyGet)](https://www.myget.org/feed/freshdesk-api-dotnet/package/nuget/Freshdesk.Api)
 
@@ -18,7 +17,7 @@ This library provides a single client class which can be created in one of sever
 1. No existing HttpClient object (suitable for console applications)
 
 ```csharp
-using var freshdeskHttpClient = new FreshdeskHttpClient("https://mydomain.freshdesk.com", "APIKEY");
+using var freshdeskHttpClient = FreshdeskHttpClient.Create("https://mydomain.freshdesk.com", "APIKEY");
 var freshdeskClient = FreshdeskClient.Create(freshdeskHttpClient);
 ```
 
@@ -39,10 +38,12 @@ NOTE: Typically you don't want to dispose the freshdesk client in this case.
 ```csharp
 using FreshdeskApi.Client.Extensions;
 
-serviceCollection.AddFreshdeskApiClient(options => {
-  options.FreshdeskDomain = "https://<mydomain>.freshdesk.com";
-  options.FreshdeskDomain = "APIKEY"; 
-})
+serviceCollection
+    .AddFreshdeskApiClient()
+    .Configure(options => {
+      options.FreshdeskDomain = "https://<mydomain>.freshdesk.com";
+      options.ApiKey = "APIKEY"; 
+    });
 
 ...
 
@@ -75,10 +76,10 @@ Conversations|:heavy_check_mark:
 Contacts|:heavy_check_mark:
 Agents|:heavy_check_mark:
 Skills|:x:
-Roles|:x:
+Roles|:heavy_check_mark:
 Groups|:heavy_check_mark:
 Companies|:heavy_check_mark:
-Canned Response Folders|:x:
+Canned Responses|:heavy_check_mark: (read only)
 Discussions|:x:
 Solutions|:heavy_check_mark:
 Surveys|:x:
@@ -87,14 +88,15 @@ Field Service Management|:x:
 Time Entries|:x:
 Email Configs|:x:
 Email Mailboxes|:x:
-Products|:x:
+Products|:heavy_check_mark:
 Business Hours|:x:
 Scenario Automations|:x:
 SLA Policies|:x:
 Settings|:x:
+Custom Objects|:heavy_check_mark:
 
 ## Development
 
-The library utilises C#8 features and therefore VS2019 or a suitable text editor are required for making changes.
+The library utilises C#11 features and therefore VS2022 or a suitable text editor are required for making changes.
 
 Please feel free to send pull requests or raise Github issues.

@@ -1,4 +1,4 @@
-﻿name: PR CI Build
+name: PR CI Build
 
 on:
   pull_request:
@@ -13,14 +13,13 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
-      - name: Setup .Net Core 5.0.x
-        uses: actions/setup-dotnet@v1
+      - name: Setup .Net
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '5.0.x'
-      - uses: actions/checkout@v2
-        with:
-          # shallow clone disabled as recommended by SonarCLoud - https://github.com/marketplace/actions/sonarcloud-scan
-          fetch-depth: 0
+          dotnet-version: |
+            8.0.x
+            9.0.x
+      - uses: actions/checkout@v4
       - name: Build & test
         run: |
           dotnet build --configuration Release
@@ -31,12 +30,12 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup .Net Core 5.0.x
-        uses: actions/setup-dotnet@v1
+      - uses: actions/checkout@v4
+      - name: Setup .Net 9.0.x
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '5.0.x'
-      - name: Tool restore with .Net Core
-        run: dotnet tool restore
+          dotnet-version: '9.0.x'
+      - name: Restore
+        run: dotnet restore --nologo
       - name: .Net Format
-        run: dotnet format --check -v diag
+        run: dotnet format --no-restore --verify-no-changes -v diag
