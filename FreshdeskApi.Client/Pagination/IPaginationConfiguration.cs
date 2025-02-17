@@ -14,13 +14,13 @@ namespace FreshdeskApi.Client.Pagination;
 /// </summary>
 public interface IPaginationConfiguration
 {
-    public IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters();
+    IEnumerable<KeyValuePair<string, string>> BuildInitialPageParameters();
 
-    public Uri? BuildNextPageUri<T>(int page, PagedResponse<T> response, string initialUrl, string originalQueryString);
+    Uri? BuildNextPageUri<T>(int page, PagedResponse<T> response, string initialUrl, string originalQueryString);
 
-    public PagedResponse<T> DeserializeResponse<T>(JsonTextReader reader, HttpResponseHeaders httpResponseHeaders);
+    PagedResponse<T> DeserializeResponse<T>(JsonTextReader reader, HttpResponseHeaders httpResponseHeaders);
 
-    public delegate Task ProcessPageDelegate(int page, Uri uri, CancellationToken? cancellationToken = default);
+    delegate Task ProcessPageDelegate(int page, Uri uri, CancellationToken? cancellationToken = default);
 
     /// <summary>
     /// This event is invoked right after deserialization of the page

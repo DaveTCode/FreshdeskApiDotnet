@@ -189,7 +189,7 @@ public interface IFreshdeskSolutionClient
     /// <param name="cancellationToken"></param>
     ///
     /// <returns>The contents of the category including it's new id</returns>
-    public Task<Category> CreateCategoryTranslationAsync(
+    Task<Category> CreateCategoryTranslationAsync(
         long categoryId,
         string languageCode,
         CreateCategoryRequest request,
