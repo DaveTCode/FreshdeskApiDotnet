@@ -24,9 +24,9 @@ public class ListAllTicketsRequest
         string? requesterEmail = null,
         long? companyId = null,
         DateTimeOffset? updatedSince = null,
-        ListTicketIncludes? includes = default,
-        TicketOrderBy? orderBy = default,
-        TicketOrderDirection? orderDir = default)
+        ListTicketIncludes? includes = null,
+        TicketOrderBy? orderBy = null,
+        TicketOrderDirection? orderDir = null)
     {
         var urlParams = new Dictionary<string, string?>
             {
@@ -54,10 +54,12 @@ public class ListAllTicketsRequest
 
 public enum ListAllTicketsFilter
 {
+    [Obsolete($"Use {nameof(NewAndMyOpen)} instead.", false)]
     NewAnyMyOpen,
     Watching,
     Spam,
-    Deleted
+    Deleted,
+    NewAndMyOpen,
 }
 
 public enum TicketOrderBy
@@ -65,20 +67,23 @@ public enum TicketOrderBy
     CreatedAt,
     DueBy,
     UpdatedAt,
-    Status
+    Status,
 }
 
 public enum TicketOrderDirection
 {
     Ascending,
-    Descending
+    Descending,
 }
 
 internal static class TicketOrderExtensions
 {
     internal static string QueryParameterValue(this ListAllTicketsFilter filter) => filter switch
     {
-        ListAllTicketsFilter.NewAnyMyOpen => "new_any_my_open",
+#pragma warning disable CS0618 // 'ListAllTicketsFilter.NewAnyMyOpen' is obsolete: 'Use NewAndMyOpen instead.'
+        ListAllTicketsFilter.NewAnyMyOpen => "new_and_my_open",
+#pragma warning restore CS0618
+        ListAllTicketsFilter.NewAndMyOpen => "new_and_my_open",
         ListAllTicketsFilter.Watching => "watching",
         ListAllTicketsFilter.Spam => "spam",
         ListAllTicketsFilter.Deleted => "deleted",
