@@ -54,6 +54,7 @@ public class ListAllTicketsRequest
 
 public enum ListAllTicketsFilter
 {
+    [Obsolete($"Use {nameof(NewAndMyOpen)} instead.", true)]
     NewAnyMyOpen,
     Watching,
     Spam,
