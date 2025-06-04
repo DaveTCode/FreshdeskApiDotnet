@@ -59,7 +59,7 @@ public enum ListAllTicketsFilter
     Watching,
     Spam,
     Deleted,
-    NewAndMyOpen
+    NewAndMyOpen,
 }
 
 public enum TicketOrderBy
@@ -80,7 +80,9 @@ internal static class TicketOrderExtensions
 {
     internal static string QueryParameterValue(this ListAllTicketsFilter filter) => filter switch
     {
+        #pragma warning disable CS0619 // 'ListAllTicketsFilter.NewAnyMyOpen' is obsolete: 'Use NewAndMyOpen instead.'
         ListAllTicketsFilter.NewAnyMyOpen => "new_and_my_open",
+        #pragma warning restore CS0619
         ListAllTicketsFilter.NewAndMyOpen => "new_and_my_open",
         ListAllTicketsFilter.Watching => "watching",
         ListAllTicketsFilter.Spam => "spam",
