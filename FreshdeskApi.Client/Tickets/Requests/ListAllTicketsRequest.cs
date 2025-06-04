@@ -57,7 +57,8 @@ public enum ListAllTicketsFilter
     NewAnyMyOpen,
     Watching,
     Spam,
-    Deleted
+    Deleted,
+    NewAndMyOpen
 }
 
 public enum TicketOrderBy
@@ -78,7 +79,8 @@ internal static class TicketOrderExtensions
 {
     internal static string QueryParameterValue(this ListAllTicketsFilter filter) => filter switch
     {
-        ListAllTicketsFilter.NewAnyMyOpen => "new_any_my_open",
+        ListAllTicketsFilter.NewAnyMyOpen => "new_and_my_open",
+        ListAllTicketsFilter.NewAndMyOpen => "new_and_my_open",
         ListAllTicketsFilter.Watching => "watching",
         ListAllTicketsFilter.Spam => "spam",
         ListAllTicketsFilter.Deleted => "deleted",
