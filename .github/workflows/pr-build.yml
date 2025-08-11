@@ -19,7 +19,7 @@ jobs:
           dotnet-version: |
             8.0.x
             9.0.x
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Build & test
         run: |
           dotnet build --configuration Release
@@ -30,7 +30,7 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup .Net 9.0.x
         uses: actions/setup-dotnet@v4
         with:
