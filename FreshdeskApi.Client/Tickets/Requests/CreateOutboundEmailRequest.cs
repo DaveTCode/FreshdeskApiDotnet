@@ -16,7 +16,7 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment, IRequestWithAd
     private const string CustomFieldsName = "custom_fields";
 
     public CreateOutboundEmailRequest(TicketStatus status, TicketPriority priority, string subject, string description,
-        string email, long emailConfigId, string? requesterName = null, string[]? ccEmails = null,
+        string email, long emailConfigId, string? requesterName = null, string[]? ccEmails = null, string? bccEmail = null,
         Dictionary<string, object>? customFields = null, DateTimeOffset? dueBy = null,
         DateTimeOffset? firstResponseDueBy = null, long? groupId = null, string[]? tags = null,
         string? ticketType = null,
@@ -28,6 +28,7 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment, IRequestWithAd
         Email = email;
         Description = description;
         CcEmails = ccEmails;
+        BccEmails = bccEmail is not null ? [bccEmail] : [];
         CustomFields = customFields;
         DueBy = dueBy;
         EmailConfigId = emailConfigId;
@@ -89,6 +90,12 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment, IRequestWithAd
     /// </summary>
     [JsonProperty("cc_emails")]
     public string[]? CcEmails { get; }
+
+    /// <summary>
+    /// Email address added in the 'bcc' field of the incoming ticket email.
+    /// </summary>
+    [JsonProperty("bcc_emails")]
+    public string[]? BccEmails { get; }
 
     /// <summary>
     /// Key value pairs containing the names and values of custom fields.
