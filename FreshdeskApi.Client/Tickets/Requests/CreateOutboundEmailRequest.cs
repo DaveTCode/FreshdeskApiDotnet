@@ -90,7 +90,7 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment, IRequestWithAd
     /// </summary>
     [JsonProperty("cc_emails")]
     public string[]? CcEmails { get; }
-    
+
     /// <summary>
     /// Email address added in the 'bcc' field of the incoming ticket email.
     /// </summary>
