@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net.Http;
 
 namespace FreshdeskApi.Client.Exceptions;
@@ -18,8 +19,17 @@ public abstract class FreshdeskApiException : Exception, IDisposable
     /// </summary>
     public HttpResponseMessage Response { get; }
 
+    public string ResponseMessage { get; }
+    
     internal FreshdeskApiException(HttpResponseMessage response)
     {
+        try
+        {
+            using var messageStream = new StreamReader(response.Content.ReadAsStream());
+            ResponseMessage = messageStream.ReadToEnd();
+        }
+        catch (Exception) { /* not important move on */ }
+
         Response = response;
     }
 

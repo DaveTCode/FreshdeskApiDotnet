@@ -16,7 +16,7 @@ public interface IFreshdeskAttachmentsClient
     /// </param>
     ///
     /// <param name="cancellationToken"></param>
-    Task DeleteAttachmentAsync(
+    public Task DeleteAttachmentAsync(
         long agentId,
         CancellationToken cancellationToken = default);
 }
