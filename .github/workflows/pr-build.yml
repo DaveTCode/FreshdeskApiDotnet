@@ -24,7 +24,15 @@ jobs:
       - name: Build & test
         run: |
           dotnet build --configuration Release
-          dotnet test --no-build --configuration Release
+          dotnet test --no-build --configuration Release --results-directory TestResults --report-trx
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v2.1.2
+        if: always()
+        with:
+          name: 'Test Results'
+          path: 'TestResults/*.trx'
+          reporter: dotnet-trx
 
   code-style:
     runs-on: ubuntu-latest
