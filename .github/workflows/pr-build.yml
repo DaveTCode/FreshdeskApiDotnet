@@ -19,11 +19,12 @@ jobs:
           dotnet-version: |
             8.0.x
             9.0.x
+            10.0.x
       - uses: actions/checkout@v5
       - name: Build & test
         run: |
           dotnet build --configuration Release
-          dotnet test --nologo --no-build --configuration Release
+          dotnet test --no-build --configuration Release
 
   code-style:
     runs-on: ubuntu-latest
@@ -31,10 +32,10 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
       - uses: actions/checkout@v5
-      - name: Setup .Net 9.0.x
+      - name: Setup .Net 10.0.x
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '10.0.x'
       - name: Restore
         run: dotnet restore --nologo
       - name: .Net Format
