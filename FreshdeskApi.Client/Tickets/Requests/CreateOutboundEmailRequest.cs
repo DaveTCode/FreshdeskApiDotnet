@@ -16,7 +16,7 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment, IRequestWithAd
     private const string CustomFieldsName = "custom_fields";
 
     public CreateOutboundEmailRequest(TicketStatus status, TicketPriority priority, string subject, string description,
-        string email, long emailConfigId, string? requesterName = null, string[]? ccEmails = null, string? bccEmail = null,
+        string email, long emailConfigId, string? requesterName = null, string[]? ccEmails = null, string[]? bccEmail = null,
         Dictionary<string, object>? customFields = null, DateTimeOffset? dueBy = null,
         DateTimeOffset? firstResponseDueBy = null, long? groupId = null, string[]? tags = null,
         string? ticketType = null,
@@ -28,7 +28,7 @@ public class CreateOutboundEmailRequest : IRequestWithAttachment, IRequestWithAd
         Email = email;
         Description = description;
         CcEmails = ccEmails;
-        BccEmails = bccEmail is not null ? [bccEmail] : [];
+        BccEmails = bccEmail ?? [];
         CustomFields = customFields;
         DueBy = dueBy;
         EmailConfigId = emailConfigId;
