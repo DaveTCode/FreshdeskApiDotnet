@@ -32,7 +32,7 @@ jobs:
         run: dotnet test --no-build --configuration Release --results-directory TestResults --report-trx
 
       - name: Publish test results
-        uses: dorny/test-reporter@v2.1.1
+        uses: dorny/test-reporter@v2.2.0
         if: always()
         with:
           name: 'Test Results'
