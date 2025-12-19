@@ -9,6 +9,9 @@ registries:
 updates:
   - package-ecosystem: "nuget"
     directory: "/"
+    target-branch: "master"
+    registries:
+      - nuget
     targetFramework: net10.0
     execute-restore: true
     ignore:
