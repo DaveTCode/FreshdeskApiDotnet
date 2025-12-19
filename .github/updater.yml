@@ -1,0 +1,27 @@
+version: 2
+
+registries:
+  nuget:
+    type: nuget-feed
+    url: https://api.nuget.org/v3/index.json
+    nuget-feed-version: V3
+
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/"
+    targetFramework: net10.0
+    execute-restore: true
+    ignore:
+      - dependency-name: "Microsoft.*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "System.*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      microsoft:
+        patterns:
+          - Microsoft.*
+          - System.*
+      xunit:
+        patterns:
+          - xunit
+          - xunit.*

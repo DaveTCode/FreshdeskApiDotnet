@@ -1,0 +1,32 @@
+name: 'Updater: Dependency Updates'
+
+on:
+  schedule:
+    # Run every day at 8am UTC
+    - cron: '0 8 * * *'
+
+  # Allow manual triggering
+  workflow_dispatch:
+
+# Required permissions for the action to work
+permissions:
+  contents: write      # Required to create branches and commits
+  pull-requests: write # Required to create pull requests
+  issues: write        # Required to create and apply labels to pull requests
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository with full history for rebasing
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0  # Full clone required for git operations (rebase, fetch)
+
+      # Run the dependency updater using the action from this repository
+      - name: Update dependencies
+        uses: aviationexam/Aviationexam.DependencyUpdater@0.4.10
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
