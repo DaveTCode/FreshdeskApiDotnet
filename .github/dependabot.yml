@@ -5,20 +5,6 @@
 
 version: 2
 updates:
-  - package-ecosystem: "nuget"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    groups:
-      microsoft:
-        patterns:
-          - Microsoft.*
-          - System.*
-      xunit:
-        patterns:
-          - xunit
-          - xunit.*
-
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
