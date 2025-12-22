@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <!-- Enable lock file generation during restore -->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    
+    <!-- Enforce locked mode in CI/CD environments -->
+    <RestoreLockedMode Condition="'$(CI)' == 'true' OR '$(AGENT_ID)' != '' OR '$(GITHUB_ACTIONS)' == 'true'">true</RestoreLockedMode>
+  </PropertyGroup>
+</Project>
