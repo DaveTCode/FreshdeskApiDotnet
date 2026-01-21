@@ -70,7 +70,7 @@
     <PackageVersion Include="System.Text.Encodings.Web" Version="5.0.1" />
     <PackageVersion Include="System.Text.Json" Version="5.0.2" />
     <PackageVersion Include="xunit.analyzers" Version="1.26.0" />
-    <PackageVersion Include="xunit.v3.assert" Version="3.2.1" />
+    <PackageVersion Include="xunit.v3.assert" Version="3.2.2" />
     <PackageVersion Include="xunit.v3.common" Version="3.2.1" />
     <PackageVersion Include="xunit.v3.core.mtp-v2" Version="3.2.1" />
     <PackageVersion Include="xunit.v3.extensibility.core" Version="3.2.1" />
