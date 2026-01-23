@@ -22,6 +22,9 @@ restore-dotnet:
 reset-dotnet-cache:
 	dotnet nuget locals -c http-cache
 
+format:
+  dotnet format --no-restore -v diag
+
 # Aliases
 alias cl := commit-lock
 alias rc := rebase-continue
