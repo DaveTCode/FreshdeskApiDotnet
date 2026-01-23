@@ -10,9 +10,7 @@ on:
 
 # Required permissions for the action to work
 permissions:
-  contents: write      # Required to create branches and commits
-  pull-requests: write # Required to create pull requests
-  issues: write        # Required to create and apply labels to pull requests
+  contents: read
 
 jobs:
   update-dependencies:
@@ -29,4 +27,5 @@ jobs:
       - name: Update dependencies
         uses: aviationexam/Aviationexam.DependencyUpdater@0.7.1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.UPDATER_GITHUB_PAT }}
+          authentication-proxy-address: ''
