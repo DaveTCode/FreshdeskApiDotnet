@@ -25,7 +25,7 @@ jobs:
 
       # Run the dependency updater using the action from this repository
       - name: Update dependencies
-        uses: aviationexam/Aviationexam.DependencyUpdater@0.7.1
+        uses: aviationexam/Aviationexam.DependencyUpdater@0.7.2
         with:
           github-token: ${{ secrets.UPDATER_GITHUB_PAT }}
           authentication-proxy-address: ''
