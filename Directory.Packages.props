@@ -17,7 +17,7 @@
 
   <!-- Test infrastructure -->
   <ItemGroup>
-    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.3.2" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.4.1" />
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.0.2" />
     <PackageVersion Include="ReportGenerator" Version="5.5.1" />
   </ItemGroup>
@@ -58,10 +58,10 @@
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
     <PackageVersion Include="Microsoft.DiaSymReader" Version="2.2.2" />
     <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="6.0.2" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.Telemetry" Version="2.0.2" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport.Abstractions" Version="2.0.2" />
-    <PackageVersion Include="Microsoft.Testing.Platform" Version="2.0.2" />
-    <PackageVersion Include="Microsoft.Testing.Platform.MSBuild" Version="2.0.2" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.Telemetry" Version="2.1.0" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport.Abstractions" Version="2.1.0" />
+    <PackageVersion Include="Microsoft.Testing.Platform" Version="2.1.0" />
+    <PackageVersion Include="Microsoft.Testing.Platform.MSBuild" Version="2.1.0" />
     <PackageVersion Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
