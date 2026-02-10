@@ -57,7 +57,7 @@
   <ItemGroup>
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
     <PackageVersion Include="Microsoft.DiaSymReader" Version="2.2.2" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="6.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="8.0.2" />
     <PackageVersion Include="Microsoft.Testing.Extensions.Telemetry" Version="2.1.0" />
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport.Abstractions" Version="2.1.0" />
     <PackageVersion Include="Microsoft.Testing.Platform" Version="2.1.0" />
