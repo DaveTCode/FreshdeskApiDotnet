@@ -109,6 +109,13 @@ public sealed class TicketFieldTests
         Assert.Equal(2020, ticketField.CreatedAt.Year);
         Assert.Equal(1, ticketField.CreatedAt.Month);
         Assert.Equal(27, ticketField.CreatedAt.Day);
+
+        Assert.Equal(false, ticketField.Archived);
+
+        Assert.NotNull(ticketField.SectionMappings);
+        Assert.Single(ticketField.SectionMappings);
+        Assert.Equal(1, ticketField.SectionMappings[0]["section_id"]!.Value<long>());
+        Assert.Equal(3, ticketField.SectionMappings[0]["position"]!.Value<int>());
     }
 
     [Fact]
@@ -123,6 +130,13 @@ public sealed class TicketFieldTests
         Assert.Equal(ticketField.Id, roundTripped.Id);
         Assert.Equal(ticketField.Name, roundTripped.Name);
         Assert.Equal(ticketField.Type, roundTripped.Type);
+        Assert.Equal(ticketField.Archived, roundTripped.Archived);
+
+        Assert.NotNull(roundTripped.SectionMappings);
+        Assert.Equal(ticketField.SectionMappings!.Count, roundTripped.SectionMappings.Count);
+        Assert.Equal(
+            ticketField.SectionMappings[0]["section_id"]!.Value<long>(),
+            roundTripped.SectionMappings[0]["section_id"]!.Value<long>());
     }
 
     [Fact]
@@ -147,6 +161,7 @@ public sealed class TicketFieldTests
         Assert.False(ticketField.RequiredForAgents);
         Assert.False(ticketField.RequiredForCustomers);
         Assert.True(ticketField.DisplayedToCustomers);
+        Assert.Equal(false, ticketField.Archived);
 
         Assert.NotNull(ticketField.Choices);
         var choices = ticketField.Choices as JArray;
@@ -186,25 +201,23 @@ public sealed class TicketFieldTests
     }
 
     [Fact]
-    public void Deserialize_NestedField_DependentFieldsAreAccessibleViaJObject()
+    public void Deserialize_NestedField_DependentFieldsDeserializedOnModel()
     {
-        // dependent_fields is not mapped on TicketField — verify raw JSON preserves them
         var wrapper = Deserialize<JObject>(NestedFieldJson);
-        var ticketFieldToken = wrapper["ticket_field"]!;
+        var ticketField = wrapper["ticket_field"]!.ToObject<TicketField>();
+        Assert.NotNull(ticketField);
 
-        var dependentFields = ticketFieldToken["dependent_fields"] as JArray;
+        Assert.NotNull(ticketField.DependentFields);
+        Assert.Equal(2, ticketField.DependentFields.Count);
 
-        Assert.NotNull(dependentFields);
-        Assert.Equal(2, dependentFields.Count);
-
-        var district = dependentFields[0];
+        var district = ticketField.DependentFields[0];
         Assert.Equal(29, district["id"]!.Value<long>());
         Assert.Equal("cf_district", district["name"]!.Value<string>());
         Assert.Equal("District", district["label"]!.Value<string>());
         Assert.Equal(2, district["level"]!.Value<int>());
         Assert.Equal(28, district["ticket_field_id"]!.Value<long>());
 
-        var branch = dependentFields[1];
+        var branch = ticketField.DependentFields[1];
         Assert.Equal(30, branch["id"]!.Value<long>());
         Assert.Equal("cf_branch53114", branch["name"]!.Value<string>());
         Assert.Equal("Branch", branch["label"]!.Value<string>());
@@ -226,6 +239,7 @@ public sealed class TicketFieldTests
         Assert.Equal(ticketField.Id, roundTripped.Id);
         Assert.Equal(ticketField.Name, roundTripped.Name);
         Assert.Equal(ticketField.Type, roundTripped.Type);
+        Assert.Equal(ticketField.Archived, roundTripped.Archived);
 
         var originalChoices = ticketField.Choices as JArray;
         var roundTrippedChoices = roundTripped.Choices as JArray;
@@ -238,6 +252,12 @@ public sealed class TicketFieldTests
         Assert.NotNull(originalHdfc);
         Assert.NotNull(roundTrippedHdfc);
         Assert.Equal(originalHdfc.Count, roundTrippedHdfc.Count);
+
+        Assert.NotNull(roundTripped.DependentFields);
+        Assert.Equal(ticketField.DependentFields!.Count, roundTripped.DependentFields.Count);
+        Assert.Equal(
+            ticketField.DependentFields[0]["id"]!.Value<long>(),
+            roundTripped.DependentFields[0]["id"]!.Value<long>());
     }
 
     [Fact]
