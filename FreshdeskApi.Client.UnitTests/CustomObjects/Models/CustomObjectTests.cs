@@ -127,15 +127,15 @@ public sealed class CustomObjectTests
 
         var choices = field.Choices.ToList();
         Assert.Equal(1, choices[0].Id);
-        Assert.Equal("Pending", choices[0].Value);
+        Assert.Equal("Active", choices[0].Value);
         Assert.Equal(1, choices[0].Position);
 
         Assert.Equal(2, choices[1].Id);
-        Assert.Equal("Confirmed", choices[1].Value);
+        Assert.Equal("Obsolete", choices[1].Value);
         Assert.Equal(2, choices[1].Position);
 
         Assert.Equal(3, choices[2].Id);
-        Assert.Equal("Cancelled", choices[2].Value);
+        Assert.Equal("Draft", choices[2].Value);
         Assert.Equal(3, choices[2].Position);
     }
 
@@ -249,37 +249,45 @@ public sealed class CustomObjectTests
                     "choices": []
                 },
                 {
-                    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-                    "name": "booking_status",
-                    "label": "Booking Status",
-                    "type": "DROPDOWN",
-                    "position": 4,
-                    "required": false,
-                    "editable": true,
-                    "visible": true,
-                    "deleted": false,
-                    "placeholder": "Select a status",
-                    "hint": "Current status of the booking",
-                    "filterable": true,
-                    "searchable": false,
-                    "parent_id": null,
-                    "choices": [
-                        {
-                            "id": 1,
-                            "value": "Pending",
-                            "position": 1
-                        },
-                        {
-                            "id": 2,
-                            "value": "Confirmed",
-                            "position": 2
-                        },
-                        {
-                            "id": 3,
-                            "value": "Cancelled",
-                            "position": 3
-                        }
-                    ]
+                  "id" : "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                  "name" : "booking_status",
+                  "label" : "Booking Status",
+                  "type" : "DROPDOWN",
+                  "position" : 4,
+                  "required" : false,
+                  "editable" : true,
+                  "visible" : true,
+                  "deleted" : false,
+                  "placeholder" : "Select a status",
+                  "hint": "Current status of the booking",
+                  "field_options" : {
+                    "unique" : "false"
+                  },
+                  "filterable" : true,
+                  "searchable" : false,
+                  "aggregatable" : false,
+                  "has_dependents" : false,
+                  "parent_id" : null,
+                  "choices" : [ {
+                    "id" : 1,
+                    "value" : "Active",
+                    "position" : 1,
+                    "dependent_ids" : { }
+                  }, {
+                    "id" : 2,
+                    "value" : "Obsolete",
+                    "position" : 2,
+                    "dependent_ids" : { }
+                  }, {
+                    "id" : 3,
+                    "value" : "Draft",
+                    "position" : 3,
+                    "dependent_ids" : { }
+                  } ],
+                  "default" : null,
+                  "validations" : { },
+                  "created_time" : 1768896573000,
+                  "updated_time" : 1769470228000
                 }
             ]
         }
