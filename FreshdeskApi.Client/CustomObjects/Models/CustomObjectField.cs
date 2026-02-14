@@ -94,5 +94,5 @@ public record CustomObjectField
     /// Choices of the field
     /// </summary>
     [JsonProperty("choices")]
-    public IReadOnlyCollection<string>? Choices { get; set; }
+    public IReadOnlyCollection<CustomObjectFieldChoice>? Choices { get; set; }
 }

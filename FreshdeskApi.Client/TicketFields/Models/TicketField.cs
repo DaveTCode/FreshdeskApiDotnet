@@ -121,6 +121,28 @@ public class TicketField
     public JToken? Choices { get; set; }
 
     /// <summary>
+    /// Set to true if the field is archived
+    /// </summary>
+    [JsonProperty("archived")]
+    public bool? Archived { get; set; }
+
+    /// <summary>
+    /// Array of section mappings that define which sections this field
+    /// appears in. Each mapping contains a section_id and position.
+    /// </summary>
+    [JsonProperty("section_mappings")]
+    public JArray? SectionMappings { get; set; }
+
+    /// <summary>
+    /// Array of dependent field objects. Only present for fields of type
+    /// "nested_field". Each object contains id, name, label,
+    /// label_for_customers, level, ticket_field_id, created_at and
+    /// updated_at.
+    /// </summary>
+    [JsonProperty("dependent_fields")]
+    public JArray? DependentFields { get; set; }
+
+    /// <summary>
     /// True if the Ticket field is inside FSM section (Applicable only if
     /// FSM is enabled)
     /// </summary>
@@ -143,6 +165,6 @@ public class TicketField
 
     public override string ToString()
     {
-        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Label)}: {Label}, {nameof(Description)}: {Description}, {nameof(Position)}: {Position}, {nameof(RequiredForClosure)}: {RequiredForClosure}, {nameof(RequiredForAgents)}: {RequiredForAgents}, {nameof(Type)}: {Type}, {nameof(Default)}: {Default}, {nameof(CustomersCanEdit)}: {CustomersCanEdit}, {nameof(LabelForCustomers)}: {LabelForCustomers}, {nameof(RequiredForCustomers)}: {RequiredForCustomers}, {nameof(DisplayedToCustomers)}: {DisplayedToCustomers}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(PortalCc)}: {PortalCc}, {nameof(PortalCcTo)}: {PortalCcTo}, {nameof(IsFsm)}: {IsFsm}, {nameof(FieldUpdateInProgress)}: {FieldUpdateInProgress}";
+        return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Label)}: {Label}, {nameof(Description)}: {Description}, {nameof(Position)}: {Position}, {nameof(RequiredForClosure)}: {RequiredForClosure}, {nameof(RequiredForAgents)}: {RequiredForAgents}, {nameof(Type)}: {Type}, {nameof(Default)}: {Default}, {nameof(CustomersCanEdit)}: {CustomersCanEdit}, {nameof(LabelForCustomers)}: {LabelForCustomers}, {nameof(RequiredForCustomers)}: {RequiredForCustomers}, {nameof(DisplayedToCustomers)}: {DisplayedToCustomers}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(UpdatedAt)}: {UpdatedAt}, {nameof(PortalCc)}: {PortalCc}, {nameof(PortalCcTo)}: {PortalCcTo}, {nameof(Archived)}: {Archived}, {nameof(IsFsm)}: {IsFsm}, {nameof(FieldUpdateInProgress)}: {FieldUpdateInProgress}";
     }
 }
