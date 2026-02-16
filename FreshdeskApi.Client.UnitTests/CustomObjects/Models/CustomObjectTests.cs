@@ -8,10 +8,6 @@ using Xunit;
 
 namespace FreshdeskApi.Client.UnitTests.CustomObjects.Models;
 
-// TODO: Replace JSON test data with a real API response from GET /api/v2/custom_objects/schemas
-//       once a contributor can provide one. Current JSON is based on the Freshdesk API documentation
-//       at https://developers.freshdesk.com/api/#custom-objects and may not cover all edge cases.
-//       In particular, the dropdown field with choices is synthetic — the docs only show empty choices arrays.
 public sealed class CustomObjectTests
 {
     private static T Deserialize<T>(string json)
