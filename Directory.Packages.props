@@ -50,7 +50,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.3" />
   </ItemGroup>
 
   <!-- Transitive dependencies - Framework-independent -->
@@ -135,7 +135,7 @@
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.13" />
     <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.13" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.13" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.13" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.13" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.12" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.12" />
@@ -167,11 +167,11 @@
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.EventLog" Version="10.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.EventSource" Version="10.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.EventLog" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.EventSource" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Primitives" Version="10.0.3" />
