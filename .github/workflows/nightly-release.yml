@@ -38,7 +38,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore --nologo "-p:Version=${{ steps.gitversion.outputs.FullSemVer }}"
       - name: Pack with .Net
         run: dotnet pack --nologo --no-build --configuration Release --output nuget-packages -p:PackageVersion=${{ steps.gitversion.outputs.FullSemVer }} FreshdeskApi.Client/FreshdeskApi.Client.csproj
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: Nuget-packages-${{ steps.gitversion.outputs.FullSemVer }}
           path: nuget-packages
