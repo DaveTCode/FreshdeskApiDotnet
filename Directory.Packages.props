@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.5.1" />
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.1.0" />
-    <PackageVersion Include="ReportGenerator" Version="5.5.2" />
+    <PackageVersion Include="ReportGenerator" Version="5.5.3" />
   </ItemGroup>
 
   <!-- Framework-specific packages for netstandard2.1 -->
