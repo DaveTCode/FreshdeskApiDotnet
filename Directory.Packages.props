@@ -17,8 +17,8 @@
 
   <!-- Test infrastructure -->
   <ItemGroup>
-    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.5.2" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.1.0" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.6.2" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.2.1" />
     <PackageVersion Include="ReportGenerator" Version="5.5.4" />
   </ItemGroup>
 
