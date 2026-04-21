@@ -1,4 +1,4 @@
-name: Nightly Feedz Package Deploy
+name: Nightly Package Deploy
 
 on:
   push:
@@ -42,6 +42,9 @@ jobs:
         with:
           name: Nuget-packages-${{ steps.gitversion.outputs.FullSemVer }}
           path: nuget-packages
+      - name: Push package to MyGet
+        if: ${{ vars.USE_MYGET == 'true' }}
+        run: dotnet nuget push 'nuget-packages/*.nupkg' --api-key ${{ secrets.MYGET_API_KEY }} --source https://www.myget.org/F/freshdesk-api-dotnet/api/v3/index.json
       - name: Push package to Feedz
         if: ${{ vars.USE_FEEDZ == 'true' }}
         run: dotnet nuget push 'nuget-packages/*.nupkg' --api-key ${{ secrets.FEEDZ_API_KEY }} --source https://f.feedz.io/aviationexam/freshdesk/nuget/index.json
