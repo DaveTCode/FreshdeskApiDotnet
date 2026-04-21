@@ -1,6 +1,6 @@
 [![Build Status](https://github.com/DaveTCode/FreshdeskApiDotnet/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/DaveTCode/FreshdeskApiDotnet/actions/workflows/build.yml)
 [![NuGet](https://img.shields.io/nuget/v/Freshdesk.Api.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Freshdesk.Api/)
-[![MyGet](https://img.shields.io/myget/freshdesk-api-dotnet/vpre/Freshdesk.Api?label=MyGet)](https://www.myget.org/feed/freshdesk-api-dotnet/package/nuget/Freshdesk.Api)
+[![Feedz](https://img.shields.io/badge/feedz-latest-blue)](https://f.feedz.io/aviationexam/freshdesk/nuget/index.json)
 
 
 # Freshdesk API Client
