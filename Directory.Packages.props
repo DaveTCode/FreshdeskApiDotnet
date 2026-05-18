@@ -58,10 +58,10 @@
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
     <PackageVersion Include="Microsoft.DiaSymReader" Version="2.2.8" />
     <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.Telemetry" Version="2.2.2" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport.Abstractions" Version="2.2.2" />
-    <PackageVersion Include="Microsoft.Testing.Platform" Version="2.2.2" />
-    <PackageVersion Include="Microsoft.Testing.Platform.MSBuild" Version="2.2.2" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.Telemetry" Version="2.2.3" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport.Abstractions" Version="2.2.3" />
+    <PackageVersion Include="Microsoft.Testing.Platform" Version="2.2.3" />
+    <PackageVersion Include="Microsoft.Testing.Platform.MSBuild" Version="2.2.3" />
     <PackageVersion Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
@@ -128,22 +128,22 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.16" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.16" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.16" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.15" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.16" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics" Version="9.0.15" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="9.0.15" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="9.0.16" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="9.0.16" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.16" />
     <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.16" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.15" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.15" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.15" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.16" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.15" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.15" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="9.0.15" />
     <PackageVersion Include="Microsoft.Extensions.Logging.EventLog" Version="9.0.15" />
     <PackageVersion Include="Microsoft.Extensions.Logging.EventSource" Version="9.0.15" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.15" />
-    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.15" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.16" />
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.16" />
     <PackageVersion Include="Microsoft.Extensions.Primitives" Version="9.0.16" />
     <PackageVersion Include="System.Diagnostics.EventLog" Version="9.0.16" />
   </ItemGroup>
@@ -158,22 +158,22 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics" Version="10.0.7" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="10.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="10.0.8" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="10.0.8" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="10.0.8" />
     <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.7" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.7" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.7" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.7" />
     <PackageVersion Include="Microsoft.Extensions.Logging.EventLog" Version="10.0.7" />
     <PackageVersion Include="Microsoft.Extensions.Logging.EventSource" Version="10.0.7" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.7" />
-    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.8" />
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Primitives" Version="10.0.8" />
     <PackageVersion Include="System.Diagnostics.EventLog" Version="10.0.8" />
   </ItemGroup>
