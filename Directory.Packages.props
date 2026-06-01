@@ -6,7 +6,7 @@
 
   <!-- Build-time tools and analyzers -->
   <ItemGroup>
-    <PackageVersion Include="PolySharp" Version="1.15.0" />
+    <PackageVersion Include="PolySharp" Version="1.16.0" />
   </ItemGroup>
 
   <!-- Framework-independent libraries -->
