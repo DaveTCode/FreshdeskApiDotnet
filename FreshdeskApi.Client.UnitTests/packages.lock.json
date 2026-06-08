@@ -4,13 +4,13 @@
     "net10.0": {
       "Microsoft.Testing.Extensions.CodeCoverage": {
         "type": "Direct",
-        "requested": "[18.7.0, )",
-        "resolved": "18.7.0",
-        "contentHash": "i7ifcFK6lzM5BHaROS4O7SAkk7L/gAeOwZxs3pyhn8hW73ZDTwQppovXNJL1bm1JBXL69HuI4DO5NzU8rhzIiA==",
+        "requested": "[18.8.0, )",
+        "resolved": "18.8.0",
+        "contentHash": "euA4tpkGAkfHznVQrPzXFLNaUhcRCIKPkDmJJB+A2XU9d5ymHLhQ2Do0fGc/Z2y+VFUaNnM6vHhIrb4FW+qhtg==",
         "dependencies": {
-          "Microsoft.DiaSymReader": "2.2.6",
+          "Microsoft.DiaSymReader": "2.2.3",
           "Microsoft.Extensions.DependencyModel": "8.0.2",
-          "Microsoft.Testing.Platform": "2.2.1"
+          "Microsoft.Testing.Platform": "2.2.3"
         }
       },
       "Microsoft.Testing.Extensions.TrxReport": {
@@ -323,13 +323,13 @@
     "net8.0": {
       "Microsoft.Testing.Extensions.CodeCoverage": {
         "type": "Direct",
-        "requested": "[18.7.0, )",
-        "resolved": "18.7.0",
-        "contentHash": "i7ifcFK6lzM5BHaROS4O7SAkk7L/gAeOwZxs3pyhn8hW73ZDTwQppovXNJL1bm1JBXL69HuI4DO5NzU8rhzIiA==",
+        "requested": "[18.8.0, )",
+        "resolved": "18.8.0",
+        "contentHash": "euA4tpkGAkfHznVQrPzXFLNaUhcRCIKPkDmJJB+A2XU9d5ymHLhQ2Do0fGc/Z2y+VFUaNnM6vHhIrb4FW+qhtg==",
         "dependencies": {
-          "Microsoft.DiaSymReader": "2.2.6",
+          "Microsoft.DiaSymReader": "2.2.3",
           "Microsoft.Extensions.DependencyModel": "8.0.2",
-          "Microsoft.Testing.Platform": "2.2.1"
+          "Microsoft.Testing.Platform": "2.2.3"
         }
       },
       "Microsoft.Testing.Extensions.TrxReport": {
@@ -641,13 +641,13 @@
     "net9.0": {
       "Microsoft.Testing.Extensions.CodeCoverage": {
         "type": "Direct",
-        "requested": "[18.7.0, )",
-        "resolved": "18.7.0",
-        "contentHash": "i7ifcFK6lzM5BHaROS4O7SAkk7L/gAeOwZxs3pyhn8hW73ZDTwQppovXNJL1bm1JBXL69HuI4DO5NzU8rhzIiA==",
+        "requested": "[18.8.0, )",
+        "resolved": "18.8.0",
+        "contentHash": "euA4tpkGAkfHznVQrPzXFLNaUhcRCIKPkDmJJB+A2XU9d5ymHLhQ2Do0fGc/Z2y+VFUaNnM6vHhIrb4FW+qhtg==",
         "dependencies": {
-          "Microsoft.DiaSymReader": "2.2.6",
+          "Microsoft.DiaSymReader": "2.2.3",
           "Microsoft.Extensions.DependencyModel": "8.0.2",
-          "Microsoft.Testing.Platform": "2.2.1"
+          "Microsoft.Testing.Platform": "2.2.3"
         }
       },
       "Microsoft.Testing.Extensions.TrxReport": {
