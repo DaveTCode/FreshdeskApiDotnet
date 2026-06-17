@@ -49,7 +49,7 @@
   <!-- Framework-specific packages for net10.0 -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.9" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.8" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.9" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.9" />
   </ItemGroup>
 
@@ -129,7 +129,7 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.17" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.17" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.17" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics" Version="9.0.16" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics" Version="9.0.17" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="9.0.17" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="9.0.17" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.17" />
