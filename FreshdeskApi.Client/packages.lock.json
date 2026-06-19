@@ -529,13 +529,13 @@
       },
       "Microsoft.Extensions.Diagnostics": {
         "type": "CentralTransitive",
-        "requested": "[9.0.16, )",
-        "resolved": "9.0.16",
-        "contentHash": "jWzHYEyzZ2qg2/oest9aw/b3boJ7wnJQIUBj+vJ6S64dGhQkZtQBL5hopc8uNP9Vw0ztmk3TmXHDUa3Oahpfog==",
+        "requested": "[9.0.17, )",
+        "resolved": "9.0.17",
+        "contentHash": "smsRjzlGv3mkGprVOtLNk4c2DkJ53FGq7PyPFId553JuVDLjyH9COoBJ3b0s2rbaggbhCFCDDnXfFR9CIkBk4w==",
         "dependencies": {
-          "Microsoft.Extensions.Configuration": "9.0.16",
-          "Microsoft.Extensions.Diagnostics.Abstractions": "9.0.16",
-          "Microsoft.Extensions.Options.ConfigurationExtensions": "9.0.16"
+          "Microsoft.Extensions.Configuration": "9.0.17",
+          "Microsoft.Extensions.Diagnostics.Abstractions": "9.0.17",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "9.0.17"
         }
       },
       "Microsoft.Extensions.Diagnostics.Abstractions": {
