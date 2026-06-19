@@ -19,7 +19,7 @@ jobs:
     steps:
       # Checkout the repository with full history for rebasing
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0  # Full clone required for git operations (rebase, fetch)
 
