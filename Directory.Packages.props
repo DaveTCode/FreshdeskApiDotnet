@@ -135,7 +135,7 @@
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.18" />
     <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.18" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.18" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.17" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.18" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.18" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.17" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.17" />
