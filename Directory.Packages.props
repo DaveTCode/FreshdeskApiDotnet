@@ -68,14 +68,14 @@
     <PackageVersion Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
     <PackageVersion Include="System.Text.Encodings.Web" Version="5.0.1" />
     <PackageVersion Include="System.Text.Json" Version="5.0.2" />
-    <PackageVersion Include="xunit.analyzers" Version="1.27.0" />
-    <PackageVersion Include="xunit.v3.assert" Version="3.2.2" />
-    <PackageVersion Include="xunit.v3.common" Version="3.2.2" />
-    <PackageVersion Include="xunit.v3.core.mtp-v2" Version="3.2.2" />
-    <PackageVersion Include="xunit.v3.extensibility.core" Version="3.2.2" />
-    <PackageVersion Include="xunit.v3.runner.common" Version="3.2.2" />
-    <PackageVersion Include="xunit.v3.runner.inproc.console" Version="3.2.2" />
-    <PackageVersion Include="xunit.v3.mtp-v2" Version="3.2.2" />
+    <PackageVersion Include="xunit.analyzers" Version="2.0.0" />
+    <PackageVersion Include="xunit.v3.assert" Version="4.0.0" />
+    <PackageVersion Include="xunit.v3.common" Version="4.0.0" />
+    <PackageVersion Include="xunit.v3.core.mtp-v2" Version="4.0.0" />
+    <PackageVersion Include="xunit.v3.extensibility.core" Version="4.0.0" />
+    <PackageVersion Include="xunit.v3.runner.common" Version="4.0.0" />
+    <PackageVersion Include="xunit.v3.runner.inproc.console" Version="4.0.0" />
+    <PackageVersion Include="xunit.v3.mtp-v2" Version="4.0.0" />
   </ItemGroup>
 
   <!-- Transitive dependencies for netstandard2.1 -->
