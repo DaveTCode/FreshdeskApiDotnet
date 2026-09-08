@@ -703,7 +703,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.19, )",
-          "Microsoft.Extensions.Http": "[9.0.18, )",
+          "Microsoft.Extensions.Http": "[9.0.19, )",
           "Newtonsoft.Json": "[13.0.4, )",
           "TiberHealth.Serializer": "[1.0.48, )"
         }
@@ -792,16 +792,16 @@
       },
       "Microsoft.Extensions.Http": {
         "type": "CentralTransitive",
-        "requested": "[9.0.18, )",
-        "resolved": "9.0.18",
-        "contentHash": "oBzf8sLwekd1+/vQPv7N6X6PxnQoIrqHM4hCjQKBuqEzRY/7vHQ6BDxOIaJYxQlNWIlxgeLPeybzv0Hxv7kkRQ==",
+        "requested": "[9.0.19, )",
+        "resolved": "9.0.19",
+        "contentHash": "XhsIKuyiJbAeOVxEVtqaDPy6cj1+vIS5UmbBCHdDc6xBEso/i8cL39e73hjh0tqeaQFUu1d1pEaxJGfJK+vqaw==",
         "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "9.0.18",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.18",
-          "Microsoft.Extensions.Diagnostics": "9.0.18",
-          "Microsoft.Extensions.Logging": "9.0.18",
-          "Microsoft.Extensions.Logging.Abstractions": "9.0.18",
-          "Microsoft.Extensions.Options": "9.0.18"
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.19",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.19",
+          "Microsoft.Extensions.Diagnostics": "9.0.19",
+          "Microsoft.Extensions.Logging": "9.0.19",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.19",
+          "Microsoft.Extensions.Options": "9.0.19"
         }
       },
       "Microsoft.Extensions.Logging": {
