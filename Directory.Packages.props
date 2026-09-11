@@ -135,7 +135,7 @@
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.20" />
     <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.20" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.19" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.19" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.20" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.20" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.19" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.19" />
@@ -159,13 +159,13 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics" Version="10.0.11" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.Abstractions" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.12" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.11" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.11" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.12" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="10.0.11" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.11" />
