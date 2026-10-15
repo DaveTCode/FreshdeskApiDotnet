@@ -7,6 +7,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # nuget.org trusted publishing exchanges the GitHub OIDC token for a short-lived API key
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
@@ -41,5 +44,11 @@ jobs:
         with:
           name: Nuget-packages-${{ steps.gitversion.outputs.FullSemVer }}
           path: nuget-packages
+      # The temporary API key is valid for one hour, so request it right before pushing
+      - name: NuGet login (OIDC → temporary API key)
+        uses: NuGet/login@v1
+        id: nuget-login
+        with:
+          user: ${{ vars.NUGET_USER }}
       - name: Push package to nuget
-        run: dotnet nuget push 'nuget-packages/*.nupkg' --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push 'nuget-packages/*.nupkg' --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
