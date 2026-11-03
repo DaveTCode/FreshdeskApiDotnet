@@ -25,9 +25,9 @@
       },
       "ReportGenerator": {
         "type": "Direct",
-        "requested": "[5.5.11, )",
-        "resolved": "5.5.11",
-        "contentHash": "kdImIK1zFdFKHjJSxt/t+SHcq7dRHCpzA9MTVoZqBtYPpBPnCus+YiN7oklnt3ASSQ3mEjpcwuuYHNVlrW3ecA=="
+        "requested": "[5.5.12, )",
+        "resolved": "5.5.12",
+        "contentHash": "B86lmm1TQeaRNwS27efw7PMxdWoxhCBTFro7fL5Yv42pbKyrLBo1/i/4EGHRdoCaCYREmd+3vXEdmMzURDXTMw=="
       },
       "xunit.v3.mtp-v2": {
         "type": "Direct",
@@ -350,9 +350,9 @@
       },
       "ReportGenerator": {
         "type": "Direct",
-        "requested": "[5.5.11, )",
-        "resolved": "5.5.11",
-        "contentHash": "kdImIK1zFdFKHjJSxt/t+SHcq7dRHCpzA9MTVoZqBtYPpBPnCus+YiN7oklnt3ASSQ3mEjpcwuuYHNVlrW3ecA=="
+        "requested": "[5.5.12, )",
+        "resolved": "5.5.12",
+        "contentHash": "B86lmm1TQeaRNwS27efw7PMxdWoxhCBTFro7fL5Yv42pbKyrLBo1/i/4EGHRdoCaCYREmd+3vXEdmMzURDXTMw=="
       },
       "xunit.v3.mtp-v2": {
         "type": "Direct",
@@ -674,9 +674,9 @@
       },
       "ReportGenerator": {
         "type": "Direct",
-        "requested": "[5.5.11, )",
-        "resolved": "5.5.11",
-        "contentHash": "kdImIK1zFdFKHjJSxt/t+SHcq7dRHCpzA9MTVoZqBtYPpBPnCus+YiN7oklnt3ASSQ3mEjpcwuuYHNVlrW3ecA=="
+        "requested": "[5.5.12, )",
+        "resolved": "5.5.12",
+        "contentHash": "B86lmm1TQeaRNwS27efw7PMxdWoxhCBTFro7fL5Yv42pbKyrLBo1/i/4EGHRdoCaCYREmd+3vXEdmMzURDXTMw=="
       },
       "xunit.v3.mtp-v2": {
         "type": "Direct",
