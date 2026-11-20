@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net8.0;net9.0;net10.0</TargetFrameworks>
-    <LangVersion>14.0</LangVersion>
+    <LangVersion>15.0</LangVersion>
 
     <AssemblyName>FreshdeskApi</AssemblyName>
     <Authors>David Tyler</Authors>
