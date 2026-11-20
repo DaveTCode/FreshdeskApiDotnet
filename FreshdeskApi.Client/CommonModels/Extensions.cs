@@ -12,7 +12,7 @@ public static class Extensions
     };
 
     public static string ToQueryParameter(this EFilterOperator sortOrder) =>
-#if NETSTANDARD2_1 || NET8_0
+#if NETSTANDARD2_1
         Uri.EscapeDataString
 #endif
         (sortOrder switch
