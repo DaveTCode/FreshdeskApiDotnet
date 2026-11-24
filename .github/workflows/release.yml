@@ -23,16 +23,16 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v4.7.2
+        uses: gittools/actions/gitversion/setup@v5.0.0
         with:
-          versionSpec: '6.x'
+          versionSpec: '7.0.x'
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
-        uses: gittools/actions/gitversion/execute@v4.7.2
+        uses: gittools/actions/gitversion/execute@v5.0.0
       - run: |
           echo "MajorMinorPatch: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
           echo "FullSemVer: ${{ steps.gitversion.outputs.FullSemVer }}"
-          echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
+          echo "VersionSourceDistance: ${{ steps.gitversion.outputs.versionSourceDistance }}"
       - name: Restore with .Net
         run: dotnet restore --nologo
       - name: Build with .Net

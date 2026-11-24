@@ -1,9 +1,10 @@
-mode: ContinuousDelivery
-branches:
-  main:
-    increment: Patch
-    label: nightly
-    source-branches: [main]
-ignore:
-  sha: []
-merge-message-formats: {}
+calculation:
+  mode: ContinuousDelivery
+  branches:
+    main:
+      increment: Patch
+      label: nightly
+      source-branches: [main]
+  ignore:
+    sha: []
+  merge-message-formats: {}
