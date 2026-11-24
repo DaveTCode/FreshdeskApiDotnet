@@ -23,14 +23,14 @@ jobs:
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v5.0.0
         with:
-          versionSpec: '6.x'
+          versionSpec: '7.0.x'
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
         uses: gittools/actions/gitversion/execute@v5.0.0
       - run: |
           echo "MajorMinorPatch: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
           echo "FullSemVer: ${{ steps.gitversion.outputs.FullSemVer }}"
-          echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
+          echo "VersionSourceDistance: ${{ steps.gitversion.outputs.versionSourceDistance }}"
       - name: Restore with .Net
         run: dotnet restore --nologo
       - name: build with .Net
